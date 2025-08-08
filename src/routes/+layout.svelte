@@ -1,4 +1,4 @@
-<!-- src/routes/+layout.svelte (FINAL, CORRECTED LOGO PATH) -->
+<!-- src/routes/+layout.svelte (FINAL, DEFINITIVE LOGO PATH) -->
 
 <script>
     import "../styles/styles.css";
@@ -24,13 +24,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 </svelte:head>
 
-<!-- This #if block now only controls the menu, not the logo -->
 {#if data.headerConfig}
     <header class="header">
         <div class="header-inner">
             <a href="/" class="header-item header-logo" aria-label="Back to homepage">
-                <!-- [THE FIX IS HERE]: The path is now hardcoded -->
-                <img src="/assets/logo-light.svg" alt="VeryNice.kz Logo" width="209" height="27" />
+                <!-- [THE FIX IS HERE]: The path is now the simplest possible. -->
+                <img src="/logo.svg" alt="VeryNice.kz Logo" width="209" height="27" />
             </a>
             <nav class="header-item header-menu" aria-label="Main menu">
                 <ul>
@@ -64,8 +63,8 @@
         <div class="footer-wrapper">
             <div class="footer-top">
                 <div class="footer-inner">
-                     <!-- [THE FIX IS HERE]: The path is now hardcoded -->
-                    <a href="/"><img src="/assets/logo-light.svg" alt="VeryNice.kz Logo" loading="lazy" decoding="async" /></a>
+                     <!-- [THE FIX IS HERE]: The path is now the simplest possible. -->
+                    <a href="/"><img src="/logo.svg" alt="VeryNice.kz Logo" loading="lazy" decoding="async" /></a>
                 </div>
                 <div class="footer-inner">
                     <nav class="footer-menu">
