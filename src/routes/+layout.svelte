@@ -1,7 +1,6 @@
-<!-- src/routes/+layout.svelte (CLEANED) -->
+<!-- src/routes/+layout.svelte (FINAL, SYNCHRONIZED VERSION) -->
 
 <script>
-    import { browser } from '$app/environment';
     import "../styles/styles.css";
     import SearchOverlay from '$lib/components/search/SearchOverlay.svelte';
     import BackToTop from '$lib/components/ui-elements/BackToTop.svelte';
@@ -25,11 +24,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 </svelte:head>
 
+<!-- This #if block is the key to debugging. If it fails, headerConfig is null. -->
 {#if data.headerConfig}
     <header class="header">
         <div class="header-inner">
             <a href="/" class="header-item header-logo" aria-label="Back to homepage">
-                <img src={data.headerConfig.logoUrlWhite} alt={data.headerConfig.logoAltText} width="160" height="28" />
+                <!-- This now correctly points to your white logo -->
+                <img src={data.headerConfig.logoUrlWhite} alt={data.headerConfig.logoAltText} width="209" height="27" />
             </a>
             <nav class="header-item header-menu" aria-label="Main menu">
                 <ul>
@@ -63,7 +64,8 @@
         <div class="footer-wrapper">
             <div class="footer-top">
                 <div class="footer-inner">
-                    <a href="/"><img src={data.headerConfig.logoUrlWhite} alt={data.footerConfig.logoAltText} loading="lazy" decoding="async" /></a>
+                     <!-- The footer now also uses the correct white logo from the header config -->
+                    <a href="/"><img src={data.headerConfig.logoUrlWhite} alt={data.headerConfig.logoAltText} loading="lazy" decoding="async" /></a>
                 </div>
                 <div class="footer-inner">
                     <nav class="footer-menu">

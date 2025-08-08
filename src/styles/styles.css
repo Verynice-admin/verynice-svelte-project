@@ -401,11 +401,11 @@ select:focus-visible {
   background-repeat: no-repeat;
   background-size: 100%;
   content: '';
-  display: inline-block; /* Changed from flex for easier use with text */
+  display: inline-block;
   vertical-align: middle;
-  height: 22px; /* Standardized default icon size */
+  height: 22px;
   width: 22px;
-  filter: brightness(0) invert(1); /* Makes icons white */
+  filter: brightness(0) invert(1);
 }
 
 /* Specific icons that might look better in accent color */
@@ -417,86 +417,106 @@ select:focus-visible {
 .section .post-info .icon-like:before,
 .section .post-info .icon-comment:before,
 .section .post-info .icon-time:before {
-    filter: brightness(0) invert(1); /* Ensure hero stats icons are white */
+    filter: brightness(0) invert(1);
     opacity: 0.8;
 }
 
+/* --- [THE FIX IS HERE]: All icon paths are now absolute --- */
 
 .icon-menu:before {
-  background-image: url('../assets/icons/icon-menu.svg');
+  background-image: url('/assets/icons/icon-menu.svg');
   height: 28px;
   width: 28px;
 }
 
 .icon-close:before {
-  background-image: url('../assets/icons/icon-close.svg');
+  background-image: url('/assets/icons/icon-close.svg');
 }
 
 .icon-view:before {
-  background-image: url('../assets/icons/icon-views.svg');
+  background-image: url('/assets/icons/icon-views.svg');
   margin-right: 8px;
 }
 
 .icon-like:before {
-  background-image: url('../assets/icons/icon-like.svg');
+  background-image: url('/assets/icons/icon-like.svg');
   margin-right: 8px;
   width: 19px;
   height: 19px;
 }
 
 .icon-comment:before {
-  background-image: url('../assets/icons/icon-comment.svg');
+  background-image: url('/assets/icons/icon-comment.svg');
   margin: 2px 8px 0 0;
   width: 18px;
   height: 18px;
 }
 
 .icon-time:before {
-  background-image: url('../assets/icons/icon-time.svg');
+  background-image: url('/assets/icons/icon-time.svg');
   height: 18px;
   width: 18px;
   margin: 0 8px 0 0;
 }
 
 .icon-location:before {
-  background-image: url('../assets/icons/icon-location.svg');
+  background-image: url('/assets/icons/icon-location.svg');
   width: 20px;
   height: 20px;
   margin-right: 8px;
 }
 
 .icon-up:before {
-  background-image: url('../assets/icons/icon-uparrow.svg');
+  background-image: url('/assets/icons/icon-uparrow.svg');
   height: 24px;
   width: 24px;
 }
 
 .icon-address:before {
-  background-image: url('../assets/icons/icon-address.svg');
+  background-image: url('/assets/icons/icon-address.svg');
   height: 28px;
   width: 24px;
   margin-right: 10px;
 }
 
 .icon-web:before {
-  background-image: url('../assets/icons/icon-web.svg');
+  background-image: url('/assets/icons/icon-web.svg');
   height: 26px;
   width: 26px;
   margin-right: 10px;
 }
 
 .header-buttons .icon-search:before {
-  background-image: url('../assets/icons/icon-search.svg');
+  background-image: url('/assets/icons/icon-search.svg');
+  height: 23px;
+  width: 23px;
+  cursor: pointer;
+}
+
+.search-open:before {
+  background-image: url('/assets/icons/icon-search.svg');
+}
+.search-close:before {
+    background-image: url('/assets/icons/icon-close-white.svg');
+    height: 100%;
+    width: 100%;
+    content: '';
+    display: block;
+    filter: none;
+}
+
+.header-buttons .icon-search:before {
+  background-image: url('/assets/icons/icon-search.svg');
   height: 23px;
   width: 23px;
   cursor: pointer;
 }
 
 .search-open:before { /* Should be .icon-search as well */
-  background-image: url('../assets/icons/icon-search.svg');
+  background-image: url('/assets/icons/icon-search.svg');
 }
 .search-close:before { /* This is for the icon INSIDE .search-close span */
-    background-image: url('../assets/icons/icon-close-white.svg');
+    background-image: url('/assets/icons/icon-close-white.svg');
     height: 100%;
     width: 100%;
     content: '';
@@ -1131,7 +1151,7 @@ select:focus-visible {
 }
 .search-close .icon-close:before { /* Targets the pseudo-element if icon-close is on the span */
     height: 20px; width: 20px; margin: 0; /* Center the icon if used this way */
-    background-image: url('../assets/icons/icon-close-white.svg'); /* Ensure path is correct */
+    background-image: url('/assets/icons/icon-close-white.svg'); /* Ensure path is correct */
     filter: none; /* Assuming SVG is already white */
 }
 
@@ -1316,14 +1336,9 @@ select:focus-visible {
         margin-right: auto;
     }
 
-    /* --- [THE FIX IS HERE] --- */
-    /* This new rule removes the top padding from the main content section */
-    /* ONLY when the three-column grid is active, ensuring perfect alignment. */
     .article .main-column-content .content-section {
         padding-top: 0;
     }
-    /* --- [END OF FIX] --- */
-
 
     aside.additional-content.spec { /* Right sidebar (Key Facts) */
         grid-column: 3 / 4;
