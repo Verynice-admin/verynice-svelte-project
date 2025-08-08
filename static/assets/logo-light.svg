@@ -1,5 +1,5 @@
 <svg width="209" height="27" viewBox="0 0 209 27" fill="white" xmlns="http://www.w3.org/2000/svg">
-  <!-- This SVG is styled to render "VERYNICE .kz" -->
+  <!-- This version uses explicit casing to guarantee "VERYNICE .kz" -->
   <text 
     x="0" 
     y="21" 
@@ -7,14 +7,13 @@
     font-size="24" 
     font-weight="700" 
     letter-spacing="0.5"
-    style="text-transform:uppercase;"
+    <!-- text-transform has been removed -->
   >
-    VeryNice
+    VERYNICE
     <tspan 
       font-size="22" 
       font-weight="500" 
       dx="8"
-      style="text-transform: none;"
-    >.kz</tspan>
+    >.kz</tspan> <!-- "kz" is now explicitly lowercase -->
   </text>
 </svg>
