@@ -1,5 +1,5 @@
 <svg width="209" height="27" viewBox="0 0 209 27" fill="white" xmlns="http://www.w3.org/2000/svg">
-  <!-- This SVG was generated to say "VERYNICE .KZ" in the Montserrat font WITH a space -->
+  <!-- This SVG is styled to render "VERYNICE .kz" -->
   <text 
     x="0" 
     y="21" 
@@ -13,6 +13,8 @@
     <tspan 
       font-size="22" 
       font-weight="500" 
-      dx="8">.kz</tspan> <!-- [THE FIX IS HERE]: The dx="8" attribute creates the space -->
+      dx="8"
+      style="text-transform: none;"
+    >.kz</tspan>
   </text>
 </svg>
