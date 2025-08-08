@@ -1,10 +1,10 @@
-// src/routes/history/+page.js (CORRECTED TO FETCH MAP COORDINATES)
+// src/routes/history/+page.js (CORRECTED with SSR GUARDS FOR VERCEL)
 
 import { doc, getDoc, collection, getDocs, query, orderBy, updateDoc, increment } from "firebase/firestore";
 import { db } from "$lib/services/firebase.js";
 
 const CACHE_KEY = 'historyPageCache';
-const CACHE_DURATION = 15 * 60 * 1000;
+const CACHE_DURATION = 15 * 60 * 1000; // 15 minutes
 
 export async function load({ depends }) {
     depends('app:history');
@@ -12,12 +12,13 @@ export async function load({ depends }) {
     const pageDocRef = doc(db, 'pages', 'historyPage');
     
     try {
+        // NOTE: The server build cannot use the cache, this is a client-side enhancement.
+        // The getCachedData function will correctly return null on the server.
         const cachedData = getCachedData();
         if (cachedData) {
             return cachedData;
         }
         
-        // Atomically increment the view count on the server
         await updateDoc(pageDocRef, { articleViews: increment(1) });
         
         const pageSnap = await getDoc(pageDocRef);
@@ -31,10 +32,7 @@ export async function load({ depends }) {
         try {
             const sectionsQuery = query(collection(db, 'pages/historyPage/sections'), orderBy('order', 'asc'));
             const sectionsSnap = await getDocs(sectionsQuery);
-            sections = sectionsSnap.docs.map(doc => ({ 
-                id: doc.id, 
-                ...doc.data()
-            }));
+            sections = sectionsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         } catch (sectionsError) {
             console.error("Error fetching sections:", sectionsError);
         }
@@ -64,8 +62,6 @@ export async function load({ depends }) {
             sections,
             author,
             timestamp: Date.now()
-            // The mapCoordinates are already inside the 'page' object,
-            // so we don't need to add a separate property here.
         };
         
         cacheData(pageData);
@@ -91,7 +87,9 @@ export async function load({ depends }) {
     }
 }
 
-// Cache functions with SSR guards
+// --- [THE FIX IS HERE] ---
+// These functions now check if 'localStorage' exists before trying to use it.
+// This prevents the build from crashing on the server.
 function getCachedData() {
     if (typeof localStorage === 'undefined') return null;
     try {
