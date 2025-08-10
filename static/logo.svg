@@ -1,3 +1,12 @@
-<svg width="11" height="16" viewBox="0 0 11 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M7.158 15.99V4.16599L1.54199 10.358L-0.00201416 8.92999L8.13 0.0379944H10.026V15.99H7.158Z" fill="white"/>
+<svg width="209" height="27" viewBox="0 0 209 27" xmlns="http://www.w3.org/2000/svg" fill="white">
+  <text 
+    x="0" 
+    y="21" 
+    font-family="Montserrat, Arial, sans-serif" 
+    font-size="24" 
+    font-weight="bold" 
+    letter-spacing="0.5">
+      VERYNICE
+      <tspan dx="0.2em">.kz</tspan>
+  </text>
 </svg>
