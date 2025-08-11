@@ -24,3 +24,9 @@ vite.config.ts.timestamp-*
 
 # Ignore administrative scripts
 _scripts/
+
+# Ignore Firebase admin credentials
+serviceAccountKey.json
+
+# Ignore environment variables and secrets
+.env
