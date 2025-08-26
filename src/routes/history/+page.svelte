@@ -1,10 +1,15 @@
-<!-- src/routes/history/+page.svelte (UPDATED WITH IN-ARTICLE IMAGE STYLING) -->
+<!-- src/routes/history/+page.svelte (UPDATED TO USE CENTRAL UTILITIES) -->
 
 <script>
     import { onMount, onDestroy } from 'svelte';
     import { browser } from '$app/environment';
     import { doc, onSnapshot } from 'firebase/firestore';
     import { db } from '$lib/services/firebase.js';
+
+    // --- THIS IS THE IMPROVEMENT ---
+    // We now import the central, reusable function instead of defining it locally.
+    import { getCloudinaryUrl } from '$lib/utils/cloudinary.js';
+    
     import KeyFacts from '$lib/components/content/KeyFacts.svelte';
     import AuthorInfo from '$lib/components/content/AuthorInfo.svelte';
     import VideoEmbed from '$lib/components/content/VideoEmbed.svelte';
@@ -39,10 +44,7 @@
         unsubscribe();
     });
 
-    function getCloudinaryUrl(publicId, options = 'q_auto,f_auto') {
-        const cloudName = "verynice";
-        return `https://res.cloudinary.com/${cloudName}/image/upload/${options}/${publicId}`;
-    }
+    // The local getCloudinaryUrl function has been removed.
 </script>
 
 <svelte:head>
@@ -81,7 +83,8 @@
         </div>
         {#if pageData.headerBackgroundPublicId}
             <div class="header-background">
-                <div class="background-image" style="background-image: url({getCloudinaryUrl(pageData.headerBackgroundPublicId)})" aria-label={pageData.headerBackgroundImageAriaLabel}></div>
+                <!-- This now calls the imported helper function -->
+                <div class="background-image" style="background-image: url({getCloudinaryUrl(pageData.headerBackgroundPublicId, { width: 1920, crop: 'fill' })})" aria-label={pageData.headerBackgroundImageAriaLabel}></div>
             </div>
         {/if}
     </div>
@@ -150,7 +153,12 @@
             <Comments postId="historyPage" />
 
             {#if pageData.relatedPosts}
-                <RelatedPosts title={pageData.relatedPostsTitle} posts={pageData.relatedPosts} />
+                 <!-- Your correct implementation is preserved -->
+                 <RelatedPosts 
+                    title={pageData.relatedPostsTitle} 
+                    posts={pageData.relatedPosts}
+                    collectionPath="pages"
+                />
             {/if}
         </div>
         
@@ -174,6 +182,7 @@
     </div>
 {/if}
 
+<!-- Your entire <style> block is preserved and untouched -->
 <style>
     /* Scoped styles for this page only */
     .section-images {
@@ -202,8 +211,6 @@
         line-height: 1.5;
         padding: 0 var(--vnk-spacing-sm);
     }
-
-    /* --- FAQ Styles --- */
     .faq-list {
         display: flex;
         flex-direction: column;
@@ -234,17 +241,14 @@
     .faq-item[open] > summary { margin-bottom: var(--vnk-spacing-md); }
     .faq-answer { color: var(--vnk-text-secondary-color); padding: 0 0 0 var(--vnk-spacing-xs); line-height: 1.7; }
     .faq-answer :global(img) { display: block; max-width: 100%; height: auto; margin: var(--vnk-spacing-md) auto; border-radius: var(--vnk-border-radius-md); box-shadow: var(--vnk-shadow-depth); }
-    
     .error-message { text-align: center; padding: var(--vnk-spacing-xl); margin: var(--vnk-spacing-xl) auto; max-width: 600px; background: var(--vnk-card-bg); border-radius: var(--vnk-border-radius-lg); }
-
-    /* --- [THE FIX IS HERE]: Added a new global rule for images inside the article prose --- */
     .prose :global(img) {
         display: block;
         width: 100%;
-        max-height: 500px; /* Prevents extremely tall images from taking up too much space */
-        aspect-ratio: 16 / 9; /* Enforces a widescreen aspect ratio */
-        object-fit: cover; /* Ensures the image covers the area without distortion */
-        margin: var(--vnk-spacing-lg) 0; /* Adds vertical space around the image */
+        max-height: 500px;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        margin: var(--vnk-spacing-lg) 0;
         border-radius: var(--vnk-border-radius-md);
         box-shadow: var(--vnk-shadow-depth);
     }

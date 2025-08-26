@@ -1,4 +1,4 @@
-<!-- src/lib/components/content/VideoEmbed.svelte (FINAL AND CORRECTED) -->
+<!-- src/lib/components/content/VideoEmbed.svelte (UPGRADED WITH SYNTAX FIX) -->
 
 <script>
     /** @type {string} */
@@ -6,28 +6,58 @@
 
     /** @type {string} */
     export let url = '';
+
+    /**
+     * Takes a standard video URL (like youtube.com/watch?v=...) and
+     * converts it into the special embeddable URL that works in an iframe.
+     * @param {string} originalUrl
+     */
+    function getEmbedUrl(originalUrl) {
+        if (!originalUrl) return null;
+
+        try {
+            const urlObj = new URL(originalUrl);
+
+            // Handle YouTube URLs
+            if (urlObj.hostname.includes('youtube.com') || urlObj.hostname.includes('youtu.be')) {
+                const videoId = urlObj.searchParams.get('v') || urlObj.pathname.split('/').pop();
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+
+            // Handle Vimeo URLs (as a bonus)
+            if (urlObj.hostname.includes('vimeo.com')) {
+                const videoId = urlObj.pathname.split('/').pop();
+                return `https://player.vimeo.com/video/${videoId}`;
+            }
+        } catch (e) {
+            console.error('Invalid URL for video embed:', originalUrl);
+            return null;
+        }
+        
+        return originalUrl;
+    }
+
+    $: embedUrl = getEmbedUrl(url);
+
 </script>
 
-<!-- 
-    THE FIX: We wrap the iframe in the containers that your CSS is looking for.
-    - .themed-content-block gives it the nice border and background.
-    - #video-section is the specific ID for styling.
-    - .video-wrapper is the crucial aspect-ratio container.
--->
 <section id="video-section" class="themed-content-block">
     <div class="additional-content-header">
         <h2>{title}</h2>
     </div>
 
-    {#if url}
+    {#if embedUrl}
         <div class="video-wrapper">
+            <!-- THE FIX IS HERE: The invalid comment has been removed from the iframe tag. -->
             <iframe
-                src={url}
+                src={embedUrl}
                 title={title}
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen
             ></iframe>
         </div>
+    {:else if url}
+        <p style="text-align: center; padding: 2rem;">The provided video URL is not valid.</p>
     {/if}
 </section>

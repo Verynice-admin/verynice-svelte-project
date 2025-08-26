@@ -1,138 +1,123 @@
-<!-- src/routes/+page.svelte (FINAL, CORRECTED CONTENT) -->
+<!-- In src/routes/+page.svelte (NOW USING THE CENTRAL UTILITY) -->
 <script>
-    import RelatedPosts from '$lib/components/content/RelatedPosts.svelte';
-    import { getCloudinaryUrl } from '$lib/utils/cloudinary.js';
-    
-    /** @type {import('./$types').PageData} */
-    export let data;
+  import RelatedPosts from '$lib/components/content/RelatedPosts.svelte';
+  import VideoEmbed from '$lib/components/content/VideoEmbed.svelte';
+  // Correctly import the central utility
+  import { getCloudinaryUrl } from '$lib/utils/cloudinary.js';
+
+  /** @type {import('./$types').PageData} */
+  export let data;
+  
+  const { homepage, sliders } = data;
+
+  // Use the central utility to build the hero image URL
+  const heroImageUrl = getCloudinaryUrl(homepage.heroImagePublicId, {
+    width: 1920,
+    crop: 'fill',
+    gravity: 'center'
+  });
 </script>
 
 <svelte:head>
-    <title>VeryNice.kz — A Travel Portal for True Explorers</title>
-    <meta name="description" content={data.homepageContent?.heroSubtitle} />
+  <title>{homepage.title}</title>
+  <meta name="description" content={homepage.metaDescription} />
 </svelte:head>
 
-<!-- ======================================================================= -->
-<!--                   MAIN PAGE CONTENT STARTS HERE                       -->
-<!-- Your existing header and logo from +layout.svelte will appear above this. -->
-<!-- ======================================================================= -->
-
-{#if data.homepageContent}
-    <!-- 1. Hero Section (Styled like your History page hero) -->
-    <div class="section">
-        <div class="section-header wrapper">
-            <div class="section-header-text" style="align-items: center; text-align: center;">
-                <h1>{data.homepageContent.heroTitle}</h1>
-                <p class="section-description">{data.homepageContent.heroSubtitle}</p>
-                
-                <!-- Search Form (as seen on iskatel.com) -->
-                <form role="search" method="get" class="search-form" action="/search">
-                    <input 
-                        class="text" 
-                        type="text" 
-                        name="q" 
-                        placeholder={data.homepageContent.heroSearchPlaceholder || 'Search...'}
-                    />
-                    <input class="submit" type="submit" value={data.homepageContent.heroSearchButtonText || 'Find'} />
-                </form>
-            </div>
+<div class="section" id="page-hero-section">
+    <div class="section-header wrapper">
+        <div class="section-header-text">
+            <h1>{homepage.heroTitle}</h1>
+            <p class="section-description">{homepage.heroSubtitle}</p>
+            <form role="search" method="get" class="search-form" action="/search">
+                <input class="text" type="text" name="q" placeholder="Search for places, attractions..." />
+                <input class="submit" type="submit" value="Find" />
+            </form>
         </div>
-        {#if data.homepageContent.heroBackgroundPublicId}
-            <div class="header-background">
-                <div class="background-image" style="background-image: url({getCloudinaryUrl(data.homepageContent.heroBackgroundPublicId)})"></div>
-            </div>
+    </div>
+    <div class="header-background">
+        <div class="background-image" style="background-image: url({heroImageUrl})"></div>
+    </div>
+</div>
+
+<div class="wrapper article">
+    <div class="main-column-content">
+        {#if sliders.newPosts?.length > 0}
+          <RelatedPosts title="Latest Articles" posts={sliders.newPosts} collectionPath="posts" />
         {/if}
-    </div>
-
-    <!-- 2. Dynamically Rendered Sections -->
-    <div class="wrapper">
-        {#if data.sections && data.sections.length > 0}
-            {#each data.sections as section}
-                {#if section.posts && section.posts.length > 0}
-                    <section class="content-section">
-                        <div class="subheader">
-                            <h2 class="section-title">{section.title}</h2>
-                            <span class="subheader-line"></span>
-                        </div>
-                        <!-- Reuse the RelatedPosts component for the slider -->
-                        <RelatedPosts posts={section.posts} />
-                    </section>
-                {/if}
-            {/each}
+        {#if homepage.featuredVideoUrl}
+            <VideoEmbed title="Featured Video" url={homepage.featuredVideoUrl} />
         {/if}
+        {#if sliders.attractionsPosts?.length > 0}
+          <RelatedPosts title="Top Attractions" posts={sliders.attractionsPosts} collectionPath="posts" />
+        {/if}
+        <!-- ... and so on for other sliders -->
     </div>
-
-{:else if data.error}
-    <div class="error-message">
-        <h1>Oops! Something went wrong.</h1>
-        <p>{data.error}</p>
-    </div>
-{/if}
-
-<!-- ======================================================================= -->
-<!--                   MAIN PAGE CONTENT ENDS HERE                         -->
-<!-- Your existing footer from +layout.svelte will appear below this.      -->
-<!-- ======================================================================= -->
+</div>
 
 <style>
-    .content-section {
-        padding-top: 4rem;
-        padding-bottom: 2rem;
-    }
-    .subheader {
-        margin-bottom: var(--vnk-spacing-xl);
-        text-align: center;
-    }
-    .section-title {
-        font-size: clamp(1.6rem, 4vw, 2.3rem);
-        color: var(--vnk-text-primary-color);
-        display: inline-block;
-        position: relative;
-    }
-    .subheader-line {
-        display: block;
-        margin: var(--vnk-spacing-sm) auto 0;
-        width: 80px;
-        height: 3px;
-        background: var(--vnk-accent-color);
-        border-radius: 2px;
-    }
-
-    /* Styles for the search form in the hero */
+    /* --- Homepage Hero Search Form --- */
     .search-form {
         display: flex;
-        width: 100%;
         max-width: 600px;
-        margin-top: var(--vnk-spacing-lg);
+        margin: 2rem auto 0;
+        box-shadow: var(--vnk-shadow-depth);
     }
+
     .search-form .text {
         flex-grow: 1;
-        background-color: rgba(255, 255, 255, 0.9);
-        border: 1px solid transparent;
-        color: var(--vnk-bg-gradient-start);
+        background-color: rgba(var(--vnk-accent-rgb), .05);
+        border: 1px solid var(--vnk-card-border-color);
+        color: var(--vnk-text-primary-color);
         font-family: var(--vnk-font-secondary);
         font-size: 1.1rem;
+        outline: 0;
         padding: var(--vnk-spacing-md);
         border-radius: var(--vnk-border-radius-sm) 0 0 var(--vnk-border-radius-sm);
+        transition: border-color .3s ease, box-shadow .3s ease;
     }
-     .search-form .text::placeholder {
-        color: #555;
-     }
+
+    .search-form .text::placeholder {
+        color: var(--vnk-text-secondary-color);
+        opacity: 1;
+    }
+
+    .search-form .text:focus {
+        border-color: var(--vnk-accent-color);
+        box-shadow: var(--vnk-shadow-neon-sm);
+    }
+
     .search-form .submit {
-        background-color: var(--vnk-accent-color);
-        border: 1px solid var(--vnk-accent-color);
-        color: var(--vnk-bg-gradient-start);
+        border: none;
         cursor: pointer;
-        font-family: var(--vnk-font-primary);
+        transition: background-color 0.3s ease;
+        padding: 0 var(--vnk-spacing-xl);
         font-size: 1.1rem;
         font-weight: 700;
-        padding: var(--vnk-spacing-md) var(--vnk-spacing-lg);
-        text-transform: uppercase;
+        font-family: var(--vnk-font-primary);
+        background-color: var(--vnk-accent-color);
+        color: var(--vnk-text-primary-color);
         border-radius: 0 var(--vnk-border-radius-sm) var(--vnk-border-radius-sm) 0;
-        transition: all 0.3s ease;
     }
+
     .search-form .submit:hover {
-        background-color: #39dff8;
+        background-color: #08d9f9;
     }
-    .error-message { text-align: center; padding: 4rem; }
+
+    /* --- Responsive styles for mobile phones --- */
+    @media (max-width: 768px) {
+        .search-form {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .search-form .text {
+            border-radius: var(--vnk-border-radius-sm);
+            text-align: center;
+        }
+        
+        .search-form .submit {
+            border-radius: var(--vnk-border-radius-sm);
+            padding: var(--vnk-spacing-md);
+        }
+    }
 </style>
