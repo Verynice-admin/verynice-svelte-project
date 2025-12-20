@@ -1,0 +1,45 @@
+{
+  "headerConfig": {
+    "siteName": "VERYNICE .kz",
+    "logoUrlWhite": "/logo.svg",
+    "logoAltText": "VeryNice",
+    "menu": [
+      {
+        "url": "/cities",
+        "text": "Cities"
+      },
+      {
+        "url": "/attractions",
+        "text": "Attractions"
+      },
+      {
+        "url": "/history",
+        "text": "History"
+      },
+      {
+        "url": "/culture",
+        "text": "Culture"
+      },
+      {
+        "url": "/food-drink",
+        "text": "Food & Drinks"
+      },
+      {
+        "url": "/travel-tips",
+        "text": "Travel Tips"
+      },
+      {
+        "url": "/about-borat",
+        "text": "About Borat"
+      }
+    ]
+  },
+  "footerConfig": {
+    "footerMenuLinks": [],
+    "techMenuLinks": [],
+    "links": [],
+    "social": [],
+    "columns": [],
+    "copyrightTemplate": "© {year} VeryNice.kz. All Rights Reserved."
+  }
+}

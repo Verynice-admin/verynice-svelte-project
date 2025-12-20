@@ -1,0 +1,176 @@
+{
+  "timestamp": "2025-12-02T04:40:35.370Z",
+  "projectId": "verynice-kz",
+  "collections": [
+    {
+      "collection": "pages",
+      "totalDocuments": 3,
+      "documents": [
+        {
+          "id": "aboutPage",
+          "path": "pages/aboutPage",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "historyPage",
+          "path": "pages/historyPage",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "homepage",
+          "path": "pages/homepage",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        }
+      ],
+      "summary": {
+        "totalIssues": 0,
+        "totalWarnings": 0,
+        "documentsWithIssues": 0,
+        "documentsWithWarnings": 0
+      }
+    },
+    {
+      "collection": "authors",
+      "totalDocuments": 2,
+      "documents": [
+        {
+          "id": "aliya-askar",
+          "path": "authors/aliya-askar",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "aliya_askar",
+          "path": "authors/aliya_askar",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        }
+      ],
+      "summary": {
+        "totalIssues": 0,
+        "totalWarnings": 0,
+        "documentsWithIssues": 0,
+        "documentsWithWarnings": 0
+      }
+    },
+    {
+      "collection": "pages/historyPage/sections",
+      "totalDocuments": 9,
+      "documents": [
+        {
+          "id": "section-the-beginning",
+          "path": "pages/historyPage/sections/section-the-beginning",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "section-golden-man",
+          "path": "pages/historyPage/sections/section-golden-man",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "section-silk-road",
+          "path": "pages/historyPage/sections/section-silk-road",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "section-islamic-steppe",
+          "path": "pages/historyPage/sections/section-islamic-steppe",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "section-golden-horde",
+          "path": "pages/historyPage/sections/section-golden-horde",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "section-kazakh-khanate",
+          "path": "pages/historyPage/sections/section-kazakh-khanate",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "section-dzungar-invasion",
+          "path": "pages/historyPage/sections/section-dzungar-invasion",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "section-soviet-yoke",
+          "path": "pages/historyPage/sections/section-soviet-yoke",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        },
+        {
+          "id": "section-independence",
+          "path": "pages/historyPage/sections/section-independence",
+          "issues": [],
+          "warnings": [],
+          "info": [],
+          "hasIssues": false,
+          "hasWarnings": false
+        }
+      ],
+      "summary": {
+        "totalIssues": 0,
+        "totalWarnings": 0,
+        "documentsWithIssues": 0,
+        "documentsWithWarnings": 0
+      }
+    }
+  ],
+  "summary": {
+    "totalCollections": 3,
+    "totalDocuments": 14,
+    "totalIssues": 0,
+    "totalWarnings": 0,
+    "documentsWithIssues": 0,
+    "documentsWithWarnings": 0
+  }
+}

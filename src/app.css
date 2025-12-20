@@ -1,0 +1,35 @@
+/* Header just to keep it on top */
+.site-header,
+header.site-header,
+#site-header,
+header#site-header {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1001;
+}
+
+/* Mobile menu overlay. JS will set top and height. */
+.mobile-menu {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;                /* will be adjusted by JS */
+  height: 100vh;         /* will be adjusted by JS */
+  display: none;
+  z-index: 1000;
+  background: #111;
+  color: #fff;
+  overflow: auto;
+  padding: 1rem;
+}
+
+#mobile-menu[data-open="true"] {
+  display: block;
+}

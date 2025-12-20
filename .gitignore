@@ -25,8 +25,11 @@ vite.config.ts.timestamp-*
 # Ignore administrative scripts
 _scripts/
 
-# Ignore Firebase admin credentials
+# Ignore Firebase admin credentials and secrets directory
 serviceAccountKey.json
+service-account.json
+.secrets/
+secrets/
 
 # Ignore environment variables and secrets
 .env
@@ -45,3 +48,12 @@ plan_from_urls.js
 prepare_mapping.js
 working_urls.txt
 migration-plan.json
+cloudinary_rename.js
+fetch_ids.js
+generate_plan.js
+list_resources.js
+ping_cloudinary.js
+plan_from_cloudinary.js
+verify_sources.js
+SOURCE_SNAPSHOT.txt
+project-structure.txt

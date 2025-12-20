@@ -1,0 +1,84 @@
+{
+  "timestamp": "2025-12-01T15:57:48.242Z",
+  "dryRun": false,
+  "collections": [
+    {
+      "path": "pages/historyPage/sections",
+      "total": 9,
+      "cleaned": 9,
+      "skipped": 0,
+      "errors": 0,
+      "documents": [
+        {
+          "id": "section-dzungar-invasion",
+          "cleaned": true,
+          "removed": {
+            "contentHTML": null
+          }
+        },
+        {
+          "id": "section-golden-horde",
+          "cleaned": true,
+          "removed": {
+            "contentHTML": null
+          }
+        },
+        {
+          "id": "section-golden-man",
+          "cleaned": true,
+          "removed": {
+            "contentHTML": null
+          }
+        },
+        {
+          "id": "section-independence",
+          "cleaned": true,
+          "removed": {
+            "contentHTML": null
+          }
+        },
+        {
+          "id": "section-islamic-steppe",
+          "cleaned": true,
+          "removed": {
+            "contentHTML": null
+          }
+        },
+        {
+          "id": "section-kazakh-khanate",
+          "cleaned": true,
+          "removed": {
+            "contentHTML": null
+          }
+        },
+        {
+          "id": "section-silk-road",
+          "cleaned": true,
+          "removed": {
+            "contentHTML": null
+          }
+        },
+        {
+          "id": "section-soviet-yoke",
+          "cleaned": true,
+          "removed": {
+            "contentHTML": null
+          }
+        },
+        {
+          "id": "section-the-beginning",
+          "cleaned": true,
+          "removed": {
+            "contentHTML": null
+          }
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalDocuments": 9,
+    "cleaned": 9,
+    "skipped": 0,
+    "errors": 0
+  }
+}

@@ -1,38 +1,109 @@
-# sv
+# VeryNice
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A modern travel and tourism website built with SvelteKit, featuring content about Kazakhstan's cities, attractions, national parks, and more.
 
-## Creating a project
+## Tech Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Framework:** SvelteKit 2.5
+- **Language:** TypeScript
+- **Styling:** CSS
+- **Database:** Firebase (Firestore)
+- **Image Hosting:** Cloudinary
+- **Deployment:** Vercel
 
-```bash
-# create a new project in the current directory
-npx sv create
+## Prerequisites
 
-# create a new project in my-app
-npx sv create my-app
+- Node.js 18+ and npm
+- Firebase project with Firestore enabled
+- Cloudinary account (for image hosting)
+
+## Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd verynice
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Edit `.env` and fill in your Firebase credentials:
+   - Get client-side config from Firebase Console > Project Settings > General
+   - For server-side, place your `serviceAccountKey.json` in `.secrets/` directory
+   - Or set `GOOGLE_APPLICATION_CREDENTIALS` to point to your service account file
+
+4. **Set up Firebase Service Account**
+   - Go to Firebase Console > Project Settings > Service Accounts
+   - Generate a new private key
+   - Save it as `.secrets/serviceAccountKey.json` (this directory is gitignored)
+
+5. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run check` - Run Svelte type checking
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
+- `npm run type-check` - Run TypeScript type checking
+
+## Project Structure
+
+```
+verynice/
+├── .secrets/              # Service account keys (gitignored)
+├── src/
+│   ├── lib/
+│   │   ├── components/   # Reusable Svelte components
+│   │   ├── server/        # Server-only code (Firebase Admin)
+│   │   ├── services/      # Firebase services
+│   │   └── utils/         # Utility functions
+│   ├── routes/            # SvelteKit routes
+│   └── styles/            # Global styles
+├── static/                # Static assets
+└── _scripts/              # Seeding/migration scripts
 ```
 
-## Developing
+## Environment Variables
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+See `.env.example` for all required environment variables.
 
-```bash
-npm run dev
+**Important:** Never commit `.env` or `.secrets/` directory to version control.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Development
 
-## Building
+The project uses:
+- **TypeScript** for type safety
+- **ESLint** for code quality
+- **Prettier** for code formatting
+- **SvelteKit** file-based routing
 
-To create a production version of your app:
+## Deployment
 
-```bash
-npm run build
-```
+The project is configured for Vercel deployment. Simply connect your repository to Vercel and set the environment variables in the Vercel dashboard.
 
-You can preview the production build with `npm run preview`.
+## Security Notes
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- Service account keys are stored in `.secrets/` directory (gitignored)
+- Never commit sensitive credentials
+- Use environment variables for production deployments
+- The `.secrets/` directory is excluded from version control
+
+## License
+
+[Add your license here]

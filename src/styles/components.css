@@ -1,0 +1,156 @@
+/*
+  components.css — shared UI component styles.
+
+  Purpose:
+  - Centralizes reusable components using --vnk-* design tokens (spacing, radius, shadow, colors).
+
+  What it styles:
+  - .card: white content panel with rounded corners, shadow, padding, and spacing.
+  - .button (+ :hover): primary action button with smooth hover darken.
+  - .vnk-related-card: “related content” card (flex column) with light background, radius, shadow, padding.
+    • __image-wrapper/__image: clipped, responsive image.
+    • __text-content: text spacing container.
+    • __title-link (+ :hover): bold link with color transition on hover.
+    • __meta-info: smaller, muted metadata text.
+    • __stats/__stat-item: horizontal stats row; items aligned center.
+
+  Notes:
+  - No media queries; responsiveness comes from flexible layout and container widths.
+  - Relies on globally defined --vnk-* CSS variables for theming.
+*/
+
+.card {
+  background: #fff;
+  border-radius: var(--vnk-border-radius-md);
+  box-shadow: var(--vnk-shadow-depth);
+  padding: var(--vnk-spacing-md);
+  margin-bottom: var(--vnk-spacing-md);
+}
+
+.button {
+  background: var(--vnk-text-accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.button:hover {
+  background: #005fa3;
+}
+
+@media (max-width: 600px) {
+  .button {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    min-height: 48px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .button:active {
+    transform: scale(0.97);
+    background: #004d8a;
+  }
+}
+
+.vnk-related-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: var(--vnk-border-radius-md);
+  box-shadow: var(--vnk-shadow-depth);
+  padding: var(--vnk-spacing-md);
+  margin-bottom: var(--vnk-spacing-md);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Enhanced mobile card styles */
+@media (max-width: 600px) {
+  .vnk-related-card {
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 0;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .vnk-related-card:active {
+    transform: scale(0.98);
+  }
+}
+
+.vnk-related-card__image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--vnk-border-radius-md);
+  margin-bottom: var(--vnk-spacing-sm);
+}
+
+@media (max-width: 600px) {
+  .vnk-related-card__image-wrapper {
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+}
+
+.vnk-related-card__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.vnk-related-card__text-content {
+  padding: var(--vnk-spacing-sm) 0;
+}
+
+@media (max-width: 600px) {
+  .vnk-related-card__text-content {
+    padding: 1.25rem;
+  }
+}
+
+.vnk-related-card__title-link {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: var(--vnk-text-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.vnk-related-card__title-link:hover {
+  color: #005fa3;
+}
+
+@media (max-width: 600px) {
+  .vnk-related-card__title-link {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+}
+
+.vnk-related-card__meta-info {
+  font-size: 0.875rem;
+  color: var(--vnk-text-muted);
+  margin-bottom: var(--vnk-spacing-xs);
+}
+
+.vnk-related-card__stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--vnk-text-primary);
+}
+
+.vnk-related-card__stat-item {
+  display: flex;
+  align-items: center;
+}

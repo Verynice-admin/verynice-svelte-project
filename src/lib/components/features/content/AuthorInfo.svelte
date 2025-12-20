@@ -1,0 +1,394 @@
+<!-- src/lib/components/content/AuthorInfo.svelte (UPDATED TO BE REAL-TIME) -->
+
+<script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
+	import { browser } from '$app/environment';
+	import { getFirestore } from '$lib/firebaseApp';
+	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
+	import LikeButton from '$lib/components/features/ui-elements/LikeButton.svelte';
+	import SocialShare from '$lib/components/features/ui-elements/SocialShare.svelte';
+
+	export let author: any = {};
+	export let labels: any = {};
+	export let postId: string | null = null;
+	export let articleLikes: number | undefined = undefined;
+	export let collectionPath: string = 'pages';
+	export let showSocialActions: boolean = true;
+
+	let unsubscribe = () => {};
+
+	// Compute image public ID and URL with proper transformations
+	$: rawImagePublicId =
+		author?.profilePicturePublicId || author?.authorImagePublicId || author?.avatarPublicId || '';
+	$: imagePublicId = typeof rawImagePublicId === 'string' ? rawImagePublicId.trim() : '';
+
+	// Generate image URL with proper transformations for author photo
+	$: imageUrl =
+		imagePublicId && imagePublicId.length > 0
+			? getCloudinaryUrl(imagePublicId, {
+					width: 400,
+					height: 400,
+					crop: 'fill',
+					gravity: 'face',
+					quality: 'auto:good',
+					fetch_format: 'auto'
+				})
+			: '';
+
+	$: hasImage = !!(imageUrl && imageUrl.length > 0);
+
+	// Track image load state
+	let imageError = false;
+
+	// Reset error state when imagePublicId changes
+	$: if (imagePublicId) {
+		imageError = false;
+	}
+
+	// Debug: Log author data
+	$: if (browser && author) {
+		console.log('[AuthorInfo] Author data received:', {
+			name: author.name,
+			title: author.title,
+			bio: author.bio,
+			description: author.description,
+			profilePicturePublicId: author.profilePicturePublicId,
+			authorImagePublicId: author.authorImagePublicId,
+			avatarPublicId: author.avatarPublicId,
+			rawImagePublicId: rawImagePublicId,
+			imagePublicId: imagePublicId,
+			imageUrl: imageUrl,
+			hasImage: hasImage,
+			allFields: Object.keys(author)
+		});
+
+		if (!hasImage) {
+			console.warn('[AuthorInfo] No image publicId found. Available fields:', Object.keys(author));
+			console.warn('[AuthorInfo] Checking for image fields:', {
+				profilePicturePublicId: author.profilePicturePublicId,
+				authorImagePublicId: author.authorImagePublicId,
+				avatarPublicId: author.avatarPublicId,
+				hasAny: !!(
+					author.profilePicturePublicId ||
+					author.authorImagePublicId ||
+					author.avatarPublicId
+				)
+			});
+		}
+	}
+
+	onMount(() => {
+		if (!browser || !postId?.trim()) return;
+		(async () => {
+			const db = await getFirestore();
+			if (!db) return;
+			const { doc, onSnapshot } = await import('firebase/firestore');
+			const ref = doc(db, 'pages', postId);
+			unsubscribe = onSnapshot(ref, () => {
+				// keep subscription for future live counters; no-op for now
+			});
+		})();
+	});
+
+	onDestroy(() => unsubscribe());
+</script>
+
+{#if author && (author.name || author.authorName)}
+	<section class="themed-content-block author-info-section">
+		<div class="author-info-unified-box">
+			<!-- Eyebrow Label -->
+			<div class="author-section-label">
+				{labels?.authorSectionTitle || 'About the Historian'}
+			</div>
+
+			<!-- Column 1: Avatar -->
+			<div class="author-photo-container">
+				{#if hasImage && !imageError}
+					<img
+						class="author-photo"
+						src={imageUrl}
+						alt={author.ariaLabelForImage ||
+							`Photo of ${author.name || author.authorName || 'author'}`}
+						width="200"
+						height="200"
+						loading="lazy"
+						decoding="async"
+						on:error={(e) => {
+							console.error('[AuthorInfo] Image failed to load.', imageUrl);
+							imageError = true;
+						}}
+						on:load={() => {
+							imageError = false;
+						}}
+					/>
+				{:else}
+					<!-- Fallback -->
+					<div
+						class="author-photo-placeholder"
+						role="img"
+						aria-label={`Photo placeholder for ${author.name || author.authorName || 'author'}`}
+					>
+						<span class="author-initials">
+							{((author.name || author.authorName || '').match(/\b\w/g) || [])
+								.join('')
+								.substring(0, 2)
+								.toUpperCase() || 'A'}
+						</span>
+					</div>
+				{/if}
+			</div>
+
+			<!-- Column 2: Content (Text + Actions) -->
+			<div class="author-content-wrapper">
+				<div class="author-text">
+					{#if author?.name || author?.authorName}
+						<h3 class="author-name-display">{author.name || author.authorName}</h3>
+					{/if}
+					{#if author?.title || author?.authorTitle}
+						<p class="author-title-display">{author.title || author.authorTitle}</p>
+					{/if}
+					{#if author?.description || author?.bio || author?.authorBio}
+						<p class="author-description-display">
+							{author.description || author.bio || author.authorBio}
+						</p>
+					{/if}
+				</div>
+
+				<!-- Social Actions Section (Vertical, under text) -->
+				{#if showSocialActions}
+					<div class="author-social-actions-container">
+						<div class="author-share-block">
+							<SocialShare title="Share this article" />
+						</div>
+
+						{#if articleLikes !== undefined}
+							<div class="author-likes-block">
+								<LikeButton likes={articleLikes || 0} postId={postId || ''} {collectionPath} />
+							</div>
+						{/if}
+					</div>
+				{/if}
+			</div>
+		</div>
+	</section>
+{/if}
+
+<style>
+	/* Component-specific styles - these work with global styles in pages.css */
+	@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+	/* Unified box container - Premium Card Design */
+	.author-info-unified-box {
+		display: grid;
+		grid-template-columns: auto 1fr; /* Avatar | Content */
+		align-items: center; /* Vertically center avatar */
+		gap: 3rem;
+		padding: 3.5rem;
+		border-radius: 24px;
+		border: 1px solid rgba(0, 0, 0, 0.04);
+		background: #ffffff;
+		box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08); /* Deep, soft shadow */
+		transition:
+			transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+			box-shadow 0.3s ease;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.author-info-unified-box:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.12);
+	}
+
+	/* Decorative top accent line */
+	.author-info-unified-box::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 5px;
+		background: linear-gradient(90deg, #d4a373, #f3d2b3, #d4a373);
+		opacity: 0.9;
+	}
+
+	/* H4 Header removed from flow or restyled as kicker? 
+	   Let's keep it subtle or hide it if it's redundant. 
+	   We'll position it absolute top-left or visually integrated.
+	   Actually, let's make it a small eyebrow label above the name.
+	*/
+	.author-section-label {
+		position: absolute;
+		top: 2rem;
+		left: 3.5rem;
+		font-family: 'Inter', sans-serif;
+		font-size: 0.8rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		color: #94a3b8;
+		pointer-events: none;
+	}
+
+	/* Container for the avatar to allow border tricks */
+	.author-photo-container {
+		position: relative;
+		width: 200px !important;
+		height: 200px !important;
+		min-width: 200px !important;
+		flex-shrink: 0;
+	}
+
+	/* Ensure image displays correctly */
+	.author-photo {
+		display: block !important;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		background-color: #f8fafc;
+		border-radius: 50%;
+		border: 6px solid #ffffff; /* Thicker white border */
+		box-shadow:
+			0 0 0 3px #d4a373,
+			0 15px 30px rgba(0, 0, 0, 0.15); /* Gold ring + Deep Shadow */
+	}
+
+	/* Placeholder */
+	.author-photo-placeholder {
+		display: flex !important;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+		color: #64748b;
+		font-family: 'Merriweather', serif;
+		font-weight: 700;
+		font-size: 4rem;
+		border-radius: 50%;
+		border: 6px solid #ffffff;
+		box-shadow:
+			0 0 0 3px #d4a373,
+			0 15px 30px rgba(0, 0, 0, 0.15);
+	}
+
+	.author-content-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		padding-top: 1.5rem; /* Optical balance with eyebrow label */
+	}
+
+	.author-text {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.author-name-display {
+		font-family: 'Merriweather', 'Georgia', serif;
+		font-size: 2.2rem;
+		font-weight: 900;
+		color: #1e293b;
+		margin: 0 0 0.5rem 0;
+		line-height: 1.2;
+		letter-spacing: -0.5px;
+	}
+
+	.author-title-display {
+		font-family: 'Inter', sans-serif;
+		font-size: 0.95rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		color: #d4a373; /* Gold accent */
+		margin: 0 0 1.2rem 0;
+	}
+
+	.author-description-display {
+		font-family: 'Inter', sans-serif;
+		font-size: 1.1rem;
+		line-height: 1.7;
+		color: #475569;
+		max-width: 600px;
+		margin: 0;
+	}
+
+	/* Social Actions Container (Vertical Column now) */
+	.author-social-actions-container {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		align-items: flex-start;
+		justify-content: flex-start;
+		border-top: 1px solid #f1f5f9;
+		padding-top: 1.5rem;
+		width: 100%;
+	}
+
+	.author-likes-block,
+	.author-share-block {
+		display: flex;
+		/* flex-direction: column; Ensure labels are above icons if visible */
+		flex-direction: column;
+		align-items: flex-start;
+		text-align: left;
+		gap: 0.5rem;
+	}
+
+	.author-share-block h4 {
+		display: block; /* Show Share label */
+		font-family: 'Inter', sans-serif;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		color: #94a3b8;
+		margin: 0;
+	}
+
+	.author-likes-block h4 {
+		display: none; /* Keep Like label hidden for cleaner look, or enable if desired */
+	}
+
+	@media (max-width: 900px) {
+		.author-info-unified-box {
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+			padding: 2.5rem;
+			text-align: center;
+		}
+
+		.author-section-label {
+			position: static;
+			margin-bottom: 1rem;
+		}
+
+		.author-photo-container {
+			margin: 0 auto;
+			width: 140px;
+			height: 140px;
+		}
+
+		.author-content-wrapper {
+			align-items: center;
+			padding-top: 0;
+		}
+
+		.author-social-actions-container {
+			justify-content: center;
+		}
+	}
+
+	@media (max-width: 500px) {
+		.author-photo-container {
+			width: 100px;
+			height: 100px;
+		}
+
+		.author-name-display {
+			font-size: 1.8rem;
+		}
+	}
+</style>

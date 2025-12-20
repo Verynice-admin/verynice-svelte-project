@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-12-02T05:22:47.594Z",
+  "summary": {
+    "totalIssues": 0,
+    "totalWarnings": 0,
+    "collectionsAudited": 2
+  },
+  "issues": [],
+  "warnings": [],
+  "info": [
+    "Found 3 documents in 'pages'",
+    "  └─ Subcollection 'sections': 0 documents",
+    "  └─ Subcollection 'sections': 9 documents",
+    "  └─ Subcollection 'sections': 0 documents",
+    "Found 1 documents in 'authors'"
+  ]
+}

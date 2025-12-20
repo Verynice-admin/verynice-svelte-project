@@ -1,0 +1,77 @@
+{
+  "timestamp": "2025-12-01T16:41:00.760Z",
+  "dryRun": false,
+  "collections": [
+    {
+      "path": "pages/historyPage/sections",
+      "total": 9,
+      "processed": 0,
+      "skipped": 9,
+      "errors": 0,
+      "totalRemoved": 0,
+      "documents": [
+        {
+          "id": "section-dzungar-invasion",
+          "path": "pages/historyPage/sections/section-dzungar-invasion",
+          "skipped": true,
+          "reason": "No emojis found"
+        },
+        {
+          "id": "section-golden-horde",
+          "path": "pages/historyPage/sections/section-golden-horde",
+          "skipped": true,
+          "reason": "No emojis found"
+        },
+        {
+          "id": "section-golden-man",
+          "path": "pages/historyPage/sections/section-golden-man",
+          "skipped": true,
+          "reason": "No emojis found"
+        },
+        {
+          "id": "section-independence",
+          "path": "pages/historyPage/sections/section-independence",
+          "skipped": true,
+          "reason": "No emojis found"
+        },
+        {
+          "id": "section-islamic-steppe",
+          "path": "pages/historyPage/sections/section-islamic-steppe",
+          "skipped": true,
+          "reason": "No emojis found"
+        },
+        {
+          "id": "section-kazakh-khanate",
+          "path": "pages/historyPage/sections/section-kazakh-khanate",
+          "skipped": true,
+          "reason": "No emojis found"
+        },
+        {
+          "id": "section-silk-road",
+          "path": "pages/historyPage/sections/section-silk-road",
+          "skipped": true,
+          "reason": "No emojis found"
+        },
+        {
+          "id": "section-soviet-yoke",
+          "path": "pages/historyPage/sections/section-soviet-yoke",
+          "skipped": true,
+          "reason": "No emojis found"
+        },
+        {
+          "id": "section-the-beginning",
+          "path": "pages/historyPage/sections/section-the-beginning",
+          "skipped": true,
+          "reason": "No emojis found"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalDocuments": 9,
+    "processed": 0,
+    "skipped": 9,
+    "errors": 0,
+    "totalRemoved": 0
+  }
+}
