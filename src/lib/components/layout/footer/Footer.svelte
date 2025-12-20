@@ -105,7 +105,7 @@
 			<!-- Brand Section -->
 			<div class="footer-brand-section">
 				<a href={cfg.brand.homeUrl} class="footer-logo">
-					VERYNICE<span class="tld">.kz</span>
+					VERYNICE<span class="tld">.&#1082;z</span>
 				</a>
 				<p class="footer-tagline">{cfg.brand.tagline}</p>
 
@@ -212,8 +212,9 @@
 	}
 
 	.tld {
-		color: #7dd3fc; /* Softer blue */
+		color: rgb(125, 210, 251); /* Light Blue */
 		font-weight: 400; /* Thinner */
+		margin-left: 6px;
 	}
 
 	.footer-tagline {

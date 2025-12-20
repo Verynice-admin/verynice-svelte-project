@@ -410,12 +410,12 @@
 				<AuthorInfo
 					author={data.author}
 					labels={pageData.labels}
-					postId="aboutBoratPage"
+					postId="boratPage"
 					articleLikes={pageData.articleLikes}
 					collectionPath="pages"
 				/>
 			{/if}
-			<Comments postId="aboutBoratPage" />
+			<Comments postId="boratPage" />
 		</div>
 	</div>
 
@@ -437,7 +437,6 @@
 {/if}
 
 <style>
-
 	/* Mobile Local Nav */
 	.mobile-bottom-nav-local {
 		position: fixed;
@@ -465,5 +464,4 @@
 		width: 100%;
 		height: 100%;
 	}
-
 </style>

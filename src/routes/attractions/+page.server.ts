@@ -32,9 +32,12 @@ export async function load() {
   if (!adminDB) return { attractions: [], page: null };
 
   try {
-    const [attractionsSnap, pageSnap] = await Promise.all([
-      adminDB.collection('pages').doc('attractionsPage').collection('attractions').orderBy('order', 'asc').get(),
-      adminDB.collection('pages').doc('attractionsPage').get()
+    const pageRef = adminDB.collection('pages').doc('attractionsPage');
+
+    const [attractionsSnap, articlesSnap, pageSnap] = await Promise.all([
+      pageRef.collection('attractions').orderBy('order', 'asc').get(),
+      pageRef.collection('articles').orderBy('order', 'asc').get(),
+      pageRef.get()
     ]);
 
     const items = attractionsSnap.docs.map(d => {
@@ -46,18 +49,41 @@ export async function load() {
       }
     }).filter(x => x !== null);
 
+    const articles = articlesSnap.docs.map(d => {
+      const data = d.data();
+      return serializeDates({
+        id: d.id,
+        articleId: data.articleId || d.id,
+        title: data.title || '',
+        order: data.order || 0,
+        type: data.type || 'article',
+        year: data.year || ''
+      });
+    });
+
     const page = pageSnap.exists ? serializeDates(pageSnap.data()) : null;
+
+    let author = null;
+    const authorId = page?.authorId || 'verynice-official';
+    if (authorId) {
+      const authorSnap = await adminDB.collection('authors').doc(authorId).get();
+      if (authorSnap.exists) {
+        author = serializeDates(authorSnap.data());
+      }
+    }
 
     // Debug: Log the fetched page data to verify the image public ID
     if (import.meta.env.DEV) {
       console.log('[Attractions Page] Fetched page data:', {
         exists: pageSnap.exists,
         headerBackgroundPublicId: page?.headerBackgroundPublicId,
-        allKeys: page ? Object.keys(page) : []
+        allKeys: page ? Object.keys(page) : [],
+        authorFound: !!author,
+        articleCount: articles.length
       });
     }
 
-    return { attractions: items, page };
+    return { attractions: items, articles, page, author };
 
   } catch (error) {
     console.error("Error loading attractions page:", error);

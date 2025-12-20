@@ -127,13 +127,9 @@
 <header id="site-header" class:scrolled={isScrolled}>
 	<div class="header-inner">
 		<div class="header-item header-logo">
-			{#if config.logoUrlWhite}
-				<a href="/" aria-label={config.logoAltText}>
-					<img id="header-logo-img" src={config.logoUrlWhite} alt={config.logoAltText} />
-				</a>
-			{:else}
-				<a class="logo" href="/">{config.siteName}</a>
-			{/if}
+			<a class="logo" href="/" aria-label="VeryNice.kz">
+				VERYNICE<span class="tld">.&#1082;z</span>
+			</a>
 		</div>
 
 		<div class="header-item header-menu" role="navigation" aria-label="Main">
@@ -313,6 +309,13 @@
 		color: #e2e8f0;
 		font-weight: 700;
 		text-decoration: none;
+		font-size: 1.5rem; /* Ensure size matches image height roughly */
+		letter-spacing: -0.02em;
+	}
+	.tld {
+		color: rgb(125, 210, 251); /* Light Blue */
+		font-weight: 500;
+		margin-left: 6px;
 	}
 	#menu-topmenu {
 		display: flex;

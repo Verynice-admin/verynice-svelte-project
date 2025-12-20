@@ -119,3 +119,56 @@ export async function getCoordinates(query: string): Promise<{ lat: number, lng:
         return null;
     }
 }
+
+const COMMENT_SYSTEM_PROMPT = `You are a helpful and polite moderator assistant for a Kazakhstan travel website.
+Your task is to process user comments.
+1. Correct any grammatical, spelling, or punctuation errors in the text. Ensure it sounds natural and polite.
+2. Filter out any profanity or offensive language by replacing the offensive words with asterisks (e.g., ****).
+3. Only flag the comment as 'isOffensive' if it contains severe hate speech, threat of violence, or explicit illegal content. Do NOT flag gibberish, random letters, spam, or mild profanity.
+
+Output JSON only:
+{
+  "correctedText": "string",
+  "isOffensive": boolean
+}`;
+
+export async function processComment(rawText: string): Promise<{ correctedText: string, isOffensive: boolean } | null> {
+    if (!GROQ_API_KEY) {
+        console.error('[AI Service] GROQ_API_KEY is missing');
+        return null;
+    }
+
+    try {
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${GROQ_API_KEY}`
+            },
+            body: JSON.stringify({
+                model: 'llama-3.1-8b-instant',
+                messages: [
+                    { role: 'system', content: COMMENT_SYSTEM_PROMPT },
+                    { role: 'user', content: rawText }
+                ],
+                temperature: 0.1,
+                response_format: { type: 'json_object' }
+            })
+        });
+
+        if (!response.ok) {
+            console.error('[AI Service] Groq API error:', response.status);
+            return null;
+        }
+
+        const data = await response.json();
+        const content = data.choices[0]?.message?.content;
+
+        if (!content) return null;
+
+        return JSON.parse(content);
+    } catch (e) {
+        console.error('[AI Service] Error processing comment:', e);
+        return null; // Fail gracefully
+    }
+}

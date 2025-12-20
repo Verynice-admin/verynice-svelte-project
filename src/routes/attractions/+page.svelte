@@ -2,6 +2,11 @@
 	import { browser } from '$app/environment';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import AsideToc from '$components/layout/navigation/AsideToc.svelte';
+	import AuthorInfo from '$components/features/content/AuthorInfo.svelte';
+	import Comments from '$components/features/content/Comments.svelte';
+	import FaqSection from '$components/features/content/FaqSection.svelte';
+	import RelatedPosts from '$components/features/content/RelatedPosts.svelte';
+	import VideoEmbed from '$components/features/content/VideoEmbed.svelte';
 	// BackToTop is now global in +layout.svelte
 
 	/** @type {import('./$types').PageData} */
@@ -203,25 +208,60 @@
 		return out;
 	}
 
-	// Group and order by region
+	// Group content by region
 	const byRegion = (data.attractions || []).reduce((acc, item) => {
 		const region = normalizeRegion(item.region);
 		(acc[region] ||= []).push(item);
 		return acc;
 	}, {});
-	const orderedGroups = regionOrder
-		.map((r) => ({ region: r, attractions: prepareRegion(r, byRegion[r] || []) }))
-		.filter((g) => g.attractions.length);
-	const remainingGroups = Object.keys(byRegion)
-		.filter((r) => !regionOrder.includes(r))
-		.map((r) => ({ region: r, attractions: prepareRegion(r, byRegion[r]) }));
-	const groupedAndSorted = [...orderedGroups, ...remainingGroups];
 
-	// Build TOC entries exactly like History (data.sections)
-	const sections = groupedAndSorted.map((g) => {
-		const id = slugify(g.region);
-		return { id, title: g.region, sectionId: `section-${id}` };
-	});
+	// Use server-provided articles (Regions) as the source of truth for section order
+	// This aligns perfectly with the History page architecture
+	$: orderedGroups = (data.articles || [])
+		.map((article) => {
+			const regionName = article.title;
+			const rawItems = byRegion[regionName] || [];
+			const attractions = prepareRegion(regionName, rawItems);
+
+			// Only include if we have attractions OR if we want to show empty placeholders
+			// History page shows empty chapters. Here we likely only want populated ones,
+			// BUT to match TOC we should probably include them.
+			// However, rendering an empty section might look weird.
+			// AsideToc handles visible sections.
+			// Let's filter out empty ones for now to avoid UI clutter,
+			// UNLESS the prompt implies "same as history" means empty sections are okay.
+			// I'll filter out empty ones for UX quality.
+			return {
+				region: regionName,
+				title: regionName,
+				id: article.articleId, // DB provides: section-almaty-and-nearby
+				attractions
+			};
+		})
+		.filter((g) => g.attractions.length > 0);
+
+	// Handle any "Uncategorized" or remaining regions not in the DB articles list
+	const knownTitles = new Set((data.articles || []).map((a) => a.title));
+	const remainingGroups = Object.keys(byRegion)
+		.filter((r) => !knownTitles.has(r))
+		.map((r) => ({
+			region: r,
+			title: r,
+			id: `section-${slugify(r)}`, // Fallback ID generation
+			attractions: prepareRegion(r, byRegion[r])
+		}))
+		.filter((g) => g.attractions.length > 0);
+
+	$: groupedAndSorted = [...orderedGroups, ...remainingGroups];
+
+	// TOC entries directly from the rendered groups (ensures sync)
+	// We map the groups back to the format AsideToc expects if needed.
+	// AsideToc expects: { articleId, title }
+	$: sections = groupedAndSorted.map((g) => ({
+		articleId: g.id, // This is the ID used in the DOM
+		title: g.title,
+		id: g.id
+	}));
 
 	// --- Mobile collapsible sections (ADDED) ---
 	let isMobile = false;
@@ -448,9 +488,9 @@
 			</section>
 
 			{#each groupedAndSorted as group (group.region)}
-				<section class="attractions-region-block" aria-labelledby={idForRegion(group.region)}>
+				<section class="attractions-region-block" aria-labelledby={group.id}>
 					<details
-						id={`${idForRegion(group.region)}-details`}
+						id={`${group.id}-details`}
 						class="attractions-region-details"
 						open={!isMobile}
 						on:toggle={(e) => {
@@ -458,7 +498,7 @@
 						}}
 					>
 						<summary class="attractions-region-summary">
-							<h2 id={idForRegion(group.region)} class="attractions-region-title">
+							<h2 id={group.id} class="attractions-region-title">
 								{group.region}
 								<span class="attractions-count-badge">{group.attractions.length}</span>
 							</h2>
@@ -519,6 +559,43 @@
 					</details>
 				</section>
 			{/each}
+		</div>
+
+		<!-- Footer Sections (Fully Loaded) -->
+		<div class="timeline-footer wrapper" style="margin-top: 4rem;">
+			{#if pageData.relatedPosts && pageData.relatedPosts.length > 0}
+				<RelatedPosts
+					title={pageData.relatedPostsTitle || 'Related Posts'}
+					posts={pageData.relatedPosts}
+				/>
+			{/if}
+
+			{#if pageData.videos && pageData.videos.length > 0}
+				{#each pageData.videos as video}
+					<VideoEmbed title={video.title || 'Video'} url={video.url} />
+				{/each}
+			{:else if pageData.video?.url}
+				<VideoEmbed title={pageData.video.title || 'Video'} url={pageData.video.url} />
+			{/if}
+
+			{#if pageData.faq?.items?.length}
+				<FaqSection
+					title={pageData.faq.title || 'Frequently Asked Questions'}
+					items={pageData.faq.items}
+				/>
+			{/if}
+
+			{#if data.author && (data.author.name || data.author.authorName)}
+				<AuthorInfo
+					author={data.author}
+					labels={pageData.labels}
+					postId="attractionsPage"
+					articleLikes={pageData.articleLikes}
+					collectionPath="pages"
+				/>
+			{/if}
+
+			<Comments postId="attractionsPage" />
 		</div>
 	</article>
 </div>
