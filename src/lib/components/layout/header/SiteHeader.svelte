@@ -1,6 +1,7 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
+	import { afterNavigate } from '$app/navigation';
 
 	import SearchModal from '$lib/components/features/search/SearchModal.svelte';
 
@@ -38,20 +39,23 @@
 	function checkScroll() {
 		if (!browser) return;
 
-		// Find the hero section
-		const heroSection =
-			document.getElementById('page-hero-section') || document.querySelector('.section');
+		// Use a small timeout to allow DOM updates after navigation
+		setTimeout(() => {
+			// Find the hero section
+			const heroSection =
+				document.getElementById('page-hero-section') || document.querySelector('.section');
 
-		if (heroSection) {
-			const heroRect = heroSection.getBoundingClientRect();
-			const scrollY = window.scrollY || window.pageYOffset;
-			// Show border when we've scrolled past the hero section (or scrolled down significantly)
-			// Check if hero section top is above viewport or if we've scrolled past 100px
-			isScrolled = heroRect.top < -50 || scrollY > 100;
-		} else {
-			// If no hero section, always show background (menu should have background on non-hero pages)
-			isScrolled = true;
-		}
+			if (heroSection) {
+				const heroRect = heroSection.getBoundingClientRect();
+				const scrollY = window.scrollY || window.pageYOffset;
+				// Show border when we've scrolled past the hero section (or scrolled down significantly)
+				// Check if hero section top is above viewport or if we've scrolled past 100px
+				isScrolled = heroRect.top < -50 || scrollY > 100;
+			} else {
+				// If no hero section, always show background (menu should have background on non-hero pages)
+				isScrolled = true;
+			}
+		}, 0);
 	}
 
 	function openSearch() {
@@ -98,6 +102,11 @@
 			document.body.style.overflow = '';
 		}
 	}
+
+	// Re-check scroll state on navigation
+	afterNavigate(() => {
+		checkScroll();
+	});
 
 	onMount(() => {
 		if (browser) {

@@ -260,7 +260,8 @@
 	$: sections = groupedAndSorted.map((g) => ({
 		articleId: g.id, // This is the ID used in the DOM
 		title: g.title,
-		id: g.id
+		id: g.id,
+		sectionId: g.id // normalized field name used across TOC/mobile sheet
 	}));
 
 	// --- Mobile collapsible sections (ADDED) ---
@@ -285,11 +286,13 @@
 	}
 	// Open the section when clicking a TOC link, then scroll
 	function onTocClick(sectionId) {
+		const targetId = sectionId || '';
+		if (!targetId) return;
 		if (typeof document !== 'undefined') {
 			if (isMobile) openExclusive(sectionId);
-			const el = document.getElementById(sectionId);
+			const el = document.getElementById(targetId);
 			if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-			history.replaceState(null, '', `#${sectionId}`);
+			history.replaceState(null, '', `#${targetId}`);
 		}
 	}
 
@@ -320,9 +323,7 @@
 	});
 
 	// Counts per section (used in mobile sheet)
-	$: countsBySectionId = Object.fromEntries(
-		filteredGroups.map((g) => [idForRegion(g.region), g.attractions.length])
-	);
+	$: countsBySectionId = Object.fromEntries(filteredGroups.map((g) => [g.id, g.attractions.length]));
 
 	// Expand/collapse all accordions on mobile
 	function expandAll() {
@@ -678,16 +679,17 @@
 			{#each sections.filter((s) => !sheetQuery || s.title
 						.toLowerCase()
 						.includes(sheetQuery.toLowerCase())) as s}
+				{@const targetId = s.sectionId || s.articleId || s.id}
 				<li>
 					<a
-						href={`#${s.sectionId}`}
+						href={`#${targetId}`}
 						on:click|preventDefault={() => {
-							onTocClick(s.sectionId);
+							onTocClick(targetId);
 							showSheet = false;
 						}}
 					>
 						<span class="sheet-item-title">{s.title}</span>
-						<span class="attractions-sheet-count">{countsBySectionId[s.sectionId] ?? 0}</span>
+						<span class="attractions-sheet-count">{countsBySectionId[targetId] ?? 0}</span>
 					</a>
 				</li>
 			{/each}

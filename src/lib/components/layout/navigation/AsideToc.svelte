@@ -1,6 +1,7 @@
 <!-- src/lib/components/layout/navigation/AsideToc.svelte -->
 <script>
 	import { onMount, onDestroy } from 'svelte';
+	import { afterNavigate } from '$app/navigation';
 	import { browser } from '$app/environment';
 
 	export let articles = [];
@@ -101,36 +102,115 @@
 	// Simpler, framework-native approach to avoid DOM timing issues.
 	// We depend on scrollY and innerHeight to decide visibility.
 
-	$: if (browser) {
-		// Logic:
-		// Hero is typically 100vh.
-		// If we scroll past 90% of the viewport (fadeEnd), we consider the hero "gone".
-		// We start fading at 30% (fadeStart) to ensure smooth transition.
+	// State to track accurate hero height and element reference
+	let heroHeight = 0;
+	let heroEl = null;
 
-		// If scrollY is 0, we are at top -> Hero Visible (1.0)
-		// If scrollY is >0.9*VH -> Hero Invisible (0.0)
+	// Use ResizeObserver to reliably track hero height changes/appearance
+	function updateHeroState() {
+		if (!browser) return;
 
-		const fadeStart = innerHeight * 0.3;
-		const fadeEnd = innerHeight * 0.9;
+		const header = document.getElementById('site-header') || document.querySelector('header');
+		const headerHeight = header ? header.offsetHeight : headerOffset;
+		const el = heroEl || document.getElementById('page-hero-section');
+		if (!heroEl && el) {
+			heroEl = el;
+		}
 
-		if (scrollY > fadeEnd) {
-			// Definitely past hero
+		if (!el) {
 			heroTocOpacity = 0;
 			isInHeroArea = false;
 			articleTocVisible = true;
-		} else if (scrollY > fadeStart) {
-			// Fading out
-			const progress = (scrollY - fadeStart) / (fadeEnd - fadeStart);
-			heroTocOpacity = Math.max(0, 1 - progress);
+			return;
+		}
+
+		const rect = el.getBoundingClientRect();
+		const threshold = headerHeight + 12;
+		const heroVisible = rect.bottom > threshold && rect.top < (innerHeight || window.innerHeight);
+
+		if (heroVisible) {
+			// On the main image: show hero TOC, hide article rail
+			heroTocOpacity = 1;
 			isInHeroArea = true;
 			articleTocVisible = false;
 		} else {
-			// At top (Hero is fully visible)
-			heroTocOpacity = 1;
-			// Only show Hero TOC if we are truly at the top region
-			isInHeroArea = true;
-			articleTocVisible = false;
+			// Scrolled past the hero: hide hero TOC, show article rail
+			heroTocOpacity = 0;
+			isInHeroArea = false;
+			articleTocVisible = true;
 		}
+	}
+
+	function initHeroObserver() {
+		if (!browser) return;
+
+		const findAndObserve = () => {
+			const el = document.getElementById('page-hero-section');
+			if (el) {
+				heroEl = el;
+				heroHeight = el.offsetHeight;
+				updateHeroState();
+
+				// Update height immediately
+				heroHeight = el.offsetHeight;
+
+				// Observe for future changes
+				const ro = new ResizeObserver((entries) => {
+					for (const entry of entries) {
+						heroHeight = entry.target.offsetHeight;
+						updateHeroState();
+					}
+				});
+				ro.observe(el);
+				return ro; // Return cleanup
+			}
+			return null;
+		};
+
+		// Try immediately
+		let ro = findAndObserve();
+
+		// If not found (race condition during nav), retry briefly
+		if (!ro) {
+			const interval = setInterval(() => {
+				ro = findAndObserve();
+				if (ro) clearInterval(interval);
+			}, 100);
+			// Stop trying after 2 seconds to avoid infinite loops
+			setTimeout(() => clearInterval(interval), 2000);
+		}
+
+		return () => ro?.disconnect();
+	}
+
+	let heroObserverCleanup;
+	let observerArticlesKey = '';
+
+	// Re-run observer on every navigation to ensure we catch the NEW page's hero
+	afterNavigate(() => {
+		if (heroObserverCleanup) heroObserverCleanup();
+		// Wait for DOM to settle/transition to separate old vs new hero
+		setTimeout(() => {
+			heroObserverCleanup = initHeroObserver();
+			updateHeroState();
+			initObserver();
+		}, 100);
+	});
+
+	onMount(() => {
+		heroObserverCleanup = initHeroObserver();
+		updateHeroState();
+		initObserver();
+	});
+
+	onDestroy(() => {
+		if (heroObserverCleanup) heroObserverCleanup();
+		if (observer) observer.disconnect();
+	});
+
+	$: if (browser) {
+		// Recompute hero/article state when scroll or viewport changes
+		updateHeroState();
 	}
 
 	function initObserver() {
@@ -146,6 +226,7 @@
 						}
 					});
 				},
+				// Adjust root margin to trigger earlier/later as needed
 				{ root: null, rootMargin: '0px 0px -55% 0px', threshold: 0 }
 			);
 			articles.forEach((s) => {
@@ -158,15 +239,13 @@
 		}, 200);
 	}
 
-	onMount(() => {
-		if (browser) {
+	$: if (browser) {
+		const key = articles.map((s) => getArticleId(s)).filter(Boolean).join('|');
+		if (key !== observerArticlesKey) {
+			observerArticlesKey = key;
 			initObserver();
 		}
-	});
-
-	onDestroy(() => {
-		if (observer) observer.disconnect();
-	});
+	}
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} bind:scrollY bind:innerHeight />
@@ -178,7 +257,7 @@
 		class:in-hero-area={isInHeroArea}
 		class:interactive={heroTocOpacity > 0.1}
 		data-aside-toc
-		style={`opacity: ${heroTocOpacity}; pointer-events: none;`}
+		style={`opacity: ${heroTocOpacity}; pointer-events: none; visibility: ${heroTocOpacity > 0 ? 'visible' : 'hidden'};`}
 		aria-label="Table of contents"
 	>
 		<div class="toc-header">Contents</div>
