@@ -1,10 +1,11 @@
 import { json } from '@sveltejs/kit';
 import { processComment } from '$lib/server/aiService';
 
-/** @type {import('./$types').RequestHandler} */
-export async function POST({ request }) {
+import type { RequestHandler } from './$types';
+
+export const POST: RequestHandler = async ({ request }) => {
     try {
-        const { text } = await request.json();
+        const { text } = await request.json() as { text: string };
 
         if (!text || typeof text !== 'string') {
             return json({ error: 'Text is required' }, { status: 400 });

@@ -277,6 +277,8 @@
 	};
 
 	$: allArticles = [...(data.articles || []), keyFactsSection];
+
+	let heroSection;
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} />
@@ -359,9 +361,9 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 	<link rel="preconnect" href="https://res.cloudinary.com" />
 
-	<!-- Fonts with display=swap for performance -->
+	<!-- Fonts with display=block for performance -->
 	<link
-		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=block"
 		rel="stylesheet"
 	/>
 
@@ -372,7 +374,7 @@
 
 {#if pageData}
 	<!-- apply .section styles from pages.css -->
-	<section id="page-hero-section" class="section">
+	<section id="page-hero-section" class="section" bind:this={heroSection}>
 		<div class="section-header wrapper">
 			<nav aria-label="Breadcrumb" class="breadcrumb-modern">
 				<ol class="breadcrumb-modern__list">
@@ -511,7 +513,7 @@
 
 	<!-- Floating TOC (overlay) -->
 	{#if browser}
-		<AsideToc articles={allArticles} />
+		<AsideToc articles={allArticles} heroElement={heroSection} />
 	{/if}
 
 	{#if windowWidth <= 1023}
@@ -525,4 +527,3 @@
 		<p>{data.error}</p>
 	</div>
 {/if}
-

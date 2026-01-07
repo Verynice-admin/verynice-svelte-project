@@ -1,4 +1,3 @@
-<!-- In src/routes/+page.svelte (DEFINITIVE RESPONSIVE VERSION) -->
 <script lang="ts">
 	import '../styles/index.css';
 	import RelatedPosts from '$components/features/content/RelatedPosts.svelte';
@@ -13,7 +12,6 @@
 		? getCloudinaryUrl(homepage.heroImagePublicId, { width: 1920, crop: 'fill', gravity: 'center' })
 		: '';
 
-	$: combinedAttractions = [...(sliders?.attractions || []), ...(sliders?.landmarks || [])];
 	$: combinedFood = [
 		...(sliders?.cuisine || []),
 		...(sliders?.restaurants || []),
@@ -70,12 +68,7 @@
 			listClass="related-posts-list"
 			cardClass="related-post-card"
 		/>
-		<RelatedPosts
-			title="Attractions"
-			posts={combinedAttractions}
-			collectionPath="attractions"
-			titleUrl="/attractions"
-		/>
+
 		<RelatedPosts
 			title="National Parks"
 			posts={sliders?.nationalParks || []}

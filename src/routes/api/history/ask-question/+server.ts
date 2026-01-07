@@ -3,8 +3,9 @@ import { adminDB } from '$lib/server/firebaseAdmin';
 import { Timestamp } from 'firebase-admin/firestore';
 import { generateAnswer } from '$lib/server/aiService';
 
-/** @type {import('./$types').RequestHandler} */
-export async function POST({ request }) {
+import type { RequestHandler } from './$types';
+
+export const POST: RequestHandler = async ({ request }) => {
     try {
         const { question } = await request.json();
 
@@ -90,7 +91,8 @@ export async function POST({ request }) {
             id: docId,
             message: aiResult ? 'Question answered!' : 'Question submitted successfully',
             aiAnswer: aiResult ? aiResult.answer : null,
-            correctedQuestion: aiResult ? aiResult.correctedQuestion : null
+            correctedQuestion: aiResult ? aiResult.correctedQuestion : null,
+            relatedLinks: aiResult && aiResult.relatedLinks ? aiResult.relatedLinks : []
         });
 
     } catch (error) {

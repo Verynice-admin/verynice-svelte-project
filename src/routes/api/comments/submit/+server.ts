@@ -3,10 +3,11 @@ import { adminDB } from '$lib/server/firebaseAdmin';
 import { Timestamp } from 'firebase-admin/firestore';
 import { processComment } from '$lib/server/aiService';
 
-/** @type {import('./$types').RequestHandler} */
-export async function POST({ request }) {
+import type { RequestHandler } from './$types';
+
+export const POST: RequestHandler = async ({ request }) => {
     try {
-        const { postId, text, author } = await request.json();
+        const { postId, text, author } = await request.json() as { postId: string, text: string, author: string };
 
         if (!postId || !text) {
             return json({ error: 'Post ID and Text are required' }, { status: 400 });
@@ -40,7 +41,7 @@ export async function POST({ request }) {
         }
 
         // Generate ID
-        const sanitizeSegment = (value) => (value || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 24) || 'anonymous';
+        const sanitizeSegment = (value: string | null | undefined) => (value || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 24) || 'anonymous';
         const base = sanitizeSegment(author);
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
         const random = Math.random().toString(36).slice(2, 6);
@@ -65,7 +66,8 @@ export async function POST({ request }) {
         return json({ success: true, comment: newComment });
 
     } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error';
         console.error('[API] Error submitting comment:', error);
-        return json({ error: 'Internal Server Error: ' + (error.message || 'Unknown') }, { status: 500 });
+        return json({ error: 'Internal Server Error: ' + message }, { status: 500 });
     }
 }

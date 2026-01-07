@@ -1,7 +1,9 @@
 import { json } from '@sveltejs/kit';
 import { getCoordinates } from '$lib/server/aiService';
 
-export async function POST({ request }) {
+import type { RequestHandler } from './$types';
+
+export const POST: RequestHandler = async ({ request }) => {
     try {
         const { query } = await request.json();
 

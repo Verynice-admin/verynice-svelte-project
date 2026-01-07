@@ -4,6 +4,7 @@
 	import { afterNavigate } from '$app/navigation';
 
 	import SearchModal from '$lib/components/features/search/SearchModal.svelte';
+	import LanguageSelector from '$lib/components/ui/LanguageSelector.svelte';
 
 	export let headerConfig = {};
 	const defaultConfig = {
@@ -135,12 +136,54 @@
 
 <header id="site-header" class:scrolled={isScrolled}>
 	<div class="header-inner">
+		<!-- 1. Hamburger (Mobile Only) -->
+		<button
+			class="header-menu-toggle"
+			aria-label="Menu"
+			on:click={toggleMobileMenu}
+			aria-expanded={isMobileMenuOpen}
+		>
+			<svg
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				{#if isMobileMenuOpen}
+					<path
+						d="M18 6L6 18M6 6L18 18"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				{:else}
+					<path
+						d="M3 12H21M3 6H21M3 18H21"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					/>
+				{/if}
+			</svg>
+		</button>
+
+		<!-- 2. Logo (Centered on mobile, Left on desktop) -->
 		<div class="header-item header-logo">
-			<a class="logo" href="/" aria-label="VeryNice.kz">
-				VERYNICE<span class="tld">.&#1082;z</span>
+			<a
+				class="logo notranslate"
+				href="/"
+				aria-label="VeryNice.kz"
+				data-no-ai-translate
+				translate="no"
+			>
+				VERYNICE<span class="logo-dot">.</span><span class="tld">kz</span>
 			</a>
 		</div>
 
+		<!-- 3. Desktop Menu (Hidden on mobile) -->
 		<div class="header-item header-menu" role="navigation" aria-label="Main">
 			<ul id="menu-topmenu">
 				{#each menu as item}
@@ -149,56 +192,29 @@
 			</ul>
 		</div>
 
+		<!-- 4. Right Actions (Search + Language) -->
 		<div class="header-item header-buttons">
-			<button
-				class="header-menu-toggle"
-				aria-label="Menu"
-				on:click={toggleMobileMenu}
-				aria-expanded={isMobileMenuOpen}
-			>
-				<svg
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					{#if isMobileMenuOpen}
+			<div class="header-right-actions">
+				<button class="header-search-btn" aria-label="Search" on:click={openSearch}>
+					<svg
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
 						<path
-							d="M18 6L6 18M6 6L18 18"
+							d="M21 21L15.0001 15.0001M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
 							stroke="currentColor"
 							stroke-width="2"
 							stroke-linecap="round"
 							stroke-linejoin="round"
 						/>
-					{:else}
-						<path
-							d="M3 12H21M3 6H21M3 18H21"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					{/if}
-				</svg>
-			</button>
-			<button class="header-search-btn" aria-label="Search" on:click={openSearch}>
-				<svg
-					width="20"
-					height="20"
-					viewBox="0 0 24 24"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						d="M21 21L15.0001 15.0001M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					/>
-				</svg>
-			</button>
+					</svg>
+				</button>
+
+				<LanguageSelector isCompact={isMobile} />
+			</div>
 		</div>
 	</div>
 </header>
@@ -230,6 +246,14 @@
 		/* Background will be handled by pages.css for consistency */
 	}
 
+	#site-header.scrolled {
+		background-color: rgb(17, 63, 114) !important;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+		transition:
+			background-color 0.3s ease,
+			box-shadow 0.3s ease;
+	}
+
 	/* Mobile: Ensure header has blue background */
 	@media (max-width: 600px) {
 		#site-header,
@@ -249,103 +273,228 @@
 
 	/* --- Mobile-First Refactoring --- */
 
-	/* 1. Default Styles (Mobile) */
+	/* 1. Default Styles (Mobile < 1024px) */
+	@media (max-width: 1023.98px) {
+		.header-inner {
+			display: grid;
+			/* [Toggle: ~44px] [Logo: Shared] [Actions: ~90px] */
+			grid-template-columns: 44px 1fr 90px;
+			align-items: center;
+			padding: 0.5rem 0.75rem;
+			min-height: 3.5rem;
+			gap: 0;
+		}
 
-	/* Hide desktop menu by default */
-	.header-item.header-menu {
-		display: none;
-	}
+		/* Hide desktop menu */
+		.header-item.header-menu {
+			display: none;
+		}
 
-	/* Center logo by default (Mobile) */
-	.header-logo {
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: 1;
-	}
+		/* Hamburger */
+		.header-menu-toggle {
+			grid-column: 1;
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			padding: 0.4rem;
+			color: #fff;
+			background: transparent;
+			border: none;
+		}
 
-	.header-buttons {
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-	}
+		/* Logo */
+		.header-logo {
+			grid-column: 2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-width: 0;
+			z-index: 10;
+		}
 
-	/* Show hamburger by default (Mobile) */
-	.header-menu-toggle {
-		background: transparent;
-		border: none;
-		color: #fff;
-		cursor: pointer;
-		padding: 0.5rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition: all 0.3s ease;
-		-webkit-tap-highlight-color: transparent;
+		/* Right Side Buttons */
+		.header-buttons {
+			grid-column: 3;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+		}
+
+		.header-right-actions {
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+		}
+
+		.header-search-btn {
+			color: #fff !important; /* Force visibility on mobile */
+			padding: 0.4rem;
+			display: flex;
+			flex-shrink: 0;
+		}
 	}
 
 	/* 2. Desktop Styles (min-width: 1024px) */
 	@media (min-width: 1024px) {
-		/* Show desktop menu */
-		.header-item.header-menu {
-			display: block;
-			position: absolute;
-			left: 55%;
-			top: 60%;
-			transform: translate(-50%, -50%);
+		.header-inner {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 1.5rem;
+			max-width: 1400px;
+			margin: 0 auto;
+			width: 100%;
+			height: 4.5rem;
 		}
 
-		/* Reset logo position */
+		/* Logo Column: Locked width to match side actions */
 		.header-logo {
-			position: static;
-			transform: none;
+			flex: 1; /* Take 1/3 of space */
+			flex-basis: 0;
+			display: flex;
+			justify-content: flex-start;
+			min-width: 160px;
 		}
 
+		/* Centered Menu: Perfectly centered regardless of side content width */
+		.header-item.header-menu {
+			flex: 2; /* Take 2/3 of space effectively centering */
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-width: 0;
+			padding: 0 1rem;
+		}
+
+		#menu-topmenu {
+			display: flex;
+			/* Fluid gap that tightens up on smaller screens */
+			gap: clamp(0.5rem, 1.1vw, 1.75rem);
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			white-space: nowrap;
+			align-items: center;
+		}
+
+		#menu-topmenu a {
+			/* Responsive font-size to fit French/Arabic in one line */
+			font-size: clamp(10.5px, 0.8vw, 13.5px);
+			font-weight: 700;
+			letter-spacing: 0.03em;
+			text-transform: uppercase;
+			color: #fff;
+			transition: all 0.2s ease;
+		}
+
+		/* Actions Column: Locked width to balance the logo */
 		.header-buttons {
-			width: auto;
-			display: block;
+			flex: 1;
+			flex-basis: 0;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			min-width: 160px;
 		}
 
-		/* Hide hamburger on desktop */
+		.header-right-actions {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			flex-shrink: 0;
+		}
+
+		/* Mobile toggle hidden */
 		.header-menu-toggle {
 			display: none;
 		}
 	}
 
+	/* Extra safety for very small desktops */
+	@media (min-width: 1024px) and (max-width: 1280px) {
+		#menu-topmenu {
+			gap: 0.75rem;
+		}
+		#menu-topmenu a {
+			font-size: 11px;
+		}
+	}
+
 	/* --- Component Styles --- */
+	.header-buttons {
+		/* Shared button container properties */
+		pointer-events: auto;
+		display: flex;
+		align-items: center;
+	}
+
+	.header-menu-toggle,
+	.header-right-actions {
+		pointer-events: auto;
+		z-index: 30;
+	}
 
 	.logo {
 		color: #e2e8f0;
 		font-weight: 700;
 		text-decoration: none;
-		font-size: 1.5rem; /* Ensure size matches image height roughly */
-		letter-spacing: -0.02em;
+		font-size: 1rem; /* Compact for mobile */
+		letter-spacing: -0.015em;
+		white-space: nowrap;
+		display: flex;
+		align-items: center;
+		line-height: 1;
+	}
+
+	@media (min-width: 1024px) {
+		.logo {
+			font-size: 1.55rem;
+			letter-spacing: -0.025em;
+		}
+	}
+
+	.logo-dot {
+		display: inline-flex;
+		align-items: center;
+		color: #ffd700;
+		font-size: 1.4em; /* Slightly smaller dot */
+		line-height: 0;
+		margin-left: 2px;
+		margin-right: 0px;
+		position: relative;
+		top: -0.03em;
 	}
 	.tld {
 		color: rgb(125, 210, 251); /* Light Blue */
 		font-weight: 500;
-		margin-left: 6px;
+		display: inline-flex;
+		align-items: center;
+		position: relative;
+		top: 0.1em;
 	}
 	#menu-topmenu {
-		display: flex;
-		gap: 1rem;
 		list-style: none;
 		margin: 0;
 		padding: 0;
+		white-space: nowrap;
 	}
 	.header-search-btn {
 		background: transparent;
 		border: none;
-		color: #cbd5e1;
+		color: #fff; /* Changed from #cbd5e1 for better visibility */
 		cursor: pointer;
 		padding: 0.5rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		transition: color 0.2s;
+		transition: transform 0.2s, opacity 0.2s;
+		flex-shrink: 0;
+		width: 40px;
+		height: 40px;
 	}
 	.header-search-btn:hover {
-		color: #fff;
+		transform: scale(1.1);
+		opacity: 0.8;
 	}
 
 	/* Clean up any list styles */

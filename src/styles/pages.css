@@ -154,25 +154,25 @@ h2 {
 
 h3 {
   font-family: var(--vnk-font-primary), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: var(--inc-text-5xl);
+  font-size: var(--inc-text-3xl);
   line-height: var(--inc-leading-snug);
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: var(--inc-tracking-tight);
   color: var(--inc-text-heading);
-  margin-top: 2em;
-  margin-bottom: 0.875em;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
   text-transform: none;
 }
 
 h4 {
   font-family: var(--vnk-font-primary), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: var(--inc-text-3xl);
+  font-size: var(--inc-text-2xl);
   line-height: var(--inc-leading-snug);
   font-weight: 700;
   letter-spacing: var(--inc-tracking-normal);
   color: var(--inc-text-heading);
-  margin-top: 1.75em;
-  margin-bottom: 0.625em;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
 }
 
 h5 {
@@ -4346,6 +4346,11 @@ body:has(#page-hero-section) {
 }
 
 /* Yellow for Tier 3 (Nice to see) */
+
+.attractions-tier-description {
+  max-width: 100% !important;
+  width: 100%;
+}
 
 .attractions-item-card .tier-label {
   display: none;

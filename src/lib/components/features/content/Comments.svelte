@@ -2,7 +2,10 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
+	import { get } from 'svelte/store';
 	import { getFirestore } from '$lib/firebaseApp';
+	import { currentLanguage } from '$lib/stores/languageStore';
+	import { translatePageTo } from '$lib/services/aiTranslator';
 
 	export let postId: string;
 
@@ -92,12 +95,22 @@
 			const { collection, query, orderBy, onSnapshot } = await import('firebase/firestore');
 
 			const commentsQuery = query(
-				collection(db, 'pages', postId, 'comments'),
-				orderBy('createdAt', 'desc') // Show newest first usually makes more sense for active sections, but sticking to existing logic or user pref? Let's use DESC for modern feel
+				collection(db, `pages/${postId}/comments`),
+				orderBy('createdAt', 'desc')
 			);
 
 			unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
 				comments = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+				// Re-apply translation so newly loaded comments are also localized
+				if (browser) {
+					const lang = get(currentLanguage);
+					if (lang && lang !== 'EN') {
+						translatePageTo(lang).catch((err) =>
+							console.error('[Comments] Failed to re-apply translation', err)
+						);
+					}
+				}
 			});
 		})();
 	});

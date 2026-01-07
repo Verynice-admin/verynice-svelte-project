@@ -5,16 +5,12 @@
     "logoAltText": "VeryNice",
     "menu": [
       {
-        "url": "/cities",
-        "text": "Cities"
-      },
-      {
-        "url": "/attractions",
-        "text": "Attractions"
-      },
-      {
         "url": "/history",
         "text": "History"
+      },
+      {
+        "url": "/destinations",
+        "text": "Destinations"
       },
       {
         "url": "/culture",

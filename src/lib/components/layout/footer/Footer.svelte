@@ -30,8 +30,8 @@
 		title: 'Explore', // Helper title for the primary menu
 		footerMenuLinks: [
 			{ text: 'Cities', url: '/cities' },
-			{ text: 'Attractions', url: '/attractions' },
 			{ text: 'History', url: '/history' },
+			{ text: 'Destinations', url: '/destinations' },
 			{ text: 'Food & Drink', url: '/food-drink' },
 			{ text: 'Tips', url: '/travel-tips' }
 		],
@@ -51,8 +51,7 @@
 				links: [
 					{ text: 'Astana', url: '/cities/astana' },
 					{ text: 'Almaty', url: '/cities/almaty' },
-					{ text: 'Shymkent', url: '/cities/shymkent' },
-					{ text: 'Nature', url: '/attractions#nature' }
+					{ text: 'Shymkent', url: '/cities/shymkent' }
 				]
 			},
 			{
@@ -104,8 +103,13 @@
 		<div class="footer-content">
 			<!-- Brand Section -->
 			<div class="footer-brand-section">
-				<a href={cfg.brand.homeUrl} class="footer-logo">
-					VERYNICE<span class="tld">.&#1082;z</span>
+				<a
+					href={cfg.brand.homeUrl}
+					class="footer-logo notranslate"
+					data-no-ai-translate
+					translate="no"
+				>
+					VERYNICE<span class="logo-dot">.</span><span class="tld">kz</span>
 				</a>
 				<p class="footer-tagline">{cfg.brand.tagline}</p>
 
@@ -211,10 +215,21 @@
 		letter-spacing: -0.01em;
 	}
 
+	.logo-dot {
+		display: inline-block;
+		color: #ffd700;
+		font-size: 1.5em;
+		line-height: 0;
+		vertical-align: middle;
+		margin-left: 6px;
+		margin-right: 1px;
+		position: relative;
+		top: -0.05em;
+	}
 	.tld {
 		color: rgb(125, 210, 251); /* Light Blue */
 		font-weight: 400; /* Thinner */
-		margin-left: 6px;
+		/* margin-left: 6px; removed */
 	}
 
 	.footer-tagline {

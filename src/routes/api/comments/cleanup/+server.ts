@@ -1,10 +1,11 @@
 import { json } from '@sveltejs/kit';
 import { adminDB } from '$lib/server/firebaseAdmin';
 
-/** @type {import('./$types').RequestHandler} */
-export async function POST({ request }) {
+import type { RequestHandler } from './$types';
+
+export const POST: RequestHandler = async ({ request }) => {
     try {
-        const { postId } = await request.json();
+        const { postId } = await request.json() as { postId: string };
 
         if (!postId) {
             return json({ error: 'Post ID is required' }, { status: 400 });

@@ -82,6 +82,11 @@
 			The provided video URL is not valid. Please use a YouTube or Vimeo URL.
 		</p>
 	{:else}
-		<p style="text-align: center; padding: 2rem; color: #999;">No video URL provided.</p>
+		<div
+			style="background: #f0f0f0; padding: 2rem; text-align: center; border: 1px dashed #ccc; margin: 1rem 0;"
+		>
+			<p style="color: #666; font-weight: bold;">Video Section Placeholder</p>
+			<p style="color: #888;">No video source URL is currently configured for this destination.</p>
+		</div>
 	{/if}
 </section>

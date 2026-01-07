@@ -12,19 +12,7 @@
     "test:ui": "vitest --ui",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "type-check": "tsc --noEmit",
-    "audit:firebase": "node scripts/audit-firebase.js",
-    "audit:firebase:verbose": "node scripts/audit-firebase.js --verbose",
-    "migrate:html-to-markdown": "node scripts/migrate-html-to-markdown.js",
-    "migrate:html-to-markdown:dry-run": "node scripts/migrate-html-to-markdown.js --dry-run",
-    "cleanup:html-fields": "node scripts/cleanup-html-fields.js",
-    "cleanup:html-fields:dry-run": "node scripts/cleanup-html-fields.js --dry-run",
-    "remove:emoji": "node scripts/remove-emoji-from-content.js",
-    "remove:emoji:dry-run": "node scripts/remove-emoji-from-content.js --dry-run",
-    "cleanup:content-style": "node scripts/cleanup-content-style.js",
-    "cleanup:content-style:dry-run": "node scripts/cleanup-content-style.js --dry-run",
-    "upgrade:firebase": "node scripts/upgrade-firebase-structure.js",
-    "upgrade:firebase:dry-run": "node scripts/upgrade-firebase-structure.js --dry-run"
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@sveltejs/adapter-vercel": "^5.3.1",
@@ -44,7 +32,9 @@
   },
   "dependencies": {
     "@types/dompurify": "^3.0.5",
+    "cloudinary": "^2.8.0",
     "dompurify": "^3.3.0",
+    "dotenv": "^17.2.3",
     "firebase": "^12.5.0",
     "firebase-admin": "^13.6.0",
     "firebase-functions": "^7.0.1",

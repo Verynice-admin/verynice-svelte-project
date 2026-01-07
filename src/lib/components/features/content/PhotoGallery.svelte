@@ -50,13 +50,9 @@
 	{#if totalPhotos > 0}
 		<div class="gallery-slider" role="group" aria-label="Photo gallery carousel">
 			<div class="slides" style={`transform: translateX(-${activeIndex * 100}%);`}>
-				{#each photos as photo, index (photo.imageUrl ?? index)}
+				{#each photos as photo, index (index)}
 					<figure class="slide" aria-hidden={index === activeIndex ? 'false' : 'true'}>
-						<img
-							src={photo.imageUrl}
-							alt={photo.altText || `Photo ${index + 1}`}
-							loading="lazy"
-						/>
+						<img src={photo.imageUrl} alt={photo.altText || `Photo ${index + 1}`} loading="lazy" />
 						{#if photo.caption}
 							<figcaption>{photo.caption}</figcaption>
 						{/if}
@@ -67,7 +63,7 @@
 
 		{#if totalPhotos > 1}
 			<div class="gallery-thumbnails" role="tablist" aria-label="Select gallery image">
-				{#each photos as photo, index (photo.thumbnailUrl ?? photo.imageUrl ?? index)}
+				{#each photos as photo, index (index)}
 					<button
 						type="button"
 						role="tab"
@@ -113,7 +109,9 @@
 		font-size: 1.5rem;
 		line-height: 1;
 		cursor: pointer;
-		transition: background 0.2s ease, color 0.2s ease;
+		transition:
+			background 0.2s ease,
+			color 0.2s ease;
 	}
 
 	.nav-button:hover:not(:disabled) {
@@ -180,7 +178,9 @@
 		overflow: hidden;
 		cursor: pointer;
 		background: transparent;
-		transition: border-color 0.2s ease, transform 0.2s ease;
+		transition:
+			border-color 0.2s ease,
+			transform 0.2s ease;
 	}
 
 	.gallery-thumbnails button img {

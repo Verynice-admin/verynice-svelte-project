@@ -29,6 +29,7 @@
 		// 1. Check for valid coordinates and API key first
 		// Default to Astana (Nur-Sultan) if no coordinates provided
 		const ASTANA_COORDINATES = { lat: 51.169392, lng: 71.449074 };
+		const ALMATY_COORDINATES = { lat: 43.238949, lng: 76.889709 };
 
 		// Handle both object format and GeoPoint format from Firestore
 		let lat, lng;
@@ -45,11 +46,19 @@
 			}
 		}
 
-		// Use Astana as fallback if coordinates are invalid
+		// Use fallback if coordinates are invalid
 		if (typeof lat !== 'number' || typeof lng !== 'number') {
-			console.warn('[Map Component] Invalid coordinates, using Astana as default');
-			lat = ASTANA_COORDINATES.lat;
-			lng = ASTANA_COORDINATES.lng;
+			console.warn('[Map Component] Invalid/Missing coordinates, determining fallback...');
+
+			if (title && /almaty/i.test(title)) {
+				console.log('[Map Component] Title contains "Almaty", defaulting to Almaty coordinates.');
+				lat = ALMATY_COORDINATES.lat;
+				lng = ALMATY_COORDINATES.lng;
+			} else {
+				console.log('[Map Component] Defaulting to Astana coordinates.');
+				lat = ASTANA_COORDINATES.lat;
+				lng = ASTANA_COORDINATES.lng;
+			}
 		}
 
 		// Coordinates are now validated above with Astana fallback
@@ -75,6 +84,7 @@
 				mapInstance = new window.google.maps.Map(mapContainer, {
 					zoom: 12,
 					center: mapPosition,
+					mapTypeId: 'satellite',
 					disableDefaultUI: false,
 					zoomControl: true,
 					mapTypeControl: true,
@@ -151,24 +161,36 @@
 					]
 				});
 
-				// Add marker for Astana with custom icon
+				// Determine label based on coordinates (if it matches known defaults)
+				let markerTitle = title || 'Location';
+				let markerDesc = 'Kazakhstan';
+
+				if (Math.abs(lat - 43.238949) < 0.01 && Math.abs(lng - 76.889709) < 0.01) {
+					markerTitle = 'Almaty';
+					markerDesc = 'The City of Apples';
+				} else if (Math.abs(lat - 51.169392) < 0.01 && Math.abs(lng - 71.449074) < 0.01) {
+					markerTitle = 'Astana (Nur-Sultan)';
+					markerDesc = 'Capital of Kazakhstan';
+				}
+
+				// Add marker
 				const marker = new window.google.maps.Marker({
 					position: mapPosition,
 					map: mapInstance,
-					title: 'Astana (Nur-Sultan) - Capital of Kazakhstan',
+					title: markerTitle,
 					animation: window.google.maps.Animation.DROP,
 					optimized: false
 				});
 
-				// Add info window for Astana with more details
+				// Add info window
 				const infoWindow = new window.google.maps.InfoWindow({
 					content: `
 						<div style="padding: 12px; min-width: 200px;">
 							<h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #1a202c;">
-								Astana (Nur-Sultan)
+								${markerTitle}
 							</h3>
 							<p style="margin: 0 0 8px 0; font-size: 14px; color: #4a5568; font-weight: 500;">
-								Capital of Kazakhstan
+								${markerDesc}
 							</p>
 							<p style="margin: 0; font-size: 12px; color: #718096;">
 								Coordinates: ${lat.toFixed(6)}, ${lng.toFixed(6)}

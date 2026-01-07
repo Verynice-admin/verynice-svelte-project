@@ -14,7 +14,7 @@
 */
 
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;700;900&display=block');
 
 :root {
   --vnk-primary-color: #1E3A8A;
@@ -633,4 +633,32 @@ body>*:last-child:not(main):not(footer):not(script)::after {
   .post-info {
     display: none !important;
   }
+}
+
+/* ========================================
+   TRANSLATION SMOOTHNESS
+   ======================================== */
+
+html[data-translation-state="loading"] body>*:not(#site-header):not(.translation-progress-bar) {
+  filter: blur(4px);
+  opacity: 0.7;
+  pointer-events: none;
+  transition: filter 0.4s ease, opacity 0.4s ease;
+}
+
+html[data-translation-state="translated"] body>* {
+  filter: blur(0);
+  opacity: 1;
+  transition: filter 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.notranslate {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Base styles for progress bar are in its component, 
+   but we can define variables here if needed */
+:root {
+  --vnk-translation-progress-bg: var(--vnk-accent-color);
 }

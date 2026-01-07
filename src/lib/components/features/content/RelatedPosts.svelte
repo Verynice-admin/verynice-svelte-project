@@ -76,7 +76,7 @@
 	});
 </script>
 
-<section class="related-posts">
+<section class="related-posts" id="related-posts">
 	{#if title}
 		<header class="related-posts-header">
 			<h2>

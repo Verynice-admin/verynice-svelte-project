@@ -6,6 +6,7 @@
 
 	export let articles = [];
 	export let railRight = 32;
+	export let heroElement = null; // Direct reference from parent
 
 	// Header offset for scroll calculations (default 80px)
 	const headerOffset = 80;
@@ -14,12 +15,14 @@
 	let observer;
 	let isInHeroArea = false; // Start with FALSE to prevent white text on white bg
 	let heroTocOpacity = 0; // Opacity 0 by default
-	let articleTocVisible = true; // Visibility true by default (Rail Mode)
+	let articleTocVisible = false; // Start HIDDEN to prevent ghosting
 
 	// Positioning for Hero TOC
 	let windowWidth = 0;
 	let scrollY = 0;
 	let innerHeight = 0;
+	let heroEl = null; // Fix: Declare heroEl
+	let heroHeight = 0; // Fix: Declare heroHeight
 
 	const normalizeId = (id) => (id || '').trim();
 
@@ -99,34 +102,45 @@
 	}
 
 	// --- NEW REACTIVE LOGIC ---
-	// Simpler, framework-native approach to avoid DOM timing issues.
-	// We depend on scrollY and innerHeight to decide visibility.
 
-	// State to track accurate hero height and element reference
-	let heroHeight = 0;
-	let heroEl = null;
-
-	// Use ResizeObserver to reliably track hero height changes/appearance
 	function updateHeroState() {
 		if (!browser) return;
 
-		const header = document.getElementById('site-header') || document.querySelector('header');
-		const headerHeight = header ? header.offsetHeight : headerOffset;
-		const el = heroEl || document.getElementById('page-hero-section');
-		if (!heroEl && el) {
-			heroEl = el;
-		}
-
-		if (!el) {
+		// FAILSAFE: If we are scrolled past the initial viewport (e.g. > 100vh or > 900px),
+		// we are definitely NOT in the hero area. Force Rail Mode.
+		const safeHeight = innerHeight || window.innerHeight || 900;
+		if (scrollY > safeHeight) {
 			heroTocOpacity = 0;
 			isInHeroArea = false;
 			articleTocVisible = true;
 			return;
 		}
 
+		// Use prop if available, otherwise try ID (fallback for other pages)
+		const el = heroElement || document.getElementById('page-hero-section');
+
+		if (!el) {
+			// If we can't find the hero, but we are at the top of the page,
+			// assume we are in a hero-like state (or loading one) to avoid flashing the Rail.
+			if (scrollY < 100) {
+				heroTocOpacity = 1; // Optimistic visibility (Assume Hero exists)
+				isInHeroArea = true;
+				articleTocVisible = false;
+			} else {
+				// We are scrolled down (but < 1vh) and still no hero found?
+				// It might be a page without a hero. Show Rail.
+				heroTocOpacity = 0;
+				isInHeroArea = false;
+				articleTocVisible = true;
+			}
+			return;
+		}
+
 		const rect = el.getBoundingClientRect();
-		const threshold = headerHeight + 12;
-		const heroVisible = rect.bottom > threshold && rect.top < (innerHeight || window.innerHeight);
+		// Switch when the hero bottom is above the middle of the screen (plus buffer)
+		// This prevents the centered Hero TOC from overlapping white content
+		const threshold = safeHeight * 0.55;
+		const heroVisible = rect.bottom > threshold && rect.top < safeHeight;
 
 		if (heroVisible) {
 			// On the main image: show hero TOC, hide article rail
@@ -140,6 +154,9 @@
 			articleTocVisible = true;
 		}
 	}
+
+	// Trigger update when heroElement changes (e.g., parent mount)
+	$: if (heroElement) updateHeroState();
 
 	function initHeroObserver() {
 		if (!browser) return;
@@ -188,7 +205,15 @@
 
 	// Re-run observer on every navigation to ensure we catch the NEW page's hero
 	afterNavigate(() => {
+		// Reset state immediately to prevent "Rail" persisting during transition
+		heroEl = null;
+		if (scrollY < 100) {
+			articleTocVisible = false;
+			heroTocOpacity = 1; // Optimistic visibility for new page
+		}
+
 		if (heroObserverCleanup) heroObserverCleanup();
+
 		// Wait for DOM to settle/transition to separate old vs new hero
 		setTimeout(() => {
 			heroObserverCleanup = initHeroObserver();
@@ -208,7 +233,7 @@
 		if (observer) observer.disconnect();
 	});
 
-	$: if (browser) {
+	$: if (browser && (scrollY !== undefined || innerHeight)) {
 		// Recompute hero/article state when scroll or viewport changes
 		updateHeroState();
 	}
@@ -240,15 +265,22 @@
 	}
 
 	$: if (browser) {
-		const key = articles.map((s) => getArticleId(s)).filter(Boolean).join('|');
+		const key = articles
+			.map((s) => getArticleId(s))
+			.filter(Boolean)
+			.join('|');
 		if (key !== observerArticlesKey) {
 			observerArticlesKey = key;
 			initObserver();
 		}
 	}
+	function onScroll() {
+		scrollY = window.scrollY;
+		updateHeroState();
+	}
 </script>
 
-<svelte:window bind:innerWidth={windowWidth} bind:scrollY bind:innerHeight />
+<svelte:window bind:innerWidth={windowWidth} on:scroll={onScroll} bind:innerHeight />
 
 {#if browser && articles.length}
 	<!-- Hero TOC: Standard Text List, Centered -->
@@ -470,11 +502,14 @@
 	/* ========================================= */
 
 	.toc-rail-article {
-		right: var(--rail-right);
+		position: fixed;
+		top: 50%;
+		right: 32px !important; /* Force right alignment */
 		width: var(--w-rail);
 		pointer-events: none;
 		opacity: 0;
 		transform: translateY(-50%) translateX(10px);
+		z-index: 1002;
 	}
 
 	.toc-rail-article.visible {
@@ -707,8 +742,7 @@
 	}
 
 	/* Keep rest unchanged */
-
-	@media (max-width: 1024px) {
+	@media (max-width: 900px) {
 		.toc-rail {
 			display: none !important;
 		}

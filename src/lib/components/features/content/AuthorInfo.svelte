@@ -175,7 +175,7 @@
 
 <style>
 	/* Component-specific styles - these work with global styles in pages.css */
-	@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Inter:wght@300;400;500;600&display=block');
 
 	/* Unified box container - Premium Card Design */
 	.author-info-unified-box {
