@@ -15,9 +15,9 @@
 	import FaqSection from '$components/features/content/FaqSection.svelte';
 
 	export let data;
-	const { page, articles, author } = data;
+	$: ({ page, articles, author } = data);
 
-	let pageData = { ...(page ?? {}) };
+	$: pageData = { ...(page ?? {}) };
 
 	// Derived State
 	// Fix [object Object] issue:
@@ -48,20 +48,32 @@
 		});
 	};
 
-	$: normalizedPhotoGallery = (pageData?.photoGallery?.photos || []).map((item, index) => {
-		// Simplify normalization logic for brevity - assuming good data from generator
-		if (typeof item === 'string')
-			return { imageUrl: getCloudinaryUrl(item), altText: `Photo ${index}` };
-		return {
-			imageUrl: item.url || getCloudinaryUrl(item.publicId),
-			thumbnailUrl: item.thumbnailUrl || getCloudinaryUrl(item.publicId, { width: 480 }),
-			altText: item.alt || item.caption || '',
-			caption: item.caption || ''
-		};
-	});
+	$: rawPhotos =
+		pageData?.photoGallery?.photos?.length > 0
+			? pageData.photoGallery.photos
+			: pageData?.photos || [];
+	$: normalizedPhotoGallery = rawPhotos
+		.map((item, index) => {
+			if (!item) return null;
+			if (typeof item === 'string') {
+				return {
+					imageUrl: getCloudinaryUrl(item),
+					thumbnailUrl: getCloudinaryUrl(item, { width: 480 }),
+					altText: `Photo ${index + 1}`
+				};
+			}
+			const publicId = item.publicId || item.public_id || item.url || '';
+			return {
+				imageUrl: item.url || getCloudinaryUrl(publicId),
+				thumbnailUrl: item.thumbnailUrl || getCloudinaryUrl(publicId, { width: 480 }),
+				altText: item.alt || item.altText || item.caption || `Photo ${index + 1}`,
+				caption: item.caption || ''
+			};
+		})
+		.filter(Boolean);
 
 	$: hasPhotoGallery = normalizedPhotoGallery.length > 0;
-	$: photoGalleryTitle = pageData?.photoGallery?.title || 'Photo Gallery';
+	$: photoGalleryTitle = pageData?.photoGallery?.title || 'Visual Journey';
 
 	// Structured Data (Schema.org)
 	$: structuredData = {

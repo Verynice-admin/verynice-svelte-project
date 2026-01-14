@@ -756,7 +756,8 @@
 						>
 							{#each group.attractions as attraction (attraction.id)}
 								{@const isAlmaty =
-									/almaty/i.test(attraction.title) && !/region|nearby|lake/i.test(attraction.title)}
+									(/almaty/i.test(attraction.title) && /city/i.test(attraction.title)) ||
+									attraction.title.toLowerCase().trim() === 'almaty'}
 								<a
 									href={isAlmaty
 										? '/destinations/almaty'

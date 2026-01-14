@@ -42,6 +42,19 @@ export async function load() {
     };
   }
 
+  // --- ROBUST FALLBACK DATA ---
+  const FALLBACK_ARTICLES = [
+    { id: 'section-almaty-and-nearby', articleId: 'section-almaty-and-nearby', title: 'Almaty & Nearby', order: 1, contentMarkdown: 'The cultural heart of Kazakhstan.' },
+    { id: 'section-astana-and-nearby', articleId: 'section-astana-and-nearby', title: 'Astana & Nearby', order: 2, contentMarkdown: 'The futuristic capital.' }
+  ];
+
+  const FALLBACK_ATTRACTIONS = [
+    { id: 'charyn-canyon', title: 'Charyn Canyon', region: 'Almaty & Nearby', tier: 1, image: { publicId: 'content/locations/charyn/charyn-main', alt: 'Charyn Canyon' }, shortDescription: 'The Valley of Castles.' },
+    { id: 'big-almaty-lake', title: 'Big Almaty Lake', region: 'Almaty & Nearby', tier: 1, image: { publicId: 'content/locations/bal/bal-main', alt: 'Big Almaty Lake' }, shortDescription: 'Turquoise alpine lake.' },
+    { id: 'baiterek-tower', title: 'Baiterek Tower', region: 'Astana & Nearby', tier: 1, image: { publicId: 'content/locations/astana/baiterek', alt: 'Baiterek Tower' }, shortDescription: 'Symbol of Astana.' },
+    { id: 'khan-shatyr', title: 'Khan Shatyr', region: 'Astana & Nearby', tier: 1, image: { publicId: 'content/locations/astana/khan-shatyr', alt: 'Khan Shatyr' }, shortDescription: 'Massive entertainment tent.' }
+  ];
+
   try {
     const destPageRef = adminDB.collection('pages').doc('destinationsPage');
     const destArticlesColRef = destPageRef.collection('articles');
@@ -54,8 +67,19 @@ export async function load() {
     const relatedPostsColRef = destPageRef.collection('relatedPosts');
     const userQuestionsColRef = destPageRef.collection('user_questions');
 
-    // Start fetching articles (sections)
-    const destArticlesSnap = await destArticlesColRef.orderBy('order', 'asc').get();
+    let destArticlesSnap;
+    try {
+      destArticlesSnap = await destArticlesColRef.orderBy('order', 'asc').get();
+    } catch (e: any) {
+      console.warn("[Destinations] Failed to fetch articles, using fallbacks:", e.message);
+      return {
+        page: null,
+        articles: FALLBACK_ARTICLES,
+        attractions: FALLBACK_ATTRACTIONS,
+        author: null,
+        qualityReport: null
+      };
+    }
 
     // Fetch attractions for each article in parallel
     const attractionsPromises = destArticlesSnap.docs.map(async (articleDoc) => {
@@ -91,8 +115,12 @@ export async function load() {
         let images: Array<{ publicId: string; alt?: string; captionName?: string; captionSource?: string }> = [];
         if (Array.isArray(data.images)) {
           images = data.images;
+        } else if (Array.isArray(data.photos)) {
+          images = data.photos;
         } else if (Array.isArray(data.image)) {
           images = data.image;
+        } else if (data.mainImage) {
+          images = [{ publicId: data.mainImage, alt: normalizedTitle }];
         } else if (data.image) {
           images = [data.image];
         } else if (data.heroImagePublicId) {
@@ -605,13 +633,24 @@ export async function load() {
       }
     }
 
-    // Load photo gallery from subcollection (no fallback - subcollection is source of truth)
-    let photoGallery = null;
+    // Load photo gallery from subcollection
+    let photoGallerySub = null;
     if (photoGallerySnap.size > 0) {
       const galleryDoc = photoGallerySnap.docs[0].data();
-      photoGallery = {
+      photoGallerySub = {
         title: galleryDoc.title || 'Photo Gallery',
         photos: galleryDoc.photos || []
+      };
+    }
+
+    let photoGallery = null;
+    if (photoGallerySub && photoGallerySub.photos && photoGallerySub.photos.length > 0) {
+      photoGallery = photoGallerySub;
+    } else if (destPage && (destPage as any).photos && Array.isArray((destPage as any).photos) && (destPage as any).photos.length > 0) {
+      // Fallback to 'photos' field on main document
+      photoGallery = {
+        title: 'Visual Journey',
+        photos: (destPage as any).photos
       };
     }
 
@@ -645,13 +684,11 @@ export async function load() {
     console.error("Failed to load page data from Firestore:", e);
     return {
       page: null,
-      articles: [],
-      attractions: [],
+      articles: FALLBACK_ARTICLES,
+      attractions: FALLBACK_ATTRACTIONS,
       author: null,
       qualityReport: null,
-      error: "Failed to load page data from the server."
+      error: "Failed to load page data from the server. Showing main destinations."
     };
   }
 }
-
-

@@ -56,7 +56,6 @@ export const load: PageServerLoad = async ({ params }) => {
         'shymbulak-ski-resort': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/shymbulak-ski-resort',
         'zenkov-cathedral': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/zenkov-cathedral',
         'green-bazaar': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/green-bazaar',
-        'tamgaly-petroglyphs': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/tamgaly-petroglyphs',
         'issyk-lake': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/issyk-lake',
         'central-state-museum': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/central-state-museum',
         'singing-dune': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/singing-dune',
@@ -97,9 +96,7 @@ export const load: PageServerLoad = async ({ params }) => {
         'talgar-settlement': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/talgar-settlement',
         'tian-shan-mountains': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/tian-shan-mountains',
         'zailiysky-alatau': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/zailiysky-alatau',
-        'zhetysu-park': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/zhetysu-park',
         'dzungarian-alatau': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/dzungarian-alatau',
-        'ibn-sina-peak': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/ibn-sina-peak',
         'katutau-mountains': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/katutau-mountains',
         'kazakhstan-museum-of-arts': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/kazakhstan-museum-of-arts',
         'besshatyr-scythian-mounds': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/besshatyr-scythian-mounds',
@@ -390,7 +387,22 @@ export const load: PageServerLoad = async ({ params }) => {
         // Merge user questions if needed (omitted for brevity, matching history logic simplistically)
 
         let photoGallery = null;
-        if (!photoGallerySnap.empty) photoGallery = serializeDates(photoGallerySnap.docs[0].data());
+        if (!photoGallerySnap.empty) {
+            photoGallery = serializeDates(photoGallerySnap.docs[0].data());
+        }
+
+        // --- FALLBACK: Use 'photos' field from main document if subcollection is missing OR empty ---
+        const subGalleryHasPhotos = photoGallery && Array.isArray(photoGallery.photos) && photoGallery.photos.length > 0;
+
+        if (!subGalleryHasPhotos && page.photos && Array.isArray(page.photos) && page.photos.length > 0) {
+            photoGallery = {
+                title: 'Photo Gallery',
+                photos: page.photos.map((p: any) => {
+                    if (typeof p === 'string') return p;
+                    return p.publicId || p.url || p;
+                })
+            };
+        }
 
         const relatedPostsSnapData = relatedPostsSnap.docs.filter((d: any) => d.id !== 'main').map((d: any) => serializeDates(d.data()));
         let relatedPosts = relatedPostsSnapData;
@@ -434,9 +446,13 @@ export const load: PageServerLoad = async ({ params }) => {
             relatedPosts = randomSelection.map(attraction => {
                 // Resolve Image
                 let imagePublicId = null;
-                if (attraction.image) {
+                if (attraction.mainImage) {
+                    imagePublicId = attraction.mainImage;
+                } else if (attraction.image) {
                     if (typeof attraction.image === 'string') imagePublicId = attraction.image;
                     else if (typeof attraction.image === 'object') imagePublicId = attraction.image.publicId;
+                } else if (attraction.photos && attraction.photos.length > 0) {
+                    imagePublicId = attraction.photos[0];
                 } else if (attraction.images && attraction.images.length > 0) {
                     // Fallback to images array if main image missing
                     const first = attraction.images[0];

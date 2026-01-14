@@ -110,6 +110,12 @@
 					translate="no"
 				>
 					VERYNICE<span class="logo-dot">.</span><span class="tld">kz</span>
+					<span class="sun-container">
+						<span class="sun-glow"></span>
+						<span class="samruk-wrapper">
+							<span class="samruk"></span>
+						</span>
+					</span>
 				</a>
 				<p class="footer-tagline">{cfg.brand.tagline}</p>
 
@@ -208,11 +214,14 @@
 	}
 
 	.footer-logo {
-		font-size: 1.5rem;
+		font-size: 1.85rem; /* Increased from 1.5rem */
 		font-weight: 800;
 		color: #fff;
 		text-decoration: none;
 		letter-spacing: -0.01em;
+		display: inline-flex;
+		align-items: center;
+		white-space: nowrap; /* Ensure it stays in one line */
 	}
 
 	.logo-dot {
@@ -230,6 +239,90 @@
 		color: rgb(125, 210, 251); /* Light Blue */
 		font-weight: 400; /* Thinner */
 		/* margin-left: 6px; removed */
+		text-transform: lowercase; /* Ensure kz is lowercase */
+	}
+
+	/* Animated Sun & Birds */
+	.sun-container {
+		display: inline-flex;
+		align-items: center;
+		position: relative;
+		vertical-align: middle;
+		margin-left: 0.12em;
+	}
+
+	.sun-glow {
+		display: inline-block;
+		width: 0.8em; /* Scaled up */
+		height: 0.8em;
+		background: radial-gradient(circle, #daa520 0%, #b8860b 50%, rgba(218, 165, 32, 0) 100%);
+		border-radius: 50%;
+		position: relative;
+		top: -0.45em;
+		pointer-events: none;
+		animation: sun-shimmer 4s infinite ease-in-out;
+		filter: blur(1px);
+	}
+
+	.samruk-wrapper {
+		position: absolute;
+		top: -0.1em;
+		left: 0.05em;
+		pointer-events: none;
+		animation: soar-arc 5s infinite ease-in-out alternate;
+		z-index: 2;
+	}
+
+	.samruk {
+		display: block;
+		width: 0.7em; /* Scaled back for elegance */
+		height: 0.35em;
+		background: #ffff00; /* Reverted to bright yellow */
+		clip-path: path('M0,0 C5,3 10,5 15,0 C20,5 25,3 30,0 L15,3 L0,0');
+		opacity: 1;
+		filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.5));
+		animation: flap 0.4s infinite alternate ease-in-out;
+	}
+
+	@keyframes flap {
+		0% {
+			transform: scaleY(1);
+		}
+		100% {
+			transform: scaleY(0.4);
+		}
+	}
+
+	@keyframes soar-arc {
+		0% {
+			/* Start position */
+			transform: translate(0.05em, 0.5em) rotate(-20deg) scale(1);
+			opacity: 1;
+		}
+		100% {
+			/* End position - no longer fades or shrinks */
+			transform: translate(0.65em, 0.1em) rotate(0deg) scale(0.9);
+			opacity: 1;
+		}
+	}
+
+	@keyframes sun-shimmer {
+		0%,
+		100% {
+			transform: scale(0.85);
+			opacity: 0.7;
+			box-shadow: 0 0 15px #daa520;
+			filter: blur(1px) brightness(1.2);
+		}
+		50% {
+			transform: scale(1.1);
+			opacity: 1;
+			box-shadow:
+				0 0 45px #daa520,
+				0 0 90px #b8860b,
+				0 0 120px rgba(218, 165, 32, 0.5);
+			filter: blur(2px) brightness(1.5);
+		}
 	}
 
 	.footer-tagline {
