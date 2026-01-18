@@ -217,7 +217,7 @@
 		padding: 0;
 		margin: 0;
 		display: flex;
-		gap: 2rem; /* Spacing between items */
+		gap: 4rem; /* Spacing between items */
 	}
 
 	.carousel-item {
@@ -231,16 +231,16 @@
 	/* Tablet: 3 items */
 	@media (min-width: 640px) and (max-width: 1023px) {
 		.carousel-item {
-			flex: 0 0 calc((100% - 4rem) / 3); /* 3 items, 2 gaps of 2rem */
+			flex: 0 0 calc((100% - 8rem) / 3); /* 3 items, 2 gaps of 4rem */
 		}
 	}
 
 	/* Desktop: Exactly 5 items */
 	@media (min-width: 1024px) {
 		.carousel-item {
-			/* 5 items, 4 gaps of 2rem (8rem total). 
+			/* 5 items, 4 gaps of 4rem (16rem total). 
 			   Restore min-width to prevent cards from becoming too narrow/tiny. */
-			flex: 0 0 calc((100% - 8rem) / 5);
+			flex: 0 0 calc((100% - 16rem) / 5);
 			min-width: 220px;
 		}
 	}

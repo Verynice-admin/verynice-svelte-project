@@ -87,57 +87,37 @@
 	{/if}
 </section>
 
-<!-- WELCOME SECTION -->
+<!-- WELCOME SECTION REIMAGINED -->
 <section class="welcome-section wrapper section-padding relative">
-	<!-- Background accent -->
-	<div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-		<div
-			class="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/10 blur-[100px] rounded-full"
-		></div>
-	</div>
+	<div class="welcome-centered-stack relative z-10 w-full wrapper">
+		<!-- TOP: CENTERED TEXT -->
+		<div class="welcome-text-body">
+			<div class="welcome-header-center">
+				<h2 class="section-title-premium gradient-text">
+					Welcome to <br />
+					<span class="text-highlight">Central Asia's Hidden Gem</span>
+				</h2>
+			</div>
 
-	<div class="welcome-grid relative z-10">
-		<div class="welcome-content">
-			<h2 class="section-title-premium gradient-text">Welcome to Central Asia's<br />Hidden Gem</h2>
-			<p class="section-text-large">
+			<p class="section-text-large centered-text-block">
 				Kazakhstan is a land of extremes and unexpected beauty. Whether you are seeking the urban
 				energy of Almaty, the spiritual depth of ancient mausoleums, or the silence of high-altitude
-				lakes, our curated guides provide everything you need for the perfect journey.
+				lakes, we curated the perfect path for you.
 			</p>
-			<div class="welcome-features-premium">
-				<div class="feature-tag-premium">
-					<div class="icon-box">
-						<i class="icon-check"></i>
-					</div>
-					<div class="feature-text">
-						<strong>Verified Guides</strong>
-						<span>Trusted Experts</span>
-					</div>
-				</div>
-				<div class="feature-tag-premium">
-					<div class="icon-box">
-						<i class="icon-camera"></i>
-					</div>
-					<div class="feature-text">
-						<strong>4K Photography</strong>
-						<span>Visual Immersion</span>
-					</div>
-				</div>
-				<div class="feature-tag-premium">
-					<div class="icon-box">
-						<i class="icon-globe"></i>
-					</div>
-					<div class="feature-text">
-						<strong>Cultural Depth</strong>
-						<span>Authentic Stories</span>
-					</div>
-				</div>
-			</div>
 		</div>
-		<div class="welcome-video-teaser">
-			{#if homepage?.featuredVideoUrl}
-				<VideoEmbed title="Experience Kazakhstan" url={homepage.featuredVideoUrl} />
-			{/if}
+
+		<!-- BOTTOM: WIDE VIDEO -->
+		<div class="welcome-video-wide">
+			<div class="video-frame-glass-wide">
+				<div class="video-label-large">Start Your Journey</div>
+				{#if homepage?.featuredVideoUrl}
+					<div class="video-content-area-wide">
+						<VideoEmbed title="" url={homepage.featuredVideoUrl} />
+					</div>
+				{/if}
+				<!-- Glow behind -->
+				<div class="video-glow-wide"></div>
+			</div>
 		</div>
 	</div>
 </section>
@@ -181,31 +161,24 @@
 	</div>
 </section>
 
-<!-- PREMIUM NEWSLETTER SECTION -->
+<!-- CULINARY JOURNEY SECTION -->
 <section class="newsletter-section">
 	<div class="newsletter-bg-glow"></div>
 	<div class="wrapper relative z-10">
-		<div class="newsletter-card-premium">
+		<div class="newsletter-card-premium culinary-card">
 			<div class="newsletter-text-content">
-				<span class="newsletter-badge">Monthly Digest</span>
-				<h2>{homepage?.newsletterTitle || 'The Definitive Kazakhstan Guide'}</h2>
+				<span class="newsletter-badge">Taste the Tradition</span>
+				<h2>A Culinary Journey Like No Other</h2>
 				<p>
-					{homepage?.newsletterSubtitle ||
-						'Join 15,000+ travelers receiving exclusive hidden gems, cultural deep-dives, and seasonal planning tips.'}
+					Savor the exquisite flavors of the Silk Road. From the hearty richness of Beshbarmak
+					feasts to the sweet crispness of Almaty apples, discover a cuisine that bridges empires.
 				</p>
 			</div>
-			<div class="newsletter-action">
-				<form
-					class="premium-input-group"
-					on:submit|preventDefault={() => alert('Welcome to the inner circle!')}
-				>
-					<div class="input-wrapper">
-						<i class="icon-mail"></i>
-						<input type="email" placeholder="Enter your email address" required />
-					</div>
-					<button type="submit" class="btn-glow-gold">Subscribe</button>
-				</form>
-				<p class="newsletter-micro">No spam. Unsubscribe anytime.</p>
+			<div class="newsletter-action centered-action">
+				<a href="/food-drink" class="btn-glow-gold large-btn">
+					<span>Explore Food & Drink</span>
+					<i class="icon-arrow-right"></i>
+				</a>
 			</div>
 		</div>
 	</div>
@@ -574,7 +547,7 @@
 	.sliders-stack {
 		display: flex;
 		flex-direction: column;
-		gap: 6rem;
+		gap: 2rem;
 	}
 
 	/* PREMIUM NEWSLETTER */
@@ -747,6 +720,66 @@
 		text-align: center;
 	}
 
+	/* TEXT SECTION */
+	.welcome-text-body {
+		text-align: center;
+		max-width: 1000px;
+		margin: 0 auto; /* Ensure block itself is centered */
+	}
+
+	.section-label-center {
+		display: inline-block;
+		font-family: 'Outfit', sans-serif;
+		font-size: 0.85rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		color: #22d3ee;
+		margin-bottom: 1rem;
+		border-bottom: 1px solid rgba(34, 211, 238, 0.3);
+		padding-bottom: 0.5rem;
+	}
+
+	.section-title-premium {
+		font-family: 'Outfit', sans-serif;
+		font-size: clamp(4rem, 6.5vw, 6rem); /* Increased size */
+		font-weight: 900;
+		line-height: 1.1;
+		color: #fff;
+		margin-bottom: 1.5rem;
+	}
+
+	.text-highlight {
+		color: #fff;
+	}
+
+	.section-text-large {
+		font-size: 1.5rem; /* Increased size */
+		line-height: 1.6;
+		color: #cbd5e1;
+		margin: 0 auto;
+	}
+
+	/* WIDE VIDEO SECTION */
+	.welcome-video-wide {
+		width: 100%;
+		max-width: 1450px; /* Increased width */
+		position: relative;
+		perspective: 1000px;
+		margin: 0 auto; /* Explicit centering */
+	}
+
+	.video-frame-glass-wide {
+		background: rgba(15, 23, 42, 0.5);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 24px;
+		backdrop-filter: blur(25px);
+		/* UPDATED: Uniform padding for equal spacing on sides and bottom */
+		padding: 2rem;
+		box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
+		position: relative;
+		z-index: 2;
+	}
 	.section-kicker-gold {
 		display: inline-block;
 		font-family: 'Outfit', sans-serif;
@@ -849,104 +882,245 @@
 			padding: 1rem;
 		}
 	}
-	/* NEW PREMIUM WELCOME STYLES (Moved from duplicate block) */
-	.gradient-text {
-		background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-		text-fill-color: transparent;
-		/* Fallback */
-		color: #fff;
-		filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
-	}
+	/* --- NEW WELCOME SECTION STYLES --- */
 
-	.welcome-grid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: clamp(4rem, 8vw, 8rem);
-		align-items: center;
-		padding: 2rem 0;
-	}
-
-	.welcome-content {
-		max-width: 600px; /* Constrain width for readability and aesthetic */
-	}
-
-	.welcome-features-premium {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Grid for better spacing */
-		gap: 1.5rem;
-		margin-top: 3rem;
-	}
-
-	.feature-tag-premium {
-		display: flex;
-		align-items: center;
-		gap: 1.25rem;
-		background: rgba(30, 41, 59, 0.6); /* Lighter, bluish dark */
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		padding: 1.25rem 1.5rem;
-		border-radius: 20px;
-		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-		backdrop-filter: blur(10px);
-	}
-
-	.feature-tag-premium:hover {
-		background: rgba(30, 41, 59, 0.9);
-		transform: translateY(-5px);
-		border-color: rgba(34, 211, 238, 0.5);
-		box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-	}
-
-	.icon-box {
-		width: 56px;
-		height: 56px;
-		background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(34, 211, 238, 0.05));
-		border: 1px solid rgba(34, 211, 238, 0.2);
-		color: #22d3ee;
-		border-radius: 16px;
+	.welcome-section {
+		position: relative;
+		overflow: hidden;
+		min-height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 1.5rem;
-		box-shadow: 0 0 20px rgba(34, 211, 238, 0.1);
+		padding: 4rem 0;
 	}
 
-	.feature-text {
+	/* BACKGROUND AMBIENCE */
+	.ambient-glows {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		pointer-events: none;
+	}
+
+	.glow-orb {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(80px);
+		opacity: 0.4;
+	}
+
+	.orb-1 {
+		width: 400px;
+		height: 400px;
+		background: radial-gradient(circle, #22d3ee, transparent);
+		top: -100px;
+		right: -100px;
+		animation: floatOrb 10s ease-in-out infinite;
+	}
+
+	.orb-2 {
+		width: 300px;
+		height: 300px;
+		background: radial-gradient(circle, #818cf8, transparent);
+		bottom: 50px;
+		left: -50px;
+		animation: floatOrb 12s ease-in-out infinite reverse;
+	}
+
+	@keyframes floatOrb {
+		0%,
+		100% {
+			transform: translateY(0) scale(1);
+		}
+		50% {
+			transform: translateY(20px) scale(1.1);
+		}
+	}
+
+	/* HEADER */
+	.welcome-header {
+		margin-bottom: 2rem;
+	}
+
+	.section-label-modern {
+		display: inline-block;
+		font-family: 'Outfit', sans-serif;
+		font-size: 0.85rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		color: #22d3ee;
+		margin-bottom: 1rem;
+		padding-left: 1rem;
+		border-left: 2px solid #22d3ee;
+	}
+
+	.text-highlight {
+		color: #fff; /* Plain white for contrast against gradient if needed, or stick to gradient text class */
+	}
+
+	/* FEATURE CARD ALIGNMENT */
+	.feature-cards-stack {
 		display: flex;
 		flex-direction: column;
-		gap: 0.2rem;
+		gap: 1.5rem;
+		margin-top: 3.5rem;
 	}
 
-	.feature-text strong {
+	/* GLASS CARD */
+	.glass-feature-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1.25rem 2rem;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.08); /* faint border */
+		border-radius: 20px;
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		text-decoration: none;
+		transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.glass-feature-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+		transform: translateX(-100%);
+		transition: transform 0.6s;
+	}
+
+	.glass-feature-card:hover {
+		background: rgba(255, 255, 255, 0.08);
+		border-color: rgba(34, 211, 238, 0.5);
+		transform: translateX(10px);
+		box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+	}
+
+	.glass-feature-card:hover::before {
+		transform: translateX(100%);
+	}
+
+	.glass-feature-card.static-card {
+		cursor: default;
+	}
+	.glass-feature-card.static-card:hover {
+		transform: none; /* No movement for non-link */
+		border-color: rgba(255, 255, 255, 0.08);
+	}
+
+	.card-icon-wrapper {
+		width: 48px;
+		height: 48px;
+		border-radius: 12px;
+		background: rgba(34, 211, 238, 0.1);
+		color: #22d3ee;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 1.25rem;
+		margin-right: 1.5rem;
+	}
+
+	.card-content {
+		flex: 1;
+	}
+
+	.card-content h3 {
 		color: #fff;
 		font-family: 'Outfit', sans-serif;
-		font-size: 1.15rem;
+		font-size: 1.1rem;
 		font-weight: 700;
-		letter-spacing: 0.02em;
+		margin: 0 0 0.2rem 0;
 	}
 
-	.feature-text span {
+	.card-content p {
 		color: #94a3b8;
-		font-size: 0.85rem;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		font-weight: 600;
+		font-size: 0.9rem;
+		margin: 0;
 	}
 
-	/* Adjust video teaser to float nicely */
-	.welcome-video-teaser {
-		box-shadow:
-			0 20px 50px -12px rgba(0, 0, 0, 0.5),
-			0 0 0 1px rgba(255, 255, 255, 0.1);
-		border-radius: 32px;
+	.card-action {
+		color: #fff;
+		opacity: 0;
+		transform: translateX(-10px);
+		transition: all 0.3s ease;
+	}
+
+	.glass-feature-card:hover .card-action {
+		opacity: 1;
+		transform: translateX(0);
+		color: #22d3ee;
+	}
+
+	/* VIDEO SECTION */
+	.welcome-media-column {
+		display: flex;
+		justify-content: center; /* Center in column */
+		align-items: center;
+		perspective: 1000px;
+	}
+
+	.video-floating-container {
+		position: relative;
+		width: 100%;
+		max-width: 600px;
+		transform-style: preserve-3d;
+		animation: subtleFloat 6s ease-in-out infinite;
+	}
+
+	@keyframes subtleFloat {
+		0%,
+		100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-10px);
+		}
+	}
+
+	.video-backdrop-blur {
+		position: absolute;
+		inset: -20px;
+		background: radial-gradient(circle, rgba(34, 211, 238, 0.2), transparent 70%);
+		filter: blur(40px);
+		z-index: -1;
+		opacity: 0.6;
+	}
+
+	.video-frame-glass {
+		background: rgba(20, 20, 30, 0.6);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 20px;
+		backdrop-filter: blur(20px);
+		padding: 1rem; /* frame padding */
+		box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);
+	}
+
+	.video-content-area {
+		border-radius: 12px;
 		overflow: hidden;
-		transform: perspective(1000px) rotateY(-2deg);
-		transition: transform 0.5s ease;
+		border: 1px solid rgba(255, 255, 255, 0.1);
 	}
 
-	.welcome-video-teaser:hover {
-		transform: perspective(1000px) rotateY(0deg);
+	.video-label-large {
+		font-family: 'Outfit', sans-serif;
+		font-size: 1.75rem; /* Reduced by half from 3.5rem */
+		font-weight: 700;
+		color: #22d3ee;
+		text-align: center;
+		margin-bottom: 2rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		text-shadow: 0 0 30px rgba(34, 211, 238, 0.3);
 	}
 </style>

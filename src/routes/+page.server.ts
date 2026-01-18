@@ -6,7 +6,7 @@ const FALLBACK_HOMEPAGE = {
   heroTitle: 'Discover Kazakhstan',
   heroSubtitle: 'Explore amazing places, rich history, and vibrant culture',
   heroImagePublicId: 'home/content/pages/homepage/Kazakhstan-bckgrnd',
-  featuredVideoUrl: 'https://www.youtube.com/watch?v=v_O_E_iSAc4',
+  featuredVideoUrl: 'https://youtu.be/pssnBA7-f98?si=OBk1YVHKTHoDXOUd',
   stats: [
     { value: '14', label: 'Destinations' },
     { value: '25+', label: 'Natural Parks' },

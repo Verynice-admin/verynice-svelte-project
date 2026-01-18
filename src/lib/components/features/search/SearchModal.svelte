@@ -15,7 +15,6 @@
 		answer: string;
 		relatedLinks?: { title: string; url: string }[];
 	} | null = null;
-	let searchRef: HTMLElement;
 
 	// Simple client-side index of content
 	const pages = [
@@ -54,6 +53,68 @@
 			description: 'The truth about the movie vs reality.',
 			url: '/about-borat',
 			keywords: 'borat, movie, cohen, facts, myths'
+		},
+		// --- CITIES ---
+		{
+			title: 'Almaty City',
+			description: 'The cultural capital, nestled in the Trans-Ili Alatau mountains.',
+			url: '/cities/almaty',
+			keywords: 'almaty, apple city, mountains, kok tobe, medeu'
+		},
+		{
+			title: 'Astana City',
+			description: 'The modern futuristic capital in the heart of the steppes.',
+			url: '/cities/astana',
+			keywords: 'astana, capital, nur-sultan, baiterek, khan shatyr'
+		},
+		{
+			title: 'Shymkent',
+			description: 'The southern gastronomic heart of Kazakhstan.',
+			url: '/cities/shymkent',
+			keywords: 'shymkent, south, food, warmest city'
+		},
+		// --- TOP ATTRACTIONS (Assumed slugs based on common structure) ---
+		{
+			title: 'Shymbulak Mountain Resort',
+			description: 'World-class skiing and snowboarding just minutes from Almaty.',
+			url: '/destinations/shymbulak-ski-resort',
+			keywords: 'shymbulak, ski, snowboard, mountains, resort, almaty'
+		},
+		{
+			title: 'Charyn Canyon',
+			description: 'The Valley of Castles, often compared to the Grand Canyon.',
+			url: '/destinations/charyn-canyon',
+			keywords: 'charyn, canyon, nature, desert, valley of castles'
+		},
+		{
+			title: 'Kolsai Lakes',
+			description: 'The Pearls of Tien Shan - stunning alpine lakes.',
+			url: '/destinations/kolsai-lakes',
+			keywords: 'kolsai, lakes, saty, nature, hiking, kayindy'
+		},
+		{
+			title: 'Big Almaty Lake',
+			description: 'A turquoise alpine lake supplying water to the city.',
+			url: '/destinations/big-almaty-lake',
+			keywords: 'big almaty lake, bal, bao, mountains, lake'
+		},
+		{
+			title: 'Burabay (Borovoe)',
+			description: 'The "Switzerland of Kazakhstan" with pine forests and lakes.',
+			url: '/destinations/burabay-national-park',
+			keywords: 'burabay, borovoe, nature, swimming, resort, north'
+		},
+		{
+			title: 'Turkistan & Mausoleum',
+			description: 'The spiritual capital and home to Yasawi Mausoleum.',
+			url: '/destinations/khoja-ahmed-yasawi-mausoleum',
+			keywords: 'turkistan, mausoleum, yasawi, silk road, history, spiritual'
+		},
+		{
+			title: 'Kaindy Lake',
+			description: 'The bizarre and beautiful sunken forest.',
+			url: '/destinations/kaindy-lake',
+			keywords: 'kaindy, sunker forest, lake, saty, nature'
 		}
 	];
 
@@ -88,16 +149,12 @@
 	function handleKeydown(e: KeyboardEvent) {
 		if (!isOpen) return;
 		if (e.key === 'Escape') {
+			e.preventDefault(); // Safety to ensure browser doesn't do default escape actions if any
 			close();
+			return;
 		}
 		if (e.key === 'Enter' && query.trim()) {
 			performAiSearch();
-		}
-	}
-
-	function handleClickOutside(event: MouseEvent) {
-		if (searchRef && !searchRef.contains(event.target as Node)) {
-			close();
 		}
 	}
 
@@ -150,32 +207,33 @@
 		setTimeout(() => inputElement.focus(), 100);
 
 		// Re-apply translation to the modal content if needed
-		if (browser) {
-			const lang = get(currentLanguage);
-			if (lang !== 'EN') {
-				translatePageTo(lang)
-					.then((ok) => {
-						if (!ok) {
-							console.error('[Translation] Failed to apply to search modal');
-						}
-					})
-					.catch(console.error);
-			}
-		}
+		// if (browser) {
+		// 	const lang = get(currentLanguage);
+		// 	if (lang !== 'EN') {
+		// 		translatePageTo(lang)
+		// 			.then((ok) => {
+		// 				if (!ok) {
+		// 					console.error('[Translation] Failed to apply to search modal');
+		// 				}
+		// 			})
+		// 			.catch(console.error);
+		// 	}
+		// }
 	}
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
 
 {#if isOpen}
-	<div class="search-overlay" transition:fade={{ duration: 200 }} on:click={handleClickOutside}>
-		<div
-			class="search-modal"
-			bind:this={searchRef}
-			transition:fly={{ y: -20, duration: 300 }}
-			role="dialog"
-			aria-modal="true"
-		>
+	<!-- Use click on overlay to close, stop prop on modal -->
+	<div
+		class="search-overlay"
+		transition:fade={{ duration: 200 }}
+		on:click={close}
+		role="dialog"
+		aria-modal="true"
+	>
+		<div class="search-modal" on:click|stopPropagation transition:fly={{ y: -20, duration: 300 }}>
 			<!-- Search Header / Input -->
 			<div class="search-header">
 				<div class="search-icon-wrapper">

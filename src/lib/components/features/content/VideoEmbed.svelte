@@ -63,9 +63,11 @@
 </script>
 
 <section id="video-section" class="themed-content-block">
-	<div class="additional-content-header">
-		<h2>{title}</h2>
-	</div>
+	{#if title}
+		<div class="additional-content-header">
+			<h2>{title}</h2>
+		</div>
+	{/if}
 
 	{#if embedUrl}
 		<div class="video-wrapper">
