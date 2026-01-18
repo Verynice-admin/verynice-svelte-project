@@ -64,7 +64,7 @@
 			}
 			const publicId = item.publicId || item.public_id || item.url || '';
 			return {
-				imageUrl: item.url || getCloudinaryUrl(publicId),
+				imageUrl: item.imageUrl || item.url || getCloudinaryUrl(publicId),
 				thumbnailUrl: item.thumbnailUrl || getCloudinaryUrl(publicId, { width: 480 }),
 				altText: item.alt || item.altText || item.caption || `Photo ${index + 1}`,
 				caption: item.caption || ''

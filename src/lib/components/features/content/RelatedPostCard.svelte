@@ -5,12 +5,18 @@
 	export let collectionPath: string = 'posts';
 
 	// Resolve the image source with fallback logic
+	// Resolve the image source with fallback logic
 	$: imageSrc = (() => {
+		const resolve = (p: any) => p?.publicId || p?.url || (typeof p === 'string' ? p : null);
+
 		const publicId =
 			post.headerBackgroundPublicId ||
 			post.heroImagePublicId ||
 			post.imagePublicId ||
-			post.coverImagePublicId;
+			post.coverImagePublicId ||
+			resolve(post.mainImage) ||
+			resolve(post.image);
+
 		if (publicId) {
 			return getCloudinaryUrl(publicId, { width: 400, height: 400, crop: 'fill', gravity: 'auto' });
 		}

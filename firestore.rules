@@ -1,0 +1,37 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. GLOBAL DEFAULT: DENY EVERYTHING
+    // This is the "correct" starting point for professional security.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. PAGES DATA (ARTICLES, DESTINATIONS)
+    // These are loaded server-side in +page.server.ts using Admin SDK.
+    // Admin SDK bypasses rules, so we KEEP THESE DENIED to the public
+    // to prevent bots from scraping your high-quality content.
+    match /pages/{pageId} {
+      allow read: if false; 
+    }
+
+    // 3. COMMENTS (CLIENT-SIDE REAL-TIME UPDATES)
+    // Your frontend uses onSnapshot() to show comments as they arrive.
+    // We allow Public READ but NO public writes. 
+    // This protects your quota from bots while keeping the site interactive.
+    match /pages/{pageId}/comments/{commentId} {
+      allow read: if request.time < timestamp.date(2026, 12, 31);
+      allow write: if false; // All writes MUST go through your /api/comments/submit endpoint
+    }
+
+    // 4. USERS & CONFIG
+    // Site configuration and user data should NEVER be readable by the public.
+    match /users/{userId} {
+      allow read, write: if false;
+    }
+    match /config/{configId} {
+      allow read, write: if false;
+    }
+  }
+}

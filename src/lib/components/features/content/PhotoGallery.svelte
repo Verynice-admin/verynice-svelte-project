@@ -33,8 +33,7 @@
 					disabled={totalPhotos < 2}
 				>
 					‹
-				</button>
-				<span class="gallery-counter">{activeIndex + 1}/{totalPhotos}</span>
+				</button> 
 				<button
 					class="nav-button"
 					on:click={showNext}

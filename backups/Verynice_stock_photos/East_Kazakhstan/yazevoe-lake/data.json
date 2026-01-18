@@ -1,0 +1,228 @@
+{
+  "main": {
+    "category": "Lakes & Nature",
+    "shortDescription": "Serene and picturesque mountain lake nestled within the Katon-Karagay National Park.",
+    "title": "Yazevoe Lake",
+    "order": 0,
+    "id": "yazevoe-lake",
+    "articleViews": 2494,
+    "publishDate": "2025-12-31T05:58:33.520Z",
+    "articleLikes": 360,
+    "articleComments": 34,
+    "authorId": "aliya-askar",
+    "type": "destination",
+    "headerDescription": "Discover the golden Altai mountains and pristine lakes.",
+    "createdAt": "2025-12-31T05:58:33.520Z",
+    "tier": 2,
+    "mainTitle": "Yazevoe Lake",
+    "location": {
+      "address": "Yazevoe Lake, East Kazakhstan",
+      "lng": 82.46082854830682,
+      "lat": 49.89539361613161
+    },
+    "region": "East Kazakhstan",
+    "seo": {
+      "description": "Guide to Yazevoe Lake. Explore the Altai region.",
+      "title": "Yazevoe Lake | Visit East Kazakhstan"
+    },
+    "quality_score": 5,
+    "last_audited": "2026-01-04",
+    "status": "Premium Quality",
+    "word_count": 1250,
+    "content": "\n# Yazevoe Lake: The Mirror of the Altai (2026 Guide)\n\nYazevoe Lake (Lake of the Yaz fish) is arguably the most beautiful alpine lake in the Kazakh Altai. Located at 1,650 meters, it is famous for one specific, postcard-perfect view: the twin peaks of Mount Belukha reflected perfectly in its emerald-green waters.\n\n## The Jewel of the Katon-Karagay\nSurrounded by dense Siberian larch and cedar forests, Yazevoe is a haven for those seeking the \"old-school\" Altai experience. In 2026, while many lower-altitude sites have modernized, Yazevoe remains a sanctuary of silence and traditional wooden cabins.\n\n## Flora and Fauna\nThe lake is famous for its abundance of Yaz (Ide) fish, making it a dream for sustainable fishing. The surrounding meadows are home to the Altai Wapiti (Maral deer) and, occasionally, brown bears can be spotted on the distant ridges.\n\n## 2026 Logistics & Access\n*   **The Journey:** Access is via the village of Kara-Aul. The final 30km is a rugged forest track. In 2026, \"Green-Trail\" electric shuttles are tested for the final approach to reduce noise and emissions.\n*   **Accommodations:** A series of \"Zero-Impact\" wooden eco-huts are available on the western shore, offering simple but cozy stays.\n*   **Permit:** You are deep in the border zone; ensure your Oskemen-issued permit is in hand.\n\n## Essential Experiences\n1.  **The \"Belukha Mirror\" Photo:** Set your alarm for 5:30 AM. When the water is perfectly still before the morning breeze starts, the reflection of Belukha is a world-class photographic event.\n2.  **Larch Forest Trekking:** Hike the trail toward the Yazevoe Waterfall, where the lake drains into a series of dramatic cascades.\n3.  **Maral Health Spa:** Visit a nearby Maral farm (in June/July) to learn about the traditional \"Panty\" (antler-based) health treatments that have been part of Altai culture for centuries.\n\n## Travel Tips\n*   **Equipment:** Waterproof boots and high-quality mosquito repellent (for the early summer months) are essential.\n*   **Fishing:** Catch-and-release is the preferred rule for sustainable tourism in 2026.\n*   **Off-Grid:** Expect zero mobile signal at the lake. It is a place to disconnect.\n",
+    "verified_2026": true,
+    "updatedAt": {
+      "_seconds": 1767629273,
+      "_nanoseconds": 327000000
+    }
+  },
+  "subcollections": {
+    "articles": [
+      {
+        "id": "experience",
+        "order": 20,
+        "title": "The Experience",
+        "contentMarkdown": "Yazevoe Lake, nestled high in the East Kazakhstan Altai mountains, is an astonishing panorama of raw, untamed nature. The glassy surface of the water perfectly mirrors the rugged peaks of the surrounding range, including the towering Mount Belukha, a sacred landmark to many cultures and the highest point in the region. This pristine environment, characterized by ancient Siberian forests of larch and cedar, sweeping alpine meadows blooming with rare flora, and clear, glacial-fed streams, offers a profound sense of solitude and immersion. Visitors are drawn to the pure air and the sheer magnitude of the landscape, where the silence is broken only by the whispers of the wind and the distant cries of high-altitude birds, providing a humbling reminder of the enduring power and beauty of the natural world.\n\nThe area around Yazevoe Lake is more than just a scenic vista; it is a crossroads of history and mythology, lying close to the legendary \"Gateway to Shambhala.\" For centuries, this remote corner of the Altai has been a spiritual sanctuary and a source of profound inspiration, particularly for those seeking enlightenment and connection with the earth. Early indigenous tribes, followed by explorers and mystics, recognized the powerful energy emanating from these peaks. A journey to Yazevoe is not merely a hike, but a pilgrimage into a landscape imbued with myth, offering a chance to walk in the footsteps of those who sought the wisdom and tranquility held within these ancient, towering mountains of Central Asia."
+      },
+      {
+        "id": "history",
+        "contentMarkdown": "**Yazevoe Lake** is a geographically significant high-mountain water body located deep within the Altai Mountains of East Kazakhstan, specifically nestled within the protected boundaries of the Katon-Karagay State National Nature Park. Situated at a considerable elevation, the lake's formation is intrinsically tied to Pleistocene glaciation, classifying it as a classic cirque lake sculpted by the immense erosive power of ancient ice sheets. This glacial origin dictates its key hydrological features: extremely cold, clear, oligotrophic waters fed primarily by snowmelt and small, rapid mountain streams. Yazevoe Lake is a critical ecological nexus; it acts as a major headwater reservoir that contributes significantly to the local river systems draining into the larger Irtysh basin. Its surrounding environment—a mosaic of dense Siberian taiga comprised of larch and spruce, fringed by vast subalpine meadows—makes it an essential ecological benchmark for understanding the unique biodiversity and pristine high-altitude ecosystems of the South Altai region.\n\nThe historical significance and modern relevance of Yazevoe Lake are centered on its role in local traditional practices and contemporary conservation efforts. The lake’s name, translating roughly to \"Ide Lake,\" suggests its long-standing importance to local communities, particularly for fishing the common Ide (*Leuciscus idus*) that thrives in its cold, oxygen-rich waters. Today, however, its isolation has transformed it into one of Kazakhstan’s foremost wilderness preservation sites. Its protected status within the Katon-Karagay Park ensures the safeguarding of its geological and biological integrity, providing a sanctuary for rare and endangered megafauna, including the elusive snow leopard and various endemic avian species. Consequently, Yazevoe Lake now serves as a key destination for regulated ecotourism and scientific research, acting as a crucial economic and cultural anchor for sustainable development that celebrates the majestic and largely untouched wilderness of the Kazakh Altai.",
+        "title": "History & Discovery",
+        "order": 10
+      },
+      {
+        "id": "section-1",
+        "order": 1,
+        "title": "The Jewel of the Katon-Karagay",
+        "type": "article",
+        "contentMarkdown": "# Yazevoe Lake: The Mirror of the Altai (definitive guide)\n\nYazevoe Lake (Lake of the Yaz fish) is arguably the most beautiful alpine lake in the Kazakh Altai. Located at 1,650 meters, it is famous for one specific, postcard-perfect view: the twin peaks of Mount Belukha reflected perfectly in its emerald-green waters.\n\nSurrounded by dense Siberian larch and cedar forests, Yazevoe is a haven for those seeking the \"old-school\" Altai experience. Recently, while many lower-altitude sites have modernized, Yazevoe remains a sanctuary of silence and traditional wooden cabins.",
+        "content": "# Yazevoe Lake: The Mirror of the Altai (definitive guide)\n\nYazevoe Lake (Lake of the Yaz fish) is arguably the most beautiful alpine lake in the Kazakh Altai. Located at 1,650 meters, it is famous for one specific, postcard-perfect view: the twin peaks of Mount Belukha reflected perfectly in its emerald-green waters.\n\nSurrounded by dense Siberian larch and cedar forests, Yazevoe is a haven for those seeking the \"old-school\" Altai experience. Recently, while many lower-altitude sites have modernized, Yazevoe remains a sanctuary of silence and traditional wooden cabins.",
+        "updatedAt": {
+          "_seconds": 1767682534,
+          "_nanoseconds": 521000000
+        }
+      },
+      {
+        "id": "section-2",
+        "title": "Flora and Fauna",
+        "contentMarkdown": "The lake is famous for its abundance of Yaz (Ide) fish, making it a dream for sustainable fishing. The surrounding meadows are home to the Altai Wapiti (Maral deer) and, occasionally, brown bears can be spotted on the distant ridges.",
+        "content": "The lake is famous for its abundance of Yaz (Ide) fish, making it a dream for sustainable fishing. The surrounding meadows are home to the Altai Wapiti (Maral deer) and, occasionally, brown bears can be spotted on the distant ridges.",
+        "type": "article",
+        "order": 2,
+        "updatedAt": {
+          "_seconds": 1767629273,
+          "_nanoseconds": 327000000
+        }
+      },
+      {
+        "id": "section-3",
+        "type": "article",
+        "order": 3,
+        "contentMarkdown": "*   **The Journey:** Access is via the village of Kara-Aul. The final 30km is a rugged forest track. Recently, \"Green-Trail\" electric shuttles are tested for the final approach to reduce noise and emissions.\n*   **Accommodations:** A series of \"Zero-Impact\" wooden eco-huts are available on the western shore, offering simple but cozy stays.\n*   **Permit:** You are deep in the border zone; ensure your Oskemen-issued permit is in hand.",
+        "content": "*   **The Journey:** Access is via the village of Kara-Aul. The final 30km is a rugged forest track. Recently, \"Green-Trail\" electric shuttles are tested for the final approach to reduce noise and emissions.\n*   **Accommodations:** A series of \"Zero-Impact\" wooden eco-huts are available on the western shore, offering simple but cozy stays.\n*   **Permit:** You are deep in the border zone; ensure your Oskemen-issued permit is in hand.",
+        "title": "Digital Logistics & Access",
+        "updatedAt": {
+          "_seconds": 1767697090,
+          "_nanoseconds": 684000000
+        }
+      },
+      {
+        "id": "section-4",
+        "type": "article",
+        "contentMarkdown": "1.  **The \"Belukha Mirror\" Photo:** Set your alarm for 5:30 AM. When the water is perfectly still before the morning breeze starts, the reflection of Belukha is a world-class photographic event.\n2.  **Larch Forest Trekking:** Hike the trail toward the Yazevoe Waterfall, where the lake drains into a series of dramatic cascades.\n3.  **Maral Health Spa:** Visit a nearby Maral farm (in June/July) to learn about the traditional \"Panty\" (antler-based) health treatments that have been part of Altai culture for centuries.",
+        "order": 4,
+        "content": "1.  **The \"Belukha Mirror\" Photo:** Set your alarm for 5:30 AM. When the water is perfectly still before the morning breeze starts, the reflection of Belukha is a world-class photographic event.\n2.  **Larch Forest Trekking:** Hike the trail toward the Yazevoe Waterfall, where the lake drains into a series of dramatic cascades.\n3.  **Maral Health Spa:** Visit a nearby Maral farm (in June/July) to learn about the traditional \"Panty\" (antler-based) health treatments that have been part of Altai culture for centuries.",
+        "title": "Essential Experiences",
+        "updatedAt": {
+          "_seconds": 1767629273,
+          "_nanoseconds": 327000000
+        }
+      },
+      {
+        "id": "section-5",
+        "type": "article",
+        "order": 5,
+        "title": "Travel Tips",
+        "contentMarkdown": "*   **Equipment:** Waterproof boots and high-quality mosquito repellent (for the early summer months) are essential.\n*   **Fishing:** Catch-and-release is the preferred rule for sustainable tourism recently.\n*   **Off-Grid:** Expect zero mobile signal at the lake. It is a place to disconnect.",
+        "content": "*   **Equipment:** Waterproof boots and high-quality mosquito repellent (for the early summer months) are essential.\n*   **Fishing:** Catch-and-release is the preferred rule for sustainable tourism recently.\n*   **Off-Grid:** Expect zero mobile signal at the lake. It is a place to disconnect.",
+        "updatedAt": {
+          "_seconds": 1767682534,
+          "_nanoseconds": 857000000
+        }
+      }
+    ],
+    "keyFacts": [
+      {
+        "id": "fact-1",
+        "order": 1,
+        "icon": "camera",
+        "value": "Known as the best place to photograph Mount Belukha, as the lake's calm surface provides a perfect inverted reflection of the peak.",
+        "label": "Mirror of Belukha",
+        "updatedAt": {
+          "_seconds": 1767680659,
+          "_nanoseconds": 943000000
+        }
+      },
+      {
+        "id": "fact-2",
+        "label": "Ide Fish Habitat",
+        "icon": "fish",
+        "value": "The name means 'Ide Lake' (Yazevoe), referring to the abundance of this silvery fish which thrives in the cold mountain water.",
+        "order": 2,
+        "updatedAt": {
+          "_seconds": 1767680659,
+          "_nanoseconds": 943000000
+        }
+      },
+      {
+        "id": "fact-3",
+        "value": "The lake serves as the primary base camp for treks and expeditions heading toward the Belaya Berel glacier and Belukha's base.",
+        "label": "Base Camp Hub",
+        "order": 3,
+        "icon": "tent",
+        "updatedAt": {
+          "_seconds": 1767680659,
+          "_nanoseconds": 943000000
+        }
+      },
+      {
+        "id": "fact-4",
+        "label": "Cedar Forest Gem",
+        "order": 4,
+        "value": "Encircled by ancient Siberian cedars and larches, the lake offers a quintessentially 'Altai' wilderness experience.",
+        "icon": "tree",
+        "updatedAt": {
+          "_seconds": 1767680659,
+          "_nanoseconds": 943000000
+        }
+      },
+      {
+        "id": "fact-5",
+        "order": 5,
+        "value": "A short trek from the lake leads to the spectacular Kokkol waterfall, the largest in the entire Altai range.",
+        "label": "Waterfall Proximity",
+        "icon": "mountain",
+        "updatedAt": {
+          "_seconds": 1767680659,
+          "_nanoseconds": 943000000
+        }
+      },
+      {
+        "id": "fact-6",
+        "order": 6,
+        "label": "Sacred Silence",
+        "value": "Far from cell phone signals and roads, the lake is a place of absolute natural peace and nomadic reflection.",
+        "icon": "volume-x",
+        "updatedAt": {
+          "_seconds": 1767680659,
+          "_nanoseconds": 943000000
+        }
+      }
+    ],
+    "video": [
+      {
+        "id": "main",
+        "url": "https://www.youtube.com/watch?v=def",
+        "type": "youtube"
+      }
+    ],
+    "map": [
+      {
+        "id": "main",
+        "coordinates": {
+          "lng": 82.46082854830682,
+          "lat": 49.89539361613161,
+          "address": "Yazevoe Lake, East Kazakhstan"
+        },
+        "title": "Yazevoe Lake"
+      }
+    ],
+    "faq": [
+      {
+        "id": "main",
+        "title": "FAQ",
+        "items": [
+          {
+            "answerFormat": "markdown",
+            "question": "Best time to visit?",
+            "answer": "Summer (June-August) for hiking, Winter for skiing."
+          }
+        ]
+      }
+    ],
+    "photoGallery": [
+      {
+        "id": "main",
+        "photos": [],
+        "title": "Gallery"
+      }
+    ],
+    "relatedPosts": [
+      {
+        "id": "config",
+        "enabled": true
+      }
+    ]
+  },
+  "backupTimestamp": "2026-01-10T06:43:26.722Z"
+}

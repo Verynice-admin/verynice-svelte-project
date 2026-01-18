@@ -150,9 +150,24 @@
 	}
 
 	.related-posts-header h2 {
-		font-size: clamp(1.4rem, 2vw, 2rem);
+		font-family: 'Outfit', sans-serif;
+		font-size: clamp(2rem, 3vw, 3rem);
+		font-weight: 800;
 		text-align: left;
 		margin: 0;
+		color: #fff;
+		letter-spacing: -0.03em;
+		text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	}
+
+	.related-posts-header h2 a {
+		text-decoration: none;
+		color: inherit;
+		transition: color 0.3s ease;
+	}
+
+	.related-posts-header h2 a:hover {
+		color: var(--vnk-accent-color, #22d3ee);
 	}
 
 	.nav-arrows {
@@ -206,25 +221,27 @@
 	}
 
 	.carousel-item {
-		list-style: none !important; /* Force remove bullets from items too */
+		list-style: none !important;
 		scroll-snap-align: start;
-		/* 3 items visible: (100% - 2 * gap) / 3 */
-		/* gap is 2rem. So (100% - 4rem) / 3 = 33.33% - 1.33rem */
-		flex: 0 0 calc((100% - 4rem) / 3);
-		min-width: 220px; /* Lower min-width to allow shrinking on tablet/small laptop */
+		/* Default: 1.2 items visible for mobile peek */
+		flex: 0 0 85%;
+		min-width: 200px;
 	}
 
-	/* Mobile: 1 item per row (carousel style) */
-	@media (max-width: 700px) {
+	/* Tablet: 3 items */
+	@media (min-width: 640px) and (max-width: 1023px) {
 		.carousel-item {
-			flex: 0 0 85%; /* Shows part of the next slide to encourage scrolling */
+			flex: 0 0 calc((100% - 4rem) / 3); /* 3 items, 2 gaps of 2rem */
 		}
 	}
 
-	/* Tablet: 2 items per row if space is tight */
-	@media (min-width: 701px) and (max-width: 900px) {
+	/* Desktop: Exactly 5 items */
+	@media (min-width: 1024px) {
 		.carousel-item {
-			flex: 0 0 calc(50% - 1rem); /* 2 items, 1 gap of 2rem */
+			/* 5 items, 4 gaps of 2rem (8rem total). 
+			   Restore min-width to prevent cards from becoming too narrow/tiny. */
+			flex: 0 0 calc((100% - 8rem) / 5);
+			min-width: 220px;
 		}
 	}
 

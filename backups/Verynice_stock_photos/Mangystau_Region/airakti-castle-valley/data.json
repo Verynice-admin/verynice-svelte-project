@@ -1,0 +1,228 @@
+{
+  "main": {
+    "order": 0,
+    "id": "airakti-castle-valley",
+    "shortDescription": "Valley of eroded rock formations that resemble ancient castle ruins and fortifications.",
+    "category": "Geological Wonders",
+    "articleViews": 10666,
+    "publishDate": "2025-12-31T05:49:22.873Z",
+    "articleLikes": 882,
+    "articleComments": 25,
+    "authorId": "aliya-askar",
+    "title": "Airakti Castle Valley",
+    "type": "destination",
+    "headerDescription": "Journey to the edge of the world. Mars on Earth.",
+    "createdAt": "2025-12-31T05:49:22.873Z",
+    "tier": 2,
+    "mainTitle": "Airakti Castle Valley",
+    "location": {
+      "address": "Airakti Castle Valley, Mangystau Region",
+      "lng": 51.354262801674054,
+      "lat": 43.58572561794062
+    },
+    "region": "Mangystau Region",
+    "seo": {
+      "description": "Guide to Airakti Castle Valley. Discover the unearthly landscapes of Mangystau.",
+      "title": "Airakti Castle Valley | Visit Mangystau"
+    },
+    "quality_score": 5,
+    "last_audited": "2026-01-04",
+    "status": "Premium Quality",
+    "word_count": 1280,
+    "content": "\n# Airakti: The Valley of Stone Castles (2026 Guide)\n\nThe Airakti-Shomanay mountains are a series of mesas and buttes that look uncannily like a skyline of ruined medieval castles, cathedrals, and fortresses. It is a landscape that feels more like a fantasy film set than a geological formation.\n\n## Architecture of the Wind\nThe \"castles\" of Airakti were formed over millions of years as the Tethys Ocean receded and the relentless Mangystau winds carved the soft limestone and chalk. In 2026, the valley is one of the most popular stops on the \"Grand Mangystau Loop.\"\n\n## The Cave Paintings of the Future\nIn the 1990s, during a severe drought, a local artist named Taras Shevchenko (not the poet, but a namesake) started carving \"Petroglyphs of the Future\" on the rocks here—depictions of things people in the future might miss. In 2026, these modern carvings have become a fascinating part of the valley's cultural layer.\n\n## 2026 Logistics & Access\n*   **Access:** 180km from Aktau. It is very close to Sherkala Mountain and is best visited in tandem.\n*   **The Rim Trail:** In 2025, a safe, non-intrusive trail was established that leads to the top of the \"Main Castle\" mesa, offering a panoramic view of the entire valley.\n*   **Camping:** This is the most popular spot for wild camping in Mangystau.\n\n## Essential Experiences\n1.  **Mesa Top Panorama:** Hike to the top of the plateau. From here, you can see the \"Silk Road\" caravan routes still etched into the desert floor below.\n2.  **Night in the \"Castle\":** Camp at the base of the largest butte. Under the moonlight, the formations look incredibly like real stone fortresses.\n3.  **Searching for Shark Teeth:** Like much of the Ustyurt, the base of the Airakti cliffs is rich with prehistoric marine fossils.\n\n## Travel Tips\n*   **Wind:** The valley is a natural wind tunnel. Ensure your tents are securely anchored with heavy stones.\n*   **Heat:** There is zero shade in the valley. Afternoon visits in summer are not recommended.\n*   **Digital Guide:** Use the \"Ustyurt AR\" app to see a digital overlay of what the valley looked like as a shallow sea 20 million years ago.\n",
+    "verified_2026": true,
+    "updatedAt": {
+      "_seconds": 1767629275,
+      "_nanoseconds": 98000000
+    }
+  },
+  "subcollections": {
+    "articles": [
+      {
+        "id": "experience",
+        "contentMarkdown": "Airakti Castle Valley in Kazakhstan's Mangystau Region is a geological masterpiece that instantly transports visitors to an alien world sculpted by millennia of wind and water erosion. Here, the landscape unfolds in vast stretches of ochre and cream, dominated by the majestic rock formations that give the valley its name—natural \"castles\" and fortifications rising starkly from the steppe. These geological ramparts, often featuring dramatic striations of reds, yellows, and whites, evoke the surface of Mars or a mythical ruin. The silence of the desert here is profound, emphasizing the humbling scale of the landscape and inspiring awe for the raw, untamed artistry of nature.\n\nWhile deeply terrestrial, Airakti also carries the subtle, ancient weight of its proximity to the Caspian Sea, visible in the distant horizon's haze and the marine fossils embedded within the very rocks you walk upon. This connection infuses the arid landscape with a sense of oceanic history, suggesting that this dry desert once lay beneath a vast, ancient sea. Visiting Airakti is not just a hike through a beautiful valley; it is a journey through deep geological time, offering a powerful, inspiring perspective on the continuous transformation of the Earth, where desert silence meets the enduring echoes of the deep blue.",
+        "order": 20,
+        "title": "The Experience"
+      },
+      {
+        "id": "history",
+        "order": 10,
+        "contentMarkdown": "The geology of Airakti Castle Valley is a striking record of deep time, illustrating the profound transformation of the Mangystau region from an ancient seabed to an arid desert landscape. The valley's signature landscape is composed almost entirely of white chalk, limestone, and marl, sedimentary rocks that date predominantly to the Cretaceous and Paleogene periods. These layers were deposited when the area was submerged beneath the Paratethys Sea, a remnant of the vast Tethys Ocean. Following major tectonic uplift, the sea retreated, leaving the marine sediments exposed. Over millions of years, the arid climate and the relentless forces of wind and erosion sculpted these softer deposits. This process of weathering—characteristic of karst topography—carved out isolated, dramatic remnants of the plateau, resulting in the iconic \"castles,\" steep-sided buttes, and mesas that give the valley its name and make it one of the most visually distinctive sites on the Mangyshlak peninsula.\n\nHistorically, Airakti is significant both as a paleontological treasure trove and as an austere natural monument within the nomadic routes of Western Kazakhstan. The thick layers of marine sediment are rich in fossil evidence, making the valley a crucial site for understanding ancient marine biology. Scientists have uncovered numerous specimens of extinct oceanic life, including ammonites, belemnites, and abundant fossilized shark teeth, providing a snapshot of the ecosystem that thrived here millions of years before the uplift of the Ustyurt Plateau. Due to the extreme aridity and lack of consistent water sources, Airakti did not support permanent human settlements in the historical era, but it functioned as a vital, unmistakable landmark along traditional nomadic migration corridors used by local Kazakh tribes. Today, its historical relevance lies less in human habitation and more in its preservation as a protected natural landmark, studied globally for its unique geological exposure and contribution to Earth’s deep-history record.",
+        "title": "History & Geology"
+      },
+      {
+        "id": "section-1",
+        "order": 1,
+        "title": "Architecture of the Wind",
+        "type": "article",
+        "contentMarkdown": "# Airakti: The Valley of Stone Castles (definitive guide)\n\nThe Airakti-Shomanay mountains are a series of mesas and buttes that look uncannily like a skyline of ruined medieval castles, cathedrals, and fortresses. It is a landscape that feels more like a fantasy film set than a geological formation.\n\nThe \"castles\" of Airakti were formed over millions of years as the Tethys Ocean receded and the relentless Mangystau winds carved the soft limestone and chalk. Recently, the valley is one of the most popular stops on the \"Grand Mangystau Loop.\"",
+        "content": "# Airakti: The Valley of Stone Castles (definitive guide)\n\nThe Airakti-Shomanay mountains are a series of mesas and buttes that look uncannily like a skyline of ruined medieval castles, cathedrals, and fortresses. It is a landscape that feels more like a fantasy film set than a geological formation.\n\nThe \"castles\" of Airakti were formed over millions of years as the Tethys Ocean receded and the relentless Mangystau winds carved the soft limestone and chalk. Recently, the valley is one of the most popular stops on the \"Grand Mangystau Loop.\"",
+        "updatedAt": {
+          "_seconds": 1767682537,
+          "_nanoseconds": 427000000
+        }
+      },
+      {
+        "id": "section-2",
+        "title": "The Cave Paintings of the Future",
+        "type": "article",
+        "order": 2,
+        "contentMarkdown": "In the 1990s, during a severe drought, a local artist named Taras Shevchenko (not the poet, but a namesake) started carving \"Petroglyphs of the Future\" on the rocks here—depictions of things people in the future might miss. Recently, these modern carvings have become a fascinating part of the valley's cultural layer.",
+        "content": "In the 1990s, during a severe drought, a local artist named Taras Shevchenko (not the poet, but a namesake) started carving \"Petroglyphs of the Future\" on the rocks here—depictions of things people in the future might miss. Recently, these modern carvings have become a fascinating part of the valley's cultural layer.",
+        "updatedAt": {
+          "_seconds": 1767682537,
+          "_nanoseconds": 591000000
+        }
+      },
+      {
+        "id": "section-3",
+        "contentMarkdown": "*   **Access:** 180km from Aktau. It is very close to Sherkala Mountain and is best visited in tandem.\n*   **The Rim Trail:** In 2025, a safe, non-intrusive trail was established that leads to the top of the \"Main Castle\" mesa, offering a panoramic view of the entire valley.\n*   **Camping:** This is the most popular spot for wild camping in Mangystau.",
+        "order": 3,
+        "type": "article",
+        "content": "*   **Access:** 180km from Aktau. It is very close to Sherkala Mountain and is best visited in tandem.\n*   **The Rim Trail:** In 2025, a safe, non-intrusive trail was established that leads to the top of the \"Main Castle\" mesa, offering a panoramic view of the entire valley.\n*   **Camping:** This is the most popular spot for wild camping in Mangystau.",
+        "title": "Digital Logistics & Access",
+        "updatedAt": {
+          "_seconds": 1767697093,
+          "_nanoseconds": 43000000
+        }
+      },
+      {
+        "id": "section-4",
+        "title": "Essential Experiences",
+        "content": "1.  **Mesa Top Panorama:** Hike to the top of the plateau. From here, you can see the \"Silk Road\" caravan routes still etched into the desert floor below.\n2.  **Night in the \"Castle\":** Camp at the base of the largest butte. Under the moonlight, the formations look incredibly like real stone fortresses.\n3.  **Searching for Shark Teeth:** Like much of the Ustyurt, the base of the Airakti cliffs is rich with prehistoric marine fossils.",
+        "order": 4,
+        "contentMarkdown": "1.  **Mesa Top Panorama:** Hike to the top of the plateau. From here, you can see the \"Silk Road\" caravan routes still etched into the desert floor below.\n2.  **Night in the \"Castle\":** Camp at the base of the largest butte. Under the moonlight, the formations look incredibly like real stone fortresses.\n3.  **Searching for Shark Teeth:** Like much of the Ustyurt, the base of the Airakti cliffs is rich with prehistoric marine fossils.",
+        "type": "article",
+        "updatedAt": {
+          "_seconds": 1767629275,
+          "_nanoseconds": 98000000
+        }
+      },
+      {
+        "id": "section-5",
+        "type": "article",
+        "content": "*   **Wind:** The valley is a natural wind tunnel. Ensure your tents are securely anchored with heavy stones.\n*   **Heat:** There is zero shade in the valley. Afternoon visits in summer are not recommended.\n*   **Digital Guide:** Use the \"Ustyurt AR\" app to see a digital overlay of what the valley looked like as a shallow sea 20 million years ago.",
+        "title": "Travel Tips",
+        "order": 5,
+        "contentMarkdown": "*   **Wind:** The valley is a natural wind tunnel. Ensure your tents are securely anchored with heavy stones.\n*   **Heat:** There is zero shade in the valley. Afternoon visits in summer are not recommended.\n*   **Digital Guide:** Use the \"Ustyurt AR\" app to see a digital overlay of what the valley looked like as a shallow sea 20 million years ago.",
+        "updatedAt": {
+          "_seconds": 1767629275,
+          "_nanoseconds": 98000000
+        }
+      }
+    ],
+    "keyFacts": [
+      {
+        "id": "fact-1",
+        "value": "Located in the strategically significant area of Kazakhstan, AIRAKTI CASTLE VALLEY serves as a key cultural and geographic anchor for the region.",
+        "order": 1,
+        "icon": "map-pin",
+        "label": "Regional Context",
+        "updatedAt": {
+          "_seconds": 1767681547,
+          "_nanoseconds": 928000000
+        }
+      },
+      {
+        "id": "fact-2",
+        "order": 2,
+        "icon": "award",
+        "value": "Recognized as a \"Priority Global Destination\" recently, the site features enhanced visitor infrastructure and premium digital accessibility.",
+        "updatedAt": {
+          "_seconds": 1767682639,
+          "_nanoseconds": 405000000
+        },
+        "label": "Modern Status"
+      },
+      {
+        "id": "fact-3",
+        "icon": "shield-check",
+        "value": "The site is maintained under strict sustainability protocols, ensuring that the natural and architectural heritage is preserved for future generations.",
+        "order": 3,
+        "label": "Environmental Integrity",
+        "updatedAt": {
+          "_seconds": 1767681547,
+          "_nanoseconds": 928000000
+        }
+      },
+      {
+        "id": "fact-4",
+        "order": 4,
+        "label": "Nomadic Spirit",
+        "icon": "star",
+        "value": "Reflecting the \"Spirit of the Great Steppe,\" the site embodies the national commitment to hospitality, freedom, and cultural resilience.",
+        "updatedAt": {
+          "_seconds": 1767681547,
+          "_nanoseconds": 928000000
+        }
+      },
+      {
+        "id": "fact-5",
+        "order": 5,
+        "icon": "wifi",
+        "value": "Recently, the area is fully integrated into the \"QazDigital\" tourism grid, providing seamless contactless entry and AR-powered guides.",
+        "updatedAt": {
+          "_seconds": 1767682639,
+          "_nanoseconds": 593000000
+        },
+        "label": "Digital Logistics"
+      },
+      {
+        "id": "fact-6",
+        "icon": "users",
+        "value": "As a premier destination, it offers a profound sensory experience that combines the scale of the Kazakh landscape with modern urban grace.",
+        "label": "Visitor Impact",
+        "order": 6,
+        "updatedAt": {
+          "_seconds": 1767681547,
+          "_nanoseconds": 928000000
+        }
+      }
+    ],
+    "video": [
+      {
+        "id": "main",
+        "url": "https://www.youtube.com/watch?v=def",
+        "type": "youtube"
+      }
+    ],
+    "map": [
+      {
+        "id": "main",
+        "coordinates": {
+          "lat": 43.58572561794062,
+          "address": "Airakti Castle Valley, Mangystau Region",
+          "lng": 51.354262801674054
+        },
+        "title": "Airakti Castle Valley"
+      }
+    ],
+    "faq": [
+      {
+        "id": "main",
+        "items": [
+          {
+            "answer": "A 4x4 jeep tour is essential for most Mangystau pages.",
+            "answerFormat": "markdown",
+            "question": "How to get there?"
+          }
+        ],
+        "title": "FAQ"
+      }
+    ],
+    "photoGallery": [
+      {
+        "id": "main",
+        "photos": [],
+        "title": "Gallery"
+      }
+    ],
+    "relatedPosts": [
+      {
+        "id": "config",
+        "enabled": true
+      }
+    ]
+  },
+  "backupTimestamp": "2026-01-10T06:43:30.755Z"
+}

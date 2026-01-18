@@ -445,8 +445,13 @@ export const load: PageServerLoad = async ({ params }) => {
             // Map to RelatedPostCard format
             relatedPosts = randomSelection.map(attraction => {
                 // Resolve Image
+                // Resolve Image
                 let imagePublicId = null;
-                if (attraction.mainImage) {
+
+                // Prioritize the reliably restored headerBackgroundPublicId
+                if (attraction.headerBackgroundPublicId) {
+                    imagePublicId = attraction.headerBackgroundPublicId;
+                } else if (attraction.mainImage) {
                     imagePublicId = attraction.mainImage;
                 } else if (attraction.image) {
                     if (typeof attraction.image === 'string') imagePublicId = attraction.image;
