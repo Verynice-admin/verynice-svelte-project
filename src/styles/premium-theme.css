@@ -424,8 +424,9 @@ a:hover {
 }
 
 .attractions-tier-heading {
-	color: #fbbf24 !important; /* Gold */
+	color: #ffffff !important; /* White instead of gold */
 	font-family: 'Outfit', sans-serif !important;
+	text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
 .attractions-tier-description {
@@ -435,31 +436,52 @@ a:hover {
 .attractions-tier-item {
 	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
 	border: 1px solid rgba(255, 255, 255, 0.1) !important;
-	border-radius: 999px !important; /* Pill-shaped */
-	padding: 0.875rem 1.5rem !important;
+	border-radius: 20px !important; /* Rounded for better content display */
+	padding: 1.25rem 1.5rem !important;
 	backdrop-filter: blur(20px) !important;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
 .attractions-tier-item:hover {
 	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+	transform: translateY(-4px) !important;
 }
 
-.tier-title {
-	color: #fbbf24 !important; /* Gold */
+/* Different colors for each tier card */
+.attractions-tier-item:nth-child(1) .tier-title {
+	color: #60a5fa !important; /* Blue for Tier 1 */
 }
 
-.tier-box {
-	background: rgba(251, 191, 36, 0.2) !important;
-	border: 2px solid #fbbf24 !important;
+.attractions-tier-item:nth-child(2) .tier-title {
+	color: #34d399 !important; /* Green for Tier 2 */
+}
+
+.attractions-tier-item:nth-child(3) .tier-title {
+	color: #fbbf24 !important; /* Gold for Tier 3 */
+}
+
+/* Tier boxes with matching colors */
+.attractions-tier-item:nth-child(1) .tier-box {
+	background: linear-gradient(135deg, #2563eb, #3b82f6) !important; /* Blue */
+	border: none !important;
+}
+
+.attractions-tier-item:nth-child(2) .tier-box {
+	background: linear-gradient(135deg, #10b981, #34d399) !important; /* Green */
+	border: none !important;
+}
+
+.attractions-tier-item:nth-child(3) .tier-box {
+	background: linear-gradient(135deg, #f59e0b, #fbbf24) !important; /* Gold */
+	border: none !important;
 }
 
 .tier-label {
-	color: #fbbf24 !important;
+	color: #ffffff !important;
 }
 
 .tier-number {
-	color: #fbbf24 !important;
+	color: #ffffff !important;
 }
 
 /* ========================================= */

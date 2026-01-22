@@ -3818,8 +3818,9 @@ body:has(#page-hero-section) {
   font-size: 1.75rem;
   font-weight: 800;
   margin: 0 0 1rem 0;
-  color: #fbbf24 !important; /* Gold */
+  color: #ffffff !important; /* White instead of gold */
   font-family: 'Outfit', sans-serif !important;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
 .attractions-tier-body {
@@ -3837,55 +3838,74 @@ body:has(#page-hero-section) {
 
 .attractions-tier-list {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem; /* Slim vertical spacing */
+  flex-direction: row; /* Horizontal layout */
+  gap: 1rem;
+  align-items: stretch;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .attractions-tier-list {
-    gap: 1rem;
+    flex-direction: column; /* Stack on mobile */
+    gap: 0.75rem;
   }
 }
 
 .attractions-tier-item {
   display: flex;
-  align-items: center; /* Center vertically for slim look */
-  gap: 1rem;
-  padding: 0.875rem 1.5rem; /* Slim padding like other pill cards */
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 999px; /* Pill-shaped */
+  flex-direction: column; /* Stack vertically inside each pill */
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px; /* Rounded but not full pill for better content display */
   background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  height: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  flex: 1; /* Equal width */
+  min-width: 0;
   transition: all 0.3s ease;
   backdrop-filter: blur(20px);
+  text-align: center;
 }
 
 .attractions-tier-item:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
 }
 
 .attractions-tier-item p {
   margin: 0;
   color: #cbd5e1; /* Light text for dark background */
-  font-size: 0.875rem;
-  line-height: 1.4;
-  display: none; /* Hide description for slim pill look */
+  font-size: 0.85rem;
+  line-height: 1.5;
+  display: block; /* Show description */
 }
 
 .tier-title {
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: none; /* Remove uppercase for modern look */
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: none;
   letter-spacing: 0;
-  color: #fbbf24; /* Gold */
   margin: 0;
   border: none;
   padding: 0;
-  width: auto;
+  width: 100%;
   line-height: 1.3;
   min-height: 0;
+}
+
+/* Different color for each tier title */
+.attractions-tier-item:nth-child(1) .tier-title {
+  color: #60a5fa; /* Blue for Tier 1 */
+}
+
+.attractions-tier-item:nth-child(2) .tier-title {
+  color: #34d399; /* Green for Tier 2 */
+}
+
+.attractions-tier-item:nth-child(3) .tier-title {
+  color: #fbbf24; /* Gold for Tier 3 */
 }
 
 .attractions-tier-item>div:not(.tier-box) {
