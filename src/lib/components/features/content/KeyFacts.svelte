@@ -101,7 +101,7 @@
 		}
 	}
 	.key-facts-title {
-		color: var(--vnk-text-accent-color, #0a84ff);
+		color: #fbbf24 !important;
 		padding-bottom: 8px;
 		margin: 0 0 12px 0;
 		font-size: 1.1rem;

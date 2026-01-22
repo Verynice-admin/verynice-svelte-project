@@ -1,5 +1,3 @@
-<!-- src/lib/components/content/VideoEmbed.svelte (UPGRADED WITH SYNTAX FIX) -->
-
 <script>
 	/** @type {string} */
 	export let title = 'Embedded Video';
@@ -92,3 +90,34 @@
 		</div>
 	{/if}
 </section>
+
+<style>
+	/* Make the video wrapper 16:9 and responsive */
+	.video-wrapper {
+		position: relative;
+		padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+		height: 0;
+		overflow: hidden;
+		width: 100%;
+		border-radius: 1.5rem; /* Match premium styling */
+		background: #000;
+		box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5); /* Deep shadow */
+		/* Match RelatedPosts negative margin expansion */
+		margin: 0 -1rem;
+		width: calc(100% + 2rem);
+	}
+
+	.video-wrapper iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
+	/* Optional: if component is used in white theme context */
+	:global(.light-theme) .video-wrapper {
+		box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+	}
+</style>

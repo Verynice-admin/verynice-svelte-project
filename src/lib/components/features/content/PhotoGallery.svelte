@@ -33,7 +33,7 @@
 					disabled={totalPhotos < 2}
 				>
 					‹
-				</button> 
+				</button>
 				<button
 					class="nav-button"
 					on:click={showNext}
@@ -88,6 +88,17 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--vnk-spacing-md);
+	}
+
+	.photo-gallery-block h2 {
+		font-family: 'Outfit', sans-serif;
+		font-size: clamp(2rem, 3vw, 3rem);
+		font-weight: 800;
+		color: #ffffff !important;
+		margin: 0;
+		text-align: left;
+		letter-spacing: -0.03em;
+		text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 	}
 
 	.gallery-controls {

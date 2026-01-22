@@ -29,7 +29,7 @@
 		},
 		title: 'Explore', // Helper title for the primary menu
 		footerMenuLinks: [
-			{ text: 'Cities', url: '/cities' },
+			{ text: 'Cities', url: '/destinations' },
 			{ text: 'History', url: '/history' },
 			{ text: 'Destinations', url: '/destinations' },
 			{ text: 'Food & Drink', url: '/food-drink' },
@@ -49,9 +49,9 @@
 			{
 				title: 'Destinations',
 				links: [
-					{ text: 'Astana', url: '/cities/astana' },
-					{ text: 'Almaty', url: '/cities/almaty' },
-					{ text: 'Shymkent', url: '/cities/shymkent' }
+					{ text: 'Astana', url: '/destinations/astana' },
+					{ text: 'Almaty', url: '/destinations/almaty' },
+					{ text: 'Shymkent', url: '/destinations/shymkent' }
 				]
 			},
 			{

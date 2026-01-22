@@ -408,19 +408,25 @@
 	/* ========================================= */
 	.toc-rail-hero {
 		right: auto !important; /* Override generic right */
-		/* Responsive positioning: 
-		   - Normally 480px right of center
-		   - BUT constrained to never be further right than "100% - 380px" (20px margin for 360px width)
-		   - This 'pushes' it left as any screen < 1300px squeezes it
+		/* Position strictly relative to center to ensure it NEVER enters the content area.
+		   Content is max 900px (450px half). 
+		   We place this at 500px from center.
 		*/
-		left: min(calc(50% + 480px), calc(100% - 380px));
+		left: calc(50% + 500px);
 		width: max-content;
-		max-width: 360px;
+		max-width: 300px;
 		text-align: left;
 		display: flex;
 		flex-direction: column;
 		gap: 12px;
 		pointer-events: none !important; /* Container ignores clicks */
+	}
+
+	/* Hide Hero TOC on screens where it would not fit or look crowded (<1550px) */
+	@media (max-width: 1550px) {
+		.toc-rail-hero {
+			display: none !important;
+		}
 	}
 
 	.toc-rail-hero .toc-header {

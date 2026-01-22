@@ -2,9 +2,8 @@
 	import '../styles/index.css';
 	import SiteHeader from '$components/layout/header/SiteHeader.svelte';
 	import Footer from '$components/layout/footer/Footer.svelte';
-	import TimeWeatherDock from '$components/features/widgets/TimeWeatherDock.svelte';
-	import BackToTop from '$components/features/ui-elements/BackToTop.svelte';
-	import TranslationProgressBar from '$lib/components/ui/TranslationProgressBar.svelte';
+	// Lazy load non-critical components for better performance
+	import { onMount } from 'svelte';
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import { get } from 'svelte/store';
@@ -15,6 +14,12 @@
 	export let data: LayoutData;
 	const headerConfig = data.headerConfig ?? {};
 	const footerConfig = data.footerContent ?? {};
+
+	// Lazy loaded components
+	let TimeWeatherDock: any;
+	let BackToTop: any;
+	let TranslationProgressBar: any;
+	let componentsLoaded = false;
 
 	if (browser) {
 		beforeNavigate(() => {
@@ -35,7 +40,6 @@
 
 			// Small delay to ensure the new page content is fully rendered in the DOM
 			setTimeout(() => {
-				console.log(`[Translation] Re-applying ${lang} to new page...`);
 				translatePageTo(lang)
 					.then((ok) => {
 						if (!ok) {
@@ -46,13 +50,38 @@
 			}, 300);
 		});
 	}
+
+	// Lazy load non-critical components after initial render
+	onMount(async () => {
+		// Use requestIdleCallback or setTimeout for better performance
+		const loadComponents = () => {
+			Promise.all([
+				import('$components/features/widgets/TimeWeatherDock.svelte'),
+				import('$components/features/ui-elements/BackToTop.svelte'),
+				import('$lib/components/ui/TranslationProgressBar.svelte')
+			]).then(([timeWeather, backToTop, translation]) => {
+				TimeWeatherDock = timeWeather.default;
+				BackToTop = backToTop.default;
+				TranslationProgressBar = translation.default;
+				componentsLoaded = true;
+			}).catch(err => console.error('Failed to load components:', err));
+		};
+
+		if ('requestIdleCallback' in window) {
+			requestIdleCallback(loadComponents, { timeout: 1000 });
+		} else {
+			setTimeout(loadComponents, 100);
+		}
+	});
 </script>
 
 <SiteHeader {headerConfig} />
 
 <slot />
 
-<TranslationProgressBar />
+{#if componentsLoaded}
+	<svelte:component this={TranslationProgressBar} />
+	<svelte:component this={TimeWeatherDock} city="Almaty" timeZone="Asia/Almaty" dockLeft={32} />
+	<svelte:component this={BackToTop} />
+{/if}
 <Footer {footerConfig} />
-<TimeWeatherDock city="Almaty" timeZone="Asia/Almaty" dockLeft={32} />
-<BackToTop />

@@ -2,6 +2,30 @@ import { adminDB } from '$lib/server/firebaseAdmin';
 import { loadHistoryPage } from '$lib/data-loaders/history';
 import { validateImage, generateQualityReport } from '$lib/utils/sanitize';
 
+// Default FAQ items for the History page when Firestore has no FAQ yet
+const defaultHistoryFaqItems = [
+  {
+    question: 'Who is Gagarin?',
+    answer:
+      'Yuri Gagarin was a Soviet cosmonaut who became the **first human in space** on 12 April 1961. ' +
+      'His historic Vostok 1 mission launched from the Baikonur Cosmodrome, which is located in present-day Kazakhstan.',
+    answerFormat: 'markdown'
+  },
+  {
+    question: 'What is the current time in Kazakhstan?',
+    answer:
+      'Kazakhstan spans **two time zones** (UTC+5 and UTC+6). Major cities like Astana and Almaty usually observe UTC+5 or UTC+6 ' +
+      'depending on the region and season. For the exact current time, search “time in Kazakhstan” or in a specific city (e.g. “time in Almaty”) in your browser.',
+    answerFormat: 'markdown'
+  },
+  {
+    question: 'What year did Kazakhstan gain independence from the USSR?',
+    answer:
+      'Kazakhstan declared its independence from the Soviet Union on **16 December 1991**, becoming the last of the Soviet republics to do so.',
+    answerFormat: 'markdown'
+  }
+];
+
 // Serialize Firestore Timestamps to ISO strings for client-side
 function serializeDates(obj: any): any {
   if (!obj || typeof obj !== 'object') return obj;
@@ -475,6 +499,14 @@ export async function load() {
       }
     }
 
+    // 3. If there are still no FAQ items in Firestore, use the default History FAQ
+    if (!faq || !Array.isArray(faq.items) || faq.items.length === 0) {
+      faq = {
+        title: 'Frequently Asked Questions',
+        items: defaultHistoryFaqItems
+      };
+    }
+
     // Old Logic (Disabled)
     if (false) {
       const userQuestions = userQuestionsSnap.docs
@@ -524,6 +556,7 @@ export async function load() {
     }
 
     // Load photo gallery from subcollection (no fallback - subcollection is source of truth)
+    // Load photo gallery from subcollection (no fallback - subcollection is source of truth)
     let photoGallery = null;
     if (photoGallerySnap.size > 0) {
       const galleryDoc = photoGallerySnap.docs[0].data();
@@ -533,12 +566,99 @@ export async function load() {
       };
     }
 
-    // Load related posts from subcollection (no fallback - subcollection is source of truth)
-    // Filter out the 'main' document if it exists (it only contained title, which is now in document)
-    const relatedPosts = relatedPostsSnap.docs
-      .filter(doc => doc.id !== 'main')
-      .map(doc => serializeDates(doc.data()))
-      .sort((a, b) => (a.order || 0) - (b.order || 0));
+    // --- UNIVERSAL "MORE TO EXPLORE" STRATEGY (Copied from Destinations) ---
+    // Fetch random attractions to ensure freshness and working images
+    let relatedPosts: any[] = [];
+
+    try {
+      // Fetch all attractions from the database
+      const allAttractionsSnap = await adminDB.collectionGroup('attractions').get();
+
+      let allAttractions = allAttractionsSnap.docs
+        .map((doc: any) => {
+          const data = doc.data();
+          return { id: doc.id, ...data };
+        })
+        .filter((item: any) => {
+          // Filter out items that definitely have no image
+          const hasImage = item.headerBackgroundPublicId ||
+            item.mainImage ||
+            item.image ||
+            item.heroImagePublicId ||
+            (item.photos && item.photos.length > 0) ||
+            (item.images && item.images.length > 0);
+          return !!hasImage;
+        });
+
+      // Shuffle Array (Fisher-Yates) for randomness
+      for (let i = allAttractions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [allAttractions[i], allAttractions[j]] = [allAttractions[j], allAttractions[i]];
+      }
+
+      // Select top 12 (User requested "e.g. 10", 12 is a good grid number)
+      const randomSelection = allAttractions.slice(0, 12);
+
+      // Map to RelatedPostCard format
+      relatedPosts = randomSelection.map(attraction => {
+        // Resolve Image - Robust Logic from Destinations Page
+        let imagePublicId = null;
+
+        // Prioritize the reliably restored headerBackgroundPublicId
+        if (attraction.headerBackgroundPublicId) {
+          imagePublicId = attraction.headerBackgroundPublicId;
+        } else if (attraction.mainImage) {
+          imagePublicId = attraction.mainImage;
+        } else if (attraction.image) {
+          if (typeof attraction.image === 'string') imagePublicId = attraction.image;
+          else if (typeof attraction.image === 'object') imagePublicId = attraction.image.publicId;
+        } else if (attraction.photos && attraction.photos.length > 0) {
+          imagePublicId = attraction.photos[0];
+        } else if (attraction.images && attraction.images.length > 0) {
+          // Fallback to images array if main image missing
+          const first = attraction.images[0];
+          imagePublicId = typeof first === 'string' ? first : first.publicId;
+        } else if (attraction.heroImage) {
+          imagePublicId = attraction.heroImage;
+        } else if (attraction.heroImagePublicId) {
+          imagePublicId = attraction.heroImagePublicId;
+        }
+
+        // Resolve URL
+        let url = attraction.url;
+        if (!url) {
+          if (attraction.id && !attraction.id.startsWith('item-')) {
+            url = `/destinations/${attraction.id}`;
+          } else {
+            url = '#';
+          }
+        }
+
+        // Special overrides for known slugs to ensure perfect linking
+        const titleLower = (attraction.title || '').toLowerCase();
+        if (titleLower.includes('altyn-emel')) url = '/destinations/altyn-emel-national-park';
+        if (titleLower.includes('big almaty lake')) url = '/destinations/big-almaty-lake';
+        if (titleLower.includes('almaty') && titleLower.includes('city')) url = '/destinations/almaty-city';
+
+        return {
+          id: attraction.id,
+          title: attraction.title || attraction.name || 'Discover',
+          category: attraction.category || attraction.region || 'Destinations',
+          imagePublicId: imagePublicId,
+          headerBackgroundPublicId: imagePublicId,
+          url: url,
+          mainTitle: attraction.mainTitle // Pass mainTitle if available
+        };
+      });
+
+    } catch (err) {
+      console.warn('[History Page] Failed to generate random related posts:', err);
+      // Fallback: Use manual list if random generation fails completely
+      relatedPosts = relatedPostsSnap.docs
+        .filter(doc => doc.id !== 'main')
+        .map(doc => serializeDates(doc.data()))
+        .sort((a, b) => (a.order || 0) - (b.order || 0));
+    }
 
     // Small data is now in the document (labels, breadcrumbs, seo, nextUpPreview, relatedPostsTitle)
     // These are read directly from the page object below

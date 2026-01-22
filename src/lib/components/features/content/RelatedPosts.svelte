@@ -217,31 +217,41 @@
 		padding: 0;
 		margin: 0;
 		display: flex;
-		gap: 4rem; /* Spacing between items */
+		/* Responsive gap */
+		gap: 1.5rem;
 	}
 
 	.carousel-item {
 		list-style: none !important;
-		scroll-snap-align: start;
-		/* Default: 1.2 items visible for mobile peek */
-		flex: 0 0 85%;
-		min-width: 200px;
+		scroll-snap-align: center; /* Center snap feels better for partial peeking */
+		/* Sizing for Mobile: Fixed, manageable width for 'polaroid' feel */
+		flex: 0 0 260px;
+		width: 260px;
+		min-width: 0; /* Reset */
 	}
 
 	/* Tablet: 3 items */
 	@media (min-width: 640px) and (max-width: 1023px) {
+		.related-posts-list {
+			gap: 2rem;
+		}
 		.carousel-item {
-			flex: 0 0 calc((100% - 8rem) / 3); /* 3 items, 2 gaps of 4rem */
+			flex: 0 0 calc((100% - 4rem) / 3); /* 3 items, 2 gaps of 2rem */
+			width: auto;
 		}
 	}
 
 	/* Desktop: Exactly 5 items */
 	@media (min-width: 1024px) {
+		.related-posts-list {
+			gap: 4rem;
+		}
 		.carousel-item {
-			/* 5 items, 4 gaps of 4rem (16rem total). 
-			   Restore min-width to prevent cards from becoming too narrow/tiny. */
+			scroll-snap-align: start;
+			/* 5 items, 4 gaps of 4rem (16rem total). */
 			flex: 0 0 calc((100% - 16rem) / 5);
 			min-width: 220px;
+			width: auto;
 		}
 	}
 

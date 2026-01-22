@@ -469,6 +469,17 @@
 		transition: transform 0.1s ease-out;
 	}
 
+	.themed-content-block h2 {
+		font-family: 'Outfit', sans-serif;
+		font-size: clamp(2rem, 3vw, 3rem);
+		font-weight: 800;
+		color: #ffffff !important;
+		margin: 0 0 1.5rem 0;
+		text-align: left;
+		letter-spacing: -0.03em;
+		text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+	}
+
 	/* Wrapper handles sizing and positioning context */
 	.map-wrapper {
 		position: relative;

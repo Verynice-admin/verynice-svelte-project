@@ -12,7 +12,7 @@ const getBoratData = () => {
       mainTitle: 'About Borat',
       headerDescription:
         'The movie "Borat: Cultural Learnings of America for Make Benefit Glorious Nation of Kazakhstan" changed the world\'s view of us forever.',
-      headerBackgroundPublicId: 'borat_header_bg',
+      headerBackgroundPublicId: 'content/pages/aboutBorat/main_borat',
       location: 'Glod, Romania (Not Kazakhstan)',
       articleViews: 69420,
       articleComments: 128,
@@ -34,7 +34,7 @@ const getBoratData = () => {
       name: 'Borat Sagdiyev',
       title: 'Lead Country promoter',
       bio: 'Providing accurate facts about our glorious nation.',
-      profilePicturePublicId: 'logo'
+      profilePicturePublicId: 'content/pages/aboutBorat/borat_author'
     },
     qualityReport: { qualityScore: 100 }
   };
@@ -118,6 +118,11 @@ export async function load() {
     }
 
     const page = serializeDates(pageSnap.data());
+
+    // Fallback image if missing from DB
+    if (!page.headerBackgroundPublicId) {
+      page.headerBackgroundPublicId = 'content/pages/aboutBorat/main_borat';
+    }
 
     const articles = articlesSnap.docs
       .map((doc) => {
@@ -315,6 +320,7 @@ export async function load() {
     return getBoratData();
   }
 }
+
 
 
 

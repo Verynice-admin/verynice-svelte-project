@@ -58,19 +58,19 @@
 		{
 			title: 'Almaty City',
 			description: 'The cultural capital, nestled in the Trans-Ili Alatau mountains.',
-			url: '/cities/almaty',
+			url: '/destinations/almaty',
 			keywords: 'almaty, apple city, mountains, kok tobe, medeu'
 		},
 		{
 			title: 'Astana City',
 			description: 'The modern futuristic capital in the heart of the steppes.',
-			url: '/cities/astana',
+			url: '/destinations/astana',
 			keywords: 'astana, capital, nur-sultan, baiterek, khan shatyr'
 		},
 		{
 			title: 'Shymkent',
 			description: 'The southern gastronomic heart of Kazakhstan.',
-			url: '/cities/shymkent',
+			url: '/destinations/shymkent',
 			keywords: 'shymkent, south, food, warmest city'
 		},
 		// --- TOP ATTRACTIONS (Assumed slugs based on common structure) ---

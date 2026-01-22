@@ -282,9 +282,11 @@
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} />
+<svelte:body class="premium-theme-page" />
 
 <svelte:head>
 	<title>{pageData?.seo?.title || 'History | VeryNice'}</title>
+
 	<meta
 		name="description"
 		content={pageData?.seo?.description || 'Learn about the rich history of Kazakhstan.'}
@@ -363,7 +365,7 @@
 
 	<!-- Fonts with display=block for performance -->
 	<link
-		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=block"
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Outfit:wght@400;700;800;900&display=block"
 		rel="stylesheet"
 	/>
 
@@ -374,74 +376,80 @@
 
 {#if pageData}
 	<!-- apply .section styles from pages.css -->
-	<section id="page-hero-section" class="section" bind:this={heroSection}>
-		<div class="section-header wrapper">
-			<nav aria-label="Breadcrumb" class="breadcrumb-modern">
-				<ol class="breadcrumb-modern__list">
-					{#each breadcrumbs as crumb, index}
-						<li class="breadcrumb-modern__item">
-							{#if crumb.href && index !== breadcrumbs.length - 1}
-								<a class="breadcrumb-modern__link" href={crumb.href}>{crumb.label}</a>
-							{:else}
-								<span class="breadcrumb-modern__current" aria-current="page">{crumb.label}</span>
-							{/if}
-							{#if index < breadcrumbs.length - 1}
-								<span class="breadcrumb-modern__divider" aria-hidden="true"></span>
-							{/if}
-						</li>
-					{/each}
-				</ol>
-			</nav>
-			<div class="section-header-content-row">
-				<div class="section-header-text">
-					<h1 itemprop="headline">{pageData.mainTitle}</h1>
-					<p class="section-description" itemprop="description">{pageData.headerDescription}</p>
-					<div class="post-info" role="group" aria-label="Article statistics">
-						{#if pageData.location}
-							<div class="post-info-inner" aria-label="Location: {pageData.location}">
-								<span class="icon-location" aria-hidden="true"></span>
-								<div class="post-info-content">{pageData.location}</div>
-							</div>
-						{/if}
-						{#if pageData.articleViews > 0}
-							<div class="post-info-inner" aria-label="{pageData.articleViews} views">
-								<span class="icon-view" aria-hidden="true"></span>
-								<div class="post-info-content">{pageData.articleViews.toLocaleString()}</div>
-							</div>
-						{/if}
-						{#if pageData.articleComments > 0}
-							<div class="post-info-inner" aria-label="{pageData.articleComments} comments">
-								<span class="icon-comment" aria-hidden="true"></span>
-								<div class="post-info-content">{pageData.articleComments.toLocaleString()}</div>
-							</div>
-						{/if}
-						{#if pageData.articleLikes > 0}
-							<div class="post-info-inner" aria-label="{pageData.articleLikes} likes">
-								<span class="icon-like" aria-hidden="true"></span>
-								<div class="post-info-content">{pageData.articleLikes.toLocaleString()}</div>
-							</div>
-						{/if}
-					</div>
+	<!-- PREMIUM HERO SECTION (BORAT STYLE) -->
+	<section id="page-hero-section" class="hero-premium" bind:this={heroSection}>
+		<div class="hero-bg-container">
+			{#if pageData.headerBackgroundPublicId}
+				<div
+					class="hero-bg-image"
+					role="img"
+					aria-label={pageData.headerBackgroundImageAriaLabel || 'Background image for page'}
+					style={`background-image: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, {
+						width: 2200,
+						height: 1200,
+						crop: 'fill',
+						gravity: 'auto',
+						quality: 100,
+						fetch_format: 'auto'
+					})}")`}
+				></div>
+			{/if}
+			<div class="hero-overlay"></div>
+		</div>
+
+		<div class="hero-content wrapper">
+			<div class="hero-text-box">
+				<!-- Breadcrumbs (Keep them but subtle) -->
+				<nav aria-label="Breadcrumb" class="breadcrumb-premium">
+					<ol class="breadcrumb-list">
+						{#each breadcrumbs as crumb, index}
+							<li class="breadcrumb-item">
+								{#if crumb.href && index !== breadcrumbs.length - 1}
+									<a class="breadcrumb-link" href={crumb.href}>{crumb.label}</a>
+									<span class="breadcrumb-divider">/</span>
+								{:else}
+									<span class="breadcrumb-current" aria-current="page">{crumb.label}</span>
+								{/if}
+							</li>
+						{/each}
+					</ol>
+				</nav>
+
+				<span class="hero-kicker">HISTORY OF KAZAKHSTAN</span>
+				<h1 itemprop="headline">{pageData.mainTitle}</h1>
+				<p class="hero-lead" itemprop="description">
+					{pageData.headerDescription}
+				</p>
+
+				<!-- Stats Bar (Integrated into Hero) -->
+				<div class="post-info-premium" role="group" aria-label="Article statistics">
+					{#if pageData.location}
+						<div class="stat-pill" aria-label="Location: {pageData.location}">
+							<span class="icon-location" aria-hidden="true"></span>
+							<span>{pageData.location}</span>
+						</div>
+					{/if}
+					{#if pageData.articleViews > 0}
+						<div class="stat-pill" aria-label="{pageData.articleViews} views">
+							<span class="icon-view" aria-hidden="true"></span>
+							<span>{pageData.articleViews.toLocaleString()}</span>
+						</div>
+					{/if}
+					{#if pageData.articleLikes > 0}
+						<div class="stat-pill" aria-label="{pageData.articleLikes} likes">
+							<span class="icon-like" aria-hidden="true"></span>
+							<span>{pageData.articleLikes.toLocaleString()}</span>
+						</div>
+					{/if}
+					{#if pageData.articleComments > 0}
+						<div class="stat-pill" aria-label="{pageData.articleComments} comments">
+							<span class="icon-comment" aria-hidden="true"></span>
+							<span>{pageData.articleComments.toLocaleString()}</span>
+						</div>
+					{/if}
 				</div>
 			</div>
 		</div>
-		{#if pageData.headerBackgroundPublicId}
-			<div
-				class="header-background"
-				role="img"
-				aria-label={pageData.headerBackgroundImageAriaLabel || 'Background image for history page'}
-				style={`--hero-bg-url: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, {
-					width: 2200,
-					height: 1200,
-					crop: 'fill',
-					gravity: 'auto',
-					quality: 'auto:good',
-					fetch_format: 'auto'
-				})}")`}
-			>
-				<div class="background-image"></div>
-			</div>
-		{/if}
 	</section>
 
 	<div class="timeline-container">
@@ -475,39 +483,53 @@
 		<!-- Footer Content (Video, Map, FAQ, Author) moved below timeline -->
 		<div class="timeline-footer wrapper">
 			{#if hasPhotoGallery}
-				<PhotoGallery title={photoGalleryTitle} photos={normalizedPhotoGallery} />
+				<div class="themed-content-block">
+					<PhotoGallery title={photoGalleryTitle} photos={normalizedPhotoGallery} />
+				</div>
 			{/if}
 			{#if pageData.relatedPosts && pageData.relatedPosts.length > 0}
-				<RelatedPosts
-					title={pageData.relatedPostsTitle || 'Related Posts'}
-					posts={pageData.relatedPosts}
-				/>
+				<div class="dark-component-wrapper">
+					<RelatedPosts
+						title={pageData.relatedPostsTitle || 'Related Posts'}
+						posts={pageData.relatedPosts}
+					/>
+				</div>
 			{/if}
 			{#if pageData.video?.url}
-				<VideoEmbed title={pageData.video.title || 'Video'} url={pageData.video.url} />
+				<div class="video-single">
+					<VideoEmbed title={pageData.video.title || 'Video'} url={pageData.video.url} />
+				</div>
 			{/if}
 			{#if pageData.map?.coordinates}
-				<Map
-					title={pageData.map.title || 'Location on Map'}
-					coordinates={pageData.map.coordinates}
-				/>
+				<div class="map-wrapper-premium">
+					<Map
+						title={pageData.map.title || 'Location on Map'}
+						coordinates={pageData.map.coordinates}
+					/>
+				</div>
 			{/if}
 			{#if pageData.faq?.items?.length}
-				<FaqSection
-					title={pageData.faq.title || 'Frequently Asked Questions'}
-					items={pageData.faq.items}
-				/>
+				<div class="faq-wrapper-premium">
+					<FaqSection
+						title={pageData.faq.title || 'Frequently Asked Questions'}
+						items={pageData.faq.items}
+					/>
+				</div>
 			{/if}
 			{#if data.author && (data.author.name || data.author.authorName)}
-				<AuthorInfo
-					author={data.author}
-					labels={pageData.labels}
-					postId="historyPage"
-					articleLikes={pageData.articleLikes}
-					collectionPath="pages"
-				/>
+				<div class="author-wrapper-premium">
+					<AuthorInfo
+						author={data.author}
+						labels={pageData.labels}
+						postId="historyPage"
+						articleLikes={pageData.articleLikes}
+						collectionPath="pages"
+					/>
+				</div>
 			{/if}
-			<Comments postId="historyPage" />
+			<div class="comments-wrapper-premium">
+				<Comments postId="historyPage" />
+			</div>
 		</div>
 	</div>
 
@@ -527,3 +549,173 @@
 		<p>{data.error}</p>
 	</div>
 {/if}
+
+<style>
+	/* PREMIUM HERO SECTION (Borat Style) */
+	/* We keep this as per "change only main image area" */
+
+	:global(body) {
+		background-color: #0f172a !important;
+		color: #f8fafc !important; /* Essential for readability on dark bg */
+	}
+
+	/* Ensure main containers match */
+	:global(.section),
+	:global(.timeline-container) {
+		background-color: #0f172a !important;
+		color: #f8fafc !important;
+	}
+
+	.wrapper {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+
+	/* HERO SECTION Styles (From Borat Page) */
+	.hero-premium {
+		position: relative;
+		height: 80vh;
+		min-height: 600px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		padding-top: 80px;
+		overflow: hidden;
+		background: #000;
+		margin-bottom: 0;
+	}
+
+	.hero-bg-container {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+	}
+
+	.hero-bg-image {
+		width: 100%;
+		height: 100%;
+		background-size: cover;
+		background-position: center 20%;
+		/* Filter forced off for maximum clarity as requested */
+		filter: none !important;
+	}
+
+	.hero-overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.95) 100%);
+	}
+
+	.hero-content {
+		position: relative;
+		z-index: 10;
+		width: 100%;
+		padding-top: 10vh;
+	}
+
+	.hero-text-box {
+		max-width: 900px;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	/* Breadcrumbs - Premium */
+	.breadcrumb-premium {
+		margin-bottom: 2rem;
+		display: inline-block;
+	}
+
+	.breadcrumb-list {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		gap: 0.5rem;
+		font-family: 'Inter', sans-serif;
+		font-size: 0.9rem;
+		color: #94a3b8;
+	}
+
+	.breadcrumb-link {
+		color: #cbd5e1;
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+
+	.breadcrumb-link:hover {
+		color: var(--vnk-accent-color);
+	}
+
+	.breadcrumb-divider {
+		color: #475569;
+		margin-left: 0.5rem;
+	}
+
+	.breadcrumb-current {
+		color: var(--vnk-accent-color);
+		font-weight: 600;
+	}
+
+	.hero-kicker {
+		display: block;
+		font-family: 'Outfit', sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 0.4em;
+		color: #fbbf24; /* Gold */
+		font-weight: 700;
+		font-size: 0.9rem;
+		margin-bottom: 1rem;
+		text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+	}
+
+	.hero-text-box h1 {
+		font-family: 'Outfit', sans-serif;
+		font-size: clamp(3.5rem, 6vw, 5.5rem);
+		font-weight: 900;
+		line-height: 1.1;
+		margin-bottom: 1.5rem;
+		color: #fff;
+		text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+		letter-spacing: -0.02em;
+	}
+
+	.hero-lead {
+		font-family: 'Inter', sans-serif;
+		font-size: clamp(1.2rem, 2vw, 1.5rem);
+		line-height: 1.6;
+		color: #cbd5e1;
+		margin-bottom: 3rem;
+		max-width: 700px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	/* Post Info Pills */
+	.post-info-premium {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.stat-pill {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		padding: 0.5rem 1.25rem;
+		border-radius: 50px;
+		font-size: 0.9rem;
+		color: #fff;
+		font-weight: 500;
+		backdrop-filter: blur(10px);
+	}
+
+	.stat-pill span[class^='icon-'] {
+		color: var(--vnk-accent-color);
+	}
+</style>
