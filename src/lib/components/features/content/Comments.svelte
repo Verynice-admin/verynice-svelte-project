@@ -437,7 +437,7 @@
 
 	.author-name {
 		font-weight: 700;
-		color: #1e293b;
+		/* Color controlled by global theme */
 		font-size: 0.95rem; /* Slightly smaller */
 	}
 
@@ -447,13 +447,13 @@
 	}
 
 	.comment-date {
-		color: #64748b;
+		/* Color controlled by global theme */
 		font-size: 0.8rem;
 		font-weight: 500;
 	}
 
 	.comment-text {
-		color: #334155;
+		/* Color controlled by global theme */
 		line-height: 1.5;
 		font-size: 0.95rem; /* Slightly smaller for slim look */
 		white-space: pre-wrap; /* Preserve paragraphs */
@@ -463,9 +463,9 @@
 	.empty-state {
 		text-align: center;
 		padding: 2rem;
-		background: #d1d4da; /* Light gray background */
+		/* Background controlled by global theme */
 		border-radius: 999px; /* Pill-shaped */
-		color: #94a3b8;
+		/* Color controlled by global theme */
 		font-style: italic;
 		font-size: 0.9rem;
 	}
@@ -477,7 +477,7 @@
 
 	/* -- Premium Form -- */
 	.comment-form-wrapper {
-		background: #d1d4da; /* Light gray background */
+		/* Background controlled by global theme */
 		border-radius: 20px; /* Reduced from 40px for sleeker look */
 		padding: 1.25rem 1.5rem; /* Further reduced for slimmer look */
 		box-shadow:
@@ -497,7 +497,7 @@
 	.comment-form-wrapper h3 {
 		font-size: 1.35rem; /* Slightly reduced */
 		font-weight: 800;
-		color: #1e293b;
+		/* Color controlled by global theme */
 		margin-bottom: 1.25rem; /* Reduced from 1.5rem */
 		text-align: center;
 		letter-spacing: -0.02em;
@@ -637,8 +637,7 @@
 	}
 
 	.text-btn {
-		background: #d1d4da; /* Light gray background */
-		color: #64748b;
+		/* Background and color controlled by global theme */
 		border: 1px solid rgba(0, 0, 0, 0.08);
 		padding: 0.625rem 1.5rem;
 		border-radius: 999px; /* Pill-shaped like Google */
@@ -651,8 +650,7 @@
 
 	.text-btn:hover {
 		border-color: rgba(0, 0, 0, 0.12);
-		color: #1e293b;
-		background: #c4c7cd; /* Slightly darker gray on hover */
+		/* Background and color controlled by global theme */
 		box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 	}
 

@@ -188,7 +188,7 @@
 		margin: 0 auto; /* Center the box */
 		border-radius: 32px; /* More modern, less rounded */
 		border: 1px solid rgba(0, 0, 0, 0.06);
-		background: #d1d4da; /* Light gray background to match other sections */
+		/* Background controlled by global theme */
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Softer, more modern shadow */
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		position: relative;
@@ -219,7 +219,7 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 1.5px;
-		color: #64748b; /* Darker for better contrast */
+		/* Color controlled by global theme */
 		pointer-events: none;
 	}
 
@@ -240,7 +240,7 @@
 		object-fit: cover;
 		background-color: #f8fafc;
 		border-radius: 50%;
-		border: 4px solid #e8eaee; /* Lighter border */
+		/* Border controlled by global theme */
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 		transition: all 0.3s ease;
 	}
@@ -257,13 +257,13 @@
 		justify-content: center;
 		width: 100%;
 		height: 100%;
-		background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+		/* Background controlled by global theme */
 		color: #ffffff;
 		font-family: 'Inter', sans-serif;
 		font-weight: 700;
-		font-size: 2.5rem; /* Smaller for reduced size */
+		font-size: 5rem; /* Larger for 240px size */
 		border-radius: 50%;
-		border: 4px solid #e8eaee;
+		/* Border controlled by global theme */
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 		transition: all 0.3s ease;
 	}

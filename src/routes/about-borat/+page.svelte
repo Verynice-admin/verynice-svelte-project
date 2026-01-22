@@ -464,11 +464,7 @@
 
 <style>
 	/* PREMIUM DARK STYLING FOR BORAT PAGE */
-
-	:global(body) {
-		background: #0f172a !important;
-		color: #f8fafc !important;
-	}
+	/* Global theme handles body background - removed duplicate */
 
 	.wrapper {
 		max-width: 1200px;
@@ -784,142 +780,10 @@
 		color: var(--vnk-accent-color) !important;
 	}
 
-	/* Ensure generic component headers are white on Borat page */
-	:global(.themed-content-block h2),
-	:global(.additional-content-header h2),
-	:global(.photo-gallery-block h2),
-	:global(.related-posts-header h2),
-	:global(.map-wrapper-premium h2),
-	:global(.video-single h2),
-	:global(.faq-header-wrapper h2),
-	:global(.comments-header h2),
-	:global(#video-section h2),
-	:global(section.related-posts h2) {
-		font-family: 'Outfit', sans-serif !important;
-		font-size: clamp(2rem, 3vw, 3rem) !important;
-		color: #ffffff !important; /* STRICTLY WHITE */
-		font-weight: 800 !important;
-		text-align: left !important;
-		margin: 0 0 1.5rem 0 !important;
-		letter-spacing: -0.03em !important;
-		text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
-		display: block !important;
-		opacity: 1 !important;
-		visibility: visible !important;
-	}
+	/* Global header styling moved to premium-theme.css */
 
-	/* FAQ Section Overrides */
-	:global(.faq-section .faq-card) {
-		background: rgba(30, 41, 59, 0.5) !important;
-		backdrop-filter: blur(20px) !important;
-		border: 1px solid rgba(255, 255, 255, 0.1) !important;
-		border-radius: 24px !important;
-		box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
-	}
-
-	/* Reset FAQ override specifically if it conflicts w/ global white headers, 
-	   but keep question text legible if needed (assuming yellow/accent for questions is distinct from headers)
-	*/
-	:global(.faq-section .faq-question-text) {
-		color: #fbbf24 !important;
-	}
-	:global(.faq-section .faq-body-inner),
-	:global(.faq-section .faq-body-inner p),
-	:global(.faq-section .faq-body-inner li),
-	:global(.faq-section .faq-body-inner span),
-	:global(.faq-section .faq-body-inner div) {
-		color: #e2e8f0 !important; /* Very light slate for readability */
-	}
-	:global(.faq-section .faq-body-inner strong),
-	:global(.faq-section .faq-body-inner b) {
-		color: #fff !important;
-	}
-
-	/* FAQ "Ask a Question" Section */
-	:global(.faq-ask-wrapper .ask-container) {
-		background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
-		border: 1px solid rgba(255, 255, 255, 0.1) !important;
-		box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
-	}
-	:global(.faq-ask-wrapper .ask-container h3) {
-		color: #fbbf24 !important;
-	}
-	:global(.faq-ask-wrapper .ask-subtitle) {
-		color: #94a3b8 !important;
-	}
-	:global(.faq-ask-wrapper input) {
-		background: #0f172a !important;
-		border-color: #334155 !important;
-		color: #fff !important;
-	}
-	:global(.faq-ask-wrapper input::placeholder) {
-		color: #64748b !important;
-	}
-
-	/* Author Info Overrides */
-	:global(.author-info-section .author-info-unified-box) {
-		background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
-		backdrop-filter: blur(20px) !important;
-		border: 1px solid rgba(255, 255, 255, 0.1) !important;
-		box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
-	}
-	:global(.author-info-section .author-name-display) {
-		color: #fbbf24 !important;
-		font-family: 'Outfit', sans-serif !important;
-	}
-	:global(.author-info-section .author-title-display) {
-		color: #22d3ee !important; /* Blue/Cyan accent */
-	}
-	:global(.author-info-section .author-description-display) {
-		color: #cbd5e1 !important;
-	}
-	:global(.author-info-section .author-photo) {
-		border-color: rgba(255, 255, 255, 0.1) !important;
-		background-color: #1e293b !important;
-	}
-	:global(.author-info-section .author-photo-placeholder) {
-		border-color: rgba(255, 255, 255, 0.1) !important;
-	}
-	:global(.author-info-section .author-section-label) {
-		color: #94a3b8 !important;
-	}
-
-	/* Comments Section Overrides */
-	:global(.comments-section .comment-card) {
-		background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
-		border: 1px solid rgba(255, 255, 255, 0.1) !important;
-		box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3) !important;
-	}
-	:global(.comments-section .author-name) {
-		color: #fbbf24 !important;
-	}
-	:global(.comments-section .comment-text) {
-		color: #cbd5e1 !important;
-	}
-	:global(.comments-section .comment-date) {
-		color: #94a3b8 !important;
-	}
-	:global(.comments-section .comment-form-wrapper) {
-		background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
-		border: 1px solid rgba(255, 255, 255, 0.1) !important;
-	}
-	:global(.comments-section .comment-form-wrapper h3) {
-		color: #fbbf24 !important;
-	}
-	:global(.comments-section .modern-input),
-	:global(.comments-section .modern-textarea) {
-		background: #0f172a !important;
-		border-color: #334155 !important;
-		color: #fff !important;
-	}
-	:global(.comments-section .modern-input::placeholder),
-	:global(.comments-section .modern-textarea::placeholder) {
-		color: #64748b !important;
-	}
-	:global(.comments-section .empty-state) {
-		background: rgba(30, 41, 59, 0.5) !important;
-		color: #94a3b8 !important;
-	}
+	/* FAQ, Author, Comments styling moved to global premium-theme.css */
+	/* This ensures all pages have consistent styling */
 
 	.dark-component-wrapper,
 	.videos-grid,

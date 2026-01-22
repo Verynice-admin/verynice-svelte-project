@@ -1,266 +1,413 @@
 /* 
-  PREMIUM THEME (Copilot/Bing Aesthetic)
-  Global styles for History, About Borat, and Destinations pages.
-  Applies: Gray containers (#d1d4da), White Pill buttons, Slim Cards, and Dark Mode typography.
+  GLOBAL PREMIUM DARK THEME - About Borat Style Applied to ALL Pages
+  Applies: Dark background, glassmorphism cards, gold accents, modern pill shapes
 */
 
-/* 
-   ROOT CLASS: .premium-theme-page 
-   Apply this class to the outer wrapper or body of any page that needs this look.
-*/
+/* ========================================= */
+/* 1. GLOBAL DARK BACKGROUND */
+/* ========================================= */
 
-.premium-theme-page {
-    /* Force dark background for the page/section */
-    background: #0f172a;
-    color: #f8fafc;
-    width: 100%;
-    min-height: 100vh;
+body {
+	background: #0f172a !important;
+	color: #f8fafc !important;
 }
 
-/* =========================================
-   1. GRAY CONTAINERS (Copilot Aesthetic)
-   ========================================= */
-/* Targets: FAQ Ask Box, Author Card, Comments, Map Search */
-.premium-theme-page .faq-ask-wrapper .ask-container,
-.premium-theme-page .author-info-unified-box,
-.premium-theme-page .comments-section .comment-card,
-.premium-theme-page .comments-section .comment-form-wrapper,
-.premium-theme-page .comments-section .empty-state,
-.premium-theme-page .map-search-below .search-container-below {
-    background: #d1d4da !important;
-    /* User requested Gray */
-    border: 1px solid rgba(255, 255, 255, 0.5) !important;
-    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1) !important;
-    backdrop-filter: none !important;
-    border-radius: 24px !important;
+/* Ensure main containers match */
+.section,
+.timeline-container,
+main {
+	background-color: #0f172a !important;
+	color: #f8fafc !important;
 }
 
-/* Author Box exception for shape */
-.premium-theme-page .author-info-unified-box {
-    border-radius: 40px !important;
+/* ========================================= */
+/* 2. GLOBAL SECTION HEADERS - White with Shadow */
+/* ========================================= */
+
+.themed-content-block h2,
+.additional-content-header h2,
+.photo-gallery-block h2,
+.related-posts-header h2,
+.map-wrapper-premium h2,
+.video-single h2,
+.faq-header-wrapper h2,
+.comments-header h2,
+#video-section h2,
+section.related-posts h2 {
+	font-family: 'Outfit', sans-serif !important;
+	font-size: clamp(2rem, 3vw, 3rem) !important;
+	color: #ffffff !important;
+	font-weight: 800 !important;
+	text-align: left !important;
+	margin: 0 0 1.5rem 0 !important;
+	letter-spacing: -0.03em !important;
+	text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+	display: block !important;
+	opacity: 1 !important;
+	visibility: visible !important;
 }
 
-/* Map Search exception */
-.premium-theme-page .map-search-below .search-container-below {
-    border-radius: 999px !important;
+/* ========================================= */
+/* 3. FAQ SECTION - Dark Glassmorphism */
+/* ========================================= */
+
+.faq-section .faq-card {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	backdrop-filter: blur(20px) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	border-radius: 999px !important;
+	box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Force Slimmer Padding on Forms (User "Vertical Slim" Request) */
-.premium-theme-page .faq-ask-wrapper .ask-container,
-.premium-theme-page .comments-section .comment-form-wrapper {
-    padding: 1.5rem !important;
-    /* Reduced from 2.5rem */
+.faq-section .faq-card.is-open {
+	border-radius: 24px !important;
 }
 
-/* =========================================
-   2. TYPOGRAPHY & COLORS ON GRAY
-   ========================================= */
-/* Headers inside Gray Cards -> Dark Slate */
-.premium-theme-page .faq-ask-wrapper .ask-container h3,
-.premium-theme-page .new-answer-header h4,
-.premium-theme-page .author-name-display,
-.premium-theme-page .comments-section .author-name,
-.premium-theme-page .comments-section .comment-form-wrapper h3,
-.premium-theme-page .map-search-below .search-label {
-    color: #0f172a !important;
-    font-family: 'Outfit', sans-serif !important;
+.faq-section .faq-card:hover {
+	box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.6) !important;
 }
 
-/* Subtext/Body inside Gray Cards -> Slate 700 */
-.premium-theme-page .ask-subtitle,
-.premium-theme-page .author-description-display,
-.premium-theme-page .comments-section .comment-text,
-.premium-theme-page .author-section-label,
-.premium-theme-page .new-answer-body {
-    color: #334155 !important;
+.faq-section .faq-question-text {
+	color: #fbbf24 !important; /* Gold */
 }
 
-/* Dates/Meta -> Slate 500 */
-.premium-theme-page .comments-section .comment-date {
-    color: #64748b !important;
+.faq-section .faq-body-inner,
+.faq-section .faq-body-inner p,
+.faq-section .faq-body-inner li,
+.faq-section .faq-body-inner span,
+.faq-section .faq-body-inner div {
+	color: #e2e8f0 !important; /* Very light slate */
 }
 
-/* =========================================
-   3. WHITE PILL BUTTONS & INPUTS
-   ========================================= */
-/* Buttons */
-.premium-theme-page .faq-ask-wrapper button,
-.premium-theme-page .comments-section button,
-.premium-theme-page .map-search-below button,
-.premium-theme-page .faq-btn,
-.premium-theme-page .new-answer-close {
-    background: #ffffff !important;
-    color: #0f172a !important;
-    /* Dark Text */
-    border: 1px solid #cbd5e1 !important;
-    border-radius: 999px !important;
-    /* Pill Shape */
-    font-weight: 700 !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
-    padding: 0.75rem 1.5rem !important;
-    transition: all 0.2s ease !important;
+.faq-section .faq-body-inner strong,
+.faq-section .faq-body-inner b {
+	color: #fff !important;
 }
 
-.premium-theme-page button:hover,
-.premium-theme-page .faq-btn:hover {
-    background: #f8fafc !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+/* FAQ Ask Question Section */
+.faq-ask-wrapper .ask-container {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Inputs */
-.premium-theme-page .faq-ask-wrapper input,
-.premium-theme-page .comments-section .modern-input,
-.premium-theme-page .comments-section .modern-textarea,
-.premium-theme-page .map-search-below .search-input-below {
-    background: #ffffff !important;
-    border-color: #94a3b8 !important;
-    color: #0f172a !important;
-    border-radius: 999px !important;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+.faq-ask-wrapper .ask-container h3 {
+	color: #fbbf24 !important; /* Gold */
 }
 
-.premium-theme-page .comments-section .modern-textarea {
-    border-radius: 20px !important;
-    /* Textarea exception */
+.faq-ask-wrapper .ask-subtitle {
+	color: #94a3b8 !important;
 }
 
-.premium-theme-page input::placeholder,
-.premium-theme-page textarea::placeholder {
-    color: #64748b !important;
+.faq-ask-wrapper .input-wrapper {
+	background: rgba(15, 23, 42, 0.8) !important;
+	border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-/* =========================================
-   4. SLIM CARD LAYOUTS
-   ========================================= */
-/* Slim FAQ Buttons - Enforce "Strip" look */
-.premium-theme-page .faq-btn {
-    padding: 0.75rem 1.25rem !important;
-    /* Reduced from 1rem 1.5rem */
-    min-height: 0 !important;
-    /* Prevent intrinsic height defaults */
-    height: auto !important;
-    display: flex !important;
-    align-items: center !important;
+.faq-ask-wrapper input {
+	background: transparent !important;
+	color: #fff !important;
 }
 
-.premium-theme-page .faq-card {
-    min-height: 0 !important;
+.faq-ask-wrapper input::placeholder {
+	color: #64748b !important;
 }
 
-.premium-theme-page .faq-grid {
-    gap: 0.5rem !important;
-    /* Reduced from 0.75rem */
-    /* Tighter vertical stacking */
+.faq-toggle-btn {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	color: #fbbf24 !important; /* Gold */
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Slim Comment Cards (Horizontal Row) */
-.premium-theme-page .comments-section .comment-card {
-    padding: 0.75rem 1rem !important;
-    /* Reduced from 0.75rem 1.25rem */
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 0.75rem !important;
-    /* Reduced gap */
-    min-height: 0 !important;
-    /* Prevent intrinsic height defaults */
+.faq-toggle-btn:hover {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9)) !important;
 }
 
-.premium-theme-page .comments-section .comment-card>* {
-    margin: 0 !important;
-    /* Remove internal margins that add height */
+/* ========================================= */
+/* 4. AUTHOR INFO SECTION */
+/* ========================================= */
+
+.author-info-section .author-info-unified-box {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	backdrop-filter: blur(20px) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
 }
 
-.premium-theme-page .comments-section .comment-header {
-    margin-bottom: 0 !important;
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.5rem;
+.author-info-section .author-info-unified-box:hover {
+	box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.6) !important;
 }
 
-/* =========================================
-   5. LAYOUT WIDTHS & SPACING
-   ========================================= */
-/* Slimmer functional wrappers (800px) - Restored "Slim" look */
-.premium-theme-page .comments-wrapper-premium,
-.premium-theme-page .author-wrapper-premium,
-.premium-theme-page .faq-wrapper-premium,
-.premium-theme-page .map-wrapper-premium {
-    max-width: 800px !important;
-    margin: 0 auto;
-    width: 100%;
+.author-info-section .author-name-display {
+	color: #fbbf24 !important; /* Gold */
+	font-family: 'Outfit', sans-serif !important;
 }
 
-/* Allow internal components to respect their own max-width (usually 800px) or fill the now-constrained wrapper */
-.premium-theme-page .faq-section,
-.premium-theme-page .faq-section .faq-grid,
-.premium-theme-page .faq-section .faq-header-wrapper,
-.premium-theme-page .faq-ask-wrapper,
-.premium-theme-page .author-info-unified-box {
-    max-width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+.author-info-section .author-title-display {
+	color: #22d3ee !important; /* Cyan accent */
 }
 
-/* =========================================
-   6. TIMELINE CARDS (White Boxes)
-   ========================================= */
-.premium-theme-page .timeline-card-glass,
-.premium-theme-page .timeline-content {
-    background: #ffffff !important;
-    color: #334155 !important;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 24px !important;
-    padding: 2.5rem !important;
-    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.author-info-section .author-description-display {
+	color: #cbd5e1 !important;
 }
 
-.premium-theme-page .timeline-card-glass:hover,
-.premium-theme-page .timeline-content:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.4);
-    background: #ffffff !important;
+.author-info-section .author-photo {
+	border-color: rgba(255, 255, 255, 0.1) !important;
+	background-color: #1e293b !important;
 }
 
-.premium-theme-page .card-title,
-.premium-theme-page .timeline-title {
-    color: #0f172a !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-weight: 700 !important;
+.author-info-section .author-photo-placeholder {
+	border-color: rgba(255, 255, 255, 0.1) !important;
+	background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%) !important;
 }
 
-.premium-theme-page .timeline-content .prose p,
-.premium-theme-page .card-body p,
-.premium-theme-page .timeline-body {
-    color: #334155 !important;
-    font-size: 1.1rem;
-    line-height: 1.7;
+.author-info-section .author-section-label {
+	color: #94a3b8 !important;
 }
 
-.premium-theme-page .timeline-year,
-.premium-theme-page .card-year {
-    display: inline-block;
-    font-family: 'Outfit', sans-serif;
-    font-weight: 800;
-    font-size: 1rem;
-    color: var(--vnk-accent-color);
-    background: rgba(34, 211, 238, 0.1);
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    margin-bottom: 1rem;
+/* ========================================= */
+/* 5. COMMENTS/DISCUSSION SECTION */
+/* ========================================= */
+
+.comments-section .comment-card {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* =========================================
-   7. GLOBAL HEADERS & TEXT
-   ========================================= */
-/* Ensure all section headers are white on dark pages */
-.premium-theme-page h2,
-.premium-theme-page .themed-content-block h2,
-.premium-theme-page .additional-content-header h2 {
-    color: #ffffff !important;
-    font-family: 'Outfit', sans-serif !important;
-    font-weight: 800 !important;
-    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+.comments-section .comment-card:hover {
+	box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.4) !important;
+}
+
+.comments-section .author-name {
+	color: #fbbf24 !important; /* Gold */
+}
+
+.comments-section .comment-text {
+	color: #cbd5e1 !important;
+}
+
+.comments-section .comment-date {
+	color: #94a3b8 !important;
+}
+
+.comments-section .comment-form-wrapper {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
+}
+
+.comments-section .comment-form-wrapper h3 {
+	color: #fbbf24 !important; /* Gold */
+}
+
+.comments-section .input-group:has(.modern-input),
+.comments-section .input-group:has(.modern-textarea) {
+	background: rgba(15, 23, 42, 0.8) !important;
+	border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.comments-section .input-group:has(.modern-input):focus-within,
+.comments-section .input-group:has(.modern-textarea):focus-within {
+	background: rgba(15, 23, 42, 0.9) !important;
+	border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.comments-section .modern-input,
+.comments-section .modern-textarea {
+	background: transparent !important;
+	color: #fff !important;
+}
+
+.comments-section .modern-input::placeholder,
+.comments-section .modern-textarea::placeholder {
+	color: #64748b !important;
+}
+
+.comments-section .empty-state {
+	background: rgba(30, 41, 59, 0.5) !important;
+	color: #94a3b8 !important;
+}
+
+.comments-section .text-btn {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	color: #cbd5e1 !important;
+}
+
+.comments-section .text-btn:hover {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9)) !important;
+	color: #ffffff !important;
+}
+
+.comments-header .count {
+	background: rgba(251, 191, 36, 0.2) !important; /* Gold tint */
+	color: #fbbf24 !important;
+	border: 1px solid rgba(251, 191, 36, 0.3) !important;
+}
+
+/* ========================================= */
+/* 6. OTHER SECTIONS - Glassmorphism */
+/* ========================================= */
+
+/* Video, Map, Photo Gallery sections */
+.video-single,
+.map-wrapper-premium,
+.photo-gallery-block,
+.related-posts {
+	background: transparent !important;
+}
+
+/* Make sure any white cards in these sections match */
+.themed-content-block {
+	background: transparent !important;
+}
+
+/* ========================================= */
+/* 7. RESPONSIVE MOBILE ADJUSTMENTS */
+/* ========================================= */
+
+@media (max-width: 768px) {
+	.faq-section .faq-card,
+	.comments-section .comment-card,
+	.author-info-section .author-info-unified-box {
+		border-radius: 20px !important;
+	}
+	
+	.comments-section .comment-card {
+		padding: 0.75rem 1rem !important;
+	}
+}
+
+/* ========================================= */
+/* 8. BUTTONS & INTERACTIVE ELEMENTS */
+/* ========================================= */
+
+/* Primary button styling */
+.modern-btn {
+	background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+	box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
+}
+
+.modern-btn:hover:not(:disabled) {
+	box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5) !important;
+}
+
+/* ========================================= */
+/* 9. ICONS & SMALL ELEMENTS */
+/* ========================================= */
+
+.faq-icon-wrapper {
+	background: rgba(251, 191, 36, 0.2) !important; /* Gold tint */
+}
+
+.faq-card.is-open .faq-icon-wrapper {
+	background: #fbbf24 !important; /* Gold */
+}
+
+.faq-icon::before,
+.faq-icon::after {
+	background-color: #fbbf24 !important; /* Gold */
+}
+
+.faq-card.is-open .faq-icon::before,
+.faq-card.is-open .faq-icon::after {
+	background-color: #0f172a !important; /* Dark */
+}
+
+/* ========================================= */
+/* 10. AVATAR STYLING */
+/* ========================================= */
+
+.comments-section .avatar {
+	box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.3) !important; /* Gold ring */
+}
+
+/* ========================================= */
+/* 11. SUCCESS/ERROR MESSAGES */
+/* ========================================= */
+
+.success-msg {
+	background: rgba(34, 197, 94, 0.2) !important;
+	color: #86efac !important;
+	border: 1px solid rgba(34, 197, 94, 0.3) !important;
+}
+
+.error-msg {
+	background: rgba(239, 68, 68, 0.2) !important;
+	color: #fca5a5 !important;
+	border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+.message.success {
+	background: rgba(34, 197, 94, 0.2) !important;
+	color: #86efac !important;
+	border: 1px solid rgba(34, 197, 94, 0.3) !important;
+}
+
+.message.error {
+	background: rgba(239, 68, 68, 0.2) !important;
+	color: #fca5a5 !important;
+	border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+.message.info {
+	background: rgba(59, 130, 246, 0.2) !important;
+	color: #93c5fd !important;
+	border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+/* ========================================= */
+/* 12. NEW ANSWER ALERT */
+/* ========================================= */
+
+.new-answer-alert {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.new-answer-header h4 {
+	color: #fbbf24 !important; /* Gold */
+}
+
+.new-answer-body {
+	color: #cbd5e1 !important;
+}
+
+.new-answer-close {
+	background: rgba(30, 41, 59, 0.6) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	color: #cbd5e1 !important;
+}
+
+.new-answer-close:hover {
+	background: rgba(30, 41, 59, 0.8) !important;
+	color: #ffffff !important;
+}
+
+/* ========================================= */
+/* 13. LINK COLORS ON DARK BACKGROUND */
+/* ========================================= */
+
+a {
+	color: #22d3ee !important; /* Cyan */
+}
+
+a:hover {
+	color: #67e8f9 !important; /* Lighter cyan */
+}
+
+.faq-body-inner a,
+.comment-text a,
+.author-description-display a {
+	color: #22d3ee !important;
+	border-bottom-color: #22d3ee !important;
+}
+
+.faq-body-inner a:hover,
+.comment-text a:hover,
+.author-description-display a:hover {
+	color: #67e8f9 !important;
+	border-bottom-color: #67e8f9 !important;
 }

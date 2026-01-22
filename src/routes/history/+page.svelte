@@ -552,19 +552,7 @@
 
 <style>
 	/* PREMIUM HERO SECTION (Borat Style) */
-	/* We keep this as per "change only main image area" */
-
-	:global(body) {
-		background-color: #0f172a !important;
-		color: #f8fafc !important; /* Essential for readability on dark bg */
-	}
-
-	/* Ensure main containers match */
-	:global(.section),
-	:global(.timeline-container) {
-		background-color: #0f172a !important;
-		color: #f8fafc !important;
-	}
+	/* Global theme handles body background - removed duplicate */
 
 	.wrapper {
 		max-width: 1200px;

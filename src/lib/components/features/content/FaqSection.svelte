@@ -260,7 +260,7 @@
 	}
 
 	.faq-card {
-		background: #d1d4da; /* Light gray background */
+		/* Background controlled by global theme */
 		border-radius: 999px; /* Pill-shaped like Google */
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 		border: 1px solid rgba(0, 0, 0, 0.06);
@@ -300,7 +300,7 @@
 		font-size: 1.05rem; /* Slightly smaller for slim look */
 		font-weight: 600;
 		line-height: 1.3;
-		color: #1a202c; /* Contrast */
+		/* Color controlled by global theme */
 	}
 
 	.faq-icon-wrapper {
@@ -455,7 +455,7 @@
 	}
 
 	.ask-container {
-		background: #d1d4da; /* Light gray background */
+		/* Background controlled by global theme */
 		padding: 1.25rem 1.5rem; /* Further reduced for slimmer look */
 		border-radius: 20px; /* Reduced from 32px for sleeker look */
 		box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.1);
@@ -468,12 +468,12 @@
 		font-family: 'Inter', sans-serif;
 		font-size: 1.35rem; /* Slightly reduced */
 		font-weight: 700;
-		color: #2c3e50;
+		/* Color controlled by global theme */
 		margin-bottom: 0.35rem; /* Reduced for tighter spacing */
 	}
 
 	.ask-subtitle {
-		color: #7f8c8d;
+		/* Color controlled by global theme */
 		margin-bottom: 1rem; /* Reduced from 1.25rem */
 		font-size: 0.875rem; /* Slightly smaller */
 	}
@@ -487,7 +487,7 @@
 		display: flex;
 		gap: 0;
 		width: 100%;
-		background: #d1d4da; /* Light gray background */
+		/* Background controlled by global theme */
 		border-radius: 999px; /* Pill-shaped like Google */
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 		border: 1px solid rgba(0, 0, 0, 0.08);
@@ -621,14 +621,14 @@
 	}
 
 	.faq-toggle-btn {
-		background: #d1d4da; /* Light gray background */
+		/* Background controlled by global theme */
 		border: 1px solid rgba(0, 0, 0, 0.08);
 		padding: 0.625rem 1.5rem; /* Slimmer */
 		border-radius: 999px; /* Pill-shaped */
 		font-family: 'Inter', sans-serif;
 		font-weight: 600;
 		font-size: 0.9rem;
-		color: #3498db;
+		/* Color controlled by global theme */
 		cursor: pointer;
 		display: flex;
 		align-items: center;
@@ -638,9 +638,8 @@
 	}
 
 	.faq-toggle-btn:hover {
-		background: #c4c7cd; /* Slightly darker gray on hover */
+		/* Background and color controlled by global theme */
 		box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-		color: #2980b9;
 		border-color: rgba(0, 0, 0, 0.12);
 	}
 

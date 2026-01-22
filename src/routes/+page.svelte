@@ -210,11 +210,7 @@
 
 <style>
 	/* PREMIUM HOME PAGE STYLES */
-
-	:global(body) {
-		background: #0f172a !important; /* Force darker theme for homepage */
-		color: #f8fafc !important;
-	}
+	/* Global theme handles body background - removed duplicate */
 
 	.section-padding,
 	.newsletter-section {
