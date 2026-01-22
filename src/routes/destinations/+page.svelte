@@ -655,7 +655,7 @@
 			<!-- Tier Info Block (same as destinations) -->
 			<section
 				class="themed-content-block attractions-tier-block"
-				style="background: white; border-radius: 1rem; padding: 2rem; margin-bottom: 3rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);"
+				style="background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 1.5rem 2rem; margin-bottom: 3rem; box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);"
 			>
 				<div class="additional-content-header">
 					<h2 class="attractions-tier-heading">Tier system to make your travel planning easier</h2>
@@ -720,13 +720,13 @@
 						<h2
 							id={`${group.id}-heading`}
 							class="attractions-region-title"
-							style="margin: 0; display: flex; align-items: center; gap: 0.5rem;"
+							style="margin: 0; display: flex; align-items: center; gap: 0.75rem; color: #fbbf24; font-size: 1.25rem; font-weight: 700;"
 						>
 							{group.region}
-							<span class="attractions-count-badge">{group.attractions.length}</span>
+							<span class="attractions-count-badge" style="background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); font-size: 0.75rem; padding: 0.25rem 0.65rem; border-radius: 999px; font-weight: 700;">{group.attractions.length}</span>
 						</h2>
 						<div
-							style="display: flex; align-items: center; gap: 0.5rem; color: #6b7280; font-size: 0.875rem; font-weight: 500;"
+							style="display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1; font-size: 0.875rem; font-weight: 600;"
 						>
 							<span>{expandedSections[group.id] ? 'View Less' : 'View More'}</span>
 							<svg

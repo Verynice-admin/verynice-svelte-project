@@ -411,3 +411,82 @@ a:hover {
 	color: #67e8f9 !important;
 	border-bottom-color: #67e8f9 !important;
 }
+
+/* ========================================= */
+/* 14. TIER SYSTEM CARDS - Slim Pills */
+/* ========================================= */
+
+.attractions-tier-block {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	backdrop-filter: blur(20px) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
+}
+
+.attractions-tier-heading {
+	color: #fbbf24 !important; /* Gold */
+	font-family: 'Outfit', sans-serif !important;
+}
+
+.attractions-tier-description {
+	color: #cbd5e1 !important;
+}
+
+.attractions-tier-item {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	border-radius: 999px !important; /* Pill-shaped */
+	padding: 0.875rem 1.5rem !important;
+	backdrop-filter: blur(20px) !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.attractions-tier-item:hover {
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+.tier-title {
+	color: #fbbf24 !important; /* Gold */
+}
+
+.tier-box {
+	background: rgba(251, 191, 36, 0.2) !important;
+	border: 2px solid #fbbf24 !important;
+}
+
+.tier-label {
+	color: #fbbf24 !important;
+}
+
+.tier-number {
+	color: #fbbf24 !important;
+}
+
+/* ========================================= */
+/* 15. REGION SUMMARY BUTTONS - Slim Pills */
+/* ========================================= */
+
+.attractions-region-summary {
+	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
+	backdrop-filter: blur(20px) !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	border-radius: 999px !important; /* Pill-shaped */
+	padding: 0.875rem 1.5rem !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+	margin-bottom: 1rem !important;
+}
+
+.attractions-region-summary:hover {
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+	transform: translateY(-2px) !important;
+}
+
+.attractions-region-title {
+	color: #fbbf24 !important; /* Gold */
+}
+
+.attractions-count-badge {
+	background: rgba(251, 191, 36, 0.2) !important;
+	color: #fbbf24 !important;
+	border: 1px solid rgba(251, 191, 36, 0.3) !important;
+}
