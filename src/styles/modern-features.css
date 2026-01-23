@@ -1,0 +1,254 @@
+/*
+  MODERN CSS FEATURES (2026)
+  Using latest CSS capabilities for better UX
+*/
+
+/* ========================================= */
+/* 1. MODERN CSS SELECTORS */
+/* ========================================= */
+
+/* :has() - Parent selector for dynamic styling */
+/* Border left removed for clean Copilot-style cards */
+
+/* :is() - Simplified selectors */
+:is(.faq-card, .comment-card, .author-info-unified-box):hover {
+	will-change: transform, box-shadow;
+}
+
+/* :where() - Zero specificity for easy overrides */
+:where(h1, h2, h3, h4, h5, h6) {
+	text-wrap: balance; /* Modern text wrapping */
+	overflow-wrap: break-word;
+}
+
+/* ========================================= */
+/* 2. CONTAINER QUERIES */
+/* ========================================= */
+
+/* Container queries disabled for square Copilot-style cards */
+
+/* ========================================= */
+/* 3. SCROLL-DRIVEN ANIMATIONS */
+/* ========================================= */
+
+/* Reveal on scroll */
+@supports (animation-timeline: scroll()) {
+	.attractions-item-card,
+	.faq-card,
+	.tier-item {
+		animation: fade-in linear;
+		animation-timeline: view();
+		animation-range: entry 0% cover 30%;
+	}
+	
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+}
+
+/* ========================================= */
+/* 4. CSS NESTING (Native) */
+/* ========================================= */
+
+.attractions-item-card {
+	& .card-image {
+		transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+		
+		@media (prefers-reduced-motion: no-preference) {
+			&:hover {
+				transform: scale(1.03);
+			}
+		}
+	}
+	
+	& .item-title {
+		line-height: 1.3;
+		
+		& + .item-description {
+			margin-top: 0.5rem;
+		}
+	}
+}
+
+/* ========================================= */
+/* 5. LOGICAL PROPERTIES */
+/* ========================================= */
+
+/* Better internationalization support */
+.attractions-item-content {
+	padding-block: 1.25rem;
+	padding-inline: 1.5rem;
+	margin-block-end: 0;
+}
+
+.faq-btn {
+	padding-inline-start: 1.5rem;
+	padding-inline-end: 1.5rem;
+}
+
+/* ========================================= */
+/* 6. CUSTOM PROPERTIES WITH FALLBACKS */
+/* ========================================= */
+
+:root {
+	--primary-color: #06B6D4;
+	--primary-rgb: 6, 182, 212;
+	--bg-dark: #0f172a;
+	--text-light: #f8fafc;
+	--card-bg: #e8e8e3;
+	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+	--shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+	--radius-sm: 0.5rem;
+	--radius-md: 1rem;
+	--radius-lg: 1.5rem;
+	--radius-xl: 2rem;
+	--radius-full: 9999px;
+}
+
+/* ========================================= */
+/* 7. BACKDROP FILTERS WITH FALLBACKS */
+/* ========================================= */
+
+@supports (backdrop-filter: blur(20px)) {
+	.faq-section .faq-card,
+	.comments-section .comment-card,
+	.author-info-section .author-info-unified-box {
+		backdrop-filter: blur(20px);
+		-webkit-backdrop-filter: blur(20px);
+	}
+}
+
+@supports not (backdrop-filter: blur(20px)) {
+	.faq-section .faq-card,
+	.comments-section .comment-card {
+		background: rgba(30, 41, 59, 0.95) !important;
+	}
+}
+
+/* ========================================= */
+/* 8. MODERN GRADIENTS */
+/* ========================================= */
+
+/* Smooth color interpolation */
+.tier-1 {
+	background: linear-gradient(135deg in oklab, #2563eb, #3b82f6);
+}
+
+.tier-2 {
+	background: linear-gradient(135deg in oklab, #10b981, #34d399);
+}
+
+.tier-3 {
+	background: linear-gradient(135deg in oklab, #f59e0b, #fbbf24);
+}
+
+/* ========================================= */
+/* 9. SCROLL SNAP */
+/* ========================================= */
+
+.tier-list {
+	scroll-snap-type: x mandatory;
+	scroll-padding: 1rem;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.attractions-tier-item {
+	scroll-snap-align: start;
+	scroll-snap-stop: normal;
+}
+
+/* ========================================= */
+/* 10. INERT ATTRIBUTE SUPPORT */
+/* ========================================= */
+
+[inert] {
+	pointer-events: none;
+	cursor: default;
+	opacity: 0.5;
+	filter: grayscale(1);
+}
+
+/* ========================================= */
+/* 11. ASPECT RATIO (Modern) */
+/* ========================================= */
+
+/* Card image wrapper aspect ratio controlled in pages.css */
+
+.tier-box {
+	aspect-ratio: 1;
+}
+
+/* ========================================= */
+/* 12. SUBGRID SUPPORT */
+/* ========================================= */
+
+@supports (grid-template-rows: subgrid) {
+	/* Subgrid disabled for destination cards to keep square layout */
+}
+
+/* ========================================= */
+/* 13. COLOR SCHEMES */
+/* ========================================= */
+
+/* Respect user color scheme preference */
+@media (prefers-color-scheme: light) {
+	:root {
+		color-scheme: light;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		color-scheme: dark;
+	}
+}
+
+/* ========================================= */
+/* 14. VIEW TRANSITIONS API */
+/* ========================================= */
+
+@supports (view-transition-name: main) {
+	::view-transition-old(main),
+	::view-transition-new(main) {
+		animation-duration: 0.3s;
+	}
+}
+
+/* ========================================= */
+/* 15. MODERN SCROLLBARS */
+/* ========================================= */
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: #06B6D4 #1e293b;
+}
+
+/* Webkit scrollbars */
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #1e293b;
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #06B6D4;
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #0891b2;
+}

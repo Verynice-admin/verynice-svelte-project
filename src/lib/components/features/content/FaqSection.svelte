@@ -104,25 +104,37 @@
 	}
 </script>
 
-<section class="themed-content-block faq-section" id="faq">
+<section class="themed-content-block faq-section" id="faq" aria-labelledby="faq-heading">
 	<div class="faq-header-wrapper">
-		<h2>{title}</h2>
+		<h2 id="faq-heading">{title}</h2>
 	</div>
 
 	{#if items && items.length > 0}
-		<div class="faq-grid">
+		<div class="faq-grid" role="list">
 			{#each displayedItems as item, i (item.question + '-' + i)}
 				{@const isOpen = openItems.has(item.question)}
-				<div class="faq-card" class:is-open={isOpen}>
-					<button class="faq-btn" on:click={() => toggle(item.question)} aria-expanded={isOpen}>
+				<div class="faq-card" class:is-open={isOpen} role="listitem">
+					<button 
+						class="faq-btn" 
+						on:click={() => toggle(item.question)} 
+						aria-expanded={isOpen}
+						aria-controls="faq-answer-{i}"
+						type="button"
+					>
 						<span class="faq-question-text">{item.question}</span>
-						<div class="faq-icon-wrapper">
+						<div class="faq-icon-wrapper" aria-hidden="true">
 							<span class="faq-icon"></span>
 						</div>
 					</button>
 
 					{#if isOpen}
-						<div class="faq-content" transition:slide={{ duration: 300, axis: 'y' }}>
+						<div 
+							class="faq-content" 
+							id="faq-answer-{i}"
+							role="region"
+							aria-labelledby="faq-question-{i}"
+							transition:slide={{ duration: 300, axis: 'y' }}
+						>
 							<div class="faq-body-inner">
 								{@html processContent(
 									item.answerMarkdown || item.answer,

@@ -16,7 +16,10 @@
 
 /* Fonts are preloaded in app.html for better performance */
 @import './premium-theme.css';
-/* Global Premium Theme Styles */
+@import './accessibility.css';
+@import './responsive.css';
+@import './modern-features.css';
+/* Global Premium Theme & Modern Features */
 
 :root {
   --vnk-primary-color: #1E3A8A;
@@ -635,9 +638,7 @@ html[data-translation-state="translated"] body>* {
 .notranslate {
   filter: none !important;
   opacity: 1 !important;
-}
-
-/* Base styles for progress bar are in its component, 
+}/* Base styles for progress bar are in its component, 
    but we can define variables here if needed */
 :root {
   --vnk-translation-progress-bg: var(--vnk-accent-color);

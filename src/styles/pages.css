@@ -3815,25 +3815,28 @@ body:has(#page-hero-section) {
 
 .attractions-tier-block .additional-content-header h2,
 .attractions-tier-heading {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 800;
-  margin: 0 0 1rem 0;
-  color: #ffffff !important; /* White instead of gold */
+  margin: 0 0 0.75rem 0;
+  color: #ffffff !important;
   font-family: 'Outfit', sans-serif !important;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+  text-shadow: 0 6px 16px rgba(0, 0, 0, 0.35) !important;
+  text-align: center;
+  letter-spacing: -0.01em;
 }
 
 .attractions-tier-body {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .attractions-tier-description {
-  color: #cbd5e1 !important; /* Light text for dark background */
-  margin: 0 0 1rem 0;
+  color: #cbd5e1 !important;
+  margin: 0 auto 1.5rem auto;
   max-width: 70ch;
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 1.25rem;
+  line-height: 2;
+  text-align: center;
 }
 
 .attractions-tier-list {
@@ -3852,39 +3855,40 @@ body:has(#page-hero-section) {
 
 .attractions-tier-item {
   display: flex;
-  flex-direction: column; /* Stack vertically inside each pill */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px; /* Rounded but not full pill for better content display */
-  background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  flex: 1; /* Equal width */
+  gap: 6px;
+  padding: 12px 0.7cm; /* More left/right spacing */
+  background: #d1d4da; /* Match destination card image frame */
+  border-radius: 66px; /* Match image rounding */
+  flex: 1;
   min-width: 0;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(20px);
-  text-align: center;
+  transition: all 0.25s ease;
+  text-align: left;
+  aspect-ratio: 16 / 9; /* Same shape as card image */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .attractions-tier-item:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
   transform: translateY(-4px);
 }
 
 .attractions-tier-item p {
   margin: 0;
-  color: #cbd5e1; /* Light text for dark background */
-  font-size: 0.85rem;
-  line-height: 1.5;
-  display: block; /* Show description */
+  color: #3f3f3f;
+  font-size: 1rem;
+  line-height: 1.4;
+  display: block;
+  flex-grow: 1;
+  text-align: left;
 }
 
 .tier-title {
   font-family: 'Inter', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 600;
   text-transform: none;
   letter-spacing: 0;
   margin: 0;
@@ -3893,33 +3897,25 @@ body:has(#page-hero-section) {
   width: 100%;
   line-height: 1.3;
   min-height: 0;
-}
-
-/* Different color for each tier title */
-.attractions-tier-item:nth-child(1) .tier-title {
-  color: #60a5fa; /* Blue for Tier 1 */
-}
-
-.attractions-tier-item:nth-child(2) .tier-title {
-  color: #34d399; /* Green for Tier 2 */
-}
-
-.attractions-tier-item:nth-child(3) .tier-title {
-  color: #fbbf24; /* Gold for Tier 3 */
+  color: #1f1f1f;
+  text-align: left;
 }
 
 .attractions-tier-item>div:not(.tier-box) {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
 }
 
-/* Updated Compact Tier Box */
-/* Cute & Modern Tier Box */
+/* Modern Tier Box - Icon Style */
 .tier-box {
-  width: 48px;
-  /* Slightly larger to fit label comfortably */
-  height: 48px;
-  border-radius: 14px;
-  /* Soft squircle */
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3929,15 +3925,14 @@ body:has(#page-hero-section) {
   text-transform: uppercase;
   flex-shrink: 0;
   line-height: 1;
-  /* Cute pop effect */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
 }
 
 .attractions-item-card:hover .tier-box,
 .attractions-tier-item:hover .tier-box {
-  transform: scale(1.05) rotate(-2deg);
-  /* Playful tilt on hover */
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .tier-label {
@@ -3985,10 +3980,11 @@ body:has(#page-hero-section) {
 
 .attractions-region-summary {
   list-style: none;
-  padding: 1rem 1.25rem 0.5rem 2.5rem;
+  padding: 1rem 1.25rem;
   /* Move header right (increased left padding) */
   /* Revert padding so header stays left */
-  margin: 0;
+  margin: 0 auto 1rem;
+  width: min(1200px, 100%);
   cursor: pointer;
   border-radius: 1rem;
   transition: background 0.2s ease;
@@ -3996,7 +3992,7 @@ body:has(#page-hero-section) {
   /* Flex layout for icon */
   display: flex;
   align-items: center;
-  /* justify-content: space-between; <-- Removed to keep title left */
+  justify-content: space-between;
   position: relative;
   /* For absolute centering of icon */
 }
@@ -4082,77 +4078,23 @@ body:has(#page-hero-section) {
   display: inline-block;
 }
 
-/* Cute & Stylish List Items */
-.attractions-items-list {
-  display: grid;
-  /* Make it a grid! Minimum card width 350px, otherwise expand */
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 1rem;
-  padding: 0.5rem 1rem 1.5rem;
-}
+/* Duplicate styles removed - using Microsoft Copilot style below */
 
-.attractions-item-card {
+
+
+
+
+/* Old styles removed - using Copilot styles below */
+
+/* Region Toggle Action (View More/Less) */
+.region-toggle-action {
   display: flex;
-  gap: 1rem;
   align-items: center;
-  padding: 1rem;
-  border-radius: 1.5rem;
-  /* Extra rounded corners */
-  border: 3px solid rgb(1, 134, 200);
-  /* Thicker border for visibility */
-  /* Blue colored frame */
-  height: 100%;
-  /* Ensure card fills grid cell vertically */
-  width: 100%;
-  /* Ensure full width fitting */
-  box-sizing: border-box;
-  /* Prevent border clipping */
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  /* Subtle shadow to define edges */
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  position: relative;
-  /* overflow: hidden; Removed to avoid border clipping */
-}
-
-.attractions-item-card:hover {
-  background: #f0f9ff;
-  /* Light blue tint on hover */
-  border-color: #3b82f6;
-  /* Darker blue border on hover */
-  box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.15);
-  /* Blue-ish lift shadow */
-  transform: translateY(-2px);
-}
-
-
-
-
-
-.attractions-item-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  /* Tight text gap */
-}
-
-.item-title {
-  margin: 0;
-  font-size: 1rem;
-  /* Standard text size */
-  font-weight: 600;
-  color: var(--inc-text-heading, #0f172a);
-}
-
-.item-description {
-  margin: 0;
-  color: var(--inc-text-secondary, #64748b);
-  font-size: 0.85rem;
-  /* Smaller description */
-  line-height: 1.4;
-  /* Optional: Limit lines if needed, but 'compact' usually implies short text */
+  gap: 0.5rem;
+  color: #616161;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: 'Segoe UI', 'Inter', sans-serif;
 }
 
 @media (max-width: 1024px) {
@@ -4260,100 +4202,108 @@ body:has(#page-hero-section) {
   }
 }
 
-/* Modern Attractions List - Clean Blog Grid Style */
+/* Microsoft Copilot Style - Destination Cards (exact) */
 .attractions-items-list {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  /* Strict 6 columns as requested */
-  gap: 1.5rem;
-  padding: 2rem 1rem 4rem;
-  max-width: 1800px;
-  /* Wider container to accommodate 6 cols */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  row-gap: 1.75rem;
+  column-gap: 1.75rem;
+  padding: 2rem 0;
+  max-width: 1200px;
   margin: 0 auto;
+  align-items: stretch;
 }
 
 .attractions-item-card {
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  /* Clean look usually implies minimal card bg */
-  border-radius: 0;
-  overflow: hidden;
+  background: #d1d4da; /* Copilot gray */
+  border-radius: 84px; /* 3x rounding */
+  overflow: hidden; /* Keep clean separation */
   text-decoration: none;
   color: inherit;
-  transition: opacity 0.3s ease;
-  height: 100%;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
   position: relative;
-  /* Minimal spacing */
+  box-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: none;
+  aspect-ratio: 1 / 1; /* Square card */
+  box-sizing: border-box;
+  padding: 12px; /* Equal frame thickness */
+  gap: 12px;
 }
 
 .attractions-item-card:hover {
-  opacity: 0.9;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
 }
 
 .attractions-item-card .card-image-wrapper {
   position: relative;
   width: 100%;
-  padding-top: 60%;
-  /* Horizontal (Landscape) aspect ratio */
+  aspect-ratio: 16 / 9;
+  flex: 0 0 45%;
+  min-height: 0;
   overflow: hidden;
-  background-color: #f3f3f3;
-  margin-bottom: 1rem;
+  background-color: #c6c9cf;
+  border-radius: 66px; /* 3x rounding */
 }
 
 .attractions-item-card .card-image {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   background-size: cover;
   background-position: center;
-  transition: transform 0.6s ease;
-  filter: grayscale(100%);
-  /* Screenshot shows B&W/monochrome aesthetic */
+  transition: transform 0.3s ease;
+  filter: none;
+  border-radius: 66px;
 }
 
 .attractions-item-card:hover .card-image {
-  transform: scale(1.05);
-  filter: grayscale(0%);
-  /* Color on hover for interaction */
+  transform: scale(1.03);
 }
 
-/* Tier Badge - Minimalist Corner Tag */
+/* Tier Badge - Corner Tag */
 .attractions-item-card .tier-badge {
   position: absolute;
-  top: 0;
-  left: 0;
-  /* Corner tag */
-  background: #000;
+  top: 1rem; /* Adjusted for image margin */
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
   color: #fff;
-  padding: 0.2rem 0.5rem;
-  font-size: 0.6rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.65rem;
   font-weight: 700;
   z-index: 10;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   display: flex;
-  gap: 0.25rem;
+  gap: 0.2rem;
   align-items: center;
+  border-radius: 6px;
 }
 
 .tier-badge.tier-1 {
-  background: #3b82f6;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
 }
 
 /* Blue for Tier 1 (Must-see) */
 .tier-badge.tier-2 {
-  background: #22c55e;
+  background: linear-gradient(135deg, #10b981, #34d399);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
 }
 
 /* Green for Tier 2 (Recommended) */
 .tier-badge.tier-3 {
-  background: #eab308;
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
 }
 
-/* Yellow for Tier 3 (Nice to see) */
+/* Gold for Tier 3 (Nice to see) */
 
 .attractions-tier-description {
   max-width: 100% !important;
@@ -4373,95 +4323,122 @@ body:has(#page-hero-section) {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* Left align like reference */
   text-align: left;
-  flex-grow: 1;
+  flex: 1 1 auto;
+  padding: 0 0.7cm; /* Decrease side spacing */
+  gap: 6px;
+  min-height: 0;
+  justify-content: flex-start;
 }
 
 .attractions-item-content .item-title {
-  font-family: var(--vnk-font-primary), sans-serif;
-  font-size: 13px !important;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 0.15rem;
-  line-height: 1.2;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-top: 2px solid #f97316;
-  /* Permanent Orange Line */
+  font-family: 'Segoe UI', 'Inter', sans-serif;
+  font-size: 1.25rem !important; /* Smaller */
+  font-weight: 600;
+  color: #1f1f1f;
+  margin: 0;
+  line-height: 1.3;
+  text-transform: none;
+  letter-spacing: 0;
+  border: none;
   width: 100%;
-  /* Full Width */
-  padding-top: 0.5rem;
-}
-
-.attractions-item-card:hover .item-title {
-  color: #000;
-}
-
-.attractions-item-content .item-description {
-  font-family: var(--vnk-font-secondary), serif;
-  font-size: 11px !important;
-  line-height: 1.4;
-  color: #52525b;
-  margin-bottom: 0.5rem;
+  padding: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 6;
-  /* More visible text */
-  line-clamp: 6;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
+.attractions-item-card:hover .item-title {
+  color: #000000;
+}
+
+.attractions-item-content .item-description {
+  font-family: 'Segoe UI', 'Inter', sans-serif;
+  font-size: 1rem !important; /* Smaller */
+  line-height: 1.4;
+  color: #3f3f3f;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
 .attractions-item-card .read-more {
-  font-size: 0.45rem;
-  font-weight: 700;
-  color: #f97316;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-top: auto;
-  display: inline-block;
-  padding-bottom: 1px;
-  border-bottom: 1px solid rgba(249, 115, 22, 0.3);
+  font-family: 'Segoe UI', 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #f6f6f6;
+  border: 2px solid #c7cbd2;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: all 0.2s ease;
+  width: 300px; /* 3x length */
+  align-self: center;
+  transform: translateY(-0.7cm); /* move higher */
+}
+
+.attractions-item-card:hover .read-more {
+  background: #f5f5f5;
+  border-color: #9ca0a8;
 }
 
 .attractions-item-card .read-more:after {
-  content: " \2192";
-  /* Right arrow */
-  display: inline-block;
-  margin-left: 0.2rem;
-  transition: transform 0.2s ease;
+  content: "";
+  display: none;
 }
 
-.attractions-item-card:hover .read-more:after {
-  transform: translateX(3px);
-}
-
-/* Responsive Breakpoints */
-/* Laptop: 4 cols */
-@media (max-width: 1400px) {
-  .attractions-items-list {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* Tablet: 3 cols */
-@media (max-width: 1024px) {
-  .attractions-items-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Small Tablet: 2 cols */
-@media (max-width: 768px) {
+/* Responsive Breakpoints - Square Cards */
+/* Tablet: 2 cols */
+@media (max-width: 900px) {
   .attractions-items-list {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 }
 
-/* Mobile: 1 col (or 2 small cols?) */
-@media (max-width: 480px) {
+/* Mobile: 2 cols smaller */
+@media (max-width: 600px) {
   .attractions-items-list {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .attractions-item-card .card-image-wrapper {
+    margin: 8px;
+  }
+  
+  .attractions-item-content {
+    padding: 0;
+    gap: 4px;
+  }
+  
+  .attractions-item-content .item-title {
+    font-size: 0.8rem !important;
+  }
+  
+  .attractions-item-content .item-description {
+    font-size: 0.7rem !important;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+  
+  .attractions-item-card .read-more {
+    font-size: 0.7rem;
+    padding: 5px 10px;
   }
 }
 

@@ -1,0 +1,232 @@
+/* 
+  RESPONSIVE DESIGN IMPROVEMENTS (2026)
+  Mobile-first, fluid typography, container queries
+*/
+
+/* ========================================= */
+/* 1. FLUID TYPOGRAPHY */
+/* ========================================= */
+
+:root {
+	/* Fluid font sizes that scale smoothly */
+	--fs-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+	--fs-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+	--fs-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+	--fs-lg: clamp(1.125rem, 1rem + 0.625vw, 1.5rem);
+	--fs-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.875rem);
+	--fs-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+	--fs-3xl: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+	
+	/* Fluid spacing */
+	--space-xs: clamp(0.5rem, 0.45rem + 0.25vw, 0.75rem);
+	--space-sm: clamp(0.75rem, 0.7rem + 0.25vw, 1rem);
+	--space-md: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+	--space-lg: clamp(1.5rem, 1.2rem + 1.5vw, 3rem);
+	--space-xl: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+}
+
+/* ========================================= */
+/* 2. CONTAINER QUERIES (Modern 2026) */
+/* ========================================= */
+
+.attractions-items-list,
+.faq-grid,
+.comments-list {
+	container-type: inline-size;
+	container-name: content-grid;
+}
+
+/* Responsive grid using container queries */
+@container content-grid (min-width: 1200px) {
+	.attractions-items-list {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+@container content-grid (min-width: 768px) and (max-width: 1199px) {
+	.attractions-items-list {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@container content-grid (max-width: 767px) {
+	.attractions-items-list {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+/* ========================================= */
+/* 3. ADVANCED RESPONSIVE BREAKPOINTS */
+/* ========================================= */
+
+/* Extra large screens (4K) */
+@media (min-width: 2560px) {
+	.wrapper,
+	.max-w-content {
+		max-width: 1600px;
+	}
+}
+
+/* Large desktop */
+@media (min-width: 1440px) and (max-width: 2559px) {
+	.wrapper {
+		max-width: 1400px;
+	}
+}
+
+/* Standard desktop */
+@media (min-width: 1024px) and (max-width: 1439px) {
+	.wrapper {
+		max-width: 1200px;
+	}
+	
+	.attractions-items-list {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+/* Tablet landscape */
+@media (min-width: 768px) and (max-width: 1023px) {
+	.wrapper {
+		padding: 0 1.5rem;
+	}
+	
+	.attractions-items-list {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	
+	.attractions-tier-list {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+	.wrapper {
+		padding: 0 1rem;
+	}
+	
+	.attractions-items-list {
+		grid-template-columns: 1fr;
+	}
+	
+	.attractions-tier-list {
+		flex-direction: column;
+	}
+	
+	/* Larger touch targets on mobile */
+	button,
+	a.button,
+	.faq-btn {
+		min-height: 48px;
+	}
+}
+
+/* ========================================= */
+/* 4. ORIENTATION SUPPORT */
+/* ========================================= */
+
+@media (orientation: landscape) and (max-height: 500px) {
+	/* Reduce hero height on landscape mobile */
+	.hero-premium {
+		min-height: 400px;
+	}
+}
+
+/* ========================================= */
+/* 5. HOVER CAPABILITY DETECTION */
+/* ========================================= */
+
+/* Only show hover effects on devices that support hover */
+@media (hover: none) {
+	.attractions-item-card:hover,
+	.faq-card:hover,
+	.comment-card:hover {
+		transform: none;
+	}
+}
+
+/* ========================================= */
+/* 6. SAFE AREA INSETS (iPhone notch) */
+/* ========================================= */
+
+@supports (padding: max(0px)) {
+	body {
+		padding-left: max(0px, env(safe-area-inset-left));
+		padding-right: max(0px, env(safe-area-inset-right));
+		padding-bottom: max(0px, env(safe-area-inset-bottom));
+	}
+	
+	.mobile-bottom-nav-local {
+		bottom: max(20px, env(safe-area-inset-bottom));
+	}
+}
+
+/* ========================================= */
+/* 7. IMAGE PERFORMANCE */
+/* ========================================= */
+
+/* Prevent layout shift with aspect-ratio */
+img,
+video {
+	height: auto;
+	max-width: 100%;
+}
+
+.card-image-wrapper,
+.card-image {
+	content-visibility: auto; /* Modern performance optimization */
+}
+
+/* ========================================= */
+/* 8. FORM IMPROVEMENTS */
+/* ========================================= */
+
+/* Better form states */
+input:autofill,
+input:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0 1000px rgba(15, 23, 42, 0.9) inset !important;
+	-webkit-text-fill-color: #ffffff !important;
+}
+
+/* Form error states */
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+	border-color: #ef4444 !important;
+}
+
+input[aria-invalid="false"],
+textarea[aria-invalid="false"] {
+	border-color: #10b981 !important;
+}
+
+/* ========================================= */
+/* 9. LOADING PERFORMANCE */
+/* ========================================= */
+
+/* Prevent cumulative layout shift (CLS) */
+.attractions-item-card,
+.faq-card,
+.comment-card {
+	contain: layout style paint; /* Modern CSS containment */
+}
+
+/* ========================================= */
+/* 10. TYPOGRAPHY IMPROVEMENTS */
+/* ========================================= */
+
+/* Optimal line length for readability */
+.attractions-tier-description,
+.item-description,
+.comment-text {
+	max-width: 65ch; /* Optimal reading width */
+}
+
+/* Better text rendering */
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	font-feature-settings: 'kern' 1;
+	font-kerning: normal;
+}

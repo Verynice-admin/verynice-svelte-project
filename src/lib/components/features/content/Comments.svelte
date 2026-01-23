@@ -212,14 +212,17 @@
 	};
 </script>
 
-<section class="comments-section">
+<section class="comments-section" aria-labelledby="comments-heading">
 	<div class="comments-header">
-		<h2>Discussion <span class="count">{comments.length}</span></h2>
+		<h2 id="comments-heading">
+			Discussion 
+			<span class="count" aria-label="{comments.length} comments">{comments.length}</span>
+		</h2>
 	</div>
 
 	<div class="comments-container">
 		<!-- List of comments -->
-		<div class="comments-list">
+		<div class="comments-list" role="list" aria-live="polite">
 			{#if comments.length > 0 || pendingComment}
 				{#if pendingComment}
 					<div class="comment-card" style="opacity: 0.6;">
@@ -283,8 +286,12 @@
 
 		<!-- Add Comment Form -->
 		<div class="comment-form-wrapper">
-			<h3>Leave a Reply</h3>
-			<form class="comment-form" on:submit|preventDefault={handleSubmit}>
+			<h3 id="comment-form-heading">Leave a Reply</h3>
+			<form 
+				class="comment-form" 
+				on:submit|preventDefault={handleSubmit}
+				aria-labelledby="comment-form-heading"
+			>
 				<div class="input-group">
 					<input
 						type="text"
@@ -292,6 +299,8 @@
 						bind:value={commenterName}
 						placeholder="Name"
 						class="modern-input"
+						autocomplete="name"
+						aria-label="Your name"
 					/>
 				</div>
 
@@ -303,6 +312,8 @@
 						required
 						rows="3"
 						class="modern-textarea"
+						aria-label="Your comment"
+						aria-required="true"
 					></textarea>
 				</div>
 

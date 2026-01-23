@@ -12,7 +12,9 @@
     "test:ui": "vitest --ui",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "lighthouse": "lhci autorun",
+    "analyze": "vite-bundle-visualizer"
   },
   "devDependencies": {
     "@sveltejs/adapter-vercel": "^5.3.1",

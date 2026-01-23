@@ -77,7 +77,9 @@
 
 <SiteHeader {headerConfig} />
 
-<slot />
+<main id="main-content" role="main">
+	<slot />
+</main>
 
 {#if componentsLoaded}
 	<svelte:component this={TranslationProgressBar} />

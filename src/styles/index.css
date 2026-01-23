@@ -1,4 +1,9 @@
-@import './global.css';
-@import './layout.css';
-@import './components.css';
-@import './pages.css';
+/* Modern 2026 Standards - Optimized Import Order */
+@import './global.css'; /* Variables, resets, base styles */
+@import './premium-theme.css'; /* Dark theme, glassmorphism */
+@import './accessibility.css'; /* WCAG 2.2 compliance */
+@import './responsive.css'; /* Responsive design */
+@import './modern-features.css'; /* Modern CSS features */
+@import './layout.css'; /* Layout components */
+@import './components.css'; /* UI components */
+@import './pages.css'; /* Page-specific styles */

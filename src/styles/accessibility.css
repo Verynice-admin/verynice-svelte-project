@@ -1,0 +1,266 @@
+/* 
+  ACCESSIBILITY & MODERN STANDARDS (2026)
+  Following WCAG 2.2 guidelines and best practices
+*/
+
+/* ========================================= */
+/* 1. FOCUS STATES - Keyboard Navigation */
+/* ========================================= */
+
+/* Visible focus indicators for keyboard users */
+*:focus-visible {
+	outline: 3px solid #06B6D4;
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+	outline: 3px solid #06B6D4;
+	outline-offset: 2px;
+}
+
+/* Remove default focus for mouse users */
+*:focus:not(:focus-visible) {
+	outline: none;
+}
+
+/* Enhanced focus for interactive cards */
+.attractions-item-card:focus-visible,
+.faq-card:focus-visible,
+.comment-card:focus-visible {
+	outline: 3px solid #06B6D4;
+	outline-offset: 4px;
+}
+
+/* ========================================= */
+/* 2. CONTRAST IMPROVEMENTS */
+/* ========================================= */
+
+/* Ensure text meets WCAG AA standards (4.5:1 ratio) */
+.attractions-item-content .item-description {
+	color: #475569 !important; /* Darker for better contrast */
+}
+
+.attractions-tier-item p {
+	color: #475569 !important; /* Darker for better contrast */
+}
+
+/* Improve link contrast */
+.faq-body-inner a,
+.comment-text a,
+.author-description-display a {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 2px;
+}
+
+/* ========================================= */
+/* 3. REDUCED MOTION SUPPORT */
+/* ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+
+	.attractions-item-card:hover,
+	.attractions-tier-item:hover,
+	.faq-card:hover,
+	.comment-card:hover {
+		transform: none !important;
+	}
+}
+
+/* ========================================= */
+/* 4. HIGH CONTRAST MODE SUPPORT */
+/* ========================================= */
+
+@media (prefers-contrast: high) {
+	.attractions-item-card,
+	.attractions-tier-item,
+	.faq-card,
+	.comment-card {
+		border: 2px solid currentColor !important;
+	}
+
+	.tier-box,
+	.tier-badge {
+		border: 2px solid #ffffff !important;
+	}
+}
+
+/* ========================================= */
+/* 5. TOUCH TARGET SIZING */
+/* ========================================= */
+
+/* Minimum 44x44px touch targets per WCAG 2.2 */
+button,
+a,
+input,
+textarea,
+select {
+	min-height: 44px;
+	min-width: 44px;
+}
+
+/* Exception for inline text links */
+p a,
+li a,
+.prose a {
+	min-height: auto;
+	min-width: auto;
+}
+
+/* ========================================= */
+/* 6. SKIP LINKS */
+/* ========================================= */
+
+.skip-to-content {
+	position: absolute;
+	left: -9999px;
+	z-index: 999;
+	padding: 1rem 1.5rem;
+	background: #0f172a;
+	color: #ffffff;
+	text-decoration: none;
+	border-radius: 0 0 8px 0;
+}
+
+.skip-to-content:focus {
+	left: 0;
+	top: 0;
+}
+
+/* ========================================= */
+/* 7. SCREEN READER ONLY TEXT */
+/* ========================================= */
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+	position: static;
+	width: auto;
+	height: auto;
+	overflow: visible;
+	clip: auto;
+	white-space: normal;
+}
+
+/* ========================================= */
+/* 8. DARK MODE IMPROVEMENTS */
+/* ========================================= */
+
+@media (prefers-color-scheme: dark) {
+	/* Already dark, but ensure consistency */
+	::selection {
+		background: #06B6D4;
+		color: #0f172a;
+	}
+}
+
+/* ========================================= */
+/* 9. PRINT STYLES */
+/* ========================================= */
+
+@media print {
+	body {
+		background: white !important;
+		color: black !important;
+	}
+
+	.attractions-item-card,
+	.faq-card,
+	.comment-card {
+		background: white !important;
+		color: black !important;
+		page-break-inside: avoid;
+	}
+
+	.faq-icon-wrapper,
+	.tier-box {
+		background: #cccccc !important;
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+
+	nav,
+	.mobile-bottom-nav-local,
+	.back-to-top {
+		display: none !important;
+	}
+}
+
+/* ========================================= */
+/* 10. LOADING STATES */
+/* ========================================= */
+
+/* Skeleton loading for better perceived performance */
+.skeleton {
+	background: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0.05) 25%,
+		rgba(255, 255, 255, 0.1) 50%,
+		rgba(255, 255, 255, 0.05) 75%
+	);
+	background-size: 200% 100%;
+	animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+/* ========================================= */
+/* 11. ERROR STATES */
+/* ========================================= */
+
+input:invalid:not(:placeholder-shown),
+textarea:invalid:not(:placeholder-shown) {
+	border-color: #ef4444 !important;
+	box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+input:valid:not(:placeholder-shown),
+textarea:valid:not(:placeholder-shown) {
+	border-color: #10b981 !important;
+}
+
+/* ========================================= */
+/* 12. SMOOTH SCROLLING */
+/* ========================================= */
+
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 100px; /* Account for fixed header */
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}

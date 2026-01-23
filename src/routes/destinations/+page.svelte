@@ -655,7 +655,7 @@
 			<!-- Tier Info Block (same as destinations) -->
 			<section
 				class="themed-content-block attractions-tier-block"
-				style="background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 1.5rem 2rem; margin-bottom: 3rem; box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);"
+				style="background: transparent; border: none; padding: 0 0 2rem 0; margin-bottom: 3rem;"
 			>
 				<div class="additional-content-header">
 					<h2 class="attractions-tier-heading">Tier system to make your travel planning easier</h2>
@@ -712,7 +712,6 @@
 					<button
 						type="button"
 						class="attractions-region-summary"
-						style="background: white; border-radius: 1rem; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); width: 100%; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border: none; text-align: left;"
 						on:click={() => toggleSection(group.id)}
 						aria-expanded={!!expandedSections[group.id]}
 						aria-controls="{group.id}-content"
@@ -720,18 +719,15 @@
 						<h2
 							id={`${group.id}-heading`}
 							class="attractions-region-title"
-							style="margin: 0; display: flex; align-items: center; gap: 0.75rem; color: #fbbf24; font-size: 1.25rem; font-weight: 700;"
 						>
 							{group.region}
-							<span class="attractions-count-badge" style="background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); font-size: 0.75rem; padding: 0.25rem 0.65rem; border-radius: 999px; font-weight: 700;">{group.attractions.length}</span>
+							<span class="attractions-count-badge">{group.attractions.length}</span>
 						</h2>
-						<div
-							style="display: flex; align-items: center; gap: 0.5rem; color: #cbd5e1; font-size: 0.875rem; font-weight: 600;"
-						>
+						<div class="region-toggle-action">
 							<span>{expandedSections[group.id] ? 'View Less' : 'View More'}</span>
 							<svg
-								width="20"
-								height="20"
+								width="18"
+								height="18"
 								viewBox="0 0 24 24"
 								fill="none"
 								stroke="currentColor"
@@ -806,7 +802,12 @@
 												attraction.headerDescription ||
 												''}
 										</p>
-										<span class="read-more">Read more <span class="arrow">→</span></span>
+										<span class="read-more">
+											<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+												<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+											</svg>
+											Explore
+										</span>
 									</div>
 								</a>
 							{/each}
