@@ -1,0 +1,28 @@
+{
+  "agents": {
+    "enabled": true,
+    "deepseek": {
+      "enabled": true,
+      "apiKeyEnvironmentVariable": "DEEPSEEK_API_KEY",
+      "models": {
+        "chat": "deepseek-chat",
+        "code": "deepseek-coder"
+      },
+      "priority": 1
+    },
+    "qwen": {
+      "enabled": true,
+      "apiKeyEnvironmentVariable": "QWEN_API_KEY",
+      "models": {
+        "chat": "qwen-turbo",
+        "code": "qwen-coder"
+      },
+      "priority": 2
+    }
+  },
+  "behavior": {
+    "autoSelectAgent": true,
+    "useLoadBalancing": false,
+    "prefersDeepseekForCode": true
+  }
+}

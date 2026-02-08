@@ -75,6 +75,11 @@
 	});
 </script>
 
+<svelte:body
+	data-sveltekit-preload-code="viewport"
+	data-sveltekit-preload-data="hover"
+/>
+
 <SiteHeader {headerConfig} />
 
 <main id="main-content" role="main">

@@ -48,8 +48,8 @@
   --vnk-spacing-lg: 1.5rem;
   --vnk-spacing-xl: 2rem;
 
-  /* Premium Modern Typography - Simple & Plain */
-  --vnk-font-primary: 'Inter', sans-serif;
+  /* Premium Modern Typography - Homepage Standard */
+  --vnk-font-primary: 'Outfit', sans-serif;
   --vnk-font-secondary: 'Inter', sans-serif;
 
   --vnk-shadow-neon-sm: 0 0 5px rgba(var(--vnk-accent-rgb), 0.5), 0 0 10px rgba(var(--vnk-accent-rgb), 0.3);
@@ -633,9 +633,7 @@ html[data-translation-state="translated"] body>* {
   filter: blur(0);
   opacity: 1;
   transition: filter 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.notranslate {
+}.notranslate {
   filter: none !important;
   opacity: 1 !important;
 }/* Base styles for progress bar are in its component, 

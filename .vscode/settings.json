@@ -1,4 +1,7 @@
 {
     "workbench.commandPalette.history": 100000,
-    "workbench.localHistory.mergeWindow": 500
+    "workbench.localHistory.mergeWindow": 500,
+    "Codegeex.GenerationPreference": "automatic",
+    "Codegeex.Chat.LanguagePreference": "中文",
+    "Codegeex.CommitMessageStyle": "ConventionalCommits"
 }

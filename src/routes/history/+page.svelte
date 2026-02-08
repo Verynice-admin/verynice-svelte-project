@@ -603,9 +603,9 @@
 	}
 
 	.hero-text-box {
-		max-width: 900px;
-		margin: 0 auto;
-		text-align: center;
+  max-width: 800px;
+  margin: 0;
+  text-align: left;
 	}
 
 	/* Breadcrumbs - Premium */
@@ -651,40 +651,39 @@
 		display: block;
 		font-family: 'Outfit', sans-serif;
 		text-transform: uppercase;
-		letter-spacing: 0.4em;
-		color: #fbbf24; /* Gold */
+  letter-spacing: 0.3em;
+  color: var(--vnk-accent-color);
 		font-weight: 700;
 		font-size: 0.9rem;
-		margin-bottom: 1rem;
-		text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.5rem;
 	}
 
 	.hero-text-box h1 {
 		font-family: 'Outfit', sans-serif;
-		font-size: clamp(3.5rem, 6vw, 5.5rem);
+  font-size: clamp(3rem, 7vw, 6rem);
 		font-weight: 900;
-		line-height: 1.1;
+  line-height: 1;
 		margin-bottom: 1.5rem;
 		color: #fff;
-		text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-		letter-spacing: -0.02em;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.04em;
 	}
 
 	.hero-lead {
 		font-family: 'Inter', sans-serif;
-		font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
 		line-height: 1.6;
-		color: #cbd5e1;
-		margin-bottom: 3rem;
-		max-width: 700px;
-		margin-left: auto;
-		margin-right: auto;
+  color: #cbd5e1;
+  margin-bottom: 3.5rem;
+  max-width: 600px;
+  margin-left: 0;
+  margin-right: 0;
 	}
 
 	/* Post Info Pills */
 	.post-info-premium {
 		display: flex;
-		justify-content: center;
+  justify-content: flex-start;
 		gap: 1rem;
 		flex-wrap: wrap;
 	}
@@ -707,5 +706,6 @@
 		color: var(--vnk-accent-color);
 	}
 </style>
+
 
 

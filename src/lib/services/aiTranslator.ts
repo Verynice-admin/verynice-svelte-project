@@ -29,11 +29,12 @@ const LANGUAGE_LABELS: Record<string, string> = {
 const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'IFRAME', 'CANVAS', 'SVG']);
 const MAX_SEGMENTS_PER_REQUEST = 125;
 const MIN_TEXT_LENGTH = 1;
-const MAX_TEXT_LENGTH = 3000;
+const MAX_TEXT_LENGTH = 5000;
 
 const translationCache = new Map<string, Map<string, string>>();
 const originalTextCache = new Map<Text, string>();
 let requestCounter = 0;
+let pendingMutationTranslation = false;
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -98,13 +99,36 @@ const collectSegments = () => {
 
 	// --- Attribute Segments ---
 	const attrElements = document.querySelectorAll<HTMLElement>(
-		'[placeholder], [title]:not(title), [aria-label]'
+		[
+			'[placeholder]',
+			'[title]:not(title)',
+			'[aria-label]',
+			'[alt]',
+			'[aria-description]',
+			'[aria-placeholder]',
+			'[aria-valuetext]',
+			'[aria-roledescription]',
+			'input[type="button"]',
+			'input[type="submit"]',
+			'input[type="reset"]'
+		].join(', ')
 	);
 
 	attrElements.forEach((el) => {
 		if (shouldSkipElement(el)) return;
 
-		(['placeholder', 'title', 'aria-label'] as const).forEach((attrName) => {
+		(
+			[
+				'placeholder',
+				'title',
+				'aria-label',
+				'alt',
+				'aria-description',
+				'aria-placeholder',
+				'aria-valuetext',
+				'aria-roledescription'
+			] as const
+		).forEach((attrName) => {
 			const value = el.getAttribute(attrName);
 			if (!value) return;
 
@@ -123,6 +147,25 @@ const collectSegments = () => {
 				el.setAttribute(`data-orig-${attrName}`, value);
 			}
 		});
+
+		if (el instanceof HTMLInputElement && ['button', 'submit', 'reset'].includes(el.type)) {
+			const value = el.value;
+			if (value) {
+				const normalized = normalizeText(value);
+				if (normalized && normalized.length >= MIN_TEXT_LENGTH) {
+					let id = uniqueMap.get(normalized);
+					if (!id) {
+						id = `seg-${uniqueMap.size}`;
+						uniqueMap.set(normalized, id);
+						segments.push({ id, text: normalized });
+					}
+					el.setAttribute('data-trans-id-value', id);
+					if (!el.hasAttribute('data-orig-value')) {
+						el.setAttribute('data-orig-value', value);
+					}
+				}
+			}
+		}
 	});
 
 	// --- Title Segment ---
@@ -212,10 +255,22 @@ const restoreOriginalText = () => {
 	originalTextCache.clear();
 
 	const attrElements = document.querySelectorAll<HTMLElement>(
-		'[data-orig-placeholder], [data-orig-title], [data-orig-aria-label]'
+		'[data-orig-placeholder], [data-orig-title], [data-orig-aria-label], [data-orig-alt], [data-orig-aria-description], [data-orig-aria-placeholder], [data-orig-aria-valuetext], [data-orig-aria-roledescription], [data-orig-value]'
 	);
 	attrElements.forEach((el) => {
-		(['placeholder', 'title', 'aria-label'] as const).forEach((attr) => {
+		(
+			[
+				'placeholder',
+				'title',
+				'aria-label',
+				'alt',
+				'aria-description',
+				'aria-placeholder',
+				'aria-valuetext',
+				'aria-roledescription',
+				'value'
+			] as const
+		).forEach((attr) => {
 			const val = el.getAttribute(`data-orig-${attr}`);
 			if (val !== null) el.setAttribute(attr, val);
 		});
@@ -244,10 +299,22 @@ const applyTranslationsToNodes = (
 	});
 
 	const attrElements = document.querySelectorAll<HTMLElement>(
-		'[data-orig-placeholder], [data-orig-title], [data-orig-aria-label]'
+		'[data-orig-placeholder], [data-orig-title], [data-orig-aria-label], [data-orig-alt], [data-orig-aria-description], [data-orig-aria-placeholder], [data-orig-aria-valuetext], [data-orig-aria-roledescription], [data-orig-value]'
 	);
 	attrElements.forEach((el) => {
-		(['placeholder', 'title', 'aria-label'] as const).forEach((attr) => {
+		(
+			[
+				'placeholder',
+				'title',
+				'aria-label',
+				'alt',
+				'aria-description',
+				'aria-placeholder',
+				'aria-valuetext',
+				'aria-roledescription',
+				'value'
+			] as const
+		).forEach((attr) => {
 			const origValue = el.getAttribute(`data-orig-${attr}`);
 			if (!origValue) return;
 
@@ -275,7 +342,11 @@ let observer: MutationObserver | null = null;
 
 const handleMutations = (mutations: MutationRecord[]) => {
 	const currentLang = document.documentElement.dataset.translationLanguage;
-	if (!currentLang || currentLang === 'EN' || get(translationStatus) === 'loading') return;
+	if (!currentLang || currentLang === 'EN') return;
+	if (get(translationStatus) === 'loading') {
+		pendingMutationTranslation = true;
+		return;
+	}
 
 	let needsTranslation = false;
 	mutations.forEach((mutation) => {
@@ -388,6 +459,15 @@ export const translatePageTo = async (languageCode: string, showLoading = true):
 
 		// Start observing for future changes
 		startTranslationObserver();
+
+		if (pendingMutationTranslation) {
+			pendingMutationTranslation = false;
+			setTimeout(() => {
+				translatePageTo(languageCode, false).catch((error) =>
+					console.error('[Translation] Follow-up translation failed', error)
+				);
+			}, 0);
+		}
 
 		return true;
 	} catch (error) {

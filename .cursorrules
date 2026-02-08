@@ -1,0 +1,28 @@
+# Cursor AI Configuration Rules
+
+## Agent Configuration
+This project uses DeepSeek and Qwen APIs as agents in Cursor AI.
+
+### Environment Variables
+- `DEEPSEEK_API_KEY`: Your DeepSeek API key from .env
+- `QWEN_API_KEY`: Your Qwen API key from .env
+
+### Agent Settings
+- **Primary Agent**: DeepSeek (deepseek-chat model)
+- **Fallback Agent**: Qwen (qwen-turbo model)
+- **Model Selection**: Use based on task complexity and availability
+
+### Configuration Files
+- `.cursor/agents.json`: Agent definitions and settings
+- `.env`: API keys (ensure DEEPSEEK_API_KEY and QWEN_API_KEY are set)
+
+### How to Use
+1. Set DEEPSEEK_API_KEY in .env
+2. Set QWEN_API_KEY in .env
+3. Restart Cursor IDE
+4. Select preferred agent in Cursor settings
+
+### Fallback Behavior
+- If DeepSeek is unavailable, Qwen will be used
+- Both agents support streaming responses
+- Timeout set to 30 seconds per request

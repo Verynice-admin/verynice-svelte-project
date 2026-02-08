@@ -1,0 +1,25 @@
+{
+  "folder": "content/pages/food-drink",
+  "assets": [
+    {
+      "publicId": "content/pages/food-drink/hero",
+      "usage": "hero",
+      "description": "Main hero image with full-table Kazakh spread"
+    },
+    {
+      "publicId": "content/pages/food-drink/beshbarmak",
+      "usage": "gallery",
+      "description": "Beshbarmak plated for a shared table"
+    },
+    {
+      "publicId": "content/pages/food-drink/tea",
+      "usage": "gallery",
+      "description": "Tea ritual with bowls, dried fruit, and baursak"
+    },
+    {
+      "publicId": "content/pages/food-drink/market",
+      "usage": "gallery",
+      "description": "Market produce and spices"
+    }
+  ]
+}
