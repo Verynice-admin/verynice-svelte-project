@@ -33,8 +33,17 @@ function serializeDates(obj: any): any {
 }
 
 export const load: PageServerLoad = async ({ params }) => {
+    console.log(`[Destination] adminDB is ${adminDB ? 'initialized' : 'null'}`);
     if (!adminDB) {
         console.error("Firebase Admin has not been initialized.");
+        // Try to provide more details about why it might be null
+        try {
+            // Check if we can import the admin module
+            const adminCheck = import('$lib/server/firebaseAdmin');
+            console.log('[Destination] Firebase admin module can be imported');
+        } catch (importErr) {
+            console.error('[Destination] Failed to import firebaseAdmin module:', importErr);
+        }
         throw error(500, "Server database connection failed.");
     }
 
@@ -306,6 +315,11 @@ export const load: PageServerLoad = async ({ params }) => {
         if (!pageSnap || !pageSnap.exists) {
             console.error(`Destination '${slug}' not found in pages or attractions.`);
             throw error(404, `Destination '${slug}' not found.`);
+        }
+
+        // TypeScript doesn't know pageDocRef is guaranteed here - add explicit check
+        if (!pageDocRef) {
+            throw error(500, 'Internal error: document reference not resolved');
         }
 
         // Proceed with fetching subcollections using the resolved pageDocRef

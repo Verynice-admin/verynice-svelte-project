@@ -1,4 +1,3 @@
-image.png
 /*
   pages.css — page-level layouts, hero, article content, TOC, and utilities.
 
@@ -308,9 +307,9 @@ small {
    ========================================================================== */
 .section {
   position: relative;
-  height: 100vh;
-  min-height: 100vh;
-  max-height: 100vh;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
   width: 100vw;
   max-width: 100%;
   overflow: hidden;
@@ -323,38 +322,33 @@ small {
 }
 
 .section .header-background {
-  position: absolute;
-  inset: 0;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
   z-index: 0;
   overflow: hidden;
   width: 100%;
   height: 100%;
-  min-height: 100vh;
+  min-height: 100vh !important;
 }
 
 .section .background-image {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  background: var(--vnk-bg-gradient-start) center / cover no-repeat;
-  background-image: var(--hero-bg-url);
-  animation: headermove 18s ease-in-out infinite;
+  background: var(--hero-bg-url) center center / cover no-repeat;
+  animation: none;
   transform-origin: center center;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-}
-
-.section .background-image::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom,
-      rgba(var(--vnk-bg-gradient-start-rgb), 0.35) 0%,
-      rgba(var(--vnk-bg-gradient-end-rgb), 0.88) 100%);
-  opacity: 1;
 }
 
 /* Updated keyframes - diagonal movement with zoom in/out */
@@ -409,7 +403,7 @@ small {
 
 .section .section-header-text {
   flex: 1 1 min(100%, 500px);
-  color: #fff;
+  color: #fff !important;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
   max-width: 800px;
   text-align: left;
@@ -422,7 +416,7 @@ small {
 
 .section .section-header-text h1 {
   margin: 0 0 clamp(1.1rem, 2vw, 1.6rem);
-  color: #fff;
+  color: #fff !important;
   font-family: var(--vnk-font-primary), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   font-size: clamp(3rem, 7vw, 6rem);
   font-weight: 900;
@@ -439,7 +433,7 @@ small {
 .section .section-description {
   margin: 0 0 clamp(1.25rem, 2.4vw, 1.8rem);
   max-width: 600px;
-  color: #cbd5e1;
+  color: #fff !important;
   font-size: clamp(1.1rem, 1.5vw, 1.4rem);
   line-height: 1.6;
   font-weight: 400;
@@ -508,7 +502,7 @@ small {
 
 .icon-comment {
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z'%3E%3C/path%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/0.0/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z'%3E%3C/path%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z'%3E%3C/path%3E%3C/svg%3E");
 }
 
 .icon-like {
@@ -596,6 +590,34 @@ small {
 
 .breadcrumb-modern__divider::after {
   content: '›';
+}
+
+/* Hero Kicker - Global styling */
+.hero-kicker {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .hero-kicker {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -764,7 +786,8 @@ small {
 
 @media (max-width: 600px) {
   .section {
-    min-height: max(450px, calc(var(--vnk-sticky-offset, 70px) * 2 + 120px));
+    min-height: 100vh !important;
+    height: 100vh !important;
   }
 
   /* Global Mobile Hero - Centered & Cinematic */
@@ -1132,12 +1155,12 @@ small {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
   }
 
-  /* Global mobile search submit button style - Blue color */
+  /* Global mobile search submit button style */
   .section .search-form .submit,
   .search-form .submit,
   .search-form input[type="submit"] {
-    background: rgb(1, 134, 200) !important;
-    color: white !important;
+    background: rgb(242, 132, 137) !important;
+    color: #000000 !important;
     border: none !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
@@ -1332,6 +1355,10 @@ footer[class] {
 .article-image-block img {}
 .article-image-caption {}
 .themed-content-block {}
+.additional-content-header {
+  text-align: center;
+}
+
 .themed-content-block .additional-content-header h2 {}
 @media (min-width: 1200px) {}
 @media (max-width: 1199.98px) {}
@@ -1533,7 +1560,7 @@ html {
 
 /* Typography for content blocks */
 .prose,
-.section-description,
+.section-description:not(.section .section-description),
 .faq-answer {
   color: #222;
   font-size: 1.08rem;
@@ -1633,13 +1660,12 @@ html {
 .prose :global(h2),
 .prose :global(h3),
 .history-section-title {
-  font-family: var(--vnk-font-primary), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--vnk-font-primary), -apple-system, BlinkBiSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: var(--inc-text-5xl);
   font-weight: 900;
   line-height: var(--inc-leading-tight);
   letter-spacing: var(--inc-tracking-tight);
-  color: #000000;
-  /* Pure black like Inc.com */
+  color: white;
   margin-top: var(--inc-heading-spacing-top);
   margin-bottom: var(--inc-heading-spacing-bottom);
   animation: fadeInDown 0.7s;
@@ -1775,7 +1801,7 @@ html {
 }
 
 .prose :global(table thead) {
-  background: linear-gradient(135deg, rgba(7, 76, 144, 0.95) 0%, rgba(17, 63, 114, 0.95) 100%);
+   background: linear-gradient(135deg, #000000 0%, #333333 100%) !important;
 }
 
 .prose :global(table thead th) {
@@ -1977,26 +2003,27 @@ h2,
 }
 
 /* Author Info Section Styling - Desktop and Mobile */
-.author-info-section {
+/* Only apply to non-premium theme pages */
+body:not(.premium-theme-page) .author-info-section {
   width: 100%;
   max-width: 100%;
   margin: 2rem auto;
   padding: 0;
 }
 
-.author-info-section .author-info-grid {
+body:not(.premium-theme-page) .author-info-section .author-info-grid {
   display: grid;
   gap: 1rem;
   width: 100%;
   max-width: 100%;
 }
 
-.author-info-section .author-block {
+body:not(.premium-theme-page) .author-info-section .author-block {
   display: block;
   width: 100%;
 }
 
-.author-info-section h4 {
+body:not(.premium-theme-page) .author-info-section h4 {
   margin: 0 0 1.5rem;
   font-size: var(--magazine-text-2xl);
   font-weight: 700;
@@ -2006,7 +2033,7 @@ h2,
   text-align: left;
 }
 
-.author-info-section .author-details {
+body:not(.premium-theme-page) .author-info-section .author-details {
   display: flex;
   align-items: flex-start;
   gap: 1.5rem;
@@ -2019,7 +2046,7 @@ h2,
   box-sizing: border-box;
 }
 
-.author-info-section .author-photo {
+body:not(.premium-theme-page) .author-info-section .author-photo {
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -2030,12 +2057,12 @@ h2,
   display: block;
 }
 
-.author-info-section .author-text {
+body:not(.premium-theme-page) .author-info-section .author-text {
   flex: 1;
   min-width: 0;
 }
 
-.author-info-section .author-name-display {
+body:not(.premium-theme-page) .author-info-section .author-name-display {
   font-weight: 700;
   font-size: var(--magazine-text-xl);
   line-height: var(--magazine-leading-snug);
@@ -2044,7 +2071,7 @@ h2,
   color: var(--magazine-text-secondary);
 }
 
-.author-info-section .author-title-display {
+body:not(.premium-theme-page) .author-info-section .author-title-display {
   font-weight: 500;
   font-size: var(--magazine-text-base);
   line-height: var(--magazine-leading-relaxed);
@@ -2055,7 +2082,7 @@ h2,
   font-style: italic;
 }
 
-.author-info-section .author-description-display {
+body:not(.premium-theme-page) .author-info-section .author-description-display {
   margin: 0;
   color: #475569;
   line-height: 1.7;
@@ -2339,7 +2366,7 @@ h2.history-section-title {
     margin: 0;
     position: relative;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 30%, #174880 0%, #0f172a 100%);
+    background: #ffffff !important;
   }
 
   .section {
@@ -2392,11 +2419,9 @@ h2.history-section-title {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(circle at 50% 35%, rgba(6, 182, 212, 0.35) 0%, rgba(17, 63, 114, 0) 60%),
-      linear-gradient(to bottom, rgba(17, 63, 114, 0.4) 0%, rgba(30, 41, 59, 0.9) 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
     z-index: 1;
-    mix-blend-mode: overlay;
+    mix-blend-mode: normal;
   }
 
   /* Ensure content pops above overlay */
@@ -2467,8 +2492,8 @@ h2.history-section-title {
     border-radius: 9999px;
     border: none;
     background: var(--vnk-accent-color);
-    color: #0f172a;
-    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+    color: #000000;
+    box-shadow: 0 4px 15px rgba(242, 132, 137, 0.35);
     transition: all 0.2s ease;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -2479,7 +2504,7 @@ h2.history-section-title {
 
   .search-form .submit:active {
     transform: scale(0.95);
-    background: #39dff8;
+    background: rgba(242, 132, 137, 0.85);
   }
 
   .post-info {
@@ -2595,12 +2620,13 @@ h2.history-section-title {
     user-select: none;
   }
 
-  .additional-content-header h2 {
-    font-size: clamp(1.5rem, 6vw, 2rem);
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-weight: 800;
-  }
+.additional-content-header h2 {
+		font-size: clamp(1.5rem, 6vw, 2rem);
+		text-align: center;
+		margin-bottom: 1.5rem;
+		font-weight: 800;
+		color: #1c1c1e !important;
+	}
 
   .error-message {
     font-size: 1rem;
@@ -2662,19 +2688,19 @@ h2.history-section-title {
     display: block;
   }
 
-  /* Author Info Section Mobile */
-  .author-info-section {
+  /* Author Info Section Mobile - Only for non-premium pages */
+  body:not(.premium-theme-page) .author-info-section {
     margin: 2rem auto;
     padding: 0 1rem;
   }
 
-  .author-info-section h4 {
+  body:not(.premium-theme-page) .author-info-section h4 {
     font-size: clamp(1.5rem, 6vw, 2rem);
     margin-bottom: 1.5rem;
     text-align: center;
   }
 
-  .author-info-section .author-details {
+  body:not(.premium-theme-page) .author-info-section .author-details {
     padding: 1.5rem;
     gap: 1.25rem;
     border-radius: 16px;
@@ -2684,40 +2710,37 @@ h2.history-section-title {
     text-align: center;
   }
 
-  .author-info-section .author-photo {
+  body:not(.premium-theme-page) .author-info-section .author-photo {
     width: 100px;
     height: 100px;
     border-width: 4px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   }
 
-  .author-info-section .author-name-display {
+  body:not(.premium-theme-page) .author-info-section .author-name-display {
     font-size: 1.25rem;
     text-align: center;
   }
 
-  .author-info-section .author-title-display {
+  body:not(.premium-theme-page) .author-info-section .author-title-display {
     font-size: 1rem;
     text-align: center;
   }
 
-  .author-info-section .author-description-display {
+  body:not(.premium-theme-page) .author-info-section .author-description-display {
     font-size: 1rem;
     text-align: center;
     line-height: 1.7;
   }
 
   /* Hide desktop-only elements */
-  /* Mobile hero: use solid blue gradient background, hide image entirely */
+  /* Mobile hero: keep image background for consistency with desktop */
   .section .header-background {
-    display: none !important;
+    display: block !important;
   }
 
   #page-hero-section.section {
-    background: linear-gradient(180deg,
-        rgba(7, 76, 144, 1) 0%,
-        rgba(17, 63, 114, 1) 50%,
-        rgba(15, 23, 42, 1) 100%) !important;
+    background: transparent !important;
   }
 
   /* Ensure content is above background */
@@ -2766,8 +2789,8 @@ h2.history-section-title {
 
   .mobile-bottom-nav-local a:active,
   .mobile-bottom-nav-local a:focus {
-    color: #06B6D4;
-    background: rgba(6, 182, 212, 0.1);
+    color: #000000;
+    background: rgba(242, 132, 137, 0.15);
   }
 
   /* Enhanced responsive tables for mobile */
@@ -2810,7 +2833,7 @@ h2.history-section-title {
 
   .prose :global(table th) {
     font-weight: 700;
-    background: linear-gradient(135deg, rgba(7, 76, 144, 0.95) 0%, rgba(17, 63, 114, 0.95) 100%);
+     background: transparent;
     color: #fff;
     border-radius: 8px 8px 0 0;
   }
@@ -2981,7 +3004,7 @@ h2.history-section-title {
     margin: 1.5rem 0;
     padding: 1.25rem 1.5rem;
     border-left: 4px solid var(--vnk-accent-color);
-    background: rgba(6, 182, 212, 0.05);
+    background: rgba(242, 132, 137, 0.08);
     border-radius: 0 8px 8px 0;
   }
 
@@ -3018,7 +3041,7 @@ h2.history-section-title {
   textarea:focus {
     outline: none;
     border-color: var(--vnk-accent-color);
-    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+    box-shadow: 0 0 0 3px rgba(242, 132, 137, 0.2);
   }
 }
 
@@ -3408,14 +3431,14 @@ h2.history-section-title {
 }
 
 /* Fix invisible headings on light cards: Video, Map, FAQ, etc. */
-.themed-content-block .additional-content-header h2,
+.additional-content-header h2,
 .video-embed h2,
 .video-block h2,
 .video-wrapper h2,
 .embed-video h2,
 section[data-block="video"]>h2 {
-  color: #4d4d4d !important;
-  /* RGB 77, 77, 77 */
+  color: #1c1c1e !important;
+  /* RGB 28, 28, 30 - Black for visibility */
   -webkit-text-fill-color: currentColor !important;
   -webkit-text-stroke: 0 !important;
   text-shadow: none !important;
@@ -3634,47 +3657,44 @@ header#site-header {
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
-  background-color: transparent !important;
-  /* Transparent when viewing hero - menu on image */
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 1) !important;
-  /* White line under menu */
-  box-shadow: none !important;
+  background-color: rgb(17, 63, 114) !important;
+  /* Darker blue background */
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(17, 63, 114, 0.3) !important;
+  box-shadow: 0 2px 8px rgba(17, 63, 114, 0.2) !important;
   transition: background-color 0.3s ease, border-bottom-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease !important;
   width: 100% !important;
 }
 
-/* Mobile: Make header blue to match hero background */
+/* Mobile: blue header */
 @media (max-width: 600px) {
 
   #site-header,
   header#site-header {
-    background-color: rgba(7, 76, 144, 0.95) !important;
-    /* Blue background matching hero section */
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+    background-color: rgb(17, 63, 114) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(17, 63, 114, 0.3) !important;
+    box-shadow: 0 2px 8px rgba(17, 63, 114, 0.2) !important;
   }
 
   #site-header.scrolled,
   header#site-header.scrolled {
-    background-color: rgba(7, 76, 144, 1) !important;
-    /* Solid blue when scrolled */
+    background-color: rgb(17, 63, 114) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
   }
 }
 
-/* Show dark background and border line when scrolled down */
+/* Show solid blue background when scrolled down */
 #site-header.scrolled,
 header#site-header.scrolled {
-  background-color: rgba(7, 76, 144, 1) !important;
-  /* RGB 7, 76, 144 background appears when scrolled */
+  background-color: rgb(17, 63, 114) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-  /* Border line appears when scrolled */
-  box-shadow: 0 12px 24px rgba(2, 6, 23, 0.25) !important;
+  border-bottom: 1px solid rgba(17, 63, 114, 0.3) !important;
+  box-shadow: 0 4px 12px rgba(17, 63, 114, 0.3) !important;
 }
 
 .container {
@@ -3817,9 +3837,9 @@ body:has(#page-hero-section) {
   font-size: 2rem;
   font-weight: 800;
   margin: 0 0 0.75rem 0;
-  color: #ffffff !important;
+  color: #000000 !important;
   font-family: 'Outfit', sans-serif !important;
-  text-shadow: 0 6px 16px rgba(0, 0, 0, 0.35) !important;
+  text-shadow: none !important;
   text-align: center;
   letter-spacing: -0.01em;
 }
@@ -3830,7 +3850,7 @@ body:has(#page-hero-section) {
 }
 
 .attractions-tier-description {
-  color: #cbd5e1 !important;
+  color: #000000 !important;
   margin: 0 auto 1.5rem auto;
   max-width: 70ch;
   font-size: 1.25rem;
@@ -3881,7 +3901,7 @@ body:has(#page-hero-section) {
   line-height: 1.4;
   display: block;
   flex-grow: 1;
-  text-align: left;
+  text-align: center;
 }
 
 .tier-title {
@@ -3896,6 +3916,7 @@ body:has(#page-hero-section) {
   width: 100%;
   line-height: 1.3;
   min-height: 0;
+  text-align: center;
   color: #1f1f1f;
   text-align: left;
 }
@@ -4104,9 +4125,35 @@ body:has(#page-hero-section) {
   .attractions-region-summary {
     position: sticky;
     top: 64px;
-    z-index: 6;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.94));
-    border-bottom: 1px solid var(--attractions-border);
+    z-index: 100;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin: 0 20px 16px 20px;
+    width: calc(100% - 40px);
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .attractions-region-title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #000000;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+  }
+
+  .attractions-count-badge {
+    display: none !important;
   }
 }
 
@@ -4175,9 +4222,9 @@ body:has(#page-hero-section) {
   }
 
   .attractions-pill.active {
-    background: #0ea5e9;
+    background: rgb(242, 132, 137);
     color: #fff;
-    border-color: #0ea5e9;
+    border-color: rgb(242, 132, 137);
   }
 
   .attractions-pill.clear {
@@ -4265,25 +4312,25 @@ body:has(#page-hero-section) {
   transform: scale(1.03);
 }
 
-/* Tier Badge - Corner Tag */
-.attractions-item-card .tier-badge {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(8px);
-  color: #fff;
-  padding: 0.75rem 1.2rem; /* 3x size */
-  font-size: 1.95rem; /* 3x size */
-  font-weight: 700;
-  z-index: 10;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  display: flex;
-  gap: 0.35rem;
-  align-items: center;
-  border-radius: 18px;
-}
+ /* Tier Badge - Corner Tag */
+ .attractions-item-card .tier-badge {
+   position: absolute;
+   bottom: 1rem;
+   right: 1rem;
+   background: transparent;
+   backdrop-filter: blur(8px);
+   color: #fff;
+   padding: 0.75rem 1.2rem; /* 3x size */
+   font-size: 1.95rem; /* 3x size */
+   font-weight: 700;
+   z-index: 10;
+   text-transform: uppercase;
+   letter-spacing: 0.03em;
+   display: flex;
+   gap: 0.35rem;
+   align-items: center;
+   border-radius: 18px;
+ }
 
 .tier-badge.tier-1 {
   background: linear-gradient(135deg, #2563eb, #3b82f6);
@@ -4405,7 +4452,61 @@ body:has(#page-hero-section) {
 @media (max-width: 900px) {
   .attractions-items-list {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.6rem;
+  }
+  
+  /* Circular cards on tablet - proportionally ~55% of desktop */
+  .attractions-item-card {
+    border-radius: 46px;
+    aspect-ratio: 3 / 4;
+    min-height: 120px;
+    max-height: 160px;
+    padding: 6px;
+    gap: 6px;
+  }
+  
+  .attractions-item-card .card-image-wrapper {
+    margin: 3px;
+    border-radius: 36px;
+    aspect-ratio: 1 / 1;
+    flex: 0 0 42%;
+  }
+  
+  .attractions-item-card .card-image {
+    border-radius: 36px;
+  }
+  
+  /* Tier badge - proportionally ~55% of desktop */
+  .attractions-item-card .tier-badge {
+    padding: 0.4rem 0.65rem;
+    font-size: 1.05rem;
+    border-radius: 10px;
+    bottom: 0.4rem;
+    right: 0.4rem;
+  }
+  
+  .attractions-item-card .tier-number {
+    font-size: 1.05rem;
+  }
+  
+  /* Content font sizes */
+  .attractions-item-content .item-title {
+    font-size: 0.8rem !important;
+  }
+  
+  .attractions-item-content .item-description {
+    font-size: 0.65rem !important;
+  }
+  
+  /* Explore button - below description, no overlap */
+  .attractions-item-card .read-more {
+    font-size: 0.55rem;
+    padding: 4px 8px;
+    width: auto;
+    max-width: 100px;
+    transform: none;
+    align-self: flex-start;
+    margin-top: auto;
   }
 }
 
@@ -4413,35 +4514,954 @@ body:has(#page-hero-section) {
 @media (max-width: 600px) {
   .attractions-items-list {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    gap: 0.4rem;
   }
   
-  .attractions-item-card .card-image-wrapper {
-    margin: 8px;
-  }
-  
-  .attractions-item-content {
-    padding: 0;
+  /* Circular cards on mobile - proportionally ~35% of desktop */
+  .attractions-item-card {
+    border-radius: 30px;
+    aspect-ratio: 3 / 4;
+    min-height: 100px;
+    max-height: 140px;
+    padding: 4px;
     gap: 4px;
   }
   
-  .attractions-item-content .item-title {
-    font-size: 0.8rem !important;
+  .attractions-item-card .card-image-wrapper {
+    margin: 2px;
+    border-radius: 23px;
+    aspect-ratio: 1 / 1;
+    flex: 0 0 42%;
   }
   
-  .attractions-item-content .item-description {
-    font-size: 0.7rem !important;
+  .attractions-item-card .card-image {
+    border-radius: 23px;
+  }
+  
+  /* Tier badge - proportionally ~35% of desktop */
+  .attractions-item-card .tier-badge {
+    padding: 0.25rem 0.45rem;
+    font-size: 0.85rem;
+    border-radius: 7px;
+    bottom: 0.3rem;
+    right: 0.3rem;
+  }
+  
+  /* Tier number - proportionally reduced */
+  .attractions-item-card .tier-number {
+    font-size: 0.85rem;
+  }
+  
+  .attractions-item-content {
+    padding: 0 0.25rem;
+    gap: 2px;
+  }
+  
+  .attractions-item-content .item-title {
+    font-size: 0.65rem !important;
     -webkit-line-clamp: 1;
     line-clamp: 1;
   }
   
+  .attractions-item-content .item-description {
+    font-size: 0.55rem !important;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+  
+  /* Explore button - below description, no overlap */
   .attractions-item-card .read-more {
+    font-size: 0.5rem;
+    padding: 3px 6px;
+    width: auto;
+    min-width: 40px;
+    max-width: 80px;
+    transform: none;
+    align-self: flex-start;
+    margin-top: auto;
+  }
+  
+  /* Tier info block - compact on mobile */
+  .attractions-tier-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  
+  .attractions-tier-item .tier-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+  
+  .attractions-tier-item .tier-label {
+    font-size: 0.3rem;
+  }
+  
+  .attractions-tier-item .tier-number {
     font-size: 0.7rem;
-    padding: 5px 10px;
   }
 }
 
+/* ==========================================================================
+   MOBILE DESTINATIONS B&W REFACTOR - Premium B&W Aesthetic
+   Pure White Background, Pure Black Text, Central Alignment
+   ========================================================================== */
 
+/* B&W Base Configuration for Mobile Destinations */
+@media (max-width: 600px) {
+  /* Override ALL teal/teal-green colors to white/black */
+  * {
+    --teal-color: transparent !important;
+  }
+  
+  .attractions-page,
+  .attractions-page .timeline-container,
+  .attractions-page .attractions-region-block,
+  .attractions-page .attractions-items-list,
+  .timeline-container {
+    background-color: #ffffff !important;
+  }
+
+  /* Override ALL teal colors to black/white for B&W aesthetic */
+  .attractions-page a,
+  .attractions-page a:visited,
+  .attractions-page .link {
+    color: #000000 !important;
+  }
+
+  .attractions-page a:hover,
+  .attractions-page a:active {
+    color: #333333 !important;
+  }
+
+   .attractions-page .post-info-inner {
+     background: transparent !important;
+     border-color: rgba(255, 255, 255, 0.2) !important;
+   }
+
+  /* Override teal header background to white */
+  .attractions-page .header,
+  .attractions-page .header.fixed-header,
+  .header,
+  .header.fixed-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: none !important;
+  }
+
+  /* Header & Navigation - Pure White BG, Black Text */
+  .attractions-page .section,
+  .attractions-page #page-hero-section.section,
+  .attractions-page .section.hero-section {
+    background: transparent !important;
+    min-height: 100vh !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: block !important;
+  }
+
+  /* Override global mobile section height limit */
+  @media (max-width: 600px) {
+    .attractions-page .section,
+    .attractions-page #page-hero-section {
+      min-height: 100vh !important;
+      height: 100vh !important;
+      max-height: 100vh !important;
+    }
+  }
+
+  /* Hero Image - Full Cover Mobile Screen - Override ALL */
+  .attractions-page .section .header-background,
+  .attractions-page .header-background {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100vh !important;
+    display: block !important;
+    z-index: 0 !important;
+  }
+
+  .attractions-page .section .background-image,
+  .attractions-page .background-image {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100vh !important;
+    background: var(--hero-bg-url) center / cover no-repeat !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  /* Remove gradient overlay that causes white-on-white text */
+  .attractions-page .section .background-image::before,
+  .attractions-page .background-image::before {
+    display: none !important;
+  }
+  .attractions-page .section .header-background {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100vh !important;
+    display: block !important;
+    z-index: 0 !important;
+  }
+
+  .attractions-page .section .background-image {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100vh !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  /* Remove gradient overlay that causes white-on-white text */
+  .attractions-page .section .background-image::before {
+    display: none !important;
+  }
+
+  /* Hero Text - White text on image with text shadow for visibility */
+  .attractions-page .section-header-text {
+    position: relative !important;
+    z-index: 10 !important;
+    background: transparent !important;
+    padding: 2rem 1.5rem !important;
+    margin: 0 !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .attractions-page .section .section-header-text h1 {
+    color: #ffffff !important;
+    font-size: clamp(2rem, 8vw, 2.5rem) !important;
+    text-align: center !important;
+    display: block !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .attractions-page .section-description {
+    color: #ffffff !important;
+    opacity: 0.95 !important;
+    text-align: center !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Breadcrumb - white on dark image */
+  .attractions-page .section .breadcrumb-modern__list,
+  .attractions-page .section .breadcrumb-modern__link,
+  .attractions-page .section .breadcrumb-modern__current,
+  .attractions-page .section .breadcrumb-modern__divider {
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .attractions-page .section .breadcrumb-modern__link::after {
+    background: #ffffff !important;
+  }
+
+  /* Post info - white on dark image */
+  .attractions-page .section .post-info {
+    background: transparent !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .attractions-page .section .post-info-inner {
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* Tier Info Block - B&W - Below image, black text on white */
+  .attractions-page .attractions-tier-block {
+    background: #ffffff !important;
+    border: none !important;
+    padding: 1.5rem 0 !important;
+    width: calc(100% - 40px) !important;
+    max-width: 100% !important;
+    margin: 0 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  .attractions-page .attractions-tier-heading,
+  .attractions-page .attractions-tier-block .additional-content-header h2 {
+    color: #000000 !important;
+    text-shadow: none !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 1rem !important;
+    text-align: center !important;
+    background: transparent !important;
+  }
+
+  .attractions-page .attractions-tier-description {
+    color: #000000 !important;
+    opacity: 0.8 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  .attractions-page .attractions-tier-list {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  .attractions-page .attractions-tier-item {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    border-radius: 12px !important;
+    flex-direction: row !important;
+    padding: 1rem !important;
+    aspect-ratio: auto !important;
+    box-shadow: none !important;
+  }
+
+   .attractions-page .attractions-tier-item .tier-box {
+     width: 48px !important;
+     height: 48px !important;
+     border-radius: 8px !important;
+     background: transparent !important;
+     color: #ffffff !important;
+     box-shadow: none !important;
+   }
+
+  .attractions-page .tier-title,
+  .attractions-page .attractions-tier-item h3 {
+    color: #000000 !important;
+    font-size: 1rem !important;
+    text-align: left !important;
+  }
+
+  .attractions-page .attractions-tier-item p {
+    color: #000000 !important;
+    opacity: 0.8 !important;
+    font-size: 0.85rem !important;
+    text-align: left !important;
+  }
+
+  /* Content Cards - B&W Vertical Feed */
+  .attractions-page .attractions-items-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    padding: 1rem !important;
+    background: #ffffff !important;
+  }
+
+  .attractions-page .attractions-region-block {
+    background: #ffffff !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Premium Editorial Accordion - Mobile - Button Style */
+  .attractions-page .attractions-region-summary {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: calc(100% - 40px) !important;
+    max-width: 100% !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(128, 128, 128, 0.4) !important;
+    border-radius: 30px !important;
+    padding: 10px 20px !important;
+    margin: 0 20px 10px 20px !important;
+    min-height: 42px !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+    position: sticky !important;
+    top: 75px !important;
+    z-index: 100 !important;
+  }
+
+  .attractions-page .attractions-region-summary:hover {
+    background: #fafafa !important;
+    border-color: rgba(128, 128, 128, 0.6) !important;
+  }
+
+  .attractions-page .attractions-region-summary[open],
+  .attractions-page .attractions-region-summary.expanded {
+    background: #fafafa !important;
+    border-color: rgba(128, 128, 128, 0.6) !important;
+    margin-bottom: 10px !important;
+  }
+
+  .attractions-page .attractions-region-summary:hover {
+    background: #f0f0f0 !important;
+    border-color: rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .attractions-page .attractions-region-summary[open],
+  .attractions-page .attractions-region-summary.expanded {
+    background: #f0f0f0 !important;
+    border-color: rgba(0, 0, 0, 0.25) !important;
+    margin-bottom: 12px !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .attractions-page .attractions-region-summary::marker,
+  .attractions-page .attractions-region-summary::-webkit-details-marker {
+    display: none !important;
+  }
+
+  /* Region Title - Clean Typography, Centered */
+  .attractions-page .attractions-region-title {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    color: #000000 !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em !important;
+    text-align: center !important;
+    margin: 0 !important;
+  }
+
+  /* Hide Counter - Remove numbers */
+  .attractions-page .attractions-count-badge {
+    display: none !important;
+  }
+
+  /* Chevron Icon - Thin minimalist, positioned absolute right */
+  .attractions-page .region-toggle-btn {
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: #000000 !important;
+    opacity: 0.3 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    flex-shrink: 0 !important;
+  }
+
+  .attractions-page .region-toggle-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke-width: 1.5 !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .attractions-page .attractions-region-summary[open] .region-toggle-btn svg,
+  .attractions-page .attractions-region-summary.expanded .region-toggle-btn svg {
+    transform: rotate(180deg) !important;
+  }
+
+  .attractions-page .attractions-region-summary[open] .region-toggle-btn,
+  .attractions-page .attractions-region-summary.expanded .region-toggle-btn {
+    opacity: 0.5 !important;
+  }
+
+  /* Hide "View More" text - amateurish */
+  .attractions-page .region-toggle-action {
+    display: none !important;
+  }
+
+  /* Card Structure - Clean White Cards */
+  .attractions-page .attractions-item-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .attractions-page .attractions-item-card:active {
+    transform: scale(0.98) !important;
+  }
+
+  /* Card Image - No text overlay */
+  .attractions-page .attractions-item-card .card-image-wrapper {
+    position: relative !important;
+    width: 100% !important;
+    aspect-ratio: 16 / 10 !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+
+  .attractions-page .attractions-item-card .card-image {
+    border-radius: 0 !important;
+  }
+
+  .attractions-page .attractions-item-card .card-image-wrapper::after {
+    display: none !important;
+  }
+
+  /* Card Body - White background */
+  .attractions-page .attractions-item-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 1.25rem !important;
+    background: #ffffff !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Card Title - Bold Black */
+  .attractions-page .attractions-item-content .item-title {
+    color: #000000 !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+  }
+
+  /* Card Description - Dark Gray */
+  .attractions-page .attractions-item-content .item-description {
+    color: #000000 !important;
+    opacity: 0.8 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    -webkit-line-clamp: 3 !important;
+    line-clamp: 3 !important;
+  }
+
+  /* Tier Badge - Black on White */
+   .attractions-page .attractions-item-card .tier-badge {
+      background: transparent !important;
+     color: #ffffff !important;
+     border: none !important;
+     box-shadow: none !important;
+     font-size: 0.7rem !important;
+     font-weight: 700 !important;
+     padding: 0.4rem 0.75rem !important;
+     border-radius: 20px !important;
+   }
+
+  /* Tier Badge Colors - Blue tier-1, Green tier-2, Yellow tier-3 */
+  .attractions-page .attractions-item-card .tier-badge.tier-1 {
+    background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.4) !important;
+  }
+
+  .attractions-page .attractions-item-card .tier-badge.tier-2 {
+    background: linear-gradient(135deg, #059669, #10b981) !important;
+    box-shadow: 0 2px 10px rgba(5, 150, 105, 0.4) !important;
+  }
+
+  .attractions-page .attractions-item-card .tier-badge.tier-3 {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24) !important;
+    box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4) !important;
+  }
+
+  .attractions-page .attractions-item-card .tier-number {
+    font-size: 1rem !important;
+  }
+
+  /* Explore Button - Clean Black */
+   .attractions-page .attractions-item-card .read-more {
+     width: 100% !important;
+     max-width: 100% !important;
+     min-height: 44px !important;
+     background: transparent !important;
+     color: #ffffff !important;
+     border: none !important;
+     border-radius: 8px !important;
+     font-size: 0.95rem !important;
+     font-weight: 600 !important;
+     padding: 12px 20px !important;
+     text-align: center !important;
+     margin-top: 0.5rem !important;
+     transform: none !important;
+     box-shadow: none !important;
+     display: flex !important;
+     align-items: center !important;
+     justify-content: center !important;
+     gap: 8px !important;
+  }
+
+  .attractions-page .attractions-item-card .read-more:active {
+    background: #333333 !important;
+  }
+
+  /* Footer Content - B&W */
+  .attractions-page .timeline-footer {
+    background: #ffffff !important;
+  }
+}
+
+/* Tablet Breakpoint 600-900px - B&W Continuation */
+@media (min-width: 601px) and (max-width: 900px) {
+  .attractions-page .attractions-items-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+    padding: 1rem !important;
+    background: #ffffff !important;
+  }
+
+  .attractions-page .attractions-item-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+
+  .attractions-page .attractions-item-content {
+    text-align: center !important;
+    align-items: center !important;
+    padding: 1rem !important;
+  }
+
+  .attractions-page .attractions-item-content .item-title {
+    color: #000000 !important;
+    text-align: center !important;
+  }
+
+  .attractions-page .attractions-item-content .item-description {
+    color: #000000 !important;
+    opacity: 0.8 !important;
+    text-align: center !important;
+  }
+
+   .attractions-page .attractions-item-card .read-more {
+     background: transparent !important;
+     color: #ffffff !important;
+     border: none !important;
+     border-radius: 6px !important;
+   }
+}
+
+/* Mobile Editorial Feed Refactor - Premium Vertical Travel Feed (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Container - Single column vertical scroll */
+  .attractions-page .attractions-items-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    padding: 16px 20px !important;
+    max-width: 100% !important;
+    row-gap: 28px;
+    background: #ffffff !important;
+  }
+
+  /* Card Geometry - Large rectangular cards */
+  .attractions-page .attractions-item-card {
+    display: flex !important;
+    flex-direction: column !important;
+    background: #fff !important;
+    border-radius: 28px !important;
+    overflow: hidden !important;
+    text-decoration: none !important;
+    position: relative !important;
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.08),
+      0 1px 4px rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    aspect-ratio: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  }
+
+  .attractions-page .attractions-item-card:active {
+    transform: scale(0.985);
+  }
+
+  /* Image wrapper - Full width, responsive height */
+  .attractions-page .attractions-item-card .card-image-wrapper {
+    position: relative !important;
+    width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    flex: none !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Image - Full cover */
+  .attractions-page .attractions-item-card .card-image {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-size: cover !important;
+    background-position: center !important;
+    border-radius: 0 !important;
+    transition: transform 0.4s ease !important;
+  }
+
+  .attractions-page .attractions-item-card:hover .card-image {
+    transform: scale(1.03);
+  }
+
+  /* Remove Gradient Scrim Overlay - B&W */
+  .attractions-page .attractions-item-card .card-image-wrapper::after {
+    display: none !important;
+  }
+
+  /* Content - Below image */
+  .attractions-page .attractions-item-content {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 20px 20px 24px !important;
+    gap: 12px !important;
+    background: #fff !important;
+    flex: none !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  /* Title - Bold black */
+  .attractions-page .attractions-item-content .item-title {
+    font-size: 1.35rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    letter-spacing: -0.01em !important;
+    text-align: center !important;
+  }
+
+  /* Description - Black with opacity */
+  .attractions-page .attractions-item-content .item-description {
+    font-size: 0.95rem !important;
+    line-height: 1.55 !important;
+    color: #000000 !important;
+    opacity: 0.8 !important;
+    margin: 0 !important;
+    -webkit-line-clamp: 3 !important;
+    line-clamp: 3 !important;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-align: center !important;
+  }
+
+   /* Tier Badge - Black on white for B&W */
+   .attractions-page .attractions-item-card .tier-badge {
+     position: absolute !important;
+     top: 12px !important;
+     right: 12px !important;
+     width: 48px !important;
+     height: 48px !important;
+     min-width: 48px !important;
+      background: transparent !important;
+     color: #ffffff !important;
+     padding: 0 !important;
+     font-size: 0.7rem !important;
+     font-weight: 800 !important;
+     text-transform: uppercase !important;
+     letter-spacing: 0 !important;
+     border-radius: 12px !important;
+     box-shadow: none !important;
+     z-index: 5 !important;
+     display: flex !important;
+     flex-direction: column !important;
+     align-items: center !important;
+     justify-content: center !important;
+     gap: 0 !important;
+     border: none !important;
+     line-height: 1 !important;
+   }
+
+  /* Tier Badge Colors - Blue tier-1, Green tier-2, Yellow tier-3 */
+  .attractions-page .attractions-item-card .tier-badge.tier-1 {
+    background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.4) !important;
+  }
+
+  .attractions-page .attractions-item-card .tier-badge.tier-2 {
+    background: linear-gradient(135deg, #059669, #10b981) !important;
+    box-shadow: 0 2px 10px rgba(5, 150, 105, 0.4) !important;
+  }
+
+  .attractions-page .attractions-item-card .tier-badge.tier-3 {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24) !important;
+    box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4) !important;
+  }
+
+  /* Show "TIER" label above number */
+  .attractions-page .attractions-item-card .tier-label {
+    display: flex !important;
+    font-size: 0.45rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    margin-bottom: 1px !important;
+  }
+
+  .attractions-page .attractions-item-card .tier-number {
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+  }
+
+  /* Read More / Explore Button - Blue background, white text - Rounder, slimmer */
+  .attractions-page .attractions-item-card .read-more {
+    width: auto !important;
+    min-height: 36px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    background: rgb(11, 168, 230) !important;
+    border: none !important;
+    border-radius: 24px !important;
+    padding: 8px 24px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    margin-top: 12px !important;
+    transform: none !important;
+    align-self: center !important;
+    box-shadow: none !important;
+    transition: background 0.2s ease, transform 0.15s ease !important;
+  }
+
+  .attractions-page .attractions-item-card .read-more:active {
+    background: rgb(9, 140, 192) !important;
+    transform: scale(0.96);
+  }
+
+  .attractions-page .attractions-item-card .read-more::after {
+    display: none !important;
+  }
+
+  /* Tier Info Block - Compact mobile version */
+  .attractions-page .attractions-tier-block {
+    padding: 0 0 0.4rem 0 !important;
+    margin: 0 20px 0.4rem 20px !important;
+    width: calc(100% - 40px) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+  }
+
+  .attractions-page .attractions-tier-heading {
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.5rem !important;
+    text-align: center !important;
+    color: #000000 !important;
+    background: transparent !important;
+  }
+
+  .attractions-page .attractions-tier-description {
+    color: #000000 !important;
+    opacity: 0.8 !important;
+    text-align: center !important;
+    background: transparent !important;
+  }
+
+  .attractions-page .attractions-tier-list {
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 0.75rem !important;
+  }
+
+  .attractions-page .attractions-tier-item {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 1rem !important;
+    padding: 1rem !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 12px !important;
+    flex: none !important;
+    text-align: left !important;
+  }
+
+  .attractions-page .attractions-tier-item .tier-box {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    border-radius: 8px !important;
+    color: #ffffff !important;
+  }
+
+  .attractions-page .attractions-tier-item:nth-child(1) .tier-box {
+    background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3) !important;
+  }
+
+  .attractions-page .attractions-tier-item:nth-child(2) .tier-box {
+    background: linear-gradient(135deg, #059669, #10b981) !important;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3) !important;
+  }
+
+  .attractions-page .attractions-tier-item:nth-child(3) .tier-box {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24) !important;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
+  }
+
+  .attractions-page .attractions-tier-item .tier-label {
+    display: none !important;
+  }
+
+  .attractions-page .attractions-tier-item .tier-number {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+  }
+
+  .attractions-page .attractions-tier-item h3.tier-title {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    color: #000000 !important;
+  }
+
+  .attractions-page .attractions-tier-item p {
+    display: block !important;
+    font-size: 0.85rem !important;
+    color: #000000 !important;
+    opacity: 0.8 !important;
+    margin: 0 !important;
+  }
+
+  .attractions-page .attractions-tier-description {
+    display: block !important;
+    font-size: 0.9rem !important;
+    color: #000000 !important;
+    opacity: 0.8 !important;
+    text-align: center !important;
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* Tablet: 600px to 900px - already covered in 900px media query above */
 
 
 .attractions-item-card .read-more .arrow {
@@ -4471,7 +5491,7 @@ body:has(#page-hero-section) {
 .attractions-sheet-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.45);
+  background: rgba(122, 189, 170, 0.45);
   z-index: 49;
   border: 0;
 }
@@ -4485,7 +5505,7 @@ body:has(#page-hero-section) {
   background: #fff;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 -12px 30px rgba(122, 189, 170, 0.18);
   max-height: 70vh;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -4576,7 +5596,7 @@ body:has(#page-hero-section) {
 
 /* Timeline Container */
 .timeline-container {
-  background-color: #f7f9fc;
+  background-color: #ffffff !important;
   padding: 4rem 0;
   position: relative;
 }
@@ -4683,13 +5703,13 @@ body:has(#page-hero-section) {
   margin: 0 0 1.5rem 0;
   font-size: 2.5rem;
   font-weight: 800;
-  color: #2c3e50;
+  color: black;
   font-family: 'Inter', sans-serif;
   line-height: 1.2;
 }
 
 .timeline-body {
-  color: #444;
+  color: black;
   line-height: 1.8;
   font-size: 1.4rem;
 }
@@ -4718,7 +5738,45 @@ body:has(#page-hero-section) {
 /* Mobile Responsiveness for Timeline */
 @media screen and (max-width: 900px) {
   .timeline::after {
-    left: 31px;
+    display: none;
+  }
+
+  .timeline-item {
+    width: 100%;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .timeline-item.left,
+  .timeline-item.right {
+    left: 0;
+  }
+
+  .timeline-item::after {
+    display: none;
+  }
+
+  .timeline-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .timeline-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: none;
+  }
+
+  .timeline-year {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .timeline-content {
+    text-align: center;
+    padding: 0;
   }
 
   .timeline-item {
@@ -4733,7 +5791,7 @@ body:has(#page-hero-section) {
   }
 
   .timeline-item::after {
-    left: 18px;
+    display: none;
   }
 
   .timeline-item.left::after,
@@ -4806,6 +5864,38 @@ pre:has-text('mermaid version'),
   font-weight: 600 !important;
 }
 
+/* ========================================================================== */
+/* Global Hero Standard (consistent with homepage hero readability)            */
+/* ========================================================================== */
+#page-hero-section .section-header,
+#page-hero-section .section-header-text,
+#page-hero-section .hero-kicker,
+#page-hero-section .post-info-content,
+#page-hero-section .post-info-inner {
+  text-shadow: none !important;
+}
+
+#page-hero-section .hero-text-box h1 {
+  color: #ffffff !important;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.45) !important;
+}
+
+#page-hero-section .section-description {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+ #page-hero-section .post-info-inner {
+   border-color: rgba(0, 0, 0, 0.3) !important;
+   background: transparent !important;
+ }
+
+#page-hero-section .breadcrumbs,
+#page-hero-section .breadcrumbs a,
+#page-hero-section .breadcrumbs li,
+#page-hero-section .breadcrumbs span {
+  color: rgba(255, 255, 255, 0.86) !important;
+}
+
 /* Diagram Titles */
 .language-mermaid .titleText,
 .language-mermaid .header {
@@ -4854,4 +5944,9 @@ pre:has-text('mermaid version'),
 .language-mermaid .edgePath .path {
   stroke: #d4a373 !important;
   stroke-width: 4px !important;
+}
+
+/* Premium theme: hide TOC article numbers on history page */
+body.premium-theme-page .toc-rail-article .number {
+  display: none !important;
 }

@@ -14,15 +14,6 @@
 	// Visibility state
 	let showAll = false;
 	$: displayedItems = showAll ? items.slice(0, 30) : items.slice(0, 3);
-	$: console.log(
-		'FAQ Items:',
-		items.length,
-		'Displayed:',
-		displayedItems.length,
-		'ShowAll:',
-		showAll,
-		items
-	);
 
 	// Form state
 	let userQuestion = '';
@@ -258,7 +249,7 @@
 		font-size: clamp(1.75rem, 4vw, 2.5rem); /* Slightly smaller */
 		font-weight: 800;
 		letter-spacing: -0.02em;
-		color: inherit; /* Allow override */
+		color: #1c1c1e !important; /* Black for visibility */
 		margin: 0;
 		display: inline-block;
 	}
@@ -319,7 +310,7 @@
 		flex-shrink: 0;
 		width: 28px; /* Slightly smaller */
 		height: 28px;
-		background: rgba(52, 152, 219, 0.1);
+		background: rgba(255, 255, 255, 0.2);
 		border-radius: 50%;
 		display: flex;
 		align-items: center;
@@ -339,7 +330,7 @@
 	.faq-icon::after {
 		content: '';
 		position: absolute;
-		background-color: #3498db;
+		background-color: #ffffff;
 		border-radius: 2px;
 		transition: transform 0.3s ease;
 	}
@@ -376,7 +367,7 @@
 	}
 
 	.faq-btn:hover .faq-question-text {
-		color: #3498db;
+		color: #ffffff;
 	}
 
 	.faq-content {
@@ -400,15 +391,15 @@
 	}
 
 	.faq-body-inner :global(a) {
-		color: #3498db;
+		color: #ffffff;
 		text-decoration: none;
 		font-weight: 500;
-		border-bottom: 1px solid transparent;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 		transition: border-color 0.2s;
 	}
 
 	.faq-body-inner :global(a:hover) {
-		border-bottom-color: #3498db;
+		border-bottom-color: #ffffff;
 	}
 
 	.faq-body-inner :global(img) {
@@ -541,7 +532,7 @@
 	}
 
 	button[type='submit'] {
-		background: #3498db;
+		background: rgb(3, 122, 255);
 		color: white;
 		border: none;
 		padding: 0.625rem 1.75rem;
@@ -559,12 +550,12 @@
 	}
 
 	button[type='submit']:hover:not(:disabled) {
-		background: #2980b9;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+		background: rgb(0, 100, 220);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 	}
 
 	button[type='submit']:disabled {
-		background: #cbd5e1; /* Lighter grey */
+		background: rgba(255, 255, 255, 0.3);
 		opacity: 0.6;
 		cursor: not-allowed;
 		transform: none;

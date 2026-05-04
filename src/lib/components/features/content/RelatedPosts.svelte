@@ -88,7 +88,7 @@
 			</h2>
 
 			<!-- Navigation Arrows -->
-			{#if displayPosts.length > 3}
+			{#if displayPosts.length > 4}
 				<div class="nav-arrows">
 					<button on:click={() => scroll('left')} aria-label="Scroll left" class="nav-btn">
 						<svg
@@ -155,9 +155,9 @@
 		font-weight: 800;
 		text-align: left;
 		margin: 0;
-		color: #fff;
+		color: #1c1c1e !important;
 		letter-spacing: -0.03em;
-		text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+		text-shadow: none;
 	}
 
 	.related-posts-header h2 a {
@@ -198,14 +198,14 @@
 
 	.carousel-container {
 		overflow-x: auto;
+		overflow-y: visible;
 		scroll-snap-type: x mandatory;
 		/* Hide scrollbar */
 		scrollbar-width: none;
 		-ms-overflow-style: none;
-		padding: 1rem 0 3rem 0; /* Vertical padding for shadows and hover effects */
-		margin: 0 -1rem; /* Negative margin to allow full-bleed scroll on mobile if needed, but keeping content aligned */
-		padding-left: 1rem;
-		padding-right: 1rem;
+		padding: 1rem 0 2rem 0;
+		padding-left: env(safe-area-inset-left, 1rem);
+		padding-right: env(safe-area-inset-right, 1rem);
 	}
 
 	.carousel-container::-webkit-scrollbar {
@@ -213,45 +213,113 @@
 	}
 
 	.related-posts-list {
-		list-style: none !important; /* Force remove bullets */
+		list-style: none !important;
 		padding: 0;
 		margin: 0;
 		display: flex;
-		/* Responsive gap */
-		gap: 1.5rem;
+		/* Reduced gap */
+		gap: 1rem;
 	}
 
 	.carousel-item {
 		list-style: none !important;
-		scroll-snap-align: center; /* Center snap feels better for partial peeking */
-		/* Sizing for Mobile: Fixed, manageable width for 'polaroid' feel */
-		flex: 0 0 260px;
-		width: 260px;
-		min-width: 0; /* Reset */
+		scroll-snap-align: start;
+		/* Mobile: 1 item visible (full screen width) */
+		flex: 0 0 calc(100% - 0rem);
+		width: auto;
+		min-width: 0;
+	}
+
+	/* Mobile: 140px cards with horizontal scroll */
+	@media (max-width: 767px) {
+		.carousel-container {
+			padding-left: 20px !important;
+			padding-right: 20px !important;
+			margin: 0 0 0 -20px !important;
+			width: calc(100% + 40px) !important;
+		}
+
+		.related-posts-list {
+			gap: 0 !important;
+		}
+
+		.carousel-item {
+			flex: 0 0 140px !important;
+			width: 140px !important;
+			min-width: 140px !important;
+			max-width: 140px !important;
+			scroll-snap-align: start !important;
+		}
+
+		.carousel-item :global(.attractions-item-card) {
+			border-radius: 12px !important;
+			overflow: hidden !important;
+		}
+
+		.carousel-item :global(.card-image-wrapper) {
+			aspect-ratio: 4 / 3 !important;
+			height: auto !important;
+			min-height: 0 !important;
+			margin: 0 !important;
+		}
+
+		.carousel-item :global(.card-image) {
+			border-radius: 0 !important;
+		}
+
+		.attractions-item-content {
+			padding: 8px 10px !important;
+		}
+
+		.attractions-item-content .item-title {
+			font-size: 13px !important;
+			line-height: 1.3 !important;
+			display: -webkit-box !important;
+			-webkit-line-clamp: 3 !important;
+			-webkit-box-orient: vertical !important;
+			overflow: hidden !important;
+		}
+
+		.category {
+			font-size: 10px !important;
+			margin-bottom: 2px !important;
+		}
 	}
 
 	/* Tablet: 3 items */
-	@media (min-width: 640px) and (max-width: 1023px) {
+	@media (min-width: 768px) and (max-width: 1199px) {
 		.related-posts-list {
-			gap: 2rem;
+			gap: 1.25rem;
 		}
 		.carousel-item {
-			flex: 0 0 calc((100% - 4rem) / 3); /* 3 items, 2 gaps of 2rem */
-			width: auto;
+			flex: 0 0 calc((100% - 2.5rem) / 3);
+			max-width: calc((100% - 2.5rem) / 3);
 		}
 	}
 
-	/* Desktop: Exactly 5 items */
-	@media (min-width: 1024px) {
+	/* Desktop: Exactly 4 items visible with proper card sizing */
+	@media (min-width: 1200px) {
 		.related-posts-list {
-			gap: 4rem;
+			display: flex;
+			gap: 1.5rem;
 		}
 		.carousel-item {
-			scroll-snap-align: start;
-			/* 5 items, 4 gaps of 4rem (16rem total). */
-			flex: 0 0 calc((100% - 16rem) / 5);
-			min-width: 220px;
-			width: auto;
+			/* Fixed card width guarantees 4 full cards in the homepage wrapper */
+			flex: 0 0 270px;
+			min-width: 270px;
+			max-width: 270px;
+		}
+	}
+
+	/* Large Desktop: Ensure cards don't stretch too wide */
+	@media (min-width: 1600px) {
+		.related-posts-list {
+			gap: 1.75rem;
+		}
+		.carousel-item {
+			flex: 0 0 280px;
+			min-width: 280px;
+			max-width: 280px;
 		}
 	}
 
