@@ -289,3 +289,8 @@
 [Destination] 'almaty' is a known path. fetching direct...
 [Destination] Checking map data... Snap empty? false
 [Destination] Map data found: {"id":"main","title":"Location","coordinates":{"lng":76.889709,"lat":43.238949}}
+[2m10:53:34 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/styles/premium-theme.css[22m
+[Destination] adminDB is initialized
+[Destination] 'almaty' is a known path. fetching direct...
+[Destination] Checking map data... Snap empty? false
+[Destination] Map data found: {"id":"main","title":"Location","coordinates":{"lng":76.889709,"lat":43.238949}}
