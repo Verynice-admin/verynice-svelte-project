@@ -1,5 +1,5 @@
 // Legacy shim for old imports. No secrets here.
-export { getFirebaseApp, getFirestore } from '$lib/firebaseApp';
+export { getFirebaseApp, getFirestore, getAuth } from '$lib/firebaseApp';
 
 
 

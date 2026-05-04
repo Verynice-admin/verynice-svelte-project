@@ -4,12 +4,29 @@
 	import { goto } from '$app/navigation';
 
 	export let isOpen = false;
+	export let initialQuery: string;
+
+	function handleInput(e: Event) {
+		const target = e.target as HTMLInputElement;
+		query = target.value;
+	}
+
+	function formatAiAnswer(text: string): string {
+		return text
+			// Simple line break handling for natural text
+			.replace(/\n\n+/g, '</p><p>')
+			.replace(/\n/g, '<br>')
+			// Wrap in paragraph
+			.replace(/^(.)/, '<p>$1')
+			.replace(/(.)$/, '$1</p>');
+	}
 
 	const dispatch = createEventDispatcher();
 
 	let query = '';
 	let inputElement: HTMLInputElement;
 	let loading = false;
+	const placeholder = "Search destinations, pages...";
 	let aiResponse: {
 		question: string;
 		answer: string;
@@ -129,19 +146,21 @@
 				(page) =>
 					page.title.toLowerCase().includes(lowerQuery) ||
 					page.description.toLowerCase().includes(lowerQuery) ||
-					page.keywords.includes(lowerQuery)
+					page.keywords.toLowerCase().includes(lowerQuery)
 			);
 		}
 	}
 
 	function close() {
+		// Don't allow closing during AI search
+		if (loading) return;
+
 		dispatch('close');
 		// slight delay to clear content after animation starts
 		setTimeout(() => {
 			if (!isOpen) {
 				query = '';
 				aiResponse = null;
-				loading = false;
 			}
 		}, 300);
 	}
@@ -150,12 +169,14 @@
 		if (!isOpen) return;
 		if (e.key === 'Escape') {
 			e.preventDefault(); // Safety to ensure browser doesn't do default escape actions if any
-			close();
+			// Don't allow closing during AI search
+			if (!loading) {
+				close();
+			}
 			return;
 		}
-		if (e.key === 'Enter' && query.trim()) {
-			performAiSearch();
-		}
+		// Don't auto-trigger AI search on Enter - show page results first
+		// User can click "Ask AI" button manually if they want AI response
 	}
 
 	async function performAiSearch() {
@@ -173,18 +194,24 @@
 
 			const data = await response.json();
 
-			if (data.success && data.aiAnswer) {
+			if (!response.ok) {
+				// Handle HTTP errors
+				aiResponse = {
+					question: query,
+					answer: data.error || "Sorry, I'm having trouble processing your question right now. Please try again."
+				};
+			} else if (data.aiAnswer) {
+				// Success - we have an AI answer
 				aiResponse = {
 					question: data.correctedQuestion || query,
 					answer: data.aiAnswer,
 					relatedLinks: data.relatedLinks || []
 				};
 			} else {
-				// Fallback if AI fails or returns no answer
+				// No answer returned
 				aiResponse = {
 					question: query,
-					answer:
-						"I'm sorry, I couldn't find a specific answer for that. Please try rephrasing or checking the specific pages."
+					answer: "I'm sorry, I couldn't find a specific answer for that. Please try rephrasing or checking the specific pages."
 				};
 			}
 		} catch (error) {
@@ -199,26 +226,51 @@
 	}
 
 	function navigateTo(url: string) {
+		// Close mobile menu if open before navigation
+		const mobileMenu = document.getElementById('mobile-menu');
+		const fadeBlock = document.querySelector('.fadeblock');
+		if (mobileMenu && mobileMenu.getAttribute('data-open') === 'true') {
+			mobileMenu.setAttribute('data-open', 'false');
+			mobileMenu.setAttribute('aria-hidden', 'true');
+			if (fadeBlock) fadeBlock.classList.remove('active');
+			document.body.style.overflow = '';
+		}
 		goto(url);
 		close();
 	}
 
-	$: if (isOpen && inputElement) {
-		setTimeout(() => inputElement.focus(), 100);
+	// Initialize when modal opens
+	$: if (isOpen) {
+		// Set query from initialQuery if provided, otherwise preserve current state
+		if (initialQuery && initialQuery !== query) {
+			query = initialQuery;
+			// Reset AI state when setting a new query
+			aiResponse = null;
+			loading = false;
+		}
+		// Don't reset existing state unless it's completely empty
 
-		// Re-apply translation to the modal content if needed
-		// if (browser) {
-		// 	const lang = get(currentLanguage);
-		// 	if (lang !== 'EN') {
-		// 		translatePageTo(lang)
-		// 			.then((ok) => {
-		// 				if (!ok) {
-		// 					console.error('[Translation] Failed to apply to search modal');
-		// 				}
-		// 			})
-		// 			.catch(console.error);
-		// 	}
-		// }
+		// Focus the input
+		setTimeout(() => {
+			if (inputElement) {
+				inputElement.focus();
+				// Set cursor to end
+				inputElement.selectionStart = inputElement.selectionEnd = inputElement.value.length;
+			}
+		}, 100);
+	}
+
+	// Update filtered pages when query changes
+	$: {
+		const lowerQuery = query.toLowerCase();
+		filteredPages = query.trim() === ''
+			? pages
+			: pages.filter(
+				(page) =>
+					page.title.toLowerCase().includes(lowerQuery) ||
+					page.description.toLowerCase().includes(lowerQuery) ||
+					page.keywords.toLowerCase().includes(lowerQuery)
+			);
 	}
 </script>
 
@@ -234,180 +286,125 @@
 		aria-modal="true"
 	>
 		<div class="search-modal" on:click|stopPropagation transition:fly={{ y: -20, duration: 300 }}>
-			<!-- Search Header / Input -->
-			<div class="search-header">
-				<div class="search-icon-wrapper">
-					<svg
-						width="20"
-						height="20"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M21 21L15.0001 15.0001M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
+				<!-- Search Header / Input -->
+			<div class="search-header" style="display: flex; align-items: center; padding: 1rem; gap: 0.75rem; border-bottom: 1px solid rgba(0,0,0,0.06); position: relative; z-index: 10000;">
+				{#if aiResponse}
+					<button type="button" class="back-btn" style="background: none; border: none; cursor: pointer; padding: 0.5rem; display: flex; align-items: center; justify-content: center;" on:click={() => aiResponse = null} aria-label="Back to results">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+					<!-- Show search summary when viewing AI results -->
+					<div style="flex: 1; text-align: center; color: #64748b; font-size: 0.9rem;">
+						Search results for "{query}"
+					</div>
+				{:else}
+					<div style="color: #64748b; display: flex; align-items: center; flex-shrink: 0;">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M21 21L15.0001 15.0001M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+					</div>
+					<div style="position: relative; flex: 1; display: flex; align-items: center;">
+						<input
+bind:this={inputElement}
+							type="text"
+							autocomplete="off"
+							autocorrect="off"
+							autocapitalize="off"
+							spellcheck="false"
+							placeholder={placeholder}
+							value={query}
+							on:input={handleInput}
+							on:keydown={(e) => { if (e.key === 'Enter' && query.trim()) performAiSearch(); }}
+							readonly={false}
+							disabled={false}
+							style="width: 100%; padding: 0.75rem 2.5rem 0.75rem 0; font-family: inherit; font-size: 1.1rem; font-weight: 500; border: 1px solid transparent; outline: none; color: #0f172a; background: rgba(255, 255, 255, 0.1); line-height: 1.5; z-index: 10001; pointer-events: auto !important; touch-action: manipulation; cursor: text;"
 						/>
-					</svg>
-				</div>
-				<input
-					bind:this={inputElement}
-					type="text"
-					placeholder="Search pages or ask a question..."
-					bind:value={query}
-				/>
-				<button class="close-btn" on:click={close}>
-					<svg
-						width="20"
-						height="20"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M18 6L6 18M6 6L18 18"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
+						{#if query}
+							<button
+								type="button"
+								style="position: absolute; right: 0.25rem; z-index: 10002; background: rgba(0, 0, 0, 0.1); border: none; cursor: pointer; padding: 0.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; min-width: 32px; min-height: 32px;"
+								on:mousedown|preventDefault
+								on:click={() => { query = ''; setTimeout(() => inputElement?.focus(), 50); }}
+								aria-label="Clear input"
+							>
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: #475569;">
+									<path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</button>
+						{/if}
+					</div>
+				{/if}
+			</div>
+				<button style="z-index: 10002; position: relative; background: rgba(0, 0, 0, 0.08); border: none; cursor: pointer; padding: 0.5rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; min-width: 40px; min-height: 40px;" on:click={close} aria-label="Close">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: #475569;">
+						<path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 					</svg>
 				</button>
-			</div>
 
 			<!-- Search Body -->
 			<div class="search-body">
-				<!-- AI Response Section -->
 				{#if loading}
 					<div class="ai-state loading">
-						<span class="spinner"></span>
-						<p>Consulting the historian...</p>
+						<div class="spinner"></div>
+						<span>Getting travel tips for "{query}"...</span>
 					</div>
 				{:else if aiResponse}
-					<div class="ai-state result" in:fade>
+					<div class="ai-state result">
 						<div class="ai-header">
-							<span class="badge">AI Answer</span>
+							<span class="badge">AI</span>
 							<h4>{aiResponse.question}</h4>
 						</div>
-						<p class="ai-answer">{aiResponse.answer}</p>
+						<div class="ai-answer">
+							{@html formatAiAnswer(aiResponse.answer)}
+						</div>
 						{#if aiResponse.relatedLinks && aiResponse.relatedLinks.length > 0}
 							<div class="ai-related-links">
-								<span class="related-label">Recommended for you:</span>
+								<span class="related-label">Related Pages</span>
 								<div class="related-links-list">
 									{#each aiResponse.relatedLinks as link}
-										<a
-											href={link.url}
-											on:click|preventDefault={() => navigateTo(link.url)}
-											class="related-link"
-										>
-											<span class="link-icon">↗</span>
+										<a href={link.url} on:click|preventDefault={() => navigateTo(link.url)} class="related-link">
 											{link.title}
 										</a>
 									{/each}
 								</div>
 							</div>
 						{/if}
-						<button class="clear-ai-btn" on:click={() => (aiResponse = null)}>
-							Back to results
-						</button>
 					</div>
 				{:else}
-					<!-- Navigation Results -->
-					{#if filteredPages.length > 0}
-						<div class="results-group">
-							<h5>Pages</h5>
-							<ul>
-								{#each filteredPages as page}
-									<li>
-										<a href={page.url} on:click|preventDefault={() => navigateTo(page.url)}>
-											<div class="result-icon">
-												<svg
-													width="16"
-													height="16"
-													viewBox="0 0 24 24"
-													fill="none"
-													xmlns="http://www.w3.org/2000/svg"
-												>
-													<path
-														d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V9L13 2Z"
-														stroke="currentColor"
-														stroke-width="2"
-														stroke-linecap="round"
-														stroke-linejoin="round"
-													/>
-												</svg>
-											</div>
-											<div class="result-content">
-												<span class="result-title">{page.title}</span>
-												<span class="result-desc">{page.description}</span>
-											</div>
-											<div class="result-enter">
-												<svg
-													width="16"
-													height="16"
-													viewBox="0 0 24 24"
-													fill="none"
-													xmlns="http://www.w3.org/2000/svg"
-												>
-													<path
-														d="M9 10L4 15M4 15L9 20M4 15H20"
-														stroke="currentColor"
-														stroke-width="2"
-														stroke-linecap="round"
-														stroke-linejoin="round"
-													/>
-												</svg>
-											</div>
-										</a>
-									</li>
-								{/each}
-							</ul>
-						</div>
-					{/if}
-
-					<!-- Ask Action -->
-					{#if query.trim().length > 0}
-						<div class="results-group action-group">
-							<h5>Ask AI</h5>
-							<button class="action-btn" on:click={performAiSearch}>
-								<div class="action-icon">
-									<svg
-										width="16"
-										height="16"
-										viewBox="0 0 24 24"
-										fill="none"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0035 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.90003C9.87812 3.30496 11.1801 2.99659 12.5 3.00003H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z"
-											stroke="currentColor"
-											stroke-width="2"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-										/>
-									</svg>
-								</div>
-								<div class="action-content">
-									<span class="action-title">Ask question: "{query}"</span>
-									<span class="action-desc">Get an instant answer from our AI historian</span>
-								</div>
-								<span class="action-key">↵</span>
-							</button>
-						</div>
-					{/if}
-
-					<!-- Empty State -->
-					{#if filteredPages.length === 0 && query.trim().length === 0}
-						<div class="empty-state">
-							<p>Start typing to search pages or ask a question.</p>
-						</div>
-					{:else if filteredPages.length === 0 && query.trim().length > 0}
-						<div class="empty-state">
-							<p>No pages found. Try asking our AI!</p>
-						</div>
+					<div class="results-group">
+						<h5>Destinations</h5>
+						<ul>
+							{#each filteredPages.slice(0, 5) as page}
+								<li>
+									<a href={page.url} on:click|preventDefault={() => navigateTo(page.url)}>
+										<div class="result-icon">
+											<svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+												<path d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V9L13 2Z" stroke="currentColor" stroke-width="2"/>
+											</svg>
+										</div>
+										<div class="result-content">
+											<span class="result-title">{page.title}</span>
+											<span class="result-desc">{page.description}</span>
+										</div>
+									</a>
+								</li>
+							{/each}
+						</ul>
+					</div>
+					{#if query.trim()}
+						<button type="button" class="action-btn" on:click={() => performAiSearch()} style="margin-top: 1rem; cursor: pointer;">
+							<span class="action-icon">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+									<path d="M12 3L4 9V21H20V9L12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+									<path d="M12 12V16M12 8V8.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</span>
+							<div class="action-content">
+								<span class="action-title">Ask AI about "{query}"</span>
+								<span class="action-desc">Get travel tips and recommendations</span>
+							</div>
+						</button>
 					{/if}
 				{/if}
 			</div>
@@ -438,31 +435,134 @@
 		left: 0;
 		width: 100vw;
 		height: 100vh;
-		background: rgba(15, 23, 42, 0.4); /* Darker, richer overlay */
+		background: rgba(122, 189, 170, 0.4); /* Darker, richer overlay */
 		backdrop-filter: blur(12px);
 		z-index: 9999;
 		display: flex;
 		justify-content: center;
 		align-items: flex-start;
-		padding-top: 12vh;
+		padding-top: 8vh; /* Less top padding since modal has its own margins */
+		padding-bottom: 4vh; /* Add bottom padding too */
 	}
 
 	.search-modal {
 		width: 100%;
 		max-width: 640px;
-		background: rgba(255, 255, 255, 0.85); /* Glassy white */
+		background: rgba(255, 255, 255, 0.98); /* Even more opaque */
 		backdrop-filter: blur(24px);
 		-webkit-backdrop-filter: blur(24px);
-		border-radius: 20px;
+		border-radius: 28px; /* More rounded corners */
 		box-shadow:
 			0 25px 50px -12px rgba(0, 0, 0, 0.25),
-			0 0 0 1px rgba(255, 255, 255, 0.3) inset;
-		overflow: hidden;
+			0 0 0 3px rgba(17, 63, 114, 0.15) inset; /* More visible border */
+		overflow: auto;
 		display: flex;
 		flex-direction: column;
-		max-height: 75vh;
-		border: 1px solid rgba(255, 255, 255, 0.4);
+		max-height: calc(100vh - 12rem); /* Leave more space at bottom */
+		border: 3px solid rgba(17, 63, 114, 0.25); /* More defined border */
 		transform: translateZ(0); /* Hardware acceleration */
+		margin: 3rem 2rem; /* More top margin, horizontal margin */
+		margin-bottom: 6rem; /* Much more bottom margin */
+		color: #1e293b; /* Ensure all text is dark */
+	}
+
+	/* Ensure all text elements are visible */
+	.search-modal * {
+		color: inherit;
+	}
+
+	/* Mobile responsive */
+	@media (max-width: 767px) {
+		.search-modal {
+			max-height: calc(100vh - 10rem); /* Leave more space on mobile */
+			width: calc(100% - 2rem);
+			margin: 2rem 1rem; /* More top margin */
+			margin-bottom: 5rem; /* More bottom margin */
+			touch-action: manipulation;
+			border-radius: 24px; /* Keep rounded on mobile */
+			color: #1e293b; /* Ensure all text is dark on mobile */
+		}
+
+		/* Ensure all text elements are visible on mobile */
+		.search-modal * {
+			color: inherit;
+		}
+
+		.search-header {
+			padding: 1rem;
+			gap: 0.75rem;
+			position: relative;
+			z-index: 100;
+		}
+
+		.search-header input {
+			font-size: 16px; /* Prevent zoom on iOS */
+			padding-right: 3rem;
+			touch-action: manipulation;
+			pointer-events: auto !important;
+		}
+
+		.search-input-wrapper {
+			position: relative;
+			z-index: 100;
+			pointer-events: auto !important;
+		}
+
+		.search-icon-wrapper svg,
+		.close-btn svg,
+		.clear-input-btn svg,
+		.back-btn svg {
+			width: 18px;
+			height: 18px;
+		}
+
+		.close-btn {
+			padding: 0.5rem;
+			min-width: 44px;
+			min-height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 8px;
+		}
+
+		.clear-input-btn {
+			right: 0.5rem !important;
+			padding: 0.5rem;
+			min-width: 36px;
+			min-height: 36px;
+			display: flex !important;
+			align-items: center;
+			justify-content: center;
+			background: rgba(0, 0, 0, 0.08);
+			border-radius: 50%;
+		}
+
+		.search-input-wrapper {
+			position: relative;
+		}
+
+		.results-group h5 {
+			font-size: 0.75rem;
+			color: #1e293b;
+		}
+
+		.result-title {
+			font-size: 0.9rem;
+			color: #1e293b;
+		}
+
+		.result-desc {
+			font-size: 0.75rem;
+			color: #64748b;
+		}
+
+		.clear-ai-btn,
+		.action-btn {
+			width: 100%;
+			justify-content: center;
+		}
 	}
 
 	/* 
@@ -472,9 +572,25 @@
 		display: flex;
 		align-items: center;
 		padding: 1.25rem 1.75rem;
+		padding-right: 0.5rem;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-		gap: 1rem;
+		gap: 0.5rem;
 		position: relative;
+		z-index: 100;
+	}
+
+	.search-header > * {
+		flex-shrink: 0;
+		z-index: 100;
+	}
+
+	.search-input-wrapper {
+		flex: 1;
+		position: relative;
+		display: flex;
+		align-items: center;
+		z-index: 100;
+		pointer-events: auto;
 	}
 
 	.search-icon-wrapper {
@@ -482,15 +598,12 @@
 		display: flex;
 		align-items: center;
 		filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.5));
+		z-index: 100;
 	}
 
 	.search-header input {
 		flex: 1;
-		font-family:
-			'Inter',
-			system-ui,
-			-apple-system,
-			sans-serif;
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
 		font-size: 1.25rem;
 		font-weight: 500;
 		border: none;
@@ -498,6 +611,21 @@
 		color: #0f172a;
 		background: transparent;
 		line-height: 1.5;
+		padding-right: 2rem;
+		pointer-events: auto;
+		z-index: 100;
+	}
+
+	.search-input-wrapper {
+		flex: 1;
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+.search-input-wrapper input {
+		width: 100%;
+		padding-right: 2.5rem;
 	}
 
 	.search-header input::placeholder {
@@ -516,12 +644,54 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		z-index: 30;
+		pointer-events: auto;
 	}
 
 	.close-btn:hover {
 		color: #0f172a;
 		background: rgba(0, 0, 0, 0.06);
 		transform: scale(0.95);
+	}
+
+	.clear-input-btn {
+		background: rgba(0, 0, 0, 0.05);
+		border: none;
+		color: #64748b;
+		cursor: pointer;
+		padding: 0.4rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		right: 0;
+		z-index: 20;
+		border-radius: 50%;
+		pointer-events: auto;
+	}
+
+	.clear-input-btn:hover {
+		color: #0f172a;
+		background: rgba(0, 0, 0, 0.1);
+	}
+
+	.back-btn {
+		background: none;
+		border: none;
+		color: #64748b;
+		cursor: pointer;
+		padding: 0.25rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.back-btn:hover {
+		color: #0f172a;
+	}
+
+	.search-header input {
+		padding-right: 4rem;
 	}
 
 	/* 
@@ -562,7 +732,7 @@
 		margin: 0.5rem 0.75rem 0.75rem;
 		font-size: 0.75rem;
 		font-weight: 700;
-		color: #94a3b8;
+		color: #1e293b;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 	}
@@ -579,7 +749,7 @@
 		padding: 0.875rem 1rem;
 		border-radius: 12px;
 		text-decoration: none;
-		color: inherit;
+		color: #1e293b;
 		transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 		border: 1px solid transparent;
 	}
@@ -653,6 +823,7 @@
 		text-align: left;
 		transition: all 0.2s ease;
 		box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
+		color: #1e293b;
 	}
 
 	.action-btn:hover {
@@ -778,6 +949,20 @@
 		color: #334155;
 		margin-bottom: 2rem;
 		font-size: 1.05rem;
+		max-height: 60vh;
+		overflow-y: auto;
+		padding-right: 0.5rem;
+		scrollbar-width: thin;
+		scrollbar-color: #cbd5e1 transparent;
+	}
+
+	.ai-answer p {
+		margin-bottom: 1.2rem;
+		text-align: justify;
+	}
+
+	.ai-answer br {
+		margin-bottom: 0.5rem;
 	}
 
 	.clear-ai-btn {
@@ -836,7 +1021,7 @@
 		font-size: 0.8rem;
 		text-transform: uppercase;
 		font-weight: 700;
-		color: #94a3b8;
+		color: #1e293b;
 		margin-bottom: 0.75rem;
 		letter-spacing: 0.05em;
 	}
@@ -915,26 +1100,15 @@
 
 	.search-header input {
 		flex: 1;
-
-		font-family:
-			'Inter',
-			system-ui,
-			-apple-system,
-			sans-serif;
-
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
 		font-size: 1.25rem;
-
 		font-weight: 500;
-
 		border: none;
-
 		outline: none;
-
 		color: #0f172a;
-
 		background: transparent;
-
 		line-height: 1.5;
+		padding-right: 2rem;
 	}
 
 	.search-header input::placeholder {
@@ -1027,7 +1201,7 @@
 
 		font-weight: 700;
 
-		color: #94a3b8;
+		color: #1e293b;
 
 		text-transform: uppercase;
 
@@ -1053,7 +1227,7 @@
 
 		text-decoration: none;
 
-		color: inherit;
+		color: #1e293b;
 
 		transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -1163,6 +1337,8 @@
 		transition: all 0.2s ease;
 
 		box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
+
+		color: #1e293b;
 	}
 
 	.action-btn:hover {
@@ -1329,24 +1505,31 @@
 
 	.ai-header h4 {
 		margin: 0;
-
 		color: #0f172a;
-
 		font-size: 1.15rem;
-
 		font-weight: 700;
-
 		line-height: 1.4;
 	}
 
 	.ai-answer {
 		line-height: 1.7;
-
 		color: #334155;
-
 		margin-bottom: 2rem;
-
 		font-size: 1.05rem;
+		max-height: 60vh;
+		overflow-y: auto;
+		padding-right: 0.5rem;
+		scrollbar-width: thin;
+		scrollbar-color: #cbd5e1 transparent;
+	}
+
+	.ai-answer p {
+		margin-bottom: 1.2rem;
+		text-align: justify;
+	}
+
+	.ai-answer br {
+		margin-bottom: 0.5rem;
 	}
 
 	.clear-ai-btn {

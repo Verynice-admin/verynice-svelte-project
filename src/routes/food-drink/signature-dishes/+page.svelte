@@ -22,7 +22,7 @@
 			{ label: 'Food & Drinks', href: '/food-drink' },
 			{ label: 'Signature Dishes' }
 		],
-		headerBackgroundPublicId: 'content/pages/foodDrinks/signatureDishes/hero'
+		headerBackgroundPublicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes'
 	};
 
 	let pageData = { ...defaultPage, ...(page ?? {}) };
@@ -76,6 +76,7 @@
 	/>
 </svelte:head>
 
+<div class="attractions-page">
 <section id="page-hero-section" class="section">
 	<div class="section-header wrapper">
 		<nav aria-label="Breadcrumb" class="breadcrumb-modern">
@@ -121,17 +122,28 @@
 			aria-label="Signature dishes background"
 			style={`--hero-bg-url: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, {
 				width: 2200,
-				height: 1200,
+				height: 1600,
 				crop: 'fill',
-				gravity: 'auto',
+				gravity: 'north',
 				quality: 'auto:good',
 				fetch_format: 'auto'
 			})}")`}
 		>
-			<div class="background-image"></div>
+			<div
+				class="background-image"
+				style={`background-image: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, {
+					width: 2200,
+					height: 1200,
+					crop: 'fill',
+					gravity: 'auto',
+					quality: 'auto:good',
+					fetch_format: 'auto'
+				})}")`}
+			></div>
 		</div>
 	{/if}
 </section>
+</div>
 
 <div class="timeline-container">
 	<div style="max-width: 1400px; margin: 0 auto; padding: 2rem min(2rem, 4vw); position: relative;">
@@ -271,7 +283,7 @@
 		font-family: 'Inter', sans-serif;
 		font-size: 1.15rem;
 		line-height: 1.8;
-		color: #cbd5e1;
+		color: rgba(255, 255, 255, 0.82);
 		margin: 0;
 	}
 
@@ -302,7 +314,7 @@
 		align-items: center;
 		gap: 0.5rem;
 		padding: 0.6rem 1.2rem;
-		background: #1e3a8a; /* Deep Blue */
+		background: var(--vnk-text-secondary-color); /* Deep Blue */
 		border-radius: 20px;
 		text-decoration: none;
 		color: #ffffff; /* White text */
@@ -314,7 +326,7 @@
 	}
 
 	.category-nav-link:hover {
-		background: #2563eb; /* Brighter Blue on hover */
+		background: var(--vnk-primary-color); /* Brighter Blue on hover */
 		transform: translateY(-2px);
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 	}
@@ -358,7 +370,7 @@
 	.category-header-text p {
 		font-family: 'Inter', sans-serif;
 		font-size: 1rem;
-		color: #94a3b8;
+		color: rgba(var(--vnk-text-secondary-color-rgb), 0.66);
 		margin: 0;
 		line-height: 1.5;
 	}
@@ -375,7 +387,7 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr; /* 50% Image, 50% Text */
 		gap: 0;
-		background: #d1d4da;
+		background: var(--vnk-card-bg);
 		border-radius: 24px;
 		overflow: hidden;
 		box-shadow:
@@ -411,7 +423,7 @@
 		top: 0;
 		bottom: 0;
 		width: 300px;
-		background: #d1d4da;
+		background: var(--vnk-card-bg);
 		z-index: 10;
 		pointer-events: none;
 	}
@@ -444,7 +456,7 @@
 	.image-placeholder {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(145deg, #a8b0bc 0%, #8d95a3 100%);
+		background: linear-gradient(145deg, rgba(255, 255, 255, 0.88) 0%, rgba(242, 132, 137, 0.42) 100%);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -457,7 +469,7 @@
 		font-family: 'Outfit', sans-serif;
 		font-size: 0.85rem;
 		font-weight: 600;
-		color: #5a6270;
+		color: rgba(var(--vnk-text-secondary-color-rgb), 0.72);
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
 		text-align: center;
@@ -497,29 +509,29 @@
 	}
 
 	.dish-tier.tier-1 {
-		background: linear-gradient(135deg, #2563eb, #3b82f6);
+		background: linear-gradient(135deg, var(--vnk-primary-color), rgb(126, 197, 179));
 	}
 
 	.dish-tier.tier-2 {
-		background: linear-gradient(135deg, #10b981, #34d399);
+		background: linear-gradient(135deg, rgb(2, 114, 112), var(--vnk-primary-color));
 	}
 
 	.dish-tier.tier-3 {
-		background: linear-gradient(135deg, #f59e0b, #fbbf24);
+		background: linear-gradient(135deg, var(--vnk-accent-color), rgb(255, 173, 177));
 	}
 
 	.dish-article-content h3 {
 		font-family: 'Outfit', sans-serif;
 		font-size: 1.35rem;
 		font-weight: 700;
-		color: #1a1a1a;
+		color: var(--vnk-text-secondary-color);
 		margin: 0;
 		line-height: 1.3;
 	}
 
 	.kazakh-name {
 		font-weight: 400;
-		color: #555;
+		color: rgba(var(--vnk-text-secondary-color-rgb), 0.78);
 		font-size: 1rem;
 	}
 
@@ -546,21 +558,21 @@
 		font-family: 'Inter', sans-serif;
 		font-size: 0.95rem;
 		line-height: 1.6;
-		color: #3a3a3a;
+		color: rgba(var(--vnk-text-secondary-color-rgb), 0.88);
 		margin: 0;
 	}
 
 	.dish-meta {
 		font-family: 'Inter', sans-serif;
 		font-size: 0.85rem;
-		color: #555;
+		color: rgba(var(--vnk-text-secondary-color-rgb), 0.78);
 		display: flex;
 		gap: 0.5rem;
 		flex-wrap: wrap;
 	}
 
 	.dish-meta strong {
-		color: #1a1a1a;
+		color: var(--vnk-text-secondary-color);
 		font-weight: 600;
 	}
 

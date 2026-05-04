@@ -1,15 +1,96 @@
 <!-- src/lib/components/features/content/PhotoGallery.svelte -->
 
 <script>
+	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
+
 	/** @type {string} */
 	export let title = 'Photo Gallery';
 
-	/** @type {Array<{imageUrl: string, thumbnailUrl?: string, altText?: string, caption?: string}>} */
+	/** @type {Array<any>} */
 	export let photos = [];
 
 	let activeIndex = 0;
 
-	$: totalPhotos = Array.isArray(photos) ? photos.length : 0;
+	const toImageUrl = (value, opts = {}) => {
+		const source = typeof value === 'string' ? value.trim() : '';
+		if (!source) return '';
+		if (source.startsWith('http://') || source.startsWith('https://')) return source;
+		return getCloudinaryUrl(source, opts);
+	};
+
+	const normalizePhoto = (photo, index) => {
+		if (typeof photo === 'string') {
+			const imageUrl = toImageUrl(photo, {
+				width: 1600,
+				height: 900,
+				crop: 'fill',
+				quality: 'auto:best',
+				fetch_format: 'auto'
+			});
+			const thumbnailUrl = toImageUrl(photo, {
+				width: 320,
+				height: 180,
+				crop: 'fill',
+				quality: 'auto',
+				fetch_format: 'auto'
+			});
+			return imageUrl
+				? {
+						imageUrl,
+						thumbnailUrl,
+						altText: `Photo ${index + 1}`,
+						caption: ''
+					}
+				: null;
+		}
+
+		if (!photo || typeof photo !== 'object') return null;
+
+		const primarySource =
+			photo.imageUrl ||
+			photo.url ||
+			photo.publicId ||
+			photo.public_id ||
+			photo.imagePublicId ||
+			photo.image?.publicId ||
+			photo.image?.public_id ||
+			'';
+		const thumbnailSource =
+			photo.thumbnailUrl ||
+			photo.thumbnailPublicId ||
+			photo.thumbnail?.publicId ||
+			photo.thumbnail?.public_id ||
+			primarySource;
+
+		const imageUrl = toImageUrl(primarySource, {
+			width: 1600,
+			height: 900,
+			crop: 'fill',
+			quality: 'auto:best',
+			fetch_format: 'auto'
+		});
+		const thumbnailUrl = toImageUrl(thumbnailSource, {
+			width: 320,
+			height: 180,
+			crop: 'fill',
+			quality: 'auto',
+			fetch_format: 'auto'
+		});
+
+		if (!imageUrl) return null;
+
+		return {
+			imageUrl,
+			thumbnailUrl: thumbnailUrl || imageUrl,
+			altText: photo.altText || photo.alt || `Photo ${index + 1}`,
+			caption: photo.caption || photo.captionName || ''
+		};
+	};
+
+	$: normalizedPhotos = (Array.isArray(photos) ? photos : [])
+		.map((photo, index) => normalizePhoto(photo, index))
+		.filter(Boolean);
+	$: totalPhotos = normalizedPhotos.length;
 	$: activeIndex = totalPhotos ? Math.max(0, Math.min(activeIndex, totalPhotos - 1)) : 0;
 
 	const showSlide = (index) => {
@@ -32,7 +113,7 @@
 					aria-label="Show previous photo"
 					disabled={totalPhotos < 2}
 				>
-					‹
+					&#8249;
 				</button>
 				<button
 					class="nav-button"
@@ -40,7 +121,7 @@
 					aria-label="Show next photo"
 					disabled={totalPhotos < 2}
 				>
-					›
+					&#8250;
 				</button>
 			</div>
 		{/if}
@@ -49,7 +130,7 @@
 	{#if totalPhotos > 0}
 		<div class="gallery-slider" role="group" aria-label="Photo gallery carousel">
 			<div class="slides" style={`transform: translateX(-${activeIndex * 100}%);`}>
-				{#each photos as photo, index (index)}
+				{#each normalizedPhotos as photo, index (index)}
 					<figure class="slide" aria-hidden={index === activeIndex ? 'false' : 'true'}>
 						<img src={photo.imageUrl} alt={photo.altText || `Photo ${index + 1}`} loading="lazy" />
 						{#if photo.caption}
@@ -62,7 +143,7 @@
 
 		{#if totalPhotos > 1}
 			<div class="gallery-thumbnails" role="tablist" aria-label="Select gallery image">
-				{#each photos as photo, index (index)}
+				{#each normalizedPhotos as photo, index (index)}
 					<button
 						type="button"
 						role="tab"
@@ -90,16 +171,16 @@
 		gap: var(--vnk-spacing-md);
 	}
 
-	.photo-gallery-block h2 {
-		font-family: 'Outfit', sans-serif;
-		font-size: clamp(2rem, 3vw, 3rem);
-		font-weight: 800;
-		color: #ffffff !important;
-		margin: 0;
-		text-align: left;
-		letter-spacing: -0.03em;
-		text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	}
+  .photo-gallery-block h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 800;
+    color: #000 !important;
+    margin: 0;
+    text-align: center;
+    letter-spacing: -0.03em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
 
 	.gallery-controls {
 		display: flex;
@@ -134,15 +215,11 @@
 		cursor: not-allowed;
 	}
 
-	.gallery-counter {
-		min-width: 4.5rem;
-		text-align: center;
-	}
-
 	.gallery-slider {
 		overflow: hidden;
 		border-radius: 1.2rem;
 		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+		background: transparent;
 	}
 
 	.slides {
@@ -176,12 +253,19 @@
 	}
 
 	.gallery-thumbnails {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+		display: flex;
+		flex-wrap: nowrap;
 		gap: var(--vnk-spacing-xs);
+		overflow-x: auto;
+		overflow-y: hidden;
+		padding-bottom: 6px;
+		scroll-snap-type: x mandatory;
+		-webkit-overflow-scrolling: touch;
 	}
 
 	.gallery-thumbnails button {
+		flex: 0 0 auto;
+		scroll-snap-align: start;
 		border: 2px solid transparent;
 		border-radius: 0.75rem;
 		padding: 0;
@@ -195,7 +279,7 @@
 
 	.gallery-thumbnails button img {
 		display: block;
-		width: 100%;
+		width: 88px;
 		height: 64px;
 		object-fit: cover;
 	}

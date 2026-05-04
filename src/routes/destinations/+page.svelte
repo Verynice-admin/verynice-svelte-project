@@ -575,6 +575,7 @@
 	{@html `<script type="application/ld+json">${JSON.stringify(breadcrumbStructuredData)}</script>`}
 </svelte:head>
 
+<div class="attractions-page">
 {#if pageData}
 	<!-- apply .section styles from pages.css -->
 	<section id="page-hero-section" class="section" bind:this={heroSection}>
@@ -636,9 +637,9 @@
 					'Background image for destinations page'}
 				style={`--hero-bg-url: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, {
 					width: 2200,
-					height: 1200,
+					height: 2000,
 					crop: 'fill',
-					gravity: 'auto',
+					gravity: 'center',
 					quality: 'auto:good',
 					fetch_format: 'auto'
 				})}")`}
@@ -778,6 +779,7 @@
 													attraction.heroImage ||
 													attraction.heroImagePublicId ||
 													attraction.headerBackgroundPublicId ||
+													(attraction.image?.alt ? `content/site/backgrounds/attractions-hero` : null) ||
 													'site/backgrounds/attractions-hero',
 												{
 													width: 600,
@@ -870,3 +872,4 @@
 		<p>{data.error}</p>
 	</div>
 {/if}
+</div>

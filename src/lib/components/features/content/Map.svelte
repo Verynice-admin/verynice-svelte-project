@@ -1,644 +1,446 @@
-<!-- src/lib/components/content/Map.svelte (FINAL, CORRECTED RACE CONDITION) -->
-<script>
+<script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
-	import { loadExternalScript } from '$lib/utils/loadExternalScript';
 	import { throttle, isElementInViewport } from '$lib/utils/domHelpers';
+
+  // Dynamic imports to avoid SSR issues
+  let L: any = null;
+  let leafletLoaded = false;
+  let leafletError = '';
 
 	export let title = 'Location on Map';
 	export let coordinates = null;
+	export let mapProvider: 'osm' | '2gis' | 'auto' = 'auto';
 
-	let mapContainer; // This will bind to the permanent container div
-	let mapState = 'loading'; // 'loading', 'error', or 'loaded'
+	let mapContainer;
+	let mapState = 'loading';
 	let errorMessage = '';
-	let mapInstance = null; // Store the map instance for scroll updates
-	let mapSection = null; // Reference to the section element
+	let mapInstance = null;
+	let mapSection = null;
+	let currentLat = 0;
+	let currentLng = 0;
 
-	// IMPORTANT: Ensure your Google Maps API Key is correct.
-	// IMPORTANT: Ensure your Google Maps API Key is correct.
-	const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+	const ASTANA_COORDINATES = { lat: 51.169392, lng: 71.449074 };
+	const ALMATY_COORDINATES = { lat: 43.238949, lng: 76.889709 };
 
-	async function initMap() {
-		if (!browser || !mapContainer) return;
+	let searchQuery = '';
+	let isSearching = false;
+	let searchError = '';
+	let searchMarkers = [];
 
-		// Debug logging
-		console.log('[Map Component] Initializing map with coordinates:', coordinates);
-		console.log('[Map Component] Coordinates type:', typeof coordinates);
-		console.log('[Map Component] Coordinates value:', coordinates);
+	async function loadLeaflet() {
+		if (L) return L;
+		
+		console.log('[Map] Loading Leaflet library...');
+		
+		try {
+			// Load Leaflet library and CSS
+			const leaflet = await import('leaflet');
+			await import('leaflet/dist/leaflet.css');
+			L = leaflet.default;
+			console.log('[Map] Leaflet loaded:', !!L);
+			
+			// Fix for default markers in Leaflet - use local images
+			delete L.Icon.Default.prototype._getIconUrl;
+			L.Icon.Default.mergeOptions({
+				iconRetinaUrl: '/images/marker-icon-2x.png',
+				iconUrl: '/images/marker-icon.png',
+				shadowUrl: '/images/marker-shadow.png',
+			});
+			
+			leafletLoaded = true;
+			console.log('[Map] Leaflet initialization complete');
+			return L;
+		} catch (err) {
+			console.error('[Map] Failed to load Leaflet:', err);
+			leafletError = err.message || 'Failed to load map library';
+			mapState = 'error';
+			throw err;
+		}
+	}
 
-		// 1. Check for valid coordinates and API key first
-		// Default to Astana (Nur-Sultan) if no coordinates provided
-		const ASTANA_COORDINATES = { lat: 51.169392, lng: 71.449074 };
-		const ALMATY_COORDINATES = { lat: 43.238949, lng: 76.889709 };
-
-		// Handle both object format and GeoPoint format from Firestore
-		let lat, lng;
-		if (coordinates && typeof coordinates === 'object') {
-			// Firestore GeoPoint format
-			if (coordinates.latitude !== undefined && coordinates.longitude !== undefined) {
-				lat = coordinates.latitude;
-				lng = coordinates.longitude;
-			}
-			// Standard format
-			else if (coordinates.lat !== undefined && coordinates.lng !== undefined) {
-				lat = coordinates.lat;
-				lng = coordinates.lng;
-			}
+  async function initMap() {
+		if (!browser || typeof window === 'undefined') {
+			console.log('[Map] Not in browser, skipping init');
+			return;
 		}
 
-		// Use fallback if coordinates are invalid
-		if (typeof lat !== 'number' || typeof lng !== 'number') {
-			console.warn('[Map Component] Invalid/Missing coordinates, determining fallback...');
-
-			if (title && /almaty/i.test(title)) {
-				console.log('[Map Component] Title contains "Almaty", defaulting to Almaty coordinates.');
-				lat = ALMATY_COORDINATES.lat;
-				lng = ALMATY_COORDINATES.lng;
-			} else {
-				console.log('[Map Component] Defaulting to Astana coordinates.');
-				lat = ASTANA_COORDINATES.lat;
-				lng = ASTANA_COORDINATES.lng;
-			}
-		}
-
-		// Coordinates are now validated above with Astana fallback
-
-		// Coordinates are now validated above with Astana fallback
-		if (GOOGLE_MAPS_API_KEY === 'YOUR_GOOGLE_MAPS_API_KEY' || !GOOGLE_MAPS_API_KEY) {
-			errorMessage = 'Google Maps API Key is missing in the component.';
+		// Load Leaflet first
+		try {
+			await loadLeaflet();
+		} catch (err) {
+			console.error('[Map] Leaflet load failed:', err);
+			errorMessage = 'Failed to load map library: ' + (err.message || 'Unknown error');
 			mapState = 'error';
 			return;
 		}
 
-		try {
-			// 2. Load the Google Maps script
-			console.log('[Map Component] Loading Google Maps script...');
-			await loadExternalScript(
-				`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`
-			);
-
-			if (window.google && window.google.maps) {
-				const mapPosition = { lat, lng };
-				console.log('[Map Component] Creating map at position:', mapPosition);
-
-				mapInstance = new window.google.maps.Map(mapContainer, {
-					zoom: 12,
-					center: mapPosition,
-					mapTypeId: 'satellite',
-					disableDefaultUI: false,
-					zoomControl: true,
-					mapTypeControl: true,
-					streetViewControl: false,
-					fullscreenControl: true,
-					gestureHandling: 'cooperative',
-					scrollwheel: true, // Enable scroll to zoom
-					draggable: true, // Enable dragging/panning
-					gestureHandling: 'cooperative', // Require Ctrl/Cmd for scroll zoom, but allow dragging
-					styles: [
-						// Dark theme
-						{ elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
-						{ elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
-						{ elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
-						{
-							featureType: 'administrative.locality',
-							elementType: 'labels.text.fill',
-							stylers: [{ color: '#d59563' }]
-						},
-						{
-							featureType: 'poi',
-							elementType: 'labels.text.fill',
-							stylers: [{ color: '#d59563' }]
-						},
-						{ featureType: 'poi.park', elementType: 'geometry', stylers: [{ color: '#263c3f' }] },
-						{
-							featureType: 'poi.park',
-							elementType: 'labels.text.fill',
-							stylers: [{ color: '#6b9a76' }]
-						},
-						{ featureType: 'road', elementType: 'geometry', stylers: [{ color: '#38414e' }] },
-						{
-							featureType: 'road',
-							elementType: 'geometry.stroke',
-							stylers: [{ color: '#212a37' }]
-						},
-						{
-							featureType: 'road',
-							elementType: 'labels.text.fill',
-							stylers: [{ color: '#9ca5b3' }]
-						},
-						{
-							featureType: 'road.highway',
-							elementType: 'geometry',
-							stylers: [{ color: '#746855' }]
-						},
-						{
-							featureType: 'road.highway',
-							elementType: 'geometry.stroke',
-							stylers: [{ color: '#1f2835' }]
-						},
-						{
-							featureType: 'road.highway',
-							elementType: 'labels.text.fill',
-							stylers: [{ color: '#f3d19c' }]
-						},
-						{ featureType: 'transit', elementType: 'geometry', stylers: [{ color: '#2f3948' }] },
-						{
-							featureType: 'transit.station',
-							elementType: 'labels.text.fill',
-							stylers: [{ color: '#d59563' }]
-						},
-						{ featureType: 'water', elementType: 'geometry', stylers: [{ color: '#17263c' }] },
-						{
-							featureType: 'water',
-							elementType: 'labels.text.fill',
-							stylers: [{ color: '#515c6d' }]
-						},
-						{
-							featureType: 'water',
-							elementType: 'labels.text.stroke',
-							stylers: [{ color: '#17263c' }]
-						}
-					]
-				});
-
-				// Determine label based on coordinates (if it matches known defaults)
-				let markerTitle = title || 'Location';
-				let markerDesc = 'Kazakhstan';
-
-				if (Math.abs(lat - 43.238949) < 0.01 && Math.abs(lng - 76.889709) < 0.01) {
-					markerTitle = 'Almaty';
-					markerDesc = 'The City of Apples';
-				} else if (Math.abs(lat - 51.169392) < 0.01 && Math.abs(lng - 71.449074) < 0.01) {
-					markerTitle = 'Astana (Nur-Sultan)';
-					markerDesc = 'Capital of Kazakhstan';
-				}
-
-				// Add marker
-				const marker = new window.google.maps.Marker({
-					position: mapPosition,
-					map: mapInstance,
-					title: markerTitle,
-					animation: window.google.maps.Animation.DROP,
-					optimized: false
-				});
-
-				// Add info window
-				const infoWindow = new window.google.maps.InfoWindow({
-					content: `
-						<div style="padding: 12px; min-width: 200px;">
-							<h3 style="margin: 0 0 10px 0; font-size: 18px; font-weight: bold; color: #1a202c;">
-								${markerTitle}
-							</h3>
-							<p style="margin: 0 0 8px 0; font-size: 14px; color: #4a5568; font-weight: 500;">
-								${markerDesc}
-							</p>
-							<p style="margin: 0; font-size: 12px; color: #718096;">
-								Coordinates: ${lat.toFixed(6)}, ${lng.toFixed(6)}
-							</p>
-						</div>
-					`
-				});
-
-				// Show info window automatically when map loads
-				setTimeout(() => {
-					infoWindow.open(mapInstance, marker);
-				}, 500);
-
-				// Also show info window on marker click
-				marker.addListener('click', () => {
-					infoWindow.open(mapInstance, marker);
-				});
-
-				// Add error listener for map tiles
-				google.maps.event.addListenerOnce(mapInstance, 'tilesloaded', () => {
-					console.log('[Map Component] Map tiles loaded successfully');
-					console.log('[Map Component] Map centered on Astana:', mapPosition);
-					mapState = 'loaded';
-				});
-
-				// Set loaded state after a short delay (in case tilesloaded doesn't fire)
-				setTimeout(() => {
-					if (mapState === 'loading') {
-						console.log('[Map Component] Map initialized (timeout fallback)');
-						mapState = 'loaded';
-					}
-				}, 1000);
-			} else {
-				throw new Error(
-					'Google Maps library failed to load. Check API key and console for errors.'
-				);
-			}
-		} catch (err) {
-			console.error('Map initialization failed:', err);
-			const errorMsg = err instanceof Error ? err.message : String(err);
-
-			// Check for specific API key errors
-			if (
-				errorMsg.includes('API key') ||
-				errorMsg.includes('referer') ||
-				errorMsg.includes('domain')
-			) {
-				errorMessage =
-					'Google Maps API key error. Check API key restrictions and ensure localhost is allowed.';
-			} else {
-				errorMessage = `Could not load the map: ${errorMsg}`;
-			}
-			mapState = 'error';
+		// Wait for container to be available
+		const container = document.getElementById('map-container');
+		if (!container) {
+			console.warn('[Map] Container not found, retrying...');
+			setTimeout(initMap, 200);
+			return;
 		}
-	}
 
-	// Scroll-based map behavior
-	function handleScroll() {
-		if (!browser || !mapInstance || !mapSection) return;
+		console.log('[Map] Container found, initializing map...');
 
-		const rect = mapSection.getBoundingClientRect();
-		const windowHeight = window.innerHeight;
+ 		let lat, lng;
+ 		if (coordinates && typeof coordinates === 'object') {
+ 			lat = coordinates.lat ?? coordinates.latitude;
+ 			lng = coordinates.lng ?? coordinates.longitude;
+ 		}
 
-		// Check if map is in viewport
-		const isInView = rect.top < windowHeight && rect.bottom > 0;
+ 		if (typeof lat !== 'number' || typeof lng !== 'number' || isNaN(lat) || isNaN(lng)) {
+ 			if (title && /almaty/i.test(title)) {
+ 				lat = ALMATY_COORDINATES.lat;
+ 				lng = ALMATY_COORDINATES.lng;
+ 			} else {
+ 				lat = ASTANA_COORDINATES.lat;
+ 				lng = ASTANA_COORDINATES.lng;
+ 			}
+ 		}
 
-		if (isInView) {
-			// Adjust zoom based on scroll position (subtle parallax effect)
-			const scrollProgress = Math.max(0, Math.min(1, (windowHeight - rect.top) / windowHeight));
-			const baseZoom = 10;
-			const zoomRange = 2; // Zoom can vary by 2 levels
-			const dynamicZoom = baseZoom + scrollProgress * zoomRange;
-
-			// Only update if zoom change is significant to avoid constant updates
-			const currentZoom = mapInstance.getZoom();
-			if (Math.abs(currentZoom - dynamicZoom) > 0.3) {
-				mapInstance.setZoom(Math.round(dynamicZoom));
-			}
-		}
-	}
-
-	const throttledScroll = throttle(handleScroll, 100);
-
-	onMount(() => {
-		initMap();
-		if (browser) {
-			// Get the section element for scroll tracking
-			mapSection = mapContainer?.closest('section') || mapContainer?.parentElement;
-			window.addEventListener('scroll', throttledScroll, { passive: true });
-		}
-	});
-
-	onDestroy(() => {
-		if (browser) {
-			window.removeEventListener('scroll', throttledScroll);
-		}
-	});
-
-	// Location Search Logic using Google Geocoding API
-	let searchQuery = '';
-	let isSearching = false;
-	let searchError = '';
-	let searchMarkers = []; // Store markers to clear previous searches
-
-	async function handleSearch() {
-		if (!searchQuery.trim()) return;
-
-		isSearching = true;
-		searchError = '';
+ 		currentLat = lat;
+ 		currentLng = lng;
+ 		const mapPosition = [lat, lng];
 
 		try {
-			if (!mapInstance || !window.google) {
-				searchError = 'Map is not ready. Please wait for the map to load.';
-				isSearching = false;
-				return;
+			console.log('[Map] Initializing Leaflet map...');
+
+			container.innerHTML = '';
+
+			// Check for 2GIS API key and determine provider
+			const twoGisKey = (typeof window !== 'undefined') ? import.meta.env.VITE_2GIS_MAP_API_KEY : '';
+			
+			let selectedProvider = 'osm';
+			if (mapProvider === 'auto') {
+				// Auto-detect: use 2GIS if key exists, otherwise OSM
+				selectedProvider = (twoGisKey && twoGisKey !== 'your_2gis_api_key_here') ? '2gis' : 'osm';
+			} else if (mapProvider === '2gis' && twoGisKey && twoGisKey !== 'your_2gis_api_key_here') {
+				selectedProvider = '2gis';
+			} else {
+				selectedProvider = 'osm';
 			}
 
-			// Clear previous search markers
-			searchMarkers.forEach((marker) => marker.setMap(null));
-			searchMarkers = [];
+			console.log('[Map] Selected provider:', selectedProvider, '| Has 2GIS key:', !!twoGisKey && twoGisKey !== 'your_2gis_api_key_here');
 
-			// Use Google Geocoding API (simpler and more reliable for location searches)
-			const geocoder = new window.google.maps.Geocoder();
-			const searchTerm = searchQuery.trim();
+			let tileLayer;
+			if (selectedProvider === '2gis') {
+				// Use 2GIS tiles (requires valid API key)
+				tileLayer = L.tileLayer('https://tile{s}.maps.2gis.com/tiles?x={x}&y={y}&z={z}&key=' + twoGisKey, {
+					subdomains: '0123',
+					attribution: '© 2GIS',
+					maxZoom: 19
+				});
+			} else {
+				// Use OpenStreetMap tiles (free, no API key)
+				tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+					attribution: '© OpenStreetMap contributors',
+					maxZoom: 19
+				});
+			}
 
-			// Try geocoding with region biasing toward Kazakhstan
-			geocoder.geocode(
-				{
-					address: `${searchTerm}, Kazakhstan`,
-					region: 'kz' // Bias results toward Kazakhstan
-				},
-				(results, status) => {
-					isSearching = false;
+ 			mapInstance = L.map(container, {
+ 				center: mapPosition,
+ 				zoom: 12,
+ 				layers: [tileLayer],
+ 				zoomControl: true,
+ 				scrollWheelZoom: true
+ 			});
 
-					if (status === window.google.maps.GeocoderStatus.OK && results && results.length > 0) {
-						// Find the first result that is in Kazakhstan
-						let kazakhstanResult = null;
+ 			// Add main marker
+ 			const marker = L.marker(mapPosition).addTo(mapInstance);
+ 			if (title) {
+ 				marker.bindPopup(title);
+ 			}
 
-						for (const result of results) {
-							// Check if this result is in Kazakhstan
-							const isKazakhstan = result.address_components.some((component) => {
-								return (
-									component.types.includes('country') &&
-									(component.short_name === 'KZ' || component.long_name === 'Kazakhstan')
-								);
-							});
+ 			// Try to get user location
+ 			if (navigator.geolocation) {
+ 				navigator.geolocation.getCurrentPosition(
+ 					(userPos) => {
+ 						const userLatLng = [userPos.coords.latitude, userPos.coords.longitude];
+ 						const userMarker = L.circleMarker(userLatLng, {
+ 							color: '#4285F4',
+ 							fillColor: '#4285F4',
+ 							fillOpacity: 1,
+ 							radius: 8
+ 						}).addTo(mapInstance);
+ 						userMarker.bindPopup('Your Location');
+ 					},
+ 					() => {
+ 						console.log('[Map] Could not get user location');
+ 					}
+ 				);
+ 			}
 
-							if (isKazakhstan) {
-								kazakhstanResult = result;
-								break;
-							}
-						}
+ 			mapState = 'loaded';
+ 			mapSection = container.closest('section') || container.parentElement;
+ 			window.addEventListener('scroll', throttledScroll, { passive: true });
 
-						// If no Kazakhstan result found, try the first result anyway (might still be correct)
-						if (!kazakhstanResult && results.length > 0) {
-							kazakhstanResult = results[0];
-						}
+ 			console.log('[Map] Leaflet map initialized successfully');
 
-						if (
-							kazakhstanResult &&
-							kazakhstanResult.geometry &&
-							kazakhstanResult.geometry.location
-						) {
-							const position = kazakhstanResult.geometry.location;
+  		} catch (error) {
+  			console.error('[Map] Error initializing map:', error);
+  			errorMessage = `Map unavailable: ${error.message}`;
+  			mapState = 'error';
+  		}
+  	}
 
-							// Pan to location
-							mapInstance.panTo(position);
-							mapInstance.setZoom(14); // Closer zoom for specific locations
+ 	function handleScroll() {
+ 		if (!mapInstance || !mapContainer) return;
+ 		const inView = isElementInViewport(mapSection || mapContainer);
+ 		if (inView) {
+ 			setTimeout(() => {
+ 				if (mapInstance) {
+ 					mapInstance.invalidateSize();
+ 				}
+ 			}, 100);
+ 		}
+ 	}
 
-							// Add a marker
-							const marker = new window.google.maps.Marker({
-								position: position,
-								map: mapInstance,
-								title: kazakhstanResult.formatted_address,
-								animation: window.google.maps.Animation.DROP
-							});
+ 	const throttledScroll = throttle(handleScroll, 100);
 
-							searchMarkers.push(marker);
+  onMount(() => {
+ 		setTimeout(() => {
+ 			initMap();
+ 		}, 100);
+ 	});
 
-							// Add info window
-							const infoWindow = new window.google.maps.InfoWindow({
-								content: `
-								<div style="padding: 12px; min-width: 200px;">
-									<h3 style="margin: 0 0 5px 0; font-size: 16px; font-weight: bold; color: #1a202c;">
-										${kazakhstanResult.formatted_address}
-									</h3>
-									<p style="margin: 0; font-size: 12px; color: #718096;">
-										Coordinates: ${position.lat().toFixed(6)}, ${position.lng().toFixed(6)}
-									</p>
-								</div>
-							`
-							});
+ 	onDestroy(() => {
+ 		if (browser) {
+ 			window.removeEventListener('scroll', throttledScroll);
+ 			if (mapInstance) {
+ 				mapInstance.remove();
+ 				mapInstance = null;
+ 			}
+ 		}
+ 	});
 
-							infoWindow.open(mapInstance, marker);
-							marker.addListener('click', () => infoWindow.open(mapInstance, marker));
-						} else {
-							searchError = 'Location not found in Kazakhstan. Please try a different search term.';
-						}
-					} else if (status === window.google.maps.GeocoderStatus.ZERO_RESULTS) {
-						searchError = 'Location not found. Please try a different search term.';
-					} else if (status === window.google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-						searchError = 'Search quota exceeded. Please try again later.';
-					} else if (status === window.google.maps.GeocoderStatus.REQUEST_DENIED) {
-						searchError =
-							'Geocoding request denied. Please check API key permissions and enable Geocoding API.';
-					} else {
-						searchError = `Could not find this location. Please try a different search term. (Status: ${status})`;
-						console.error('Geocoding error:', status, results);
-					}
-				}
-			);
-		} catch (e) {
-			console.error('Search failed:', e);
-			searchError = 'Something went wrong. Please try again.';
-			isSearching = false;
-		}
-	}
+  async function handleSearch() {
+ 		if (!searchQuery.trim()) return;
+ 		if (!mapInstance || !L) {
+ 			searchError = 'Map is not ready. Please wait for the map to load.';
+ 			return;
+ 		}
+
+ 		isSearching = true;
+ 		searchError = '';
+
+ 		// Clear previous search markers
+ 		searchMarkers.forEach(marker => mapInstance.removeLayer(marker));
+ 		searchMarkers = [];
+
+ 		const searchTerm = searchQuery.trim();
+
+ 		try {
+ 			// Use Nominatim (OpenStreetMap's geocoding service) for free geocoding
+ 			const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchTerm)}, Kazakhstan&countrycodes=kz&limit=1`);
+ 			const results = await response.json();
+
+ 			if (results && results.length > 0) {
+ 				const result = results[0];
+ 				const lat = parseFloat(result.lat);
+ 				const lng = parseFloat(result.lon);
+
+ 				mapInstance.setView([lat, lng], 14);
+
+ 				const marker = L.marker([lat, lng]).addTo(mapInstance);
+ 				marker.bindPopup(`
+ 					<div style="padding: 12px; min-width: 200px;">
+ 						<h3 style="margin: 0 0 8px 0; font-size: 14px; font-weight: bold;">${result.display_name.split(',')[0]}</h3>
+ 						<p style="margin: 0; font-size: 12px; color: #666;">Location found in Kazakhstan</p>
+ 					</div>
+ 				`).openPopup();
+
+ 				searchMarkers.push(marker);
+ 			} else {
+ 				searchError = 'Location not found in Kazakhstan. Try a different search term.';
+ 			}
+ 		} catch (error) {
+ 			console.error('[Map] Search error:', error);
+ 			searchError = 'Search failed. Please try again.';
+ 		} finally {
+ 			isSearching = false;
+ 		}
+ 	}
+
+ 	function handleKeydown(event) {
+ 		if (event.key === 'Enter') {
+ 			handleSearch();
+ 		}
+ 	}
 </script>
 
-<section class="themed-content-block">
-	<div class="additional-content-header">
+<section class="map-section" bind:this={mapSection}>
+	<div class="map-header">
 		<h2>{title}</h2>
-	</div>
-
-	<!-- START WRAPPER -->
-	<div class="map-wrapper">
-		<!-- Google Maps Container -->
-		<div class="map-container" bind:this={mapContainer}></div>
-
-		<!-- Loading/Error Overlays (Sibling) -->
 		{#if mapState === 'loading'}
-			<div class="map-overlay">
-				<p>Loading map...</p>
-			</div>
+			<span class="loading-indicator">Loading map...</span>
 		{:else if mapState === 'error'}
-			<div class="map-overlay">
-				<p class="error-message">⚠️ {errorMessage}</p>
-			</div>
+			<span class="error-message">{errorMessage}</span>
 		{/if}
 	</div>
-	<!-- END WRAPPER -->
 
-	<!-- Search Form Below Map -->
-	<div class="map-search-below">
-		<label for="location-search" class="search-label">Search for a location in Kazakhstan:</label>
-		<form on:submit|preventDefault={handleSearch} class="search-form-below">
-			<input
-				id="location-search"
-				type="text"
-				bind:value={searchQuery}
-				placeholder="Enter location name (e.g. 'Almaty', 'Baikonur', 'Shymkent')"
-				disabled={isSearching}
-				class="search-input-below"
-			/>
-			<button
-				type="submit"
-				disabled={isSearching || !searchQuery.trim()}
-				class="search-button-below"
-			>
-				{#if isSearching}
-					<span>Searching...</span>
-				{:else}
-					<span>Find</span>
-				{/if}
-			</button>
-		</form>
-		{#if searchError}
-			<div class="search-error-below">{searchError}</div>
-		{/if}
+	<div class="map-search">
+		<input
+			type="text"
+			bind:value={searchQuery}
+			on:keydown={handleKeydown}
+			placeholder="Search location in Kazakhstan..."
+			disabled={isSearching}
+		/>
+		<button on:click={handleSearch} disabled={isSearching || !searchQuery.trim()}>
+			{isSearching ? 'Searching...' : 'Search'}
+		</button>
 	</div>
+	{#if searchError}
+		<p class="search-error">{searchError}</p>
+	{/if}
+
+  {#if browser}
+ 		<div
+ 			id="map-container"
+ 			class="map-container"
+ 			class:has-error={mapState === 'error'}
+ 		></div>
+ 	{:else}
+ 		<div class="map-container loading">
+ 			<p>Loading map...</p>
+ 		</div>
+ 	{/if}
 </section>
 
 <style>
-	.themed-content-block {
-		position: relative;
-		transition: transform 0.1s ease-out;
-	}
-
-	.themed-content-block h2 {
-		font-family: 'Outfit', sans-serif;
-		font-size: clamp(2rem, 3vw, 3rem);
-		font-weight: 800;
-		color: #ffffff !important;
-		margin: 0 0 1.5rem 0;
-		text-align: left;
-		letter-spacing: -0.03em;
-		text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-	}
-
-	/* Wrapper handles sizing and positioning context */
-	.map-wrapper {
+	.map-section {
 		position: relative;
 		width: 100%;
-		max-width: 100%;
-		height: auto;
-		aspect-ratio: 16 / 9;
-		border-radius: var(--vnk-border-radius-md);
-		overflow: hidden;
-		background-color: #1a202c;
-		margin: 0 auto;
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	}
-
-	.map-container {
-		width: 100%;
-		height: 100%;
-	}
-
-	/* Add subtle scroll-based transform to wrapper, not inner container */
-	.map-wrapper:hover {
-		transform: scale(1.005);
-		transition: transform 0.3s ease;
-	}
-
-	.map-overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: var(--vnk-text-secondary-color);
-		font-family: var(--vnk-font-secondary);
-		z-index: 10;
-		background: rgba(26, 32, 44, 0.8); /* Semi-transparent bg for readability */
-		pointer-events: none; /* Let clicks pass if just loading spinner */
-	}
-	.error-message {
-		color: var(--vnk-error-color);
-		padding: 1rem;
-		text-align: center;
-		background: rgba(0, 0, 0, 0.8);
-		border-radius: 8px;
-		pointer-events: auto;
-	}
-
-	/* Search Form Below Map Styles */
-	.map-search-below {
-		margin-top: 2rem;
-		margin-bottom: 1rem;
-		width: 100%;
-		max-width: 100%;
-		display: block !important;
-		visibility: visible !important;
-		opacity: 1 !important;
+		margin: 2rem 0;
 		padding: 0;
 	}
 
-	.search-label {
-		display: block;
-		margin-bottom: 0.75rem;
-		font-size: 1rem;
+	.map-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1rem;
+	}
+
+	.map-header h2 {
+		margin: 0;
+		font-size: 1.5rem;
 		font-weight: 600;
-		color: #4d4d4d !important;
-		font-family: 'Roboto', 'Arial', sans-serif;
+		color: #ffffff;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 	}
 
-	.search-form-below {
-		display: flex !important;
-		gap: 0.75rem;
-		align-items: stretch;
-		width: 100%;
-		flex-direction: row;
+	.loading-indicator {
+		color: #ffffff;
+		font-size: 0.875rem;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 	}
 
-	.search-input-below {
+	.error-message {
+		color: #ef4444;
+		font-size: 0.875rem;
+	}
+
+	.error-message a {
+		color: #3b82f6;
+		text-decoration: underline;
+	}
+
+	.error-message a:hover {
+		color: #2563eb;
+	}
+
+	.map-search {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.map-search input {
 		flex: 1;
-		padding: 0.875rem 1rem;
-		font-family: 'Roboto', 'Arial', sans-serif;
-		font-size: 1rem;
-		color: #1a202c !important;
-		background: #ffffff !important;
-		border: 2px solid #e2e8f0 !important;
-		border-radius: 8px;
+		padding: 0.5rem 1rem;
+		border: 1px solid #e2e8f0;
+		border-radius: 0.375rem;
+		font-size: 0.875rem;
+	}
+
+	.map-search input:focus {
 		outline: none;
-		transition:
-			border-color 0.2s,
-			box-shadow 0.2s;
-		display: block !important;
-		visibility: visible !important;
-		opacity: 1 !important;
-		min-height: 44px;
-		box-sizing: border-box;
+		border-color: #0179b3;
+		box-shadow: 0 0 0 3px rgba(1, 121, 179, 0.1);
 	}
 
-	.search-input-below:focus {
-		border-color: #3498db !important;
-		box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-	}
-
-	.search-input-below::placeholder {
-		color: #718096;
-	}
-
-	.search-input-below:disabled {
-		background: #f7fafc !important;
-		cursor: not-allowed;
-		opacity: 0.6;
-	}
-
-	.search-button-below {
-		padding: 0.875rem 2rem;
-		font-family: 'Roboto', 'Arial', sans-serif;
-		font-size: 1rem;
-		font-weight: 600;
-		color: #ffffff !important;
-		background: #3498db !important;
-		border: none !important;
-		border-radius: 8px;
+	.map-search button {
+		padding: 0.5rem 1rem;
+		background-color: #0179b3;
+		color: white;
+		border: none;
+		border-radius: 0.375rem;
+		font-size: 0.875rem;
+		font-weight: 500;
 		cursor: pointer;
-		transition:
-			background 0.2s,
-			transform 0.1s;
-		white-space: nowrap;
-		display: inline-block !important;
-		visibility: visible !important;
-		opacity: 1 !important;
-		min-height: 44px;
-		box-sizing: border-box;
+		transition: background-color 0.2s;
 	}
 
-	.search-button-below:hover:not(:disabled) {
-		background: #2980b9 !important;
-		transform: translateY(-1px);
+	.map-search button:hover:not(:disabled) {
+		background-color: #015f8f;
 	}
 
-	.search-button-below:active:not(:disabled) {
-		transform: translateY(0);
-	}
-
-	.search-button-below:disabled {
-		background: #bdc3c7 !important;
+	.map-search button:disabled {
+		background-color: #94a3b8;
 		cursor: not-allowed;
-		transform: none;
 	}
 
-	.search-error-below {
-		margin-top: 0.75rem;
-		padding: 0.75rem 1rem;
-		background: rgba(217, 48, 37, 0.1);
-		color: #d93025 !important;
-		border: 1px solid rgba(217, 48, 37, 0.3);
-		border-radius: 8px;
-		font-size: 0.9rem;
-		text-align: center;
-		display: block !important;
-		visibility: visible !important;
+	.search-error {
+		color: #ef4444;
+		font-size: 0.875rem;
+		margin-bottom: 0.5rem;
+	}
+
+	/* Mobile-first: clean map container with proper sizing */
+	.map-container {
+		width: 100%;
+		min-height: 300px;
+		height: 300px;
+		border-radius: 12px;
+		overflow: hidden;
+		background: #f1f5f9;
+	}
+
+	.map-container.loading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #f1f5f9;
+	}
+
+	.map-container.loading::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+		background-size: 200% 100%;
+		animation: shimmer 1.5s infinite linear;
+	}
+
+	@keyframes shimmer {
+		0% { background-position: 200% 0; }
+		100% { background-position: -200% 0; }
+	}
+
+	.map-container p {
+		position: relative;
+		z-index: 1;
+		color: #64748b;
+		font-size: 14px;
+	}
+
+	:global(.gm-err-container),
+	:global(.gm-err-overlay) {
+		display: none !important;
 	}
 </style>

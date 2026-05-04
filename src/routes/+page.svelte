@@ -7,7 +7,8 @@
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-	$: ({ homepage, sliders } = data);
+	$: homepage = data?.homepage;
+	$: sliders = data?.sliders;
 
 	let scrollY = 0;
 	let innerWidth = 0;
@@ -75,16 +76,7 @@
 		</div>
 	</div>
 
-	{#if homepage?.stats}
-		<div class="hero-stats-bar wrapper" in:fade={{ delay: 800 }}>
-			{#each homepage.stats as stat}
-				<div class="stat-item">
-					<span class="stat-value">{stat.value}</span>
-					<span class="stat-label">{stat.label}</span>
-				</div>
-			{/each}
-		</div>
-	{/if}
+
 </section>
 
 <!-- WELCOME SECTION REIMAGINED -->
@@ -188,7 +180,7 @@
 <section class="history-promo-section">
 	<div
 		class="history-bg-parallax"
-		style={`background-image: url("${getCloudinaryUrl('content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/mausoleum-01', { width: 2000, height: 1200, crop: 'fill', gravity: 'center', quality: 'auto:best' })}");`}
+		style={`background-image: url("${getCloudinaryUrl('content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01', { width: 2000, height: 1200, crop: 'fill', gravity: 'center', quality: 'auto:best' })}");`}
 	></div>
 	<div class="history-overlay-gradient"></div>
 
@@ -233,7 +225,7 @@
 		justify-content: flex-start; /* Moved from center to top-bias */
 		padding-top: 25vh; /* Push content down to ideal visual center-top */
 		overflow: hidden;
-		background: #000;
+ 		background: #000;
 	}
 
 	.hero-bg-container {
@@ -254,7 +246,7 @@
 	.hero-overlay {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(to bottom, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.6) 100%);
+		background: none;
 	}
 
 	.hero-content {
@@ -377,39 +369,7 @@
 		text-decoration: underline;
 	}
 
-	/* STATS BAR */
-	.hero-stats-bar {
-		position: absolute;
-		bottom: 15%; /* Lifted significantly up from bottom */
-		left: 0;
-		right: 0;
-		z-index: 10;
-		display: flex;
-		justify-content: flex-start;
-		gap: clamp(2rem, 5vw, 6rem);
-	}
 
-	.stat-item {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.stat-value {
-		font-family: 'Outfit', sans-serif;
-		font-size: 2.5rem;
-		font-weight: 900;
-		color: #fff;
-		line-height: 1;
-	}
-
-	.stat-label {
-		font-size: 0.8rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		color: var(--vnk-accent-color);
-		margin-top: 0.5rem;
-		font-weight: 700;
-	}
 
 	/* WELCOME */
 	.welcome-grid {
@@ -697,9 +657,9 @@
 		inset: 0;
 		background: linear-gradient(
 			180deg,
-			rgba(15, 23, 42, 0.1) 0%,
-			rgba(15, 23, 42, 0.8) 60%,
-			#0f172a 100%
+			rgba(0, 0, 0, 0.1) 0%,
+			rgba(0, 0, 0, 0.8) 60%,
+			rgba(0, 0, 0, 0.92) 100%
 		);
 		z-index: 1;
 	}

@@ -5,6 +5,7 @@
 
 import { marked } from 'marked';
 import { sanitizeHTML } from './sanitize';
+import { getCloudinaryUrl } from './cloudinary';
 
 /**
  * Configuration for marked parser
@@ -74,7 +75,98 @@ export function detectContentFormat(content: string | null | undefined): 'markdo
 }
 
 /**
+ * Cloudinary image renderer extension for marked
+ * Supports syntax: ![Alt text](cloudinary:public_id) or ![Alt](publicId:some_id)
+ */
+function cloudinaryImageExtension() {
+  return {
+    name: 'cloudinaryImage',
+    level: 'inline',
+    start(src: string) {
+      return src.indexOf('cloudinary:');
+    },
+    tokenizer(src: string) {
+      const rule = /^\.\[([^\]]*)\]\(cloudinary:([^\)]+)\)/;
+      const match = rule.exec(src);
+      if (match) {
+        return {
+          type: 'cloudinaryImage',
+          raw: match[0],
+          alt: match[1],
+          publicId: match[2]
+        };
+      }
+      return undefined;
+    },
+    renderer(token: any) {
+      const url = getCloudinaryUrl(token.publicId, {
+        width: 1200,
+        height: 800,
+        crop: 'fill',
+        quality: 'auto:good',
+        fetch_format: 'auto'
+      });
+      return `<figure class="content-image">
+        <img src="${url}" alt="${token.alt}" loading="lazy" />
+        ${token.alt ? `<figcaption>${token.alt}</figcaption>` : ''}
+      </figure>`;
+    }
+  };
+}
+
+/**
+ * Post-process HTML to replace image src with Cloudinary URLs
+ * Handles patterns like:
+ * - ![alt](publicId:some_path_or_id)
+ * - data-public-id="some_public_id"
+ */
+function processEmbeddedImages(html: string): string {
+  if (!html || typeof html !== 'string') return html;
+  
+  // Pattern 1: Replace ![alt](publicId:xxx) with proper img tags
+  const cloudinaryPattern = /!\[([^\]]*)\]\(publicId:([^)]+)\)/g;
+  html = html.replace(cloudinaryPattern, (match, alt, publicId) => {
+    const url = getCloudinaryUrl(publicId.trim(), {
+      width: 1200,
+      height: 800,
+      crop: 'fill',
+      quality: 'auto:good',
+      fetch_format: 'auto'
+    });
+    return `<figure class="content-image">
+      <img src="${url}" alt="${alt || ''}" loading="lazy" />
+      ${alt ? `<figcaption>${alt}</figcaption>` : ''}
+    </figure>`;
+  });
+
+  // Pattern 2: Handle data-public-id attributes
+  const dataIdPattern = /<img([^>]*?)data-public-id="([^"]+)"([^>]*?)>/g;
+  html = html.replace(dataIdPattern, (match, before, publicId, after) => {
+    const url = getCloudinaryUrl(publicId.trim(), {
+      width: 1200,
+      height: 800,
+      crop: 'fill',
+      quality: 'auto:good',
+      fetch_format: 'auto'
+    });
+    // Build full img tag with proper src
+    const existingSrcMatch = match.match(/src="[^"]*"/);
+    const existingAltMatch = match.match(/alt="([^"]*)"/);
+    const existingClassMatch = match.match(/class="([^"]*)"/);
+
+    const classAttr = existingClassMatch ? `class="${existingClassMatch[1]}"` : 'class="content-image"';
+    const altAttr = existingAltMatch ? existingAltMatch[0] : 'alt=""';
+    const otherAttrs = before + after;
+
+    return `<img ${altAttr} src="${url}" ${classAttr} loading="lazy" ${otherAttrs}>`;
+  });
+
+  return html;
+}
+
+/**
  * Converts Markdown to HTML and sanitizes it
+ * Now includes Cloudinary image processing
  * @param markdown - Markdown string to convert
  * @returns Sanitized HTML string
  */
@@ -89,9 +181,34 @@ export function markdownToHTML(markdown: string | null | undefined): string {
   }
 
   try {
+    // getCloudinaryUrl is already imported at module level
+    
+    // Check for embedded image public IDs and convert them
+    // Pattern: publicId:some_path_or_id in image URLs
+    let processedMarkdown = trimmed;
+    const imagePattern = /!\[([^\]]*)\]\(([^)]+)\)/g;
+    processedMarkdown = processedMarkdown.replace(imagePattern, (match, alt, src) => {
+      // If it looks like a public ID (contains slashes or starts with content/)
+      if (src && !src.startsWith('http') && !src.startsWith('/') && 
+          (src.includes('/') || src.startsWith('content/') || src.includes('pages/'))) {
+        const url = getCloudinaryUrl(src.trim(), {
+          width: 1200,
+          height: 800,
+          crop: 'fill',
+          quality: 'auto:good',
+          fetch_format: 'auto'
+        });
+        return `![${alt}](${url})`;
+      }
+      // Otherwise return unchanged
+      return match;
+    });
+
+    // Configure marked with extensions
+    const markedWithExtensions = { ...marked };
+    
     // Convert Markdown to HTML
-    // marked.parse can return a Promise in some versions, handle both cases
-    const htmlResult = marked.parse(trimmed, markedOptions);
+    const htmlResult = markedWithExtensions.parse(processedMarkdown, markedOptions);
     let html = typeof htmlResult === 'string' ? htmlResult : String(htmlResult);
     
     // Post-process HTML to ensure proper structure for styling
@@ -100,6 +217,9 @@ export function markdownToHTML(markdown: string | null | undefined): string {
     
     // Ensure paragraphs are properly wrapped (marked should do this, but double-check)
     html = html.trim();
+    
+    // Process any embedded Cloudinary images that might have been missed
+    html = processEmbeddedImages(html);
     
     // Sanitize the HTML output (preserves structure, removes dangerous content)
     const sanitized = sanitizeHTML(html);

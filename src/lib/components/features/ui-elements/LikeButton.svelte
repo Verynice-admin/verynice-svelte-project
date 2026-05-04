@@ -42,23 +42,23 @@
 		align-items: center;
 		gap: 0.5rem;
 		cursor: pointer;
-		border: 1px solid rgba(0, 0, 0, 0.08);
-		background: #ffffff;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		background: rgb(3, 122, 255);
 		padding: 0.5rem 1.25rem;
 		border-radius: 999px; /* Pill shape */
 		font-family: 'Inter', sans-serif;
 		font-size: 0.95rem;
 		font-weight: 600;
-		color: #475569; /* Slate 600 */
+		color: #ffffff;
 		transition: all 0.2s ease;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 	}
 	button:hover:not(:disabled) {
-		background: #f8fafc;
+		background: rgb(0, 100, 220);
 		transform: translateY(-1px);
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
-		color: #0f172a; /* Darker on hover */
-		border-color: rgba(0, 0, 0, 0.12);
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+		color: #ffffff;
+		border-color: rgba(255, 255, 255, 0.5);
 	}
 	button:active:not(:disabled) {
 		transform: translateY(0);

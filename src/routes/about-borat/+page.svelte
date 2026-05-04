@@ -13,6 +13,17 @@
 	import Map from '$components/features/content/Map.svelte';
 	import KeyFacts from '$components/features/content/KeyFacts.svelte';
 	import FaqSection from '$components/features/content/FaqSection.svelte';
+	import SearchModal from '$lib/components/features/search/SearchModal.svelte';
+
+	let isSearchOpen = false;
+
+	function openSearch() {
+		isSearchOpen = true;
+	}
+
+	function closeSearch() {
+		isSearchOpen = false;
+	}
 
 	onMount(async () => {
 		if (browser) {
@@ -347,6 +358,12 @@
 						</div>
 					{/if}
 				</div>
+
+				<!-- Search Button -->
+				<button class="hero-search-btn" on:click={openSearch}>
+					<span class="search-icon">🔍</span>
+					<span>Search or ask anything...</span>
+				</button>
 			</div>
 		</div>
 	</section>
@@ -462,6 +479,8 @@
 	</div>
 {/if}
 
+<SearchModal isOpen={isSearchOpen} on:close={closeSearch} />
+
 <style>
 	/* PREMIUM DARK STYLING FOR BORAT PAGE */
 	/* Global theme handles body background - removed duplicate */
@@ -487,7 +506,7 @@
 		justify-content: center;
 		padding-top: 80px; /* Header clearance */
 		overflow: hidden;
-		background: #000;
+ 		background: #000;
 		margin-bottom: 0;
 	}
 
@@ -516,6 +535,34 @@
 		z-index: 10;
 		width: 100%;
 		padding-top: 10vh; /* Visual balance */
+	}
+
+	/* Hero Search Button */
+	.hero-search-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		background: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 50px;
+		padding: 0.875rem 1.5rem;
+		color: rgba(255, 255, 255, 0.7);
+		font-size: 1rem;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		margin-top: 2rem;
+		max-width: 400px;
+	}
+
+	.hero-search-btn:hover {
+		background: rgba(255, 255, 255, 0.15);
+		border-color: rgba(255, 255, 255, 0.3);
+		color: #fff;
+		transform: translateY(-2px);
+	}
+
+	.hero-search-btn .search-icon {
+		font-size: 1.25rem;
 	}
 
 	.hero-text-box {

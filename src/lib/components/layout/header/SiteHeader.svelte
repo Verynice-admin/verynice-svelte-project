@@ -3,10 +3,10 @@
 	import { browser } from '$app/environment';
 	import { afterNavigate } from '$app/navigation';
 
-	import SearchModal from '$lib/components/features/search/SearchModal.svelte';
 	import LanguageSelector from '$lib/components/ui/LanguageSelector.svelte';
 
 	export let headerConfig = {};
+	export let isSearchOpen = false;
 	const defaultConfig = {
 		siteName: 'VERYNICE .kz',
 		logoUrlWhite: '/logo.svg',
@@ -27,7 +27,6 @@
 	}));
 
 	let isScrolled = false;
-	let isSearchOpen = false;
 	let isMobileMenuOpen = false;
 	let isMobile = false;
 
@@ -57,14 +56,6 @@
 				isScrolled = true;
 			}
 		}, 0);
-	}
-
-	function openSearch() {
-		isSearchOpen = true;
-	}
-
-	function closeSearch() {
-		isSearchOpen = false;
 	}
 
 	function toggleMobileMenu() {
@@ -104,6 +95,15 @@
 		}
 	}
 
+	// Open search modal
+	function openSearch() {
+		isSearchOpen = true;
+		if (browser) {
+			const event = new CustomEvent('openSearch');
+			window.dispatchEvent(event);
+		}
+	}
+
 	// Re-check scroll state on navigation
 	afterNavigate(() => {
 		checkScroll();
@@ -115,14 +115,6 @@
 			checkMobile(); // Check initial mobile state
 			window.addEventListener('scroll', checkScroll, { passive: true });
 			window.addEventListener('resize', checkMobile, { passive: true });
-
-			// Optional: Add keyboard shortcut (Cmd+K or Ctrl+K)
-			window.addEventListener('keydown', (e) => {
-				if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-					e.preventDefault();
-					openSearch();
-				}
-			});
 		}
 	});
 
@@ -179,13 +171,7 @@
 				data-no-ai-translate
 				translate="no"
 			>
-				VERYNICE<span class="logo-dot">.</span><span class="tld">kz</span>
-				<span class="sun-container">
-					<span class="sun-glow"></span>
-					<span class="samruk-wrapper">
-						<span class="samruk"></span>
-					</span>
-				</span>
+				VERYNICE .kz
 			</a>
 		</div>
 
@@ -198,27 +184,9 @@
 			</ul>
 		</div>
 
-		<!-- 4. Right Actions (Search + Language) -->
+		<!-- 4. Right Actions (Language only - search moved to bottom bar) -->
 		<div class="header-item header-buttons">
 			<div class="header-right-actions">
-				<button class="header-search-btn" aria-label="Search" on:click={openSearch}>
-					<svg
-						width="20"
-						height="20"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							d="M21 21L15.0001 15.0001M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						/>
-					</svg>
-				</button>
-
 				<LanguageSelector isCompact={isMobile} />
 			</div>
 		</div>
@@ -240,8 +208,6 @@
 		</nav>
 	</div>
 </div>
-
-<SearchModal isOpen={isSearchOpen} on:close={closeSearch} />
 
 <style>
 	#site-header,
@@ -331,13 +297,6 @@
 			align-items: center;
 			gap: 0.75rem;
 		}
-
-		.header-search-btn {
-			color: #fff !important; /* Force visibility on mobile */
-			padding: 0.4rem;
-			display: flex;
-			flex-shrink: 0;
-		}
 	}
 
 	/* 2. Desktop Styles (min-width: 1024px) */
@@ -346,61 +305,70 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			padding: 0 1.5rem;
-			max-width: 1400px;
+			padding: 0 2rem;
+			max-width: 1600px;
 			margin: 0 auto;
 			width: 100%;
 			height: 4.5rem;
+			gap: 2rem;
 		}
 
-		/* Logo Column: Locked width to match side actions */
+		/* Logo centered but slightly left towards menu */
 		.header-logo {
-			flex: 1; /* Take 1/3 of space */
-			flex-basis: 0;
+			flex: 0 0 auto;
 			display: flex;
-			justify-content: flex-start;
-			min-width: 160px;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+			left: -10px;
+			transform: none;
+			order: 1;
 		}
 
-		/* Centered Menu: Perfectly centered regardless of side content width */
+		/* Centered Menu: Perfectly centered */
 		.header-item.header-menu {
-			flex: 2; /* Take 2/3 of space effectively centering */
+			flex: 1;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			min-width: 0;
-			padding: 0 1rem;
+			padding: 0;
+			order: 2;
 		}
 
 		#menu-topmenu {
 			display: flex;
-			/* Fluid gap that tightens up on smaller screens */
-			gap: clamp(0.5rem, 1.1vw, 1.75rem);
+			gap: 2.5rem;
 			list-style: none;
 			margin: 0;
 			padding: 0;
 			white-space: nowrap;
 			align-items: center;
+			justify-content: center;
+		}
+
+		#menu-topmenu li {
+			display: flex;
+			align-items: center;
 		}
 
 		#menu-topmenu a {
-			/* Responsive font-size to fit French/Arabic in one line */
-			font-size: clamp(10.5px, 0.8vw, 13.5px);
+			font-size: 13px;
 			font-weight: 700;
-			letter-spacing: 0.03em;
+			letter-spacing: 0.05em;
 			text-transform: uppercase;
 			color: #fff;
 			transition: all 0.2s ease;
+			padding: 0.5rem 0;
 		}
 
-		/* Actions Column: Locked width to balance the logo */
+		/* Actions on right */
 		.header-buttons {
-			flex: 1;
-			flex-basis: 0;
+			flex: 0 0 auto;
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;
-			min-width: 160px;
+			order: 3;
 		}
 
 		.header-right-actions {
@@ -413,6 +381,15 @@
 		/* Mobile toggle hidden */
 		.header-menu-toggle {
 			display: none;
+		}
+
+		.header-search-btn {
+			padding: 0.4rem;
+		}
+
+		.header-search-btn svg {
+			width: 18px;
+			height: 18px;
 		}
 	}
 
@@ -440,161 +417,61 @@
 		z-index: 30;
 	}
 
-	.logo {
-		color: #e2e8f0;
-		font-weight: 700;
-		text-decoration: none;
-		font-size: 1rem; /* Compact for mobile */
-		letter-spacing: -0.015em;
-		white-space: nowrap;
+	.header-search-btn {
 		display: flex;
 		align-items: center;
+		justify-content: center;
+		background: transparent;
+		border: none;
+		color: #fff;
+		cursor: pointer;
+		padding: 0.5rem;
+		border-radius: 6px;
+		transition: background-color 0.2s ease;
+	}
+
+	.header-search-btn:hover {
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	.logo {
+		color: #e2e8f0;
+		font-weight: 800;
+		text-decoration: none;
+		font-size: 1.5rem;
+		letter-spacing: -0.01em;
+		white-space: nowrap;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		line-height: 1;
+		width: auto;
+		text-align: center;
 	}
 
 	@media (min-width: 1024px) {
 		.logo {
 			font-family: 'Inter', sans-serif;
-			font-weight: 900;
-			font-size: 1.85rem; /* Increased from 1.55rem */
-			display: inline-flex;
+			font-weight: 800;
+			font-size: 1.4rem;
+			display: flex;
+			justify-content: flex-start;
 			align-items: center;
 			color: #fff;
 			text-decoration: none;
-			letter-spacing: -0.025em;
+			letter-spacing: -0.01em;
 			transition: transform 0.2s ease-in-out;
-			white-space: nowrap; /* Ensure it stays in one line */
+			white-space: nowrap;
+			width: auto;
+			text-align: left;
 		}
 	}
 
-	.logo-dot {
-		display: inline-flex;
-		align-items: center;
-		color: #ffd700;
-		font-size: 1.4em; /* Slightly smaller dot */
-		line-height: 0;
-		margin-left: 2px;
-		margin-right: 0px;
-		position: relative;
-		top: -0.03em;
-	}
-	.tld {
-		color: rgb(125, 210, 251); /* Light Blue */
-		font-weight: 500;
-		display: inline-flex;
-		align-items: center;
-		position: relative;
-		top: 0.1em;
-		text-transform: lowercase; /* Ensure kz is lowercase */
-	}
-
-	/* Animated Sun & Birds */
-	.sun-container {
-		display: inline-flex;
-		align-items: center;
-		position: relative;
-		vertical-align: middle;
-		margin-left: 0.12em;
-	}
-
-	.sun-glow {
-		display: inline-block;
-		width: 0.8em; /* Increased from 0.7em to match larger logo */
-		height: 0.8em;
-		background: radial-gradient(circle, #daa520 0%, #b8860b 50%, rgba(218, 165, 32, 0) 100%);
-		border-radius: 50%;
-		position: relative;
-		top: -0.45em;
-		pointer-events: none;
-		animation: sun-shimmer 4s infinite ease-in-out;
-		filter: blur(1px);
-	}
-
-	.samruk-wrapper {
-		position: absolute;
-		top: -0.1em;
-		left: 0.05em;
-		pointer-events: none;
-		animation: soar-arc 5s infinite ease-in-out alternate;
-		z-index: 2;
-	}
-
-	.samruk {
-		display: block;
-		width: 0.7em; /* Returned to elegant size */
-		height: 0.35em;
-		background: #ffff00; /* Reverted to bright yellow */
-		clip-path: path('M0,0 C5,3 10,5 15,0 C20,5 25,3 30,0 L15,3 L0,0');
-		opacity: 1;
-		filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.5));
-		animation: flap 0.4s infinite alternate ease-in-out;
-	}
-
-	@keyframes flap {
-		0% {
-			transform: scaleY(1);
-		}
-		100% {
-			transform: scaleY(0.4); /* Flap motion */
-		}
-	}
-
-	@keyframes soar-arc {
-		0% {
-			/* Start position */
-			transform: translate(0.05em, 0.5em) rotate(-20deg) scale(1);
-			opacity: 1;
-		}
-		100% {
-			/* End position - no longer fades or shrinks */
-			transform: translate(0.65em, 0.1em) rotate(0deg) scale(0.9);
-			opacity: 1;
-		}
-	}
-
-	@keyframes sun-shimmer {
-		0%,
-		100% {
-			transform: scale(0.85);
-			opacity: 0.7;
-			box-shadow: 0 0 15px #daa520;
-			filter: blur(1px) brightness(1.2);
-		}
-		50% {
-			transform: scale(1.1);
-			opacity: 1;
-			box-shadow:
-				0 0 45px #daa520,
-				0 0 90px #b8860b,
-				0 0 120px rgba(218, 165, 32, 0.5);
-			filter: blur(2px) brightness(1.5);
-		}
-	}
 	#menu-topmenu {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 		white-space: nowrap;
-	}
-	.header-search-btn {
-		background: transparent;
-		border: none;
-		color: #fff; /* Changed from #cbd5e1 for better visibility */
-		cursor: pointer;
-		padding: 0.5rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition:
-			transform 0.2s,
-			opacity 0.2s;
-		flex-shrink: 0;
-		width: 40px;
-		height: 40px;
-	}
-	.header-search-btn:hover {
-		transform: scale(1.1);
-		opacity: 0.8;
 	}
 
 	/* Clean up any list styles */

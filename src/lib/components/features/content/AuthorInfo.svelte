@@ -3,6 +3,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 	import { getFirestore } from '$lib/firebaseApp';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import LikeButton from '$lib/components/features/ui-elements/LikeButton.svelte';
@@ -37,6 +38,9 @@
 
 	$: hasImage = !!(imageUrl && imageUrl.length > 0);
 
+	// Check if this is the about-borat page
+	$: isBoratPage = $page.url.pathname === '/about-borat';
+
 	// Track image load state
 	let imageError = false;
 
@@ -45,37 +49,27 @@
 		imageError = false;
 	}
 
-	// Debug: Log author data
-	$: if (browser && author) {
-		console.log('[AuthorInfo] Author data received:', {
-			name: author.name,
-			title: author.title,
-			bio: author.bio,
-			description: author.description,
-			profilePicturePublicId: author.profilePicturePublicId,
-			authorImagePublicId: author.authorImagePublicId,
-			avatarPublicId: author.avatarPublicId,
-			rawImagePublicId: rawImagePublicId,
-			imagePublicId: imagePublicId,
-			imageUrl: imageUrl,
-			hasImage: hasImage,
-			allFields: Object.keys(author)
-		});
+	// Debug: Log author data (disabled in production)
+	// $: if (browser && author) {
+	// 	console.log('[AuthorInfo] Author data received:', {
+	// 		name: author.name,
+	// 		title: author.title,
+	// 		bio: author.bio,
+	// 		description: author.description,
+	// 		profilePicturePublicId: author.profilePicturePublicId,
+	// 		authorImagePublicId: author.authorImagePublicId,
+	// 		avatarPublicId: author.avatarPublicId,
+	// 		rawImagePublicId: rawImagePublicId,
+	// 		imagePublicId: imagePublicId,
+	// 		imageUrl: imageUrl,
+	// 		hasImage: hasImage,
+	// 		allFields: Object.keys(author)
+	// 	});
 
-		if (!hasImage) {
-			console.warn('[AuthorInfo] No image publicId found. Available fields:', Object.keys(author));
-			console.warn('[AuthorInfo] Checking for image fields:', {
-				profilePicturePublicId: author.profilePicturePublicId,
-				authorImagePublicId: author.authorImagePublicId,
-				avatarPublicId: author.avatarPublicId,
-				hasAny: !!(
-					author.profilePicturePublicId ||
-					author.authorImagePublicId ||
-					author.avatarPublicId
-				)
-			});
-		}
-	}
+	// 	if (!hasImage) {
+	// 		console.warn('[AuthorInfo] No image publicId found. Available fields:', Object.keys(author));
+	// 	}
+	// }
 
 	onMount(() => {
 		if (!browser || !postId?.trim()) return;
@@ -93,7 +87,7 @@
 	onDestroy(() => unsubscribe());
 </script>
 
-{#if author && (author.name || author.authorName)}
+{#if isBoratPage && author && (author.name || author.authorName)}
 	<section class="themed-content-block author-info-section">
 		<div class="author-info-unified-box">
 			<!-- Eyebrow Label -->
@@ -175,7 +169,7 @@
 
 <style>
 	/* Component-specific styles - these work with global styles in pages.css */
-	@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Inter:wght@300;400;500;600&display=block');
+	/* Fonts are loaded globally in app.html */
 
 	/* Unified box container - Modern Sleek Design */
 	.author-info-unified-box {
@@ -292,7 +286,7 @@
 		font-family: 'Inter', sans-serif; /* Modern sans-serif */
 		font-size: 1.5rem; /* Smaller, more modern */
 		font-weight: 800;
-		color: #1e293b;
+		color: #ffffff;
 		margin: 0;
 		line-height: 1.3;
 		letter-spacing: -0.02em;
@@ -304,7 +298,7 @@
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 1px;
-		color: #3498db; /* Blue accent instead of gold */
+		color: rgba(255, 255, 255, 0.9); /* White text */
 		margin: 0;
 	}
 
@@ -312,7 +306,7 @@
 		font-family: 'Inter', sans-serif;
 		font-size: 0.95rem;
 		line-height: 1.6;
-		color: #475569;
+		color: rgba(255, 255, 255, 0.85);
 		max-width: 600px;
 		margin: 0;
 	}
@@ -324,7 +318,7 @@
 		gap: 2rem;
 		align-items: center;
 		justify-content: flex-start;
-		border-top: 1px solid rgba(0, 0, 0, 0.06);
+		border-top: 1px solid rgba(255, 255, 255, 0.15);
 		padding-top: 1rem;
 		margin-top: 0.5rem;
 		width: 100%;
@@ -346,7 +340,7 @@
 		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
-		color: #64748b;
+		color: rgba(255, 255, 255, 0.9);
 		margin: 0;
 	}
 

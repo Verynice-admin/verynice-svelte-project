@@ -98,9 +98,9 @@
 /* ========================================= */
 
 :root {
-	--primary-color: #06B6D4;
-	--primary-rgb: 6, 182, 212;
-	--bg-dark: #0f172a;
+	--primary-color: rgb(242, 132, 137);
+	--primary-rgb: 242, 132, 137;
+	--bg-dark: rgb(126, 197, 179);
 	--text-light: #f8fafc;
 	--card-bg: #e8e8e3;
 	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -230,7 +230,7 @@
 
 * {
 	scrollbar-width: thin;
-	scrollbar-color: #06B6D4 #1e293b;
+	scrollbar-color: #666666 #eeeeee;
 }
 
 /* Webkit scrollbars */
@@ -240,15 +240,15 @@
 }
 
 ::-webkit-scrollbar-track {
-	background: #1e293b;
+	background: #eeeeee;
 	border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #06B6D4;
+	background: rgb(242, 132, 137);
 	border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #0891b2;
+	background: rgba(242, 132, 137, 0.85);
 }

@@ -1,9 +1,13 @@
 import { json } from '@sveltejs/kit';
 import { adminDB } from '$lib/server/firebaseAdmin';
+import { requireAdminAccess } from '$lib/server/apiAuth';
 
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, url }) => {
+    const auth = requireAdminAccess(request, url);
+    if (!auth.ok) return auth.response;
+
     try {
         const { postId } = await request.json() as { postId: string };
 

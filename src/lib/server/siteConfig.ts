@@ -17,83 +17,76 @@ try {
       menu: [
         { url: '/history', text: 'History' },
         { url: '/destinations', text: 'Destinations' },
-        { url: '/culture', text: 'Culture' },
+        { url: '/culture', text: 'Heritage' },
         { url: '/food-drink', text: 'Food & Drinks' },
-        { url: '/tips', text: 'Travel Tips' }
+        { url: '/travel-tips', text: 'Travel Tips' },
+        { url: '/get-started', text: 'Get Started' },
+        { url: '/about-borat', text: 'Me Borat' }
       ]
     },
     footerConfig: {}
   };
 }
 
-const DEFAULTS = {
-  headerConfig: fallbackConfig?.headerConfig || {
-    siteName: 'VERYNICE .kz',
-    menuLinks: [
-      { url: '/history', text: 'History' },
-      { url: '/destinations', text: 'Destinations' },
-      { url: '/culture', text: 'Culture' },
-      { url: '/food-drink', text: 'Food & Drinks' },
-      { url: '/tips', text: 'Travel Tips' }
-    ]
-  },
-  footerConfig: fallbackConfig?.footerConfig || {}
-};
+// Fetch config from Firebase Firestore
+async function fetchFirebaseConfig(): Promise<any> {
+  try {
+    if (!adminDB) {
+      console.log('Firebase admin not initialized, using local config');
+      return null;
+    }
+    
+    const doc = await adminDB.collection('siteConfig').doc('layout').get();
+    
+    if (doc.exists) {
+      return doc.data();
+    }
+    return null;
+  } catch (error) {
+    console.error('Error fetching Firebase config:', error);
+    return null;
+  }
+}
 
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
-let cachedConfig: any = null;
-let lastFetchTime = 0;
+// Helper to only use firebase value if it's not empty/null/undefined
+function useFirebaseOrFallback(firebaseValue: any, fallbackValue: any): any {
+  if (firebaseValue !== null && firebaseValue !== undefined) {
+    // For arrays, only use if not empty
+    if (Array.isArray(firebaseValue)) {
+      return firebaseValue.length > 0 ? firebaseValue : fallbackValue;
+    }
+    // For objects, only use if not empty
+    if (typeof firebaseValue === 'object') {
+      return Object.keys(firebaseValue).length > 0 ? firebaseValue : fallbackValue;
+    }
+    // For other values, use firebase value
+    return firebaseValue;
+  }
+  return fallbackValue;
+}
 
 export async function loadSiteConfig() {
-  const now = Date.now();
-  if (cachedConfig && (now - lastFetchTime < CACHE_TTL)) {
-    return cachedConfig;
-  }
-
-  if (!adminDB) {
-    console.warn('[siteConfig] Firebase Admin not initialized, using fallback config');
-    return DEFAULTS;
-  }
-
-  try {
-    const headerDocRef = adminDB.collection('siteConfig').doc('headerConfig');
-    const footerDocRef = adminDB.collection('siteConfig').doc('footerContent');
-
-    const [headerSnap, footerSnap] = await Promise.all([
-      headerDocRef.get(),
-      footerDocRef.get()
-    ]);
-
-    const headerConfig = headerSnap.exists ? headerSnap.data() : DEFAULTS.headerConfig;
-    const footerConfig = footerSnap.exists ? footerSnap.data() : DEFAULTS.footerConfig;
-
-    // Merge with defaults to ensure required fields
-    cachedConfig = {
-      headerConfig: { ...DEFAULTS.headerConfig, ...headerConfig },
-      footerConfig: { ...DEFAULTS.footerConfig, ...footerConfig }
-    };
-    // Override 'History 2' from database if present, without touching DB
-    const replaceHistory2 = (items: any[]) => {
-      if (!Array.isArray(items)) return items;
-      return items.map(item => {
-        if (item.url === '/history2') {
-          return { ...item, url: '/destinations', text: 'Destinations' };
-        }
-        return item;
-      });
-    };
-
-    if (cachedConfig.headerConfig?.menuLinks) {
-      cachedConfig.headerConfig.menuLinks = replaceHistory2(cachedConfig.headerConfig.menuLinks);
+  // Try to get Firebase config first
+  const firebaseConfig = await fetchFirebaseConfig();
+  
+  // Merge Firebase config with local fallback
+  // Firebase takes priority ONLY if it has actual values, otherwise use local
+  const mergedConfig = {
+    headerConfig: {
+      ...fallbackConfig?.headerConfig,
+      ...(firebaseConfig?.headerConfig || {})
+    },
+    footerConfig: {
+      ...fallbackConfig?.footerConfig,
+      ...(firebaseConfig?.footerConfig || {}),
+      // For nested objects in footerConfig, use smarter merging
+      brand: useFirebaseOrFallback(firebaseConfig?.footerConfig?.brand, fallbackConfig?.footerConfig?.brand),
+      footerMenuLinks: useFirebaseOrFallback(firebaseConfig?.footerConfig?.footerMenuLinks, fallbackConfig?.footerConfig?.footerMenuLinks),
+      techMenuLinks: useFirebaseOrFallback(firebaseConfig?.footerConfig?.techMenuLinks, fallbackConfig?.footerConfig?.techMenuLinks),
+      social: useFirebaseOrFallback(firebaseConfig?.footerConfig?.social, fallbackConfig?.footerConfig?.social),
+      columns: useFirebaseOrFallback(firebaseConfig?.footerConfig?.columns, fallbackConfig?.footerConfig?.columns)
     }
-    if (cachedConfig.headerConfig?.menu) {
-      cachedConfig.headerConfig.menu = replaceHistory2(cachedConfig.headerConfig.menu);
-    }
-
-    lastFetchTime = now;
-    return cachedConfig;
-  } catch (error) {
-    console.error('[siteConfig] Error loading config:', error);
-    return DEFAULTS;
-  }
+  };
+  
+  return mergedConfig;
 }

@@ -40,7 +40,7 @@ const FALLBACK_PAGE = {
 		{ label: 'Food & Drinks', href: '/food-drink' },
 		{ label: 'Signature Dishes' }
 	],
-	headerBackgroundPublicId: 'content/pages/foodDrinks/signatureDishes/signature-dishes'
+	headerBackgroundPublicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes'
 };
 
 const FALLBACK_CATEGORIES = [
@@ -751,13 +751,13 @@ export const load: PageServerLoad = async () => {
 
 	if (adminDB) {
 		try {
-			// Data is stored inside pages/restaurantsPage/
-			const pageRef = adminDB.collection('pages').doc('restaurantsPage');
+			// Data is stored inside pages/food-drink/
+			const pageRef = adminDB.collection('pages').doc('food-drink');
 			
 			// Fetch page data only - categories and dishes use fallback until properly seeded
 			const pageSnap = await pageRef.get();
 
-			// Process page data (signature dishes metadata is stored as fields on restaurantsPage)
+			// Process page data (signature dishes metadata is stored as fields on food-drink)
 			if (pageSnap.exists) {
 				const pageData = serializeDates(pageSnap.data());
 				page = {

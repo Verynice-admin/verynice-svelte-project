@@ -1,28 +1,39 @@
 {
-    "name": "VeryNice - Kazakhstan Travel Guide",
-    "short_name": "VeryNice",
-    "description": "Discover the best attractions, history, and culture of Kazakhstan",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#0f172a",
-    "categories": [
-        "travel",
-        "tourism",
-        "lifestyle"
-    ],
-    "icons": [
-        {
-            "src": "/icons/icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png",
-            "purpose": "any maskable"
-        },
-        {
-            "src": "/icons/icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png",
-            "purpose": "any maskable"
-        }
-    ]
+  "name": "VeryNice - Kazakhstan Travel Guide",
+  "short_name": "VeryNice",
+  "description": "Your ultimate guide to traveling in Kazakhstan",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0f172a",
+  "theme_color": "#06B6D4",
+  "categories": ["travel", "education"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Destinations",
+      "short_name": "Destinations",
+      "url": "/destinations",
+      "description": "Explore Kazakhstan destinations"
+    },
+    {
+      "name": "History",
+      "short_name": "History",
+      "url": "/history",
+      "description": "Discover Kazakhstan history"
+    }
+  ]
 }

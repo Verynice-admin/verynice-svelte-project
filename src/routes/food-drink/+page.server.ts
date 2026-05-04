@@ -36,7 +36,7 @@ const FALLBACK_PAGE = {
   articleLikes: 0,
   articleComments: 0,
   breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Food & Drinks' }],
-  headerBackgroundPublicId: 'content/site/backgrounds/attractions-hero',
+  headerBackgroundPublicId: 'content/pages/foodDrinks/main_dastarkhan',
   introMarkdown:
     'Kazakh cuisine is built for the open steppe: **hearty, seasonal, and communal**. Meals are designed to be shared around the *dastarkhan* (the family table), balancing tradition with a fast-growing modern dining scene in Almaty, Astana, and Shymkent.'
 };
@@ -124,7 +124,8 @@ const FALLBACK_RESTAURANTS = [
   {
     title: 'Traditional Dastarkhan',
     city: 'Almaty',
-    description: 'Classic Kazakh menu, live music, and generous platters.'
+    description: 'Classic Kazakh menu, live music, and generous platters.',
+    href: '/food-drink/traditional-dastarkhan'
   },
   {
     title: 'New Kazakh Cuisine',
@@ -134,12 +135,14 @@ const FALLBACK_RESTAURANTS = [
   {
     title: 'Silk Road Noodles',
     city: 'Shymkent',
-    description: 'Hand-pulled lagman and bold southern spices.'
+    description: 'Hand-pulled lagman and bold southern spices.',
+    href: '/food-drink/silk-road-noodles'
   },
   {
     title: 'Tea House Courtyard',
     city: 'Turkistan',
-    description: 'Slow tea rituals with dried fruits and sweets.'
+    description: 'Slow tea rituals with dried fruits and sweets.',
+    href: '/food-drink/tea-house-courtyard'
   }
 ];
 
@@ -194,13 +197,123 @@ const FALLBACK_ARTICLES = [
   }
 ];
 
+const LEGACY_GALLERY_MAP: Record<string, string> = {
+  'content/pages/food-drink/hero': 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes',
+  'content/pages/food-drink/beshbarmak':
+    'content/pages/foodDrinks/signatureDishes/main-meat-dishes/beshbarmak',
+  'content/pages/food-drink/tea': 'content/pages/foodDrinks/TeaHouseCourtyard/teaQuickGuide',
+  'content/pages/food-drink/market':
+    'content/pages/foodDrinks/signatureDishes/soups-and-broths/sorpa'
+};
+
 const FALLBACK_GALLERY = {
   title: 'A Taste of Kazakhstan',
   photos: [
-    { publicId: 'content/pages/food-drink/hero', alt: 'Kazakh table spread' },
-    { publicId: 'content/pages/food-drink/beshbarmak', alt: 'Beshbarmak' },
-    { publicId: 'content/pages/food-drink/tea', alt: 'Tea ritual' },
-    { publicId: 'content/pages/food-drink/market', alt: 'Market produce' }
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes',
+      alt: 'Kazakh table spread',
+      caption: 'Traditional Dastarkhan — A generous spread of Kazakh delicacies showcasing hospitality and culinary heritage'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/beshbarmak',
+      alt: 'Beshbarmak',
+      caption: 'Beshbarmak — The national dish of Kazakhstan, featuring hand-cut noodles with tender lamb or horse meat'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/kuyrdak',
+      alt: 'Kuyrdak',
+      caption: 'Kuyrdak — Fried chunks of meat with onions, a hearty dish rooted in nomadic traditions'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/kazan-zhappa',
+      alt: 'Kazan zhappa',
+      caption: 'Kazan Zhaps — Meat and potatoes cooked in a cauldron over an open fire'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/zhyzhmyzh',
+      alt: 'Zhyzhmyzh',
+      caption: 'Zhyzhmyzh — Spiced fried meat cubes, a popular dish for celebrations and gatherings'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/karynburme',
+      alt: 'Karynburme',
+      caption: 'Karynburme — Layered pastry filled with spiced meat, a savory pastry beloved in Kazakhstan'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/steamedmeat',
+      alt: 'Steamed meat',
+      caption: 'Steamed Meat — Tender meat cooked with aromatic spices in a traditional steaming method'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/driedcuredmeat',
+      alt: 'Dried cured meat',
+      caption: 'Kazy — Premium dried horse meat, a delicacy sliced thin and served as an appetizer'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/kazy',
+      alt: 'Kazy',
+      caption: 'Kazy — The most prized horse meat sausage, air-dried and sliced thin for special occasions'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/karta',
+      alt: 'Karta',
+      caption: 'Karta — Ground horse meat seasoned and formed into patties, grilled to perfection'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/shuzhuk',
+      alt: 'Shuzhuk',
+      caption: 'Shuzhuk — Spiced horse meat sausage, dried and smoked for intense flavor'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/zhaya',
+      alt: 'Zhaya',
+      caption: 'Zhaya — Finely minced horse meat mixed with fat and spices, a traditional delicacy'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/zhal',
+      alt: 'Zhal',
+      caption: 'Zhal — Horse meat preserve, a protein-rich traditional food for winter'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/soups-and-broths/sorpa',
+      alt: 'Sorpa',
+      caption: 'Sorpa — A rich broth made from lamb or horse meat, served with noodles or bread'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/soups-and-broths/kespe',
+      alt: 'Kespe',
+      caption: 'Kespe — Soup with handmade pasta squares, a comforting dish for cold Kazakh winters'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/sheepheadritual',
+      alt: 'Sheep head ritual',
+      caption: 'Sheep Head — A ceremonial dish served to honored guests, representing respect and abundance'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/tongue',
+      alt: 'Tongue',
+      caption: 'Tongue — Considered a delicacy, served boiled or sliced in salads'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/liver',
+      alt: 'Liver',
+      caption: 'Liver — Served grilled or in pate, rich in iron and flavor'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/heart',
+      alt: 'Heart',
+      caption: 'Heart — A lean and tender organ meat, often served grilled or in soups'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/lungsandliver',
+      alt: 'Lungs and liver',
+      caption: 'Lungs and Liver — Traditional offal dishes prepared in various regional styles'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/TeaHouseCourtyard/teaQuickGuide',
+      alt: 'Tea ritual',
+      caption: 'Tea Ceremony — The traditional Kazakh tea ritual, where green tea is poured and offered to guests'
+    }
   ]
 };
 
@@ -257,8 +370,82 @@ const BLOCKED_RESTAURANT_TITLES = new Set(['new kazakh cuisine']);
 const normalizeTitle = (value: any) =>
   typeof value === 'string' ? value.trim().toLowerCase() : '';
 
+const INTERNATIONAL_TASTES_DESCRIPTION =
+  'Global flavors from sushi and ramen to shawarma and pizza.';
+const LEGACY_REGIONAL_TASTES_DESCRIPTION =
+  'seafood in mangystau, spices in shymkent, and alpine dairy in the east.';
+const RESTAURANT_LINKS: Record<string, string> = {
+  'traditional dastarkhan': '/food-drink/traditional-dastarkhan',
+  'traditional-dastarkhan': '/food-drink/traditional-dastarkhan',
+  'silk road noodles': '/food-drink/silk-road-noodles',
+  'silk-road-noodles': '/food-drink/silk-road-noodles',
+  'tea house courtyard': '/food-drink/tea-house-courtyard',
+  'tea-house-courtyard': '/food-drink/tea-house-courtyard'
+};
+
+const normalizeHighlightTitle = (value: any) =>
+  normalizeTitle(value) === 'regional tastes' ? 'International Tastes' : value;
+
+const HIGHLIGHT_IMAGE_FALLBACKS: Record<string, string> = {
+  'signature dishes': 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes',
+  'international tastes': 'content/pages/foodDrinks/internationalTastes/tom_yam',
+  'regional tastes': 'content/pages/foodDrinks/internationalTastes/tom_yam',
+  'traditional dastarkhan': 'content/pages/foodDrinks/traditionalDastarkhan/hero',
+  'silk road noodles': 'content/pages/foodDrinks/silkRoadNoodles/hero',
+  'tea house courtyard': 'content/pages/foodDrinks/TeaHouseCourtyard/hero'
+};
+const RESTAURANT_IMAGE_FALLBACKS: Record<string, string> = {
+  'traditional dastarkhan': 'content/pages/foodDrinks/traditionalDastarkhan/hero',
+  'silk road noodles': 'content/pages/foodDrinks/silkRoadNoodles/hero',
+  'tea house courtyard': 'content/pages/foodDrinks/TeaHouseCourtyard/hero'
+};
+
+const withHighlightImage = (item: any) => {
+  const titleKey = normalizeTitle(item?.title);
+  const fallbackPublicId = HIGHLIGHT_IMAGE_FALLBACKS[titleKey];
+  if (!fallbackPublicId) return item;
+
+  const existingPublicId =
+    item?.image?.publicId || item?.image?.public_id || item?.imagePublicId || item?.publicId || '';
+
+  const publicId = existingPublicId || fallbackPublicId;
+  return {
+    ...item,
+    imagePublicId: publicId,
+    image: {
+      ...(item?.image || {}),
+      publicId,
+      alt: item?.image?.alt || item?.title || 'Food & Drinks highlight'
+    }
+  };
+};
+
+const normalizeHighlightDescription = (title: any, description: any) => {
+  const normalizedTitle = normalizeTitle(title);
+  if (normalizedTitle !== 'international tastes' && normalizedTitle !== 'regional tastes') {
+    return description;
+  }
+
+  const normalizedDescription = normalizeTitle(description);
+  if (!normalizedDescription || normalizedDescription === LEGACY_REGIONAL_TASTES_DESCRIPTION) {
+    return INTERNATIONAL_TASTES_DESCRIPTION;
+  }
+
+  return description;
+};
+
 const filterHighlights = (items: any[]) =>
-  (items || []).filter((item) => !BLOCKED_HIGHLIGHT_TITLES.has(normalizeTitle(item?.title)));
+  (items || [])
+    .map((item) => {
+      const title = normalizeHighlightTitle(item?.title);
+      const normalized = {
+        ...item,
+        title,
+        description: normalizeHighlightDescription(title, item?.description)
+      };
+      return withHighlightImage(normalized);
+    })
+    .filter((item) => !BLOCKED_HIGHLIGHT_TITLES.has(normalizeTitle(item?.title)));
 
 const filterArticles = (items: any[]) =>
   (items || []).filter((item) => {
@@ -268,7 +455,33 @@ const filterArticles = (items: any[]) =>
   });
 
 const filterRestaurants = (items: any[]) =>
-  (items || []).filter((item) => !BLOCKED_RESTAURANT_TITLES.has(normalizeTitle(item?.title)));
+  (items || [])
+    .map((item) => {
+      const titleKey = normalizeTitle(item?.title);
+      const idKey = normalizeTitle(item?.id);
+      const href = item?.href || item?.url || RESTAURANT_LINKS[titleKey] || RESTAURANT_LINKS[idKey];
+      const fallbackPublicId = RESTAURANT_IMAGE_FALLBACKS[titleKey] || RESTAURANT_IMAGE_FALLBACKS[idKey];
+      const existingPublicId =
+        item?.image?.publicId || item?.image?.public_id || item?.imagePublicId || item?.publicId || '';
+      const publicId = existingPublicId || fallbackPublicId || '';
+
+      const next = {
+        ...item,
+        ...(href ? { href } : {}),
+        ...(publicId
+          ? {
+              imagePublicId: publicId,
+              image: {
+                ...(item?.image || {}),
+                publicId,
+                alt: item?.image?.alt || item?.title || 'Food & Drinks restaurant'
+              }
+            }
+          : {})
+      };
+      return next;
+    })
+    .filter((item) => !BLOCKED_RESTAURANT_TITLES.has(normalizeTitle(item?.title)));
 
 function normalizeImageList(items: any[], fallbackAlt: string) {
   if (!Array.isArray(items)) return [];
@@ -282,11 +495,23 @@ function normalizeImageList(items: any[], fallbackAlt: string) {
       return (
         validation.normalized || {
           publicId: img.publicId || img.public_id || img.url || '',
-          alt: img.alt || img.altText || fallbackAlt
+          alt: img.alt || img.altText || fallbackAlt,
+          caption: img.caption || img.captionName || ''
         }
       );
     })
     .filter((img) => img && img.publicId);
+}
+
+function normalizeGalleryPhotos(items: any[], fallbackAlt: string) {
+  return normalizeImageList(items, fallbackAlt).map((img) => {
+    const mappedPublicId = LEGACY_GALLERY_MAP[img.publicId];
+    if (!mappedPublicId) return img;
+    return {
+      ...img,
+      publicId: mappedPublicId
+    };
+  });
 }
 
 export async function load() {
@@ -308,7 +533,7 @@ export async function load() {
   }
 
   try {
-    const pageRef = adminDB.collection('pages').doc('restaurantsPage');
+    const pageRef = adminDB.collection('pages').doc('food-drink');
     const [
       pageSnap,
       articlesSnap,
@@ -318,6 +543,7 @@ export async function load() {
       highlightsSnap,
       signatureSnap,
       faqSnap,
+      photoGalleryMainSnap,
       photoGallerySnap,
       relatedPostsSnap
     ] = await Promise.all([
@@ -329,6 +555,7 @@ export async function load() {
       pageRef.collection('highlights').orderBy('order', 'asc').get(),
       pageRef.collection('signatureDishes').orderBy('order', 'asc').get(),
       pageRef.collection('faq').get(),
+      pageRef.collection('photoGallery').doc('main').get(),
       pageRef.collection('photoGallery').get(),
       pageRef.collection('relatedPosts').orderBy('order', 'asc').get()
     ]);
@@ -372,17 +599,8 @@ export async function load() {
       };
     }
 
-    let photoGallery = null;
-    if (photoGallerySnap.size > 0) {
-      const galleryDoc = photoGallerySnap.docs[0].data();
-      const photos = normalizeImageList(galleryDoc.photos || [], 'Food & drinks image');
-      if (photos.length > 0) {
-        photoGallery = {
-          title: galleryDoc.title || 'Food & Drinks Gallery',
-          photos
-        };
-      }
-    }
+    // Always use fallback gallery to ensure captions are displayed
+    const photoGallery = FALLBACK_GALLERY;
 
     const relatedPosts = relatedPostsSnap.docs
       .filter((doc) => doc.id !== 'main')
@@ -397,7 +615,7 @@ export async function load() {
       markets: [],
       restaurants: filterRestaurants(restaurants.length ? restaurants : FALLBACK_RESTAURANTS),
       articles: filterArticles(articles.length ? articles : FALLBACK_ARTICLES),
-      photoGallery: photoGallery || FALLBACK_GALLERY,
+      photoGallery: photoGallery,
       faq: faq || FALLBACK_FAQ,
       relatedPosts,
       author: null

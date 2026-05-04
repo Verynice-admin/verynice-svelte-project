@@ -74,6 +74,6 @@
 	.card-footer {
 		padding: 1rem 1.5rem;
 		border-top: 1px solid rgba(148, 163, 184, 0.1);
-		background: rgba(15, 23, 42, 0.3);
+		background: rgba(122, 189, 170, 0.3);
 	}
 </style>

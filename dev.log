@@ -1,0 +1,291 @@
+
+> verynice@0.0.1 dev
+> vite
+
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m2211[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+[Firebase Admin] Initialized successfully
+[Destination] adminDB is initialized
+[Destination] 'sairam-su-lake' is a known path. fetching direct...
+[Destination] Checking map data... Snap empty? false
+[Destination] Map data found: {"id":"main","coordinates":{"address":"Sairam Su Lake, Shymkent","lng":69.5901,"lat":42.3417},"title":"Sairam Su Lake"}
+[Destination] adminDB is initialized
+[Destination] 'ile-alatau-national-park' is a known path. fetching direct...
+[Destination] Checking map data... Snap empty? false
+[Destination] Map data found: {"id":"main","title":"Ile-Alatau","coordinates":{"lng":77.08,"lat":43.08},"lat":43.08,"zoom":10,"lng":77.08}
+7:06:53 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/routes/+layout.svelte:175:24 A11y: Redundant role 'main'
+7:06:53 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/navigation/AsideToc.svelte:438:3 Unused CSS selector ".toc-rail-ol::before"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:256:2 Unused CSS selector ".attractions-item-content"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:260:2 Unused CSS selector ".attractions-item-content .item-title"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:269:2 Unused CSS selector ".category"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/Map.svelte:314:1 Unused CSS selector ".error-message a"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/Map.svelte:319:1 Unused CSS selector ".error-message a:hover"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/AuthorInfo.svelte:325:1 Unused CSS selector ".author-share-block h4"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/AuthorInfo.svelte:336:1 Unused CSS selector ".author-likes-block h4"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:197:0 A11y: Elements with the 'button' interactive role must have a tabindex value.
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:197:0 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:200:38 A11y: Redundant role 'navigation'
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:386:2 Unused CSS selector ".header-search-btn"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:390:2 Unused CSS selector ".header-search-btn svg"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:420:1 Unused CSS selector ".header-search-btn"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:433:1 Unused CSS selector ".header-search-btn:hover"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/widgets/TimeWeatherDock.svelte:41:3 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/widgets/TimeWeatherDock.svelte:41:3 A11y: Non-interactive element <div> should not be assigned mouse or keyboard event listeners.
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:266:2 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:266:2 A11y: <div> with click handler must have an ARIA role
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:259:1 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:259:1 A11y: Non-interactive element <div> should not be assigned mouse or keyboard event listeners.
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:483:2 Unused CSS selector ".search-input-wrapper"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:489:2 Unused CSS selector ".search-icon-wrapper svg"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:490:2 Unused CSS selector ".close-btn svg"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:491:2 Unused CSS selector ".clear-input-btn svg"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:497:2 Unused CSS selector ".close-btn"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:508:2 Unused CSS selector ".clear-input-btn"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:520:2 Unused CSS selector ".search-input-wrapper"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:539:2 Unused CSS selector ".clear-ai-btn"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:565:1 Unused CSS selector ".search-input-wrapper"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:574:1 Unused CSS selector ".search-icon-wrapper"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:597:1 Unused CSS selector ".search-input-wrapper"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:604:0 Unused CSS selector ".search-input-wrapper input"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:614:1 Unused CSS selector ".close-btn"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:629:1 Unused CSS selector ".close-btn:hover"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:635:1 Unused CSS selector ".clear-input-btn"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:651:1 Unused CSS selector ".clear-input-btn:hover"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:776:1 Unused CSS selector ".result-enter"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:783:1 Unused CSS selector "li a:hover .result-enter"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:843:1 Unused CSS selector ".action-key"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:854:1 Unused CSS selector ".empty-state"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:937:1 Unused CSS selector ".ai-answer p"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:942:1 Unused CSS selector ".ai-answer br"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:946:1 Unused CSS selector ".clear-ai-btn"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:958:1 Unused CSS selector ".clear-ai-btn:hover"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1036:1 Unused CSS selector ".link-icon"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1069:1 Unused CSS selector ".search-icon-wrapper"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1098:1 Unused CSS selector ".close-btn"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1120:1 Unused CSS selector ".close-btn:hover"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1272:1 Unused CSS selector ".result-enter"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1282:1 Unused CSS selector "li a:hover .result-enter"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1374:1 Unused CSS selector ".action-key"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1392:1 Unused CSS selector ".empty-state"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1504:1 Unused CSS selector ".ai-answer p"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1509:1 Unused CSS selector ".ai-answer br"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1513:1 Unused CSS selector ".clear-ai-btn"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1533:1 Unused CSS selector ".clear-ai-btn:hover"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/ui/LanguageSelector.svelte:188:1 Unused CSS selector ".lang-spinner"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/ui/LanguageSelector.svelte:199:1 Unused CSS selector ".chevron"
+7:06:54 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/ui/LanguageSelector.svelte:203:1 Unused CSS selector ".chevron.open"
+[Firebase] Config check: {
+  hasApiKey: true,
+  hasAuthDomain: true,
+  hasProjectId: true,
+  hasAppId: true
+}
+[Destination] adminDB is initialized
+[Destination] 'almaty' is a known path. fetching direct...
+[Destination] Checking map data... Snap empty? false
+[Destination] Map data found: {"id":"main","title":"Location","coordinates":{"lng":76.889709,"lat":43.238949}}
+9:23:34 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/AuthorInfo.svelte:325:1 Unused CSS selector ".author-share-block h4"
+9:23:34 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/AuthorInfo.svelte:336:1 Unused CSS selector ".author-likes-block h4"
+9:23:34 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/navigation/AsideToc.svelte:438:3 Unused CSS selector ".toc-rail-ol::before"
+9:23:35 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/Map.svelte:314:1 Unused CSS selector ".error-message a"
+9:23:35 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/Map.svelte:319:1 Unused CSS selector ".error-message a:hover"
+9:23:35 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:256:2 Unused CSS selector ".attractions-item-content"
+9:23:35 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:260:2 Unused CSS selector ".attractions-item-content .item-title"
+9:23:35 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:269:2 Unused CSS selector ".category"
+[2m9:23:40 PM[22m [36m[1m[vite][22m[39m [32m✨ new dependencies optimized: [33mmermaid[32m[39m
+[2m9:23:40 PM[22m [36m[1m[vite][22m[39m [32m✨ optimized dependencies changed. reloading[39m
+[Destinations Page] Article section-almaty-and-nearby has insufficient content (0 characters)
+[Destinations Page] Article section-astana-and-nearby has both contentMarkdown and contentHTML. Using contentMarkdown (Markdown-first approach).
+[Destinations Page] Article section-turkistan-and-shymkent has insufficient content (0 characters)
+[Destinations Page] Article section-mangystau-region has insufficient content (0 characters)
+[Destinations Page] Article section-east-kazakhstan has insufficient content (0 characters)
+[Destinations Page] Article section-other-attractions has insufficient content (0 characters)
+[Destinations Page] Author loaded: {
+  name: 'Aliya Askar',
+  hasImage: true,
+  imagePublicId: 'content/authors/aliya-askar/author',
+  profilePicturePublicId: 'content/authors/aliya-askar/author',
+  authorImagePublicId: 'content/authors/aliya-askar/author',
+  avatarPublicId: 'content/authors/aliya-askar/author',
+  hasBio: true,
+  allAuthorFields: [
+    'name',
+    'title',
+    'bio',
+    'profilePicturePublicId',
+    'authorImagePublicId',
+    'ariaLabelForImage',
+    'description',
+    'createdAt',
+    'avatarPublicId',
+    'updatedAt'
+  ]
+}
+[Destinations Page] Article quality score is below 70: {
+  totalArticles: 6,
+  articlesWithTitle: 6,
+  articlesWithContent: 1,
+  totalImages: 0,
+  imagesWithAltText: 0,
+  qualityScore: 67,
+  issues: [
+    'Article 1 (section-almaty-and-nearby) has insufficient content (0 characters)',
+    'Article 3 (section-turkistan-and-shymkent) has insufficient content (0 characters)',
+    'Article 4 (section-mangystau-region) has insufficient content (0 characters)',
+    'Article 5 (section-east-kazakhstan) has insufficient content (0 characters)',
+    'Article 6 (section-other-attractions) has insufficient content (0 characters)'
+  ]
+}
+[Destination] adminDB is initialized
+[Destination] 'almaty' is a known path. fetching direct...
+[Destination] Checking map data... Snap empty? false
+[Destination] Map data found: {"id":"main","title":"Location","coordinates":{"lng":76.889709,"lat":43.238949}}
+[Destination] adminDB is initialized
+[Destination] 'almaty' is a known path. fetching direct...
+[Destination] Checking map data... Snap empty? false
+[Destination] Map data found: {"id":"main","title":"Location","coordinates":{"lng":76.889709,"lat":43.238949}}
+9:30:00 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/routes/+layout.svelte:175:24 A11y: Redundant role 'main'
+9:30:00 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:256:2 Unused CSS selector ".attractions-item-content"
+9:30:00 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:260:2 Unused CSS selector ".attractions-item-content .item-title"
+9:30:00 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:269:2 Unused CSS selector ".category"
+9:30:00 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/navigation/AsideToc.svelte:438:3 Unused CSS selector ".toc-rail-ol::before"
+9:30:00 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/Map.svelte:314:1 Unused CSS selector ".error-message a"
+9:30:00 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/Map.svelte:319:1 Unused CSS selector ".error-message a:hover"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/AuthorInfo.svelte:325:1 Unused CSS selector ".author-share-block h4"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/AuthorInfo.svelte:336:1 Unused CSS selector ".author-likes-block h4"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/widgets/TimeWeatherDock.svelte:41:3 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/widgets/TimeWeatherDock.svelte:41:3 A11y: Non-interactive element <div> should not be assigned mouse or keyboard event listeners.
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:266:2 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:266:2 A11y: <div> with click handler must have an ARIA role
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:259:1 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:259:1 A11y: Non-interactive element <div> should not be assigned mouse or keyboard event listeners.
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:483:2 Unused CSS selector ".search-input-wrapper"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:489:2 Unused CSS selector ".search-icon-wrapper svg"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:490:2 Unused CSS selector ".close-btn svg"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:491:2 Unused CSS selector ".clear-input-btn svg"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:497:2 Unused CSS selector ".close-btn"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:508:2 Unused CSS selector ".clear-input-btn"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:520:2 Unused CSS selector ".search-input-wrapper"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:539:2 Unused CSS selector ".clear-ai-btn"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:565:1 Unused CSS selector ".search-input-wrapper"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:574:1 Unused CSS selector ".search-icon-wrapper"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:597:1 Unused CSS selector ".search-input-wrapper"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:604:0 Unused CSS selector ".search-input-wrapper input"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:614:1 Unused CSS selector ".close-btn"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:629:1 Unused CSS selector ".close-btn:hover"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:635:1 Unused CSS selector ".clear-input-btn"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:651:1 Unused CSS selector ".clear-input-btn:hover"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:776:1 Unused CSS selector ".result-enter"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:783:1 Unused CSS selector "li a:hover .result-enter"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:843:1 Unused CSS selector ".action-key"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:854:1 Unused CSS selector ".empty-state"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:937:1 Unused CSS selector ".ai-answer p"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:942:1 Unused CSS selector ".ai-answer br"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:946:1 Unused CSS selector ".clear-ai-btn"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:958:1 Unused CSS selector ".clear-ai-btn:hover"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1036:1 Unused CSS selector ".link-icon"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1069:1 Unused CSS selector ".search-icon-wrapper"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1098:1 Unused CSS selector ".close-btn"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1120:1 Unused CSS selector ".close-btn:hover"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1272:1 Unused CSS selector ".result-enter"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1282:1 Unused CSS selector "li a:hover .result-enter"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1374:1 Unused CSS selector ".action-key"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1392:1 Unused CSS selector ".empty-state"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1504:1 Unused CSS selector ".ai-answer p"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1509:1 Unused CSS selector ".ai-answer br"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1513:1 Unused CSS selector ".clear-ai-btn"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1533:1 Unused CSS selector ".clear-ai-btn:hover"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:197:0 A11y: Elements with the 'button' interactive role must have a tabindex value.
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:197:0 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:200:38 A11y: Redundant role 'navigation'
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:386:2 Unused CSS selector ".header-search-btn"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:390:2 Unused CSS selector ".header-search-btn svg"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:420:1 Unused CSS selector ".header-search-btn"
+9:30:01 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:433:1 Unused CSS selector ".header-search-btn:hover"
+9:30:02 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/ui/LanguageSelector.svelte:188:1 Unused CSS selector ".lang-spinner"
+9:30:02 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/ui/LanguageSelector.svelte:199:1 Unused CSS selector ".chevron"
+9:30:02 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/ui/LanguageSelector.svelte:203:1 Unused CSS selector ".chevron.open"
+[Firebase] Config check: {
+  hasApiKey: true,
+  hasAuthDomain: true,
+  hasProjectId: true,
+  hasAppId: true
+}
+9:30:04 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/routes/+layout.svelte:175:24 A11y: Redundant role 'main'
+9:30:04 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/AuthorInfo.svelte:325:1 Unused CSS selector ".author-share-block h4"
+9:30:04 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/AuthorInfo.svelte:336:1 Unused CSS selector ".author-likes-block h4"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/navigation/AsideToc.svelte:438:3 Unused CSS selector ".toc-rail-ol::before"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/Map.svelte:314:1 Unused CSS selector ".error-message a"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/Map.svelte:319:1 Unused CSS selector ".error-message a:hover"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:256:2 Unused CSS selector ".attractions-item-content"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:260:2 Unused CSS selector ".attractions-item-content .item-title"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/content/RelatedPosts.svelte:269:2 Unused CSS selector ".category"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:197:0 A11y: Elements with the 'button' interactive role must have a tabindex value.
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:197:0 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:200:38 A11y: Redundant role 'navigation'
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:386:2 Unused CSS selector ".header-search-btn"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:390:2 Unused CSS selector ".header-search-btn svg"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:420:1 Unused CSS selector ".header-search-btn"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/layout/header/SiteHeader.svelte:433:1 Unused CSS selector ".header-search-btn:hover"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/widgets/TimeWeatherDock.svelte:41:3 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/widgets/TimeWeatherDock.svelte:41:3 A11y: Non-interactive element <div> should not be assigned mouse or keyboard event listeners.
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:266:2 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:266:2 A11y: <div> with click handler must have an ARIA role
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:259:1 A11y: visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler. Consider whether an interactive element such as <button type="button"> or <a> might be more appropriate. See https://svelte.dev/docs/accessibility-warnings#a11y-click-events-have-key-events for more details.
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:259:1 A11y: Non-interactive element <div> should not be assigned mouse or keyboard event listeners.
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:483:2 Unused CSS selector ".search-input-wrapper"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:489:2 Unused CSS selector ".search-icon-wrapper svg"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:490:2 Unused CSS selector ".close-btn svg"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:491:2 Unused CSS selector ".clear-input-btn svg"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:497:2 Unused CSS selector ".close-btn"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:508:2 Unused CSS selector ".clear-input-btn"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:520:2 Unused CSS selector ".search-input-wrapper"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:539:2 Unused CSS selector ".clear-ai-btn"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:565:1 Unused CSS selector ".search-input-wrapper"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:574:1 Unused CSS selector ".search-icon-wrapper"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:597:1 Unused CSS selector ".search-input-wrapper"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:604:0 Unused CSS selector ".search-input-wrapper input"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:614:1 Unused CSS selector ".close-btn"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:629:1 Unused CSS selector ".close-btn:hover"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:635:1 Unused CSS selector ".clear-input-btn"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:651:1 Unused CSS selector ".clear-input-btn:hover"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:776:1 Unused CSS selector ".result-enter"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:783:1 Unused CSS selector "li a:hover .result-enter"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:843:1 Unused CSS selector ".action-key"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:854:1 Unused CSS selector ".empty-state"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:937:1 Unused CSS selector ".ai-answer p"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:942:1 Unused CSS selector ".ai-answer br"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:946:1 Unused CSS selector ".clear-ai-btn"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:958:1 Unused CSS selector ".clear-ai-btn:hover"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1036:1 Unused CSS selector ".link-icon"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1069:1 Unused CSS selector ".search-icon-wrapper"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1098:1 Unused CSS selector ".close-btn"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1120:1 Unused CSS selector ".close-btn:hover"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1272:1 Unused CSS selector ".result-enter"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1282:1 Unused CSS selector "li a:hover .result-enter"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1374:1 Unused CSS selector ".action-key"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1392:1 Unused CSS selector ".empty-state"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1504:1 Unused CSS selector ".ai-answer p"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1509:1 Unused CSS selector ".ai-answer br"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1513:1 Unused CSS selector ".clear-ai-btn"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/features/search/SearchModal.svelte:1533:1 Unused CSS selector ".clear-ai-btn:hover"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/ui/LanguageSelector.svelte:188:1 Unused CSS selector ".lang-spinner"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/ui/LanguageSelector.svelte:199:1 Unused CSS selector ".chevron"
+9:30:05 PM [vite-plugin-svelte] C:/Users/Azamat/Desktop/projects/verynice/src/lib/components/ui/LanguageSelector.svelte:203:1 Unused CSS selector ".chevron.open"
+[Destination] adminDB is initialized
+[Destination] 'almaty' is a known path. fetching direct...
+[Destination] Checking map data... Snap empty? false
+[Destination] Map data found: {"id":"main","title":"Location","coordinates":{"lng":76.889709,"lat":43.238949}}
+[Destination] adminDB is initialized
+[Destination] 'almaty' is a known path. fetching direct...
+[Destination] Checking map data... Snap empty? false
+[Destination] Map data found: {"id":"main","title":"Location","coordinates":{"lng":76.889709,"lat":43.238949}}
+[2m9:53:27 PM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/styles/premium-theme.css[22m
+[Destination] adminDB is initialized
+[Destination] 'almaty' is a known path. fetching direct...
+[Destination] Checking map data... Snap empty? false
+[Destination] Map data found: {"id":"main","title":"Location","coordinates":{"lng":76.889709,"lat":43.238949}}

@@ -81,7 +81,7 @@ const pageData = {
   headerDescription:
     'Signature dishes, tea rituals, regional specialties, and modern dining — a complete guide to the country’s table.',
   heroKicker: 'Taste the Tradition',
-  headerBackgroundPublicId: 'content/pages/food-drink/hero',
+  headerBackgroundPublicId: 'content/pages/foodDrinks/main_dastarkhan',
   headerBackgroundImageAriaLabel: 'Kazakh food and drinks table spread',
   articleViews: 1200,
   articleLikes: 150,
@@ -101,7 +101,7 @@ const pageData = {
       'Discover Kazakhstan’s signature dishes, tea rituals, markets, and modern dining scenes across the country.',
     keywords:
       'Kazakhstan food, Kazakh cuisine, beshbarmak, kazy, tea ritual, markets, Almaty, Astana',
-    ogImage: 'content/pages/food-drink/hero',
+    ogImage: 'content/pages/foodDrinks/main_dastarkhan',
     shareTitle: 'Taste Kazakhstan'
   },
   tags: ['Food', 'Culture', 'Guide'],
@@ -127,8 +127,8 @@ const highlights = [
   {
     id: 'regional-tastes',
     order: 3,
-    title: 'Regional Tastes',
-    description: 'Seafood in Mangystau, spices in Shymkent, and alpine dairy in the east.'
+    title: 'International Tastes',
+    description: 'Global flavors from sushi and ramen to shawarma and pizza.'
   },
   {
     id: 'markets-food-halls',
@@ -224,7 +224,8 @@ const restaurants = [
     order: 1,
     title: 'Traditional Dastarkhan',
     city: 'Almaty',
-    description: 'Classic Kazakh menu, live music, and generous platters.'
+    description: 'Classic Kazakh menu, live music, and generous platters.',
+    href: '/food-drink/traditional-dastarkhan'
   },
   {
     id: 'new-kazakh',
@@ -321,10 +322,90 @@ const faq = {
 const photoGallery = {
   title: 'A Taste of Kazakhstan',
   photos: [
-    { publicId: 'content/pages/food-drink/hero', alt: 'Kazakh table spread' },
-    { publicId: 'content/pages/food-drink/beshbarmak', alt: 'Beshbarmak' },
-    { publicId: 'content/pages/food-drink/tea', alt: 'Tea ritual' },
-    { publicId: 'content/pages/food-drink/market', alt: 'Market produce' }
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes',
+      alt: 'Kazakh table spread'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/beshbarmak',
+      alt: 'Beshbarmak'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/kuyrdak',
+      alt: 'Kuyrdak'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/kazan-zhappa',
+      alt: 'Kazan zhappa'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/zhyzhmyzh',
+      alt: 'Zhyzhmyzh'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/karynburme',
+      alt: 'Karynburme'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/steamedmeat',
+      alt: 'Steamed meat'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/driedcuredmeat',
+      alt: 'Dried cured meat'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/kazy',
+      alt: 'Kazy'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/karta',
+      alt: 'Karta'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/shuzhuk',
+      alt: 'Shuzhuk'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/zhaya',
+      alt: 'Zhaya'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/zhal',
+      alt: 'Zhal'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/soups-and-broths/sorpa',
+      alt: 'Sorpa'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/soups-and-broths/kespe',
+      alt: 'Kespe'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/sheepheadritual',
+      alt: 'Sheep head ritual'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/tongue',
+      alt: 'Tongue'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/liver',
+      alt: 'Liver'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/heart',
+      alt: 'Heart'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/lungsandliver',
+      alt: 'Lungs and liver'
+    },
+    {
+      publicId: 'content/pages/foodDrinks/TeaHouseCourtyard/teaQuickGuide',
+      alt: 'Tea ritual'
+    }
   ]
 };
 

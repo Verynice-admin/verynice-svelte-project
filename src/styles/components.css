@@ -28,7 +28,7 @@
 }
 
 .button {
-  background: var(--vnk-text-accent-color);
+  background: rgb(3, 122, 255);
   color: #fff;
   border: none;
   border-radius: 0.5rem;
@@ -39,7 +39,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 .button:hover {
-  background: #005fa3;
+  background: rgb(0, 100, 220);
 }
 
 @media (max-width: 600px) {
@@ -54,7 +54,7 @@
   }
   .button:active {
     transform: scale(0.97);
-    background: #004d8a;
+    background: rgb(0, 90, 200);
   }
 }
 

@@ -635,16 +635,17 @@ a:hover {
 		background-image: none !important;
 	}
 
-	/* White article content card - no visible borders/shadows */
-	.timeline-content {
-		background-color: #ffffff !important;
-		border: none !important;
-		border-radius: 0 !important;
-		box-shadow: none !important;
-		padding: 0 !important;
-		margin: 0 !important;
-		max-width: 100% !important;
-	}
+/* White article content card - no visible borders/shadows */
+.timeline-content {
+	background-color: #ffffff !important;
+	border: none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	margin-top: 3cm !important;
+	max-width: 100% !important;
+}
 
 	/* Mobile article typography - premium editorial style */
 	.timeline-body {

@@ -15,7 +15,9 @@
 	import FaqSection from '$components/features/content/FaqSection.svelte';
 
 	export let data;
-	$: ({ page, articles, author } = data);
+	$: page = data?.page;
+	$: articles = data?.articles;
+	$: author = data?.author;
 
 	$: pageData = { ...(page ?? {}) };
 
@@ -116,6 +118,7 @@
 </svelte:head>
 
 {#if pageData}
+	<div class="attractions-page">
 	<section id="page-hero-section" class="section" bind:this={heroSection}>
 		<div class="section-header wrapper">
 			<!-- Breadcrumbs -->
@@ -174,6 +177,7 @@
 			</div>
 		{/if}
 	</section>
+	</div>
 
 	<div class="timeline-container">
 		<div class="timeline">

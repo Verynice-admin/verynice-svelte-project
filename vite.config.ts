@@ -44,12 +44,15 @@ export default defineConfig({
     // Pre-bundle dependencies for faster dev and production
     include: [
       'firebase/app',
+      'firebase/auth',
       'firebase/firestore',
       'marked',
-      'dompurify'
+      'dompurify',
+      'leaflet',
+      'leaflet.markercluster'
     ],
     // Exclude heavy dependencies that should be loaded on demand
-    exclude: ['firebase/auth', 'openai']
+    exclude: ['openai']
   },
   resolve: {
     dedupe: ['svelte']

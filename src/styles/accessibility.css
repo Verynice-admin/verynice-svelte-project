@@ -9,7 +9,7 @@
 
 /* Visible focus indicators for keyboard users */
 *:focus-visible {
-	outline: 3px solid #06B6D4;
+	outline: 3px solid rgb(242, 132, 137);
 	outline-offset: 2px;
 	border-radius: 4px;
 }
@@ -19,7 +19,7 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-	outline: 3px solid #06B6D4;
+	outline: 3px solid rgb(242, 132, 137);
 	outline-offset: 2px;
 }
 
@@ -32,7 +32,7 @@ select:focus-visible {
 .attractions-item-card:focus-visible,
 .faq-card:focus-visible,
 .comment-card:focus-visible {
-	outline: 3px solid #06B6D4;
+	outline: 3px solid rgb(242, 132, 137);
 	outline-offset: 4px;
 }
 
@@ -129,7 +129,7 @@ li a,
 	left: -9999px;
 	z-index: 999;
 	padding: 1rem 1.5rem;
-	background: #0f172a;
+  background: #000000;
 	color: #ffffff;
 	text-decoration: none;
 	border-radius: 0 0 8px 0;
@@ -173,8 +173,8 @@ li a,
 @media (prefers-color-scheme: dark) {
 	/* Already dark, but ensure consistency */
 	::selection {
-		background: #06B6D4;
-		color: #0f172a;
+		background: rgb(242, 132, 137);
+		color: #000000;
 	}
 }
 

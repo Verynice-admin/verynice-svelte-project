@@ -9,9 +9,9 @@ const getBoratData = () => {
         title: 'About Borat | VeryNice.kz',
         description: 'The truth about Borat, the movie, and its impact on Kazakhstan.'
       },
-      mainTitle: 'About Borat',
+      mainTitle: 'Welcome to Verynice Land!',
       headerDescription:
-        'The movie "Borat: Cultural Learnings of America for Make Benefit Glorious Nation of Kazakhstan" changed the world\'s view of us forever.',
+        'Welcome to Verynice Land! The movie "Borat: Cultural Learnings of America for Make Benefit Glorious Nation of Kazakhstan" changed the world\'s view of us forever.',
       headerBackgroundPublicId: 'content/pages/aboutBorat/main_borat',
       location: 'Glod, Romania (Not Kazakhstan)',
       articleViews: 69420,

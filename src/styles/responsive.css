@@ -100,26 +100,487 @@
 	}
 }
 
-/* Mobile */
+/* Mobile - Unified styling for all pages */
 @media (max-width: 767px) {
-	.wrapper {
-		padding: 0 1rem;
-	}
-	
-	.attractions-items-list {
-		grid-template-columns: 1fr;
-	}
-	
-	.attractions-tier-list {
-		flex-direction: column;
-	}
-	
-	/* Larger touch targets on mobile */
-	button,
-	a.button,
-	.faq-btn {
-		min-height: 48px;
-	}
+  .wrapper {
+    padding: 0 0.75rem;
+  }
+
+  /* ========================================= */
+  /* UNIFIED MOBILE ARTICLE VIEW - ALL PAGES   */
+  /* ========================================= */
+
+  /* 1. HERO SECTION - Make hero-premium match .section styling */
+  .hero-premium,
+  .section {
+    position: relative !important;
+    min-height: 100vh !important;
+    height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .hero-premium .hero-bg-container,
+  .section .header-background {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+  }
+
+  .hero-premium .hero-bg-image,
+  .section .background-image {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+  }
+
+  .hero-premium .hero-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.95) 100%) !important;
+  }
+
+  .hero-premium .hero-content,
+  .section .section-header.wrapper {
+    position: relative !important;
+    z-index: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    gap: 1.5rem !important;
+    color: #fff !important;
+    padding: 2rem 1rem !important;
+    padding-top: max(2.5rem, calc(80px + 1.5rem)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .hero-premium .hero-text-box,
+  .section .section-header-text {
+    max-width: 100% !important;
+    width: 100% !important;
+    text-align: left !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    color: #fff !important;
+  }
+
+  .hero-premium .hero-text-box h1,
+  .section .section-header-text h1 {
+    font-size: 26px !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+    color: #ffffff !important;
+    margin: 0 0 1rem !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55) !important;
+  }
+
+  .hero-premium .hero-lead,
+  .section .section-description {
+    font-size: 17px !important;
+    line-height: 1.78 !important;
+    color: #ffffff !important;
+    margin: 0 0 1.5rem !important;
+    max-width: 100% !important;
+  }
+
+  .hero-kicker,
+  .section .post-info-inner {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 50px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    backdrop-filter: blur(10px) !important;
+  }
+
+  /* Breadcrumbs */
+  .breadcrumb-modern__list,
+  .breadcrumb-list {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    padding: 0 !important;
+    margin: 0 0 1rem !important;
+  }
+
+  .breadcrumb-modern__link,
+  .breadcrumb-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    text-decoration: none !important;
+  }
+
+  .breadcrumb-modern__current,
+  .breadcrumb-current {
+    color: #fff !important;
+    font-weight: 600 !important;
+  }
+
+  /* 2. PAGE BACKGROUND - Pure white everywhere */
+  html, body, .page-container, .article-wrapper, .content-area,
+  .timeline-container, .timeline, main, .content-container,
+  .attractions-page {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #1c1c1e !important;
+  }
+
+  /* 3. SECTION DIVIDERS - Clean whitespace separation */
+  .history-section-spacing,
+  .themed-content-block,
+  .section,
+  .photo-gallery-block,
+  .timeline-footer,
+  .component-section {
+    background: #ffffff !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 32px 20px !important;
+    margin: 0 !important;
+  }
+
+  /* Hide any stray divider blocks */
+  [class*='divider'], [class*='separator'], .section-divider, .content-divider {
+    display: none !important;
+  }
+
+  /* 4. TYPOGRAPHY STANDARDS */
+  body, .timeline-body, .prose, .tip-content, p, li, span, div {
+    font-size: 17px !important;
+    line-height: 1.78 !important;
+    color: #1c1c1e !important;
+    font-weight: 400 !important;
+  }
+
+  .timeline-body p, .prose p, .tip-content p, p {
+    margin-bottom: 1.4em !important;
+  }
+
+  /* H1 article */
+  .hero-text-box h1, .section-header-text h1,
+  .timeline-body :global(h1), .prose :global(h1), .tip-content :global(h1) {
+    font-size: 26px !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+    color: #0a0a0a !important;
+  }
+
+  /* H2 section */
+  h2, .timeline-body :global(h2), .prose :global(h2),
+  .themed-content-block h2, .section .section-header h2 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    margin: 32px 0 12px !important;
+    color: #0a0a0a !important;
+  }
+
+  /* H3 section */
+  h3, .timeline-body :global(h3), .prose :global(h3) {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    margin: 24px 0 10px !important;
+    color: #0a0a0a !important;
+  }
+
+  /* Bold inline */
+  .timeline-body :global(strong), .prose :global(strong),
+  .tip-content :global(strong), strong, b {
+    color: #0a0a0a !important;
+    font-weight: 700 !important;
+  }
+
+  /* ERA badge / hero kicker */
+  .era-badge,
+  .hero-kicker,
+  .stat-pill {
+    display: inline-block !important;
+    background: #6366f1 !important;
+    color: white !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    padding: 4px 12px !important;
+    border-radius: 20px !important;
+    text-transform: uppercase !important;
+  }
+
+  /* 5. LAYOUT */
+  .article-container, .content-wrapper, .timeline, .timeline-content,
+  .content-container, .content-wrapper {
+    max-width: 100% !important;
+    padding: 0 20px !important;
+  }
+
+  .section-spacing,
+  .history-section-spacing {
+    padding: 40px 0 !important;
+  }
+
+  .card-surface,
+  .card,
+  .attractions-item-card {
+    background: #fff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .divider {
+    border-top: 1px solid #f0f0f0 !important;
+    margin: 0 !important;
+  }
+
+  /* 6. RELATED POSTS - 140px cards */
+  .related-posts-list {
+    gap: 0 !important;
+    padding: 0 !important;
+  }
+
+  .carousel-item {
+    flex: 0 0 140px !important;
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
+  }
+
+  .carousel-item .attractions-item-card {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+  }
+
+  .carousel-item .card-image-wrapper {
+    aspect-ratio: 4 / 3 !important;
+    height: auto !important;
+    margin: 0 !important;
+  }
+
+  .carousel-item .card-image {
+    width: 100% !important;
+    height: auto !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+
+  .attractions-item-content {
+    padding: 8px 10px !important;
+  }
+
+  .attractions-item-content .item-title {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    color: #1c1c1e !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .carousel-container {
+    margin: 0 20px !important;
+    padding: 0 !important;
+    scroll-snap-type: x mandatory !important;
+  }
+
+  .related-posts {
+    padding: 32px 0 !important;
+    margin: 0 !important;
+  }
+
+  .related-posts-header h2 {
+    font-size: 20px !important;
+    margin-bottom: 16px !important;
+    color: #0a0a0a !important;
+  }
+
+  /* 7. YOUTUBE EMBED */
+  .video-single {
+    padding: 32px 20px !important;
+  }
+
+  .video-wrapper {
+    width: 100% !important;
+    aspect-ratio: 16 / 9 !important;
+    padding-bottom: 0 !important;
+    height: auto !important;
+    border-radius: 12px !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .video-wrapper iframe {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* 8. MAP SECTION */
+  .map-wrapper-premium,
+  .map-section {
+    padding: 32px 20px !important;
+    margin: 0 !important;
+  }
+
+  .map-container {
+    min-height: 300px !important;
+    height: 300px !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    background: #f1f5f9 !important;
+  }
+
+  .map-section .map-header h2 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: #0a0a0a !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* 9. FLOATING TOC */
+  .toc-rail,
+  .toc-rail-hero,
+  .toc-rail-article {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 80px !important;
+    right: 16px !important;
+    left: auto !important;
+    transform: none !important;
+    z-index: 200 !important;
+    background: rgba(0, 0, 0, 0.75) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-radius: 24px !important;
+    padding: 8px 10px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .toc-rail-hero,
+  .toc-rail-article {
+    display: none !important;
+  }
+
+  .toc-rail {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    max-height: calc(100vh - 200px) !important;
+    overflow-y: auto !important;
+  }
+
+  .toc-rail .toc-header {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: white !important;
+    margin-bottom: 8px !important;
+    padding: 0 4px !important;
+    text-align: center !important;
+  }
+
+  .toc-rail ol {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+  }
+
+  .toc-rail li {
+    list-style: none !important;
+  }
+
+  .toc-rail a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .toc-rail a:hover,
+  .toc-rail li.active a {
+    background: rgba(255, 255, 255, 0.3) !important;
+    transform: scale(1.1) !important;
+  }
+
+  .toc-rail .text-label,
+  .toc-rail .number {
+    display: none !important;
+  }
+
+  .timeline-footer {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .related-posts .carousel-container {
+    margin-left: -20px !important;
+    margin-right: -20px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* 10. TIPS PAGE */
+  .tip-content .tab-panel {
+    padding: 32px 0 !important;
+  }
+
+  .tip-content .lead-text {
+    font-size: 17px !important;
+    line-height: 1.78 !important;
+    color: #1c1c1e !important;
+    padding: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+    background: transparent !important;
+  }
+
+  /* Keep mobile grid rules */
+  .attractions-items-list {
+    grid-template-columns: 1fr;
+  }
+
+  .attractions-tier-list {
+    flex-direction: column;
+  }
+
+  /* Larger touch targets */
+  button, a.button, .faq-btn {
+    min-height: 48px;
+  }
 }
 
 /* ========================================= */

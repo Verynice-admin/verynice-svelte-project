@@ -68,7 +68,7 @@
 	.lazy-image-wrapper {
 		position: relative;
 		overflow: hidden;
-		background: rgba(15, 23, 42, 0.5);
+		background: rgba(122, 189, 170, 0.5);
 	}
 
 	.blur-placeholder {

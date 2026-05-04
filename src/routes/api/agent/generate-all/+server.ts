@@ -2,10 +2,15 @@
 import { json } from '@sveltejs/kit';
 import { destinationPrompts } from '$lib/server/destinationPrompts';
 import { generateDestinationPage } from '$lib/server/agentPageGenerator';
+import { requireAdminAccess } from '$lib/server/apiAuth';
 import * as fs from 'fs';
 import * as path from 'path';
+import type { RequestHandler } from './$types';
 
-export async function GET() {
+export const GET: RequestHandler = async ({ request, url }) => {
+    const auth = requireAdminAccess(request, url);
+    if (!auth.ok) return auth.response;
+
     const results = [];
 
     // 1. GENERATE PAGES
@@ -49,4 +54,4 @@ export async function GET() {
         message: "Agent generation complete",
         results
     });
-}
+};

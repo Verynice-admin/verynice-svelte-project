@@ -48,12 +48,9 @@
 				}
 			}
 		} catch (e) {
-			console.error('Invalid URL for video embed:', originalUrl, e);
 			return null;
 		}
 
-		// If URL doesn't match YouTube or Vimeo, return null (don't try to embed unknown URLs)
-		console.warn('Video URL is not a supported format (YouTube or Vimeo):', originalUrl);
 		return null;
 	}
 
@@ -74,7 +71,9 @@
 				{title}
 				frameBorder="0"
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				allowFullscreen
+				allowfullscreen
+				loading="lazy"
+				sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
 			></iframe>
 		</div>
 	{:else if url}
@@ -92,19 +91,16 @@
 </section>
 
 <style>
-	/* Make the video wrapper 16:9 and responsive */
+	/* Mobile-first: full-width 16:9 */
 	.video-wrapper {
 		position: relative;
-		padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-		height: 0;
-		overflow: hidden;
 		width: 100%;
-		border-radius: 1.5rem; /* Match premium styling */
+		aspect-ratio: 16 / 9;
+		height: auto;
+		overflow: hidden;
+		border-radius: 12px;
 		background: #000;
-		box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5); /* Deep shadow */
-		/* Match RelatedPosts negative margin expansion */
-		margin: 0 -1rem;
-		width: calc(100% + 2rem);
+		margin: 0;
 	}
 
 	.video-wrapper iframe {
@@ -114,10 +110,20 @@
 		width: 100%;
 		height: 100%;
 		border: 0;
+		border-radius: 12px;
 	}
 
-	/* Optional: if component is used in white theme context */
+	/* Mobile override - ensure full bleed */
+	@media (max-width: 768px) {
+		.video-wrapper {
+			margin: 0 !important;
+			width: 100% !important;
+			border-radius: 12px !important;
+		}
+	}
+
+	/* Optional: light theme context */
 	:global(.light-theme) .video-wrapper {
-		box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 	}
 </style>

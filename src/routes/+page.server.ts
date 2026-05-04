@@ -7,27 +7,28 @@ const FALLBACK_HOMEPAGE = {
   heroSubtitle: 'Explore amazing places, rich history, and vibrant culture',
   heroImagePublicId: 'home/content/pages/homepage/Kazakhstan-bckgrnd',
   featuredVideoUrl: 'https://youtu.be/pssnBA7-f98?si=OBk1YVHKTHoDXOUd',
-  stats: [
-    { value: '14', label: 'Destinations' },
-    { value: '25+', label: 'Natural Parks' },
-    { value: '50+', label: 'Silk Road Sites' },
-    { value: '1500+', label: 'Photos' }
-  ]
 };
 
-function serializeDocument(data: any) {
-  if (!data || typeof data !== 'object') return data;
-  const out: Record<string, any> = {};
-  for (const [key, value] of Object.entries(data)) {
-    if (value && typeof value.toDate === 'function') {
-      out[key] = value.toDate().toISOString();
-    } else if (Array.isArray(value)) {
-      out[key] = value.map(i => typeof i === 'object' && i !== null && i.toDate ? i.toDate().toISOString() : i);
-    } else {
-      out[key] = value;
-    }
+function serializeValue(value: any): any {
+  if (!value) return value;
+  if (typeof value?.toDate === 'function') {
+    return value.toDate().toISOString();
   }
-  return out;
+  if (Array.isArray(value)) {
+    return value.map((item) => serializeValue(item));
+  }
+  if (typeof value === 'object') {
+    const out: Record<string, any> = {};
+    for (const [key, nested] of Object.entries(value)) {
+      out[key] = serializeValue(nested);
+    }
+    return out;
+  }
+  return value;
+}
+
+function serializeDocument(data: any) {
+  return serializeValue(data);
 }
 
 export async function load() {

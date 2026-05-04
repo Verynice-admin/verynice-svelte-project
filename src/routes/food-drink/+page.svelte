@@ -28,7 +28,10 @@
 	const highlightPageLinks = {
 		'signature dishes': '/food-drink/signature-dishes',
 		'international tastes': '/food-drink/international-tastes',
-		'regional tastes': '/food-drink/international-tastes'
+		'regional tastes': '/food-drink/international-tastes',
+		'traditional dastarkhan': '/food-drink/traditional-dastarkhan',
+		'silk road noodles': '/food-drink/silk-road-noodles',
+		'tea house courtyard': '/food-drink/tea-house-courtyard'
 	};
 
 	const highlightAnchorCandidates = {
@@ -53,6 +56,34 @@
 		const match = candidates.find((id) => sectionIds.has(id));
 		return match ? `#${match}` : null;
 	};
+
+	const cardImageUrl = (item) =>
+		{
+			const title = normalizeKey(item?.title);
+			const byTitle = {
+				'signature dishes': 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes',
+				'international tastes': 'content/pages/foodDrinks/internationalTastes/tom_yam',
+				'regional tastes': 'content/pages/foodDrinks/internationalTastes/tom_yam',
+				'traditional dastarkhan': 'content/pages/foodDrinks/traditionalDastarkhan/hero',
+				'silk road noodles': 'content/pages/foodDrinks/silkRoadNoodles/hero',
+				'tea house courtyard': 'content/pages/foodDrinks/TeaHouseCourtyard/hero'
+			};
+			const publicId =
+				item?.image?.publicId ||
+				item?.imagePublicId ||
+				item?.publicId ||
+				byTitle[title] ||
+				'site/backgrounds/attractions-hero';
+
+			return getCloudinaryUrl(publicId, {
+				width: 900,
+				height: 540,
+				crop: 'fill',
+				gravity: 'auto',
+				quality: 'auto:good',
+				fetch_format: 'auto'
+			});
+		};
 
 	const defaultPage = {
 		seo: {
@@ -101,6 +132,7 @@
 </svelte:head>
 
 {#if pageData}
+<div class="attractions-page">
 	<section id="page-hero-section" class="section" bind:this={heroSection}>
 		<div class="section-header wrapper">
 			<nav aria-label="Breadcrumb" class="breadcrumb-modern">
@@ -164,9 +196,9 @@
 				aria-label={pageData.headerBackgroundImageAriaLabel || 'Food and drinks background image'}
 				style={`--hero-bg-url: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, {
 					width: 2200,
-					height: 1200,
+					height: 1600,
 					crop: 'fill',
-					gravity: 'auto',
+					gravity: 'north',
 					quality: 'auto:good',
 					fetch_format: 'auto'
 				})}")`}
@@ -193,7 +225,7 @@
 							<div class="card-image-wrapper">
 								<div
 									class="card-image"
-									style="background-image: url('{getCloudinaryUrl(item.image?.publicId || item.imagePublicId || 'site/backgrounds/attractions-hero', { width: 600, crop: 'fill' })}')"
+									style={`background-image: url("${cardImageUrl(item)}")`}
 									role="img"
 									aria-label={item.title}
 								></div>
@@ -219,7 +251,7 @@
 							<div class="card-image-wrapper">
 								<div
 									class="card-image"
-									style="background-image: url('{getCloudinaryUrl(item.image?.publicId || item.imagePublicId || 'site/backgrounds/attractions-hero', { width: 600, crop: 'fill' })}')"
+									style={`background-image: url("${cardImageUrl(item)}")`}
 									role="img"
 									aria-label={item.title}
 								></div>
@@ -252,7 +284,7 @@
 						<div class="card-image-wrapper">
 							<div
 								class="card-image"
-								style="background-image: url('{getCloudinaryUrl(restaurant.image?.publicId || restaurant.imagePublicId || 'site/backgrounds/attractions-hero', { width: 600, crop: 'fill' })}')"
+								style={`background-image: url("${cardImageUrl(restaurant)}")`}
 								role="img"
 								aria-label={restaurant.title}
 							></div>
@@ -325,6 +357,7 @@
 			<a href="/" aria-label="Home"><i class="fa fa-home" aria-hidden="true"></i></a>
 		</nav>
 	{/if}
+</div>
 {/if}
 
 <style>
@@ -352,7 +385,7 @@
 	.food-intro :global(.prose),
 	.food-intro :global(.prose p),
 	.food-intro :global(.prose li) {
-		color: #cbd5e1;
+		color: rgba(255, 255, 255, 0.82);
 		font-size: 1.15rem;
 		line-height: 1.7;
 	}
@@ -373,11 +406,11 @@
 	}
 
 	.food-intro :global(.prose a:hover) {
-		color: #0ea5b7;
+		color: var(--vnk-primary-color);
 	}
 
 	.food-article {
-		background: #d1d4da;
+		background: var(--vnk-card-bg);
 		border-radius: 48px;
 		border: none;
 		box-shadow:
@@ -389,14 +422,14 @@
 	.food-article :global(.prose),
 	.food-article :global(.prose p),
 	.food-article :global(.prose li) {
-		color: #3f3f3f;
+		color: rgba(var(--vnk-text-secondary-color-rgb), 0.9);
 	}
 
 	.food-article :global(.prose h2),
 	.food-article :global(.prose h3),
 	.food-article :global(.prose h4),
 	.food-article :global(.prose strong) {
-		color: #1f1f1f;
+		color: var(--vnk-text-secondary-color);
 	}
 
 	.food-article :global(.prose a) {
@@ -404,13 +437,13 @@
 	}
 
 	.food-article :global(.prose a:hover) {
-		color: #0ea5b7;
+		color: var(--vnk-primary-color);
 	}
 
 	.food-article h2 {
 		font-family: 'Segoe UI', 'Inter', sans-serif;
 		font-size: 1.6rem;
-		color: #1f1f1f;
+		color: var(--vnk-text-secondary-color);
 		margin-bottom: 1.25rem;
 	}
 
@@ -422,7 +455,7 @@
 	}
 
 	.food-list-block {
-		background: #d1d4da;
+		background: var(--vnk-card-bg);
 		border-radius: 72px;
 		padding: 2.5rem;
 		border: none;
@@ -434,7 +467,7 @@
 	.food-list-block h2 {
 		font-family: 'Segoe UI', 'Inter', sans-serif;
 		font-size: 1.3rem;
-		color: #1f1f1f;
+		color: var(--vnk-text-secondary-color);
 		margin-bottom: 1rem;
 	}
 
@@ -445,11 +478,11 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.75rem;
-		color: #3f3f3f;
+		color: rgba(var(--vnk-text-secondary-color-rgb), 0.9);
 	}
 
 	.food-list-block strong {
-		color: #1f1f1f;
+		color: var(--vnk-text-secondary-color);
 	}
 
 	/* Force card styles - copied from pages.css */
@@ -462,109 +495,14 @@
 		max-width: 1200px !important;
 		margin: 0 auto !important;
 		align-items: stretch !important;
-	}
+}
 
-	:global(.attractions-item-card) {
-		display: flex !important;
-		flex-direction: column !important;
-		background: #d1d4da !important;
-		border-radius: 84px !important;
-		overflow: hidden !important;
-		text-decoration: none !important;
-		color: inherit !important;
-		transition: box-shadow 0.25s ease, transform 0.25s ease !important;
-		position: relative !important;
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
-		border: none !important;
-		aspect-ratio: 1 / 1 !important;
-		box-sizing: border-box !important;
-		padding: 12px !important;
-		gap: 12px !important;
-	}
-
-	:global(.attractions-item-card:hover) {
-		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12) !important;
-		transform: translateY(-4px) !important;
-	}
-
-	:global(.attractions-item-card .card-image-wrapper) {
-		position: relative !important;
-		width: 100% !important;
-		aspect-ratio: 16 / 9 !important;
-		flex: 0 0 45% !important;
-		min-height: 0 !important;
-		overflow: hidden !important;
-		background-color: #c6c9cf !important;
-		border-radius: 66px !important;
-	}
-
-	:global(.attractions-item-card .card-image) {
-		position: absolute !important;
-		inset: 0 !important;
-		width: 100% !important;
-		height: 100% !important;
-		background-size: cover !important;
-		background-position: center !important;
-		transition: transform 0.3s ease !important;
-		filter: none !important;
-		border-radius: 66px !important;
-	}
-
-	:global(.attractions-item-card:hover .card-image) {
-		transform: scale(1.03) !important;
-	}
-
-	:global(.attractions-item-card .tier-badge) {
-		position: absolute !important;
-		bottom: 1rem !important;
-		right: 1rem !important;
-		background: rgba(0, 0, 0, 0.75) !important;
-		backdrop-filter: blur(8px) !important;
-		color: #fff !important;
-		padding: 0.75rem 1.2rem !important;
-		font-size: 1.95rem !important;
-		font-weight: 700 !important;
-		z-index: 10 !important;
-		text-transform: uppercase !important;
-		letter-spacing: 0.03em !important;
-		display: flex !important;
-		gap: 0.35rem !important;
-		align-items: center !important;
-		border-radius: 18px !important;
-	}
-
-	:global(.tier-badge.tier-1) {
-		background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
-		box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4) !important;
-	}
-
-	:global(.tier-badge.tier-2) {
-		background: linear-gradient(135deg, #10b981, #34d399) !important;
-		box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4) !important;
-	}
-
-	:global(.tier-badge.tier-3) {
-		background: linear-gradient(135deg, #f59e0b, #fbbf24) !important;
-		box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4) !important;
-	}
-
-	:global(.attractions-item-content) {
-		display: flex !important;
-		flex-direction: column !important;
-		align-items: flex-start !important;
-		text-align: left !important;
-		flex: 1 1 auto !important;
-		padding: 0 0.7cm !important;
-		gap: 6px !important;
-		min-height: 0 !important;
-		justify-content: flex-start !important;
-	}
-
-	:global(.attractions-item-content .item-title) {
+ 	/* Card styles now global in pages.css */
+ 	:global(.attractions-item-content .item-title) {
 		font-family: 'Segoe UI', 'Inter', sans-serif !important;
 		font-size: 1.25rem !important;
 		font-weight: 600 !important;
-		color: #1f1f1f !important;
+		color: var(--vnk-text-secondary-color) !important;
 		margin: 0 !important;
 		line-height: 1.3 !important;
 		text-transform: none !important;
@@ -580,14 +518,14 @@
 	}
 
 	:global(.attractions-item-card:hover .item-title) {
-		color: #000000 !important;
+		color: var(--vnk-text-secondary-color) !important;
 	}
 
 	:global(.attractions-item-content .item-description) {
 		font-family: 'Segoe UI', 'Inter', sans-serif !important;
 		font-size: 1rem !important;
 		line-height: 1.4 !important;
-		color: #3f3f3f !important;
+		color: rgba(var(--vnk-text-secondary-color-rgb), 0.9) !important;
 		margin: 0 !important;
 		display: -webkit-box !important;
 		-webkit-line-clamp: 1 !important;
@@ -601,7 +539,7 @@
 		font-family: 'Segoe UI', 'Inter', sans-serif !important;
 		font-size: 0.82rem !important;
 		font-weight: 500 !important;
-		color: #1a1a1a !important;
+		color: var(--vnk-text-secondary-color) !important;
 		text-transform: none !important;
 		letter-spacing: 0 !important;
 		margin-top: 0 !important;
@@ -610,8 +548,8 @@
 		justify-content: center !important;
 		gap: 8px !important;
 		padding: 10px 16px !important;
-		background: #f6f6f6 !important;
-		border: 2px solid #c7cbd2 !important;
+		background: rgba(255, 255, 255, 0.84) !important;
+		border: 2px solid rgba(var(--vnk-accent-rgb), 0.42) !important;
 		border-radius: 999px !important;
 		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
 		transition: all 0.2s ease !important;
@@ -621,45 +559,139 @@
 	}
 
 	:global(.attractions-item-card:hover .read-more) {
-		background: #f5f5f5 !important;
-		border-color: #9ca0a8 !important;
+		background: rgba(255, 255, 255, 0.9) !important;
+		border-color: rgba(var(--vnk-accent-rgb), 0.6) !important;
 	}
 
 	@media (max-width: 900px) {
 		:global(.attractions-items-list) {
 			grid-template-columns: repeat(2, 1fr) !important;
-			gap: 1rem !important;
+			gap: 0.6rem !important;
+		}
+		
+		/* Circular cards on tablet - ~55% of desktop */
+		:global(.attractions-item-card) {
+			border-radius: 46px !important;
+			aspect-ratio: 3 / 4 !important;
+			min-height: 120px !important;
+			max-height: 160px !important;
+			padding: 6px !important;
+			gap: 6px !important;
+		}
+		
+		:global(.attractions-item-card .card-image-wrapper) {
+			margin: 3px !important;
+			border-radius: 36px !important;
+			aspect-ratio: 1 / 1 !important;
+			flex: 0 0 42% !important;
+		}
+		
+		:global(.attractions-item-card .card-image) {
+			border-radius: 36px !important;
+		}
+		
+		/* Tier badge - ~55% of desktop */
+		:global(.attractions-item-card .tier-badge) {
+			padding: 0.4rem 0.65rem !important;
+			font-size: 1.05rem !important;
+			border-radius: 10px !important;
+			bottom: 0.4rem !important;
+			right: 0.4rem !important;
+		}
+		
+		:global(.attractions-item-card .tier-number) {
+			font-size: 1.05rem !important;
+		}
+		
+		:global(.attractions-item-content .item-title) {
+			font-size: 0.8rem !important;
+		}
+		
+		:global(.attractions-item-content .item-description) {
+			font-size: 0.65rem !important;
+		}
+		
+		/* Explore button - below description, no overlap */
+		:global(.attractions-item-card .read-more) {
+			font-size: 0.55rem !important;
+			padding: 4px 8px !important;
+			width: auto !important;
+			max-width: 100px !important;
+			transform: none !important;
+			align-self: flex-start !important;
+			margin-top: auto !important;
 		}
 	}
 
 	@media (max-width: 600px) {
 		:global(.attractions-items-list) {
 			grid-template-columns: repeat(2, 1fr) !important;
-			gap: 0.75rem !important;
+			gap: 0.4rem !important;
 		}
 
 		:global(.attractions-item-card .card-image-wrapper) {
-			margin: 8px !important;
+			margin: 2px !important;
 		}
 
 		:global(.attractions-item-content) {
-			padding: 0 !important;
-			gap: 4px !important;
+			padding: 0 0.25rem !important;
+			gap: 2px !important;
 		}
 
 		:global(.attractions-item-content .item-title) {
-			font-size: 0.8rem !important;
+			font-size: 0.65rem !important;
 		}
 
 		:global(.attractions-item-content .item-description) {
-			font-size: 0.7rem !important;
+			font-size: 0.55rem !important;
 			-webkit-line-clamp: 1 !important;
 			line-clamp: 1 !important;
 		}
 
+		/* Explore button - below description, no overlap */
 		:global(.attractions-item-card .read-more) {
-			font-size: 0.7rem !important;
-			padding: 5px 10px !important;
+			font-size: 0.5rem !important;
+			padding: 3px 6px !important;
+			width: auto !important;
+			min-width: 40px !important;
+			max-width: 80px !important;
+			transform: none !important;
+			align-self: flex-start !important;
+			margin-top: auto !important;
+		}
+		
+		/* Circular cards on mobile - ~35% of desktop */
+		:global(.attractions-item-card) {
+			border-radius: 30px !important;
+			aspect-ratio: 3 / 4 !important;
+			min-height: 100px !important;
+			max-height: 140px !important;
+			padding: 4px !important;
+			gap: 4px !important;
+		}
+		
+		:global(.attractions-item-card .card-image-wrapper) {
+			margin: 2px !important;
+			border-radius: 23px !important;
+			aspect-ratio: 1 / 1 !important;
+			flex: 0 0 42% !important;
+		}
+		
+		:global(.attractions-item-card .card-image) {
+			border-radius: 23px !important;
+		}
+		
+		/* Tier badge - ~35% of desktop */
+		:global(.attractions-item-card .tier-badge) {
+			padding: 0.25rem 0.45rem !important;
+			font-size: 0.85rem !important;
+			border-radius: 7px !important;
+			bottom: 0.3rem !important;
+			right: 0.3rem !important;
+		}
+		
+		:global(.attractions-item-card .tier-number) {
+			font-size: 0.85rem !important;
 		}
 	}
 </style>

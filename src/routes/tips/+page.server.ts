@@ -2,24 +2,152 @@ import { adminDB } from '$lib/server/firebaseAdmin';
 
 function serializeDates(obj: any): any {
   if (!obj || typeof obj !== 'object') return obj;
-  const out = { ...obj };
-  for (const k of Object.keys(out)) {
-    const v = out[k];
-    if (v && typeof v.toDate === 'function') out[k] = v.toDate().toISOString();
+  if (Array.isArray(obj)) return obj.map((item) => serializeDates(item));
+  const out: any = {};
+  for (const k of Object.keys(obj)) {
+    const v = (obj as any)[k];
+    if (v && typeof v.toDate === 'function') {
+      out[k] = v.toDate().toISOString();
+    } else if (v && typeof v === 'object' && !Array.isArray(v)) {
+      if (typeof v.latitude === 'number' && typeof v.longitude === 'number') {
+        out[k] = { lat: v.latitude, lng: v.longitude };
+      } else {
+        out[k] = serializeDates(v);
+      }
+    } else {
+      out[k] = v;
+    }
   }
   return out;
 }
 
+const FALLBACK_PAGE = {
+  seo: {
+    title: 'Travel Tips for Kazakhstan | VeryNice',
+    description: 'Essential travel tips for visiting Kazakhstan: visa requirements, best time to visit, safety, getting around, and more.'
+  },
+  mainTitle: 'Travel Tips for Kazakhstan',
+  headerDescription: 'Essential guides for your Kazakhstan adventure: visa info, best seasons, safety tips, transportation, and practical advice.',
+  heroKicker: 'Plan Your Trip',
+  location: 'Kazakhstan',
+  articleViews: 0,
+  articleLikes: 0,
+  articleComments: 0,
+  breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Travel Tips' }],
+  headerBackgroundPublicId: 'site/backgrounds/attractions-hero',
+  introMarkdown: 'Welcome to Kazakhstan! Here are essential travel tips to help you plan your perfect trip.'
+};
+
+const FALLBACK_HIGHLIGHTS = [
+  {
+    id: 'best-time',
+    title: 'Best Time to Visit',
+    description: 'Kazakhstan has extreme continental weather.',
+    tier: 1,
+    order: 1
+  },
+  {
+    id: 'visa',
+    title: 'Visa & Entry',
+    description: 'Most travelers enjoy visa-free entry.',
+    tier: 1,
+    order: 2
+  },
+  {
+    id: 'safety',
+    title: 'Safety & Precautions',
+    description: 'Kazakhstan is generally safe.',
+    tier: 1,
+    order: 3
+  },
+  {
+    id: 'transport',
+    title: 'Getting Around',
+    description: 'Flights, trains, and taxis in Kazakhstan.',
+    tier: 1,
+    order: 4
+  },
+  {
+    id: 'money',
+    title: 'Money & Costs',
+    description: 'Budget tips for Kazakhstan.',
+    tier: 1,
+    order: 5
+  }
+];
+
+const HIGHLIGHT_IMAGE_FALLBACKS: Record<string, string> = {
+  'best time to visit': 'site/backgrounds/almaty-mountains',
+  'best time to visit kazakhstan': 'site/backgrounds/almaty-mountains',
+  'visa & entry': 'site/backgrounds/passport',
+  'visa and entry': 'site/backgrounds/passport',
+  'safety & precautions': 'site/backgrounds/safety',
+  'safety and precautions': 'site/backgrounds/safety',
+  'getting around': 'site/backgrounds/transport',
+  'getting there & around': 'site/backgrounds/transport',
+  'getting there and around': 'site/backgrounds/transport',
+  'airport taxis': 'site/backgrounds/taxi',
+  'airport taxi guide': 'site/backgrounds/taxi',
+  'money & costs': 'site/backgrounds/money',
+  'money and costs': 'site/backgrounds/money'
+};
+
+const withHighlightImage = (item: any) => {
+  const titleKey = item?.title?.toLowerCase() || '';
+  const fallbackPublicId = HIGHLIGHT_IMAGE_FALLBACKS[titleKey];
+  if (!fallbackPublicId) return item;
+
+  const existingPublicId = item?.image?.publicId || item?.imagePublicId || item?.publicId || '';
+  const publicId = existingPublicId || fallbackPublicId;
+
+  return {
+    ...item,
+    imagePublicId: publicId,
+    image: {
+      ...(item?.image || {}),
+      publicId,
+      alt: item?.image?.alt || item?.title || 'Travel tip'
+    }
+  };
+};
+
 export async function load() {
-  if (!adminDB) return { tips: [], error: 'DB not initialized' };
+  if (!adminDB) {
+    return {
+      page: FALLBACK_PAGE,
+      highlights: FALLBACK_HIGHLIGHTS.map(withHighlightImage),
+      error: 'Server database connection failed.'
+    };
+  }
+
   try {
-    const snap = await adminDB.collection('pages').doc('travelTipsPage').collection('tips').orderBy('order', 'asc').get();
-    const tips = snap.docs.map(d => ({ id: d.id, ...serializeDates(d.data()) }));
-    return { tips };
-  } catch (e) {
-    console.error('[tips] load error', e);
-    return { tips: [], error: 'Failed to fetch tips' };
+    const pageRef = adminDB.collection('pages').doc('travelTipsPage');
+    const pageSnap = await pageRef.get();
+    const page = pageSnap.exists ? serializeDates(pageSnap.data()) : {};
+    
+    // Load tips from tips subcollection - these have the images
+    let tips: any[] = [];
+    try {
+      const tipsSnap = await pageRef.collection('tips').get();
+      tips = tipsSnap.docs
+        .map((doc) => serializeDates({ id: doc.id, ...doc.data() }))
+        .map(withHighlightImage);
+    } catch (tipsErr) {
+      console.warn('[travel-tips] Could not load tips subcollection:', tipsErr);
+    }
+
+    return {
+      page: { ...FALLBACK_PAGE, ...page },
+      highlights: tips.length 
+        ? tips.slice(0, 6) 
+        : FALLBACK_HIGHLIGHTS.map(withHighlightImage)
+    };
+  } catch (error) {
+    console.error('[travel-tips] load error', error);
+    return {
+      page: FALLBACK_PAGE,
+      highlights: FALLBACK_HIGHLIGHTS.map(withHighlightImage),
+      error: 'Failed to load travel tips data.'
+    };
   }
 }
-
-

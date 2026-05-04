@@ -1,18 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { adminDB } from '$lib/server/firebaseAdmin';
-import { env } from '$env/dynamic/private';
-
-function requireAdminToken(request: Request) {
-  const token = request.headers.get('x-admin-token') || request.headers.get('authorization') || '';
-  const expected = env.FIREBASE_ADMIN_TOKEN || '';
-  if (!expected) {
-    return { ok: false, status: 500, error: 'FIREBASE_ADMIN_TOKEN not configured' };
-  }
-  if (token.replace(/^Bearer\s+/i, '') !== expected) {
-    return { ok: false, status: 401, error: 'Unauthorized' };
-  }
-  return { ok: true };
-}
+import { requireAdminAccess } from '$lib/server/apiAuth';
 
 function isValidPath(path: string) {
   return typeof path === 'string' && path.trim().length > 0 && !path.includes('//');
@@ -26,9 +14,9 @@ function isCollectionPath(path: string) {
   return path.split('/').filter(Boolean).length % 2 === 1;
 }
 
-export async function GET({ request, url }) {
-  const auth = requireAdminToken(request);
-  if (!auth.ok) return json({ success: false, error: auth.error }, { status: auth.status });
+export async function GET({ request, url }: { request: Request; url: URL }) {
+  const auth = requireAdminAccess(request, url);
+  if (!auth.ok) return auth.response;
   if (!adminDB) return json({ success: false, error: 'Firebase Admin not initialized' }, { status: 500 });
 
   const path = url.searchParams.get('path') || '';
@@ -58,9 +46,9 @@ export async function GET({ request, url }) {
   }
 }
 
-export async function POST({ request }) {
-  const auth = requireAdminToken(request);
-  if (!auth.ok) return json({ success: false, error: auth.error }, { status: auth.status });
+export async function POST({ request }: { request: Request }) {
+  const auth = requireAdminAccess(request, new URL(request.url));
+  if (!auth.ok) return auth.response;
   if (!adminDB) return json({ success: false, error: 'Firebase Admin not initialized' }, { status: 500 });
 
   const body = await request.json().catch(() => null);
@@ -87,17 +75,17 @@ export async function POST({ request }) {
   }
 }
 
-export async function PUT({ request }) {
+export async function PUT({ request }: { request: Request }) {
   return updateDoc(request, false);
 }
 
-export async function PATCH({ request }) {
+export async function PATCH({ request }: { request: Request }) {
   return updateDoc(request, true);
 }
 
 async function updateDoc(request: Request, merge: boolean) {
-  const auth = requireAdminToken(request);
-  if (!auth.ok) return json({ success: false, error: auth.error }, { status: auth.status });
+  const auth = requireAdminAccess(request, new URL(request.url));
+  if (!auth.ok) return auth.response;
   if (!adminDB) return json({ success: false, error: 'Firebase Admin not initialized' }, { status: 500 });
 
   const body = await request.json().catch(() => null);
@@ -121,9 +109,9 @@ async function updateDoc(request: Request, merge: boolean) {
   }
 }
 
-export async function DELETE({ request }) {
-  const auth = requireAdminToken(request);
-  if (!auth.ok) return json({ success: false, error: auth.error }, { status: auth.status });
+export async function DELETE({ request }: { request: Request }) {
+  const auth = requireAdminAccess(request, new URL(request.url));
+  if (!auth.ok) return auth.response;
   if (!adminDB) return json({ success: false, error: 'Firebase Admin not initialized' }, { status: 500 });
 
   const body = await request.json().catch(() => null);

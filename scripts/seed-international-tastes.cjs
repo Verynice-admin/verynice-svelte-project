@@ -50,7 +50,7 @@ const PAGE_FIELDS = {
   internationalTastesDescription:
     'From East Asian noodles to Mediterranean mezze, discover the global flavors that define the modern Kazakh dining scene.',
   internationalTastesHeroKicker: 'World of Flavors',
-  internationalTastesHeroPublicId: `${PUBLIC_ID_BASE}/hero`
+  internationalTastesHeroPublicId: `${PUBLIC_ID_BASE}/tom_yam`
 };
 
 const CATEGORIES = [

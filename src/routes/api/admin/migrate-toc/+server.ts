@@ -1,5 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { adminDB } from '$lib/server/firebaseAdmin';
+import { requireAdminAccess } from '$lib/server/apiAuth';
+import type { RequestHandler } from './$types';
 
 function slugify(s: string) {
     return String(s)
@@ -11,7 +13,10 @@ function slugify(s: string) {
         .replace(/^-+|-+$/g, '');
 }
 
-export async function GET() {
+export const GET: RequestHandler = async ({ request, url }) => {
+    const auth = requireAdminAccess(request, url);
+    if (!auth.ok) return auth.response;
+
     if (!adminDB) return json({ error: 'No Admin DB' });
 
     const regions = [
@@ -55,4 +60,4 @@ export async function GET() {
     } catch (e: any) {
         return json({ error: e.message });
     }
-}
+};

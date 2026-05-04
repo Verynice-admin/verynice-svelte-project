@@ -58,7 +58,7 @@ const pageData = {
   title: 'International Tastes of Kazakhstan',
   description: 'From Italian pizza to Korean fried chicken, discover the global flavors that define the modern Kazakh dining scene.',
   heroKicker: 'World of Flavors',
-  headerBackgroundPublicId: 'content/pages/foodDrinks/internationalTastes/hero',
+  headerBackgroundPublicId: 'content/pages/foodDrinks/internationalTastes/tom_yam',
   updatedAt: now,
   createdAt: now
 };

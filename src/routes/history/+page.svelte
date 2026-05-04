@@ -571,7 +571,7 @@
 		padding-top: 80px;
 		overflow: hidden;
 		background: #000;
-		margin-bottom: 0;
+		margin-bottom: 120px;
 	}
 
 	.hero-bg-container {

@@ -122,11 +122,21 @@ export async function load() {
         } else if (data.mainImage) {
           images = [{ publicId: data.mainImage, alt: normalizedTitle }];
         } else if (data.image) {
-          images = [data.image];
+          // Handle case where image is an object like { alt: '...' }
+          if (typeof data.image === 'object' && data.image.publicId) {
+            images = [data.image];
+          } else if (typeof data.image === 'string') {
+            images = [{ publicId: data.image, alt: normalizedTitle }];
+          }
         } else if (data.heroImagePublicId) {
-          // Fallback to heroImagePublicId if no other images
           images = [{
             publicId: data.heroImagePublicId,
+            alt: normalizedTitle
+          }];
+        } else if (data.headerBackgroundPublicId) {
+          // Add headerBackgroundPublicId as fallback
+          images = [{
+            publicId: data.headerBackgroundPublicId,
             alt: normalizedTitle
           }];
         }

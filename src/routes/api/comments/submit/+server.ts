@@ -2,11 +2,25 @@ import { json } from '@sveltejs/kit';
 import { adminDB } from '$lib/server/firebaseAdmin';
 import { Timestamp } from 'firebase-admin/firestore';
 import { processComment } from '$lib/server/aiService';
+import { enforceRateLimit } from '$lib/server/rateLimit';
 
 import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request }) => {
     try {
+        const rate = enforceRateLimit({
+            request,
+            scope: 'api-comments-submit',
+            maxRequests: 10,
+            windowMs: 60_000
+        });
+        if (!rate.allowed) {
+            return json(
+                { error: 'Too many comment submissions. Please retry shortly.' },
+                { status: 429, headers: { 'Retry-After': String(rate.retryAfterSeconds) } }
+            );
+        }
+
         const { postId, text, author } = await request.json() as { postId: string, text: string, author: string };
 
         if (!postId || !text) {

@@ -23,6 +23,29 @@ function serializeDates(obj: any): any {
 }
 
 const PUBLIC_ID_BASE = 'content/pages/foodDrinks/internationalTastes';
+const MAIN_HERO_PUBLIC_ID = `${PUBLIC_ID_BASE}/tom_yam`;
+const LEGACY_HERO_PUBLIC_IDS = new Set([
+	`${PUBLIC_ID_BASE}/hero`,
+	'content/pages/foodDrinks/internationalTastes/hero'
+]);
+
+function resolveInternationalHeroPublicId(value: any): string {
+	if (typeof value !== 'string' || !value.trim()) {
+		console.warn('[InternationalTastes] Empty hero public ID, using fallback:', MAIN_HERO_PUBLIC_ID);
+		return MAIN_HERO_PUBLIC_ID;
+	}
+	const v = value.trim();
+	const vLower = v.toLowerCase();
+	if (LEGACY_HERO_PUBLIC_IDS.has(v)) {
+		console.log('[InternationalTastes] Redirecting legacy hero ID to new image:', v, '->', MAIN_HERO_PUBLIC_ID);
+		return MAIN_HERO_PUBLIC_ID;
+	}
+	if (vLower.endsWith('/hero') || vLower.endsWith('/hero.jpg') || vLower.endsWith('/hero.jpeg') || vLower.endsWith('/hero.png')) {
+		console.log('[InternationalTastes] Redirecting generic hero path to new image:', v, '->', MAIN_HERO_PUBLIC_ID);
+		return MAIN_HERO_PUBLIC_ID;
+	}
+	return v;
+}
 
 const FALLBACK_PAGE = {
 	seo: {
@@ -42,7 +65,7 @@ const FALLBACK_PAGE = {
 		{ label: 'Food & Drinks', href: '/food-drink' },
 		{ label: 'International Tastes' }
 	],
-	headerBackgroundPublicId: `${PUBLIC_ID_BASE}/hero`
+	headerBackgroundPublicId: MAIN_HERO_PUBLIC_ID
 };
 
 const FALLBACK_CATEGORIES = [
@@ -230,7 +253,7 @@ const FALLBACK_DISHES = [
 	{ id: 'greek-salad', title: 'Greek Salad', category: 'mediterranean', order: 60 }
 ].map((dish) => ({
 	...dish,
-	description: dish.description || CATEGORY_DESCRIPTIONS[dish.category] || 'A popular international favorite.',
+	description: CATEGORY_DESCRIPTIONS[dish.category] || 'A popular international favorite.',
 	publicId: `${PUBLIC_ID_BASE}/${dish.id}`
 }));
 
@@ -241,12 +264,12 @@ export const load: PageServerLoad = async () => {
 
 	if (adminDB) {
 		try {
-			// Data is stored inside pages/restaurantsPage
-			const pageRef = adminDB.collection('pages').doc('restaurantsPage');
+			// Data is stored inside pages/food-drink
+			const pageRef = adminDB.collection('pages').doc('food-drink');
 
 			const pageSnap = await pageRef.get();
 
-			// Process page data (international tastes metadata is stored as fields on restaurantsPage)
+			// Process page data (international tastes metadata is stored as fields on food-drink)
 			if (pageSnap.exists) {
 				const pageData = serializeDates(pageSnap.data());
 				page = {
@@ -254,8 +277,9 @@ export const load: PageServerLoad = async () => {
 					mainTitle: pageData.internationalTastesTitle || FALLBACK_PAGE.mainTitle,
 					headerDescription: pageData.internationalTastesDescription || FALLBACK_PAGE.headerDescription,
 					heroKicker: pageData.internationalTastesHeroKicker || FALLBACK_PAGE.heroKicker,
-					headerBackgroundPublicId:
-						pageData.internationalTastesHeroPublicId || FALLBACK_PAGE.headerBackgroundPublicId,
+					headerBackgroundPublicId: resolveInternationalHeroPublicId(
+						pageData.internationalTastesHeroPublicId || FALLBACK_PAGE.headerBackgroundPublicId
+					),
 					articleViews: pageData.articleViews || 0,
 					articleLikes: pageData.articleLikes || 0,
 					articleComments: pageData.articleComments || 0

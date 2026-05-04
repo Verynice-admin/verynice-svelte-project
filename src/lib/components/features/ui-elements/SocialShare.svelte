@@ -52,7 +52,7 @@
     h4 {
         font-size: 0.9em;
         font-family: var(--vnk-font-primary);
-        color: var(--vnk-text-secondary-color);
+        color: #ffffff;
         margin-bottom: var(--vnk-spacing-sm);
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -80,7 +80,7 @@
         display: block;
         width: 28px;
         height: 28px;
-        background-color: var(--vnk-text-secondary-color);
+        background-color: rgba(255, 255, 255, 0.8);
         -webkit-mask-repeat: no-repeat;
         mask-repeat: no-repeat;
         -webkit-mask-position: center;
@@ -91,7 +91,7 @@
     }
 
     .social-share-icons a:hover .icon-social {
-        background-color: var(--vnk-text-accent-color);
+        background-color: #ffffff;
     }
     
     /* --- THE FIX: Embedded SVG Icons --- */

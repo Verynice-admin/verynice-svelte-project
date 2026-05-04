@@ -15,28 +15,33 @@
 
 
 /* Fonts are preloaded in app.html for better performance */
-@import './premium-theme.css';
+/* Dark premium theme disabled for sitewide light premium palette */
 @import './accessibility.css';
 @import './responsive.css';
 @import './modern-features.css';
 /* Global Premium Theme & Modern Features */
 
 :root {
-  --vnk-primary-color: #1E3A8A;
-  --vnk-accent-color: #06B6D4;
-  --vnk-accent-rgb: 6, 182, 212;
-  --vnk-bg-gradient-start: #113F72;
-  --vnk-bg-gradient-start-rgb: 17, 63, 114;
-  --vnk-bg-gradient-end: #1E293B;
-  --vnk-bg-gradient-end-rgb: 30, 41, 59;
-  --vnk-card-bg: rgba(30, 41, 59, 0.7);
-  --vnk-card-bg-glass: rgba(42, 61, 95, 0.4);
-  --vnk-card-border-color: rgba(var(--vnk-accent-rgb), 0.3);
-  --vnk-text-primary-color: #F1F5F9;
-  --vnk-text-secondary-color: #A0B3D0;
-  --vnk-text-secondary-color-rgb: 148, 163, 184;
+  --vnk-primary-color: #000000;
+  --vnk-accent-color: #000000;
+  --vnk-accent-rgb: 0, 0, 0;
+  --vnk-gold-text: #d4a373;
+  --vnk-bg-gradient-start: #ffffff;
+  --vnk-bg-gradient-start-rgb: 255, 255, 255;
+  --vnk-bg-gradient-end: #ffffff;
+  --vnk-bg-gradient-end-rgb: 255, 255, 255;
+  --vnk-site-background-fallback: #ffffff;
+  --vnk-site-background-image: none;
+  --vnk-card-bg: rgba(225, 227, 230, 0.9);
+  --vnk-card-bg-glass: rgba(255, 255, 255, 0.75);
+  --vnk-card-border-color: rgba(0, 0, 0, 0.1);
+  --vnk-text-primary-color: #000000;
+  --vnk-text-secondary-color: #333333;
+  --vnk-text-secondary-color-rgb: 51, 51, 51;
   --vnk-text-accent-color: var(--vnk-accent-color);
   --vnk-error-color: #F87171;
+  --vnk-footer-bg: #000000;
+  --vnk-footer-text: rgba(255, 255, 255, 0.85);
 
   --vnk-border-radius-sm: 0.5rem;
   --vnk-border-radius-md: 0.75rem;
@@ -84,6 +89,7 @@ body {
 
 main {
   display: block;
+  min-height: calc(100vh - 250px);
 }
 
 h1 {
@@ -157,8 +163,12 @@ body {
   margin: 0;
   padding: 0;
   font-family: var(--vnk-font-primary);
-  background: #f4f4f4;
-  /* Page background color */
+  background-color: transparent;
+  background-image: var(--vnk-site-background-image);
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: #222;
 }
 
@@ -178,7 +188,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #39dff8;
+  background-color: rgba(242, 132, 137, 0.85);
 }
 
 
@@ -194,18 +204,21 @@ body {
 
 html {
   scroll-behavior: smooth;
+  overflow-x: visible;
 }
 
 body {
-  background: #f4f4f4;
-  /* Page background color - solid color instead of gradient */
-  background-image: none;
-  /* Remove gradient */
+  background-color: transparent;
+  background-image: var(--vnk-site-background-image);
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--vnk-text-primary-color);
   font-family: var(--vnk-font-secondary);
   font-size: 16px;
   font-weight: 400;
-  overflow-x: hidden;
+  overflow-x: visible;
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -220,6 +233,7 @@ body {
     line-height: 1.7;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+    background-attachment: scroll;
   }
 }
 
@@ -245,7 +259,7 @@ a {
 }
 
 a:hover {
-  color: #39dff8;
+  color: rgb(2, 114, 112);
   text-decoration: underline;
   opacity: 0.8;
 }
@@ -313,34 +327,37 @@ body>*:last-child:not(main):not(footer):not(script)::after {
 
 /* ========================================
    PROSE & ARTICLE TYPOGRAPHY STYLES
-   Science Journal Aesthetic
+   Premium Mobile-First Content Rendering
    ======================================== */
 
-/* Main prose container */
+/* Main prose container - Wider, mobile-optimized */
 .prose {
   color: #1e293b;
   font-size: 1.0625rem;
   line-height: 1.75;
-  max-width: 120ch !important;
-  text-align: justify !important;
+  max-width: 65ch !important;
+  text-align: left !important;
   text-justify: inter-word;
   hyphens: auto;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 0 1rem !important;
 }
 
 /* Headings in prose */
 .prose h2 {
-  font-size: 1.875rem;
-  font-weight: 700;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 800;
   color: #0f172a;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   line-height: 1.25;
 }
 
 .prose h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
+  font-weight: 700;
   color: #1e293b;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
@@ -348,33 +365,53 @@ body>*:last-child:not(main):not(footer):not(script)::after {
 }
 
 .prose h4 {
-  font-size: 1.25rem;
+  font-size: clamp(1.1rem, 3.5vw, 1.35rem);
   font-weight: 600;
   color: #334155;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
-/* Paragraphs */
+/* Paragraphs - Premium spacing */
 .prose p {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   color: #334155;
+  line-height: 1.8;
 }
 
 .prose p:first-of-type {
   font-size: 1.125rem;
   color: #1e293b;
+  line-height: 1.9;
 }
 
-/* Lists */
+/* Lists with custom markers */
 .prose ul,
 .prose ol {
   list-style: inherit;
   margin-left: 1.5rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   color: #334155;
-}.prose ul {
-  list-style-type: disc;
+}
+
+.prose ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.prose ul li {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose ul li::before {
+  content: '◼';
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  font-size: 0.6rem;
+  color: var(--vnk-accent-color);
 }
 
 .prose ol {
@@ -383,11 +420,11 @@ body>*:last-child:not(main):not(footer):not(script)::after {
 
 .prose li {
   margin-bottom: 0.5rem;
-  padding-left: 0.25rem;
 }
 
 .prose li::marker {
   color: var(--vnk-accent-color);
+  font-weight: 600;
 }
 
 /* Links in prose */
@@ -405,42 +442,47 @@ body>*:last-child:not(main):not(footer):not(script)::after {
   text-decoration-color: rgba(2, 132, 199, 0.6);
 }
 
-/* Blockquotes */
+/* Blockquotes - Premium white frame style */
 .prose blockquote {
   border-left: 4px solid var(--vnk-accent-color);
-  padding-left: 1.5rem;
-  margin: 1.5rem 0;
+  border-right: 2px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  margin: 2rem 0;
   font-style: italic;
   color: #475569;
-  background: rgba(226, 232, 240, 0.5);
-  padding: 1rem 1.5rem;
-  border-radius: 0 0.5rem 0.5rem 0;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Code blocks */
 .prose code {
-  background: rgba(226, 232, 240, 0.8);
-  padding: 0.2em 0.4em;
-  border-radius: 0.25rem;
+  background: rgba(226, 232, 240, 0.9);
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
   font-size: 0.875em;
   color: #0c4a6e;
   font-family: 'Monaco', 'Courier New', monospace;
   font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .prose pre {
-  background: rgba(15, 23, 42, 0.95);
+  background: #ffffff;
   padding: 1.25rem;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   overflow-x: auto;
-  margin: 1.5rem 0;
-  border: 1px solid rgba(6, 182, 212, 0.2);
+  margin: 2rem 0;
+  border: 1px solid rgba(var(--vnk-accent-rgb), 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .prose pre code {
   background: none;
   padding: 0;
-  color: #e2e8f0;
+  color: #1e293b;
 }
 
 /* Strong and emphasis */
@@ -454,15 +496,87 @@ body>*:last-child:not(main):not(footer):not(script)::after {
   color: #475569;
 }
 
-/* Horizontal rules */
+/* Horizontal rules - Premium style */
 .prose hr {
   border: none;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(to right,
       transparent,
-      rgba(6, 182, 212, 0.5),
+      rgba(var(--vnk-accent-rgb), 0.3),
       transparent);
-  margin: 2.5em 0;
+  margin: 3rem 0;
+}
+
+/* Mobile-first responsive prose enhancement */
+@media (max-width: 768px) {
+  .prose {
+    font-size: 1rem;
+    line-height: 1.8;
+    padding: 0 0.5rem;
+    max-width: 100%;
+  }
+
+  .prose h2 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .prose h3 {
+    font-size: 1.3rem;
+  }
+
+  .prose p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+
+  .prose ul li,
+  .prose ol li {
+    padding-left: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .prose blockquote {
+    padding: 1.25rem;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+  }
+
+  .prose pre {
+    padding: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .prose code {
+    font-size: 0.85rem;
+  }
+
+  .prose table {
+    font-size: 0.875rem;
+  }
+
+  .prose table thead th,
+  .prose table tbody td {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .prose {
+    overflow-x: auto;
+  }
+}
+
+/* Larger screens - slightly wider comfortable reading */
+@media (min-width: 1024px) {
+  .prose {
+    max-width: 70ch;
+    font-size: 1.0625rem;
+  }
+
+  .prose p {
+    max-width: 65ch;
+  }
 }
 
 /* ========================================
@@ -553,7 +667,7 @@ body>*:last-child:not(main):not(footer):not(script)::after {
 }
 
 .prose::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.3);
+  background: rgba(122, 189, 170, 0.3);
   border-radius: 4px;
 }
 
@@ -596,7 +710,7 @@ body>*:last-child:not(main):not(footer):not(script)::after {
   top: 0.25em;
   width: 4px;
   height: 1.5em;
-  background: linear-gradient(to bottom, var(--vnk-accent-color), rgba(6, 182, 212, 0.3));
+  background: linear-gradient(to bottom, var(--vnk-accent-color), rgba(var(--vnk-accent-rgb), 0.3));
   border-radius: 2px;
 }
 
@@ -636,6 +750,33 @@ html[data-translation-state="translated"] body>* {
 }.notranslate {
   filter: none !important;
   opacity: 1 !important;
+}
+
+/* Kazakh text font styling - applied when translating to Kazakh (KK) */
+[data-kazakh-text="true"] {
+  font-family: 'Noto Sans', 'PT Sans', 'Arial Unicode MS', sans-serif !important;
+}
+
+/* Also apply to html lang when it's kk */
+html[lang="kk"] body,
+html[lang="kk"] p,
+html[lang="kk"] h1,
+html[lang="kk"] h2,
+html[lang="kk"] h3,
+html[lang="kk"] h4,
+html[lang="kk"] h5,
+html[lang="kk"] h6,
+html[lang="kk"] li,
+html[lang="kk"] td,
+html[lang="kk"] th,
+html[lang="kk"] span,
+html[lang="kk"] div,
+html[lang="kk"] a,
+html[lang="kk"] label,
+html[lang="kk"] blockquote,
+html[lang="kk"] figcaption,
+html[lang="kk"] summary {
+  font-family: 'Noto Sans', 'PT Sans', 'Arial Unicode MS', sans-serif !important;
 }/* Base styles for progress bar are in its component, 
    but we can define variables here if needed */
 :root {

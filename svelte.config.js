@@ -5,15 +5,13 @@ const config = {
   preprocess: preprocess(),
   kit: {
     adapter: adapter({
-      runtime: 'edge', // Use edge runtime for faster response times
-      split: true // Enable route-based code splitting
+      runtime: 'nodejs20.x'
     }),
     alias: {
       $lib: 'src/lib',
       $components: 'src/lib/components'
     },
     prerender: {
-      // Prerender static pages for instant loading
       crawl: true,
       entries: ['*'],
       handleHttpError: 'warn'

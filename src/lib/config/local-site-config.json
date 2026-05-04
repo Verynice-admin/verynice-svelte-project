@@ -14,7 +14,7 @@
       },
       {
         "url": "/culture",
-        "text": "Culture"
+        "text": "Heritage"
       },
       {
         "url": "/food-drink",
@@ -25,17 +25,60 @@
         "text": "Travel Tips"
       },
       {
+        "url": "/get-started",
+        "text": "Get Started"
+      },
+      {
         "url": "/about-borat",
-        "text": "About Borat"
+        "text": "Me Borat"
       }
     ]
   },
   "footerConfig": {
-    "footerMenuLinks": [],
-    "techMenuLinks": [],
-    "links": [],
-    "social": [],
-    "columns": [],
-    "copyrightTemplate": "© {year} VeryNice.kz. All Rights Reserved."
+    "brand": {
+      "siteName": "VeryNice.kz",
+      "homeUrl": "/",
+      "logoUrl": "",
+      "logoAlt": "VeryNice.kz",
+      "tagline": "Discover the heart of Central Asia.",
+      "description": "Your ultimate guide to the history, culture, and hidden gems of Kazakhstan. From the steppes to the cities, we cover it all."
+    },
+    "title": "Explore",
+    "footerMenuLinks": [
+      { "text": "Cities", "url": "/destinations" },
+      { "text": "History", "url": "/history" },
+      { "text": "Destinations", "url": "/destinations" },
+      { "text": "Food & Drink", "url": "/food-drink" },
+      { "text": "Tips", "url": "/travel-tips" }
+    ],
+    "techMenuLinks": [
+      { "text": "Privacy Policy", "url": "/privacy" },
+      { "text": "Terms of Use", "url": "/terms" },
+      { "text": "Contact", "url": "/contact" }
+    ],
+    "social": [
+      { "text": "Instagram", "url": "https://www.instagram.com", "icon": "IG" },
+      { "text": "YouTube", "url": "https://www.youtube.com", "icon": "YT" },
+      { "text": "TikTok", "url": "https://www.tiktok.com", "icon": "TT" }
+    ],
+    "columns": [
+      {
+        "title": "Destinations",
+        "links": [
+          { "text": "Astana", "url": "/destinations/astana" },
+          { "text": "Almaty", "url": "/destinations/almaty" }
+        ]
+      },
+      {
+        "title": "Useful Info",
+        "links": [
+          { "text": "Itineraries", "url": "/travel-tips/itineraries" },
+          { "text": "Weather", "url": "/travel-tips/weather" },
+          { "text": "Transport", "url": "/travel-tips/transport" },
+          { "text": "Visas", "url": "/travel-tips/visas" }
+        ]
+      }
+    ],
+    "copyrightTemplate": "© {year} VeryNice.kz. All rights reserved."
   }
 }

@@ -117,29 +117,7 @@
 		aria-expanded={isOpen}
 		aria-busy={isTranslating}
 	>
-		{#if !isCompact}
-			<span class="current-flag">
-				{@html languages.find((l) => l.code === $currentLanguage)?.flag || ''}
-			</span>
-		{/if}
 		<span class="lang-code">{$currentLanguage}</span>
-		{#if isTranslating}
-			<span class="lang-spinner" aria-hidden="true"></span>
-		{/if}
-		<svg
-			class="chevron"
-			class:open={isOpen}
-			width="16"
-			height="16"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2.5"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-		>
-			<polyline points="6 9 12 15 18 9"></polyline>
-		</svg>
 	</button>
 
 	{#if isOpen}
@@ -150,7 +128,6 @@
 					class:active={$currentLanguage === lang.code}
 					on:click={() => selectLanguage(lang.code)}
 				>
-					<span class="flag-icon">{@html lang.flag}</span>
 					<span class="option-label">{lang.label}</span>
 					<span class="option-name">{lang.name}</span>
 				</button>
@@ -174,53 +151,33 @@
 	}
 
 	.current-lang {
-		background: rgba(255, 255, 255, 0.1);
-		border: 1px solid rgba(255, 255, 255, 0.3);
+		background: transparent;
+		border: none;
 		color: #f1f5f9;
-		padding: 0.35rem 0.75rem;
-		border-radius: 9999px; /* Pill shape */
+		padding: 0.25rem 0.5rem;
+		border-radius: 8px;
 		cursor: pointer;
 		display: flex;
 		align-items: center;
-		gap: 0.4rem;
+		gap: 0.25rem;
 		font-family: 'Inter', sans-serif;
-		font-size: 0.85rem;
-		font-weight: 600;
+		font-size: 1rem;
+		font-weight: 700;
 		transition: all 0.2s ease;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		backdrop-filter: blur(4px);
 	}
 
 	.current-lang.compact {
-		padding: 0.25rem 0.5rem;
-		gap: 0.25rem;
-		background: rgba(255, 255, 255, 0.05);
-		border-color: rgba(255, 255, 255, 0.2);
+		padding: 0.2rem 0.4rem;
+		gap: 0.2rem;
 	}
 
 	.current-lang:hover,
 	.current-lang[aria-expanded='true'] {
-		background: rgba(255, 255, 255, 0.2);
-		border-color: rgba(255, 255, 255, 0.6);
+		background: rgba(255, 255, 255, 0.15);
 		color: #fff;
 		transform: translateY(-1px);
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	}
-
-	.current-flag {
-		display: flex;
-		align-items: center;
-		width: 1.25rem;
-		height: 1.25rem;
-		border-radius: 50%;
-		overflow: hidden;
-	}
-
-	.current-flag :global(svg) {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
 	}
 
 	.lang-code {
@@ -249,52 +206,44 @@
 
 	.dropdown {
 		position: absolute;
-		top: calc(100% + 0.75rem);
+		top: calc(100% + 0.5rem);
 		right: 0;
 		background: white;
-		border-radius: 16px;
+		border-radius: 12px;
 		box-shadow:
 			0 10px 15px -3px rgba(0, 0, 0, 0.1),
-			0 4px 6px -2px rgba(0, 0, 0, 0.05),
-			0 0 0 1px rgba(0, 0, 0, 0.05);
+			0 4px 6px -2px rgba(0, 0, 0, 0.05);
 		padding: 0.5rem;
-		min-width: 200px; /* Slight increase for flags */
+		min-width: 200px;
+		max-width: calc(100vw - 2rem);
 		z-index: 1000;
 		display: flex;
 		flex-direction: column;
-		gap: 0.125rem;
+		gap: 0.25rem;
 		transform-origin: top right;
-		max-height: 400px;
-		overflow-y: auto;
+		overflow-x: hidden;
 	}
 
-	/* Scrollbar for dropdown */
-	.dropdown::-webkit-scrollbar {
-		width: 6px;
-	}
-	.dropdown::-webkit-scrollbar-track {
-		background: transparent;
-	}
-	.dropdown::-webkit-scrollbar-thumb {
-		background-color: #cbd5e1;
-		border-radius: 3px;
-	}
+	
 
 	.lang-option {
 		background: transparent;
 		border: none;
 		width: 100%;
 		text-align: left;
-		padding: 0.6rem 1rem;
-		border-radius: 12px;
+		padding: 0.4rem 0.6rem;
+		border-radius: 8px;
 		color: #334155;
-		font-size: 0.9rem;
+		font-size: 0.8rem;
 		font-family: 'Inter', sans-serif;
 		cursor: pointer;
 		display: flex;
-		align-items: center; /* Changed to simple align center */
-		gap: 0.75rem; /* Gap for flag */
+		align-items: center;
+		gap: 0.5rem;
 		transition: all 0.2s;
+		white-space: normal;
+		word-break: break-word;
+		overflow-x: hidden;
 	}
 
 	.lang-option:hover {
@@ -308,29 +257,12 @@
 		font-weight: 600;
 	}
 
-	.flag-icon {
-		display: flex;
-		align-items: center;
-		width: 1.5rem;
-		height: 1.5rem;
-		border-radius: 50%;
-		overflow: hidden;
-		flex-shrink: 0;
-		box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
-	}
-
-	.flag-icon :global(svg) {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
 	.option-label {
 		text-transform: uppercase;
-		font-size: 0.75rem;
+		font-size: 0.7rem;
 		font-weight: 700;
 		color: #64748b;
-		width: 2rem; /* Fixed width for alignment */
+		width: 1.75rem;
 	}
 
 	.lang-option.active .option-label {
@@ -339,7 +271,8 @@
 
 	.option-name {
 		flex: 1;
-		text-align: left; /* Align name to left, next to label */
+		text-align: left;
+		font-size: 0.75rem;
 	}
 
 	.translation-error {
@@ -355,7 +288,7 @@
 		gap: 0.35rem;
 		position: absolute;
 		top: 100%;
-		right: 0;
+		left: 0;
 		white-space: nowrap;
 		margin-top: 0.75rem;
 		backdrop-filter: blur(8px);
@@ -372,8 +305,46 @@
 	}
 
 	@media (max-width: 600px) {
+		.language-selector {
+			position: static;
+			z-index: 10001;
+		}
+
 		.dropdown {
-			right: -50px; /* Adjust for mobile centering/padding */
+			position: fixed;
+			left: 50% !important;
+			top: 3.5rem !important;
+			transform: translateX(-50%);
+			min-width: 160px;
+			max-width: calc(100vw - 2rem);
+			max-height: 70vh;
+			overflow-y: auto;
+			padding: 0.4rem;
+			z-index: 10002;
+		}
+
+		.current-lang {
+			padding: 0.3rem 0.6rem;
+			font-size: 1.1rem;
+			gap: 0.3rem;
+		}
+
+		.lang-option {
+			padding: 0.5rem 0.6rem;
+			gap: 0.4rem;
+			flex-wrap: wrap;
+		}
+
+		.option-label {
+			font-size: 0.75rem;
+			width: 2rem;
+		}
+
+		.option-name {
+			display: block;
+			font-size: 0.8rem;
+			flex: 1;
+			word-break: break-word;
 		}
 	}
 </style>

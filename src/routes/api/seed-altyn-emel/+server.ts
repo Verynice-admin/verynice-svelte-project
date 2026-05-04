@@ -1,10 +1,14 @@
 
 import { json } from '@sveltejs/kit';
 import { createAltynEmelPage } from '$lib/server/seedAltynEmel';
+import { requireAdminAccess } from '$lib/server/apiAuth';
 
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async () => {
+export const GET: RequestHandler = async ({ request, url }) => {
+    const auth = requireAdminAccess(request, url);
+    if (!auth.ok) return auth.response;
+
     try {
         await createAltynEmelPage();
         return json({ success: true, message: 'Altyn-Emel page seeded successfully!' });

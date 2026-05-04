@@ -50,8 +50,7 @@
 				title: 'Destinations',
 				links: [
 					{ text: 'Astana', url: '/destinations/astana' },
-					{ text: 'Almaty', url: '/destinations/almaty' },
-					{ text: 'Shymkent', url: '/destinations/shymkent' }
+					{ text: 'Almaty', url: '/destinations/almaty' }
 				]
 			},
 			{
@@ -98,7 +97,7 @@
 	};
 </script>
 
-<footer class="footer" aria-label="Site footer">
+<footer id="footer" class="footer" aria-label="Site footer">
 	<div class="footer-container">
 		<div class="footer-content">
 			<!-- Brand Section -->
@@ -185,43 +184,45 @@
 
 <style>
 	.footer {
-		background-color: rgb(17, 63, 114);
-		color: #e2e8f0;
-		padding: 3rem 1.5rem 1.5rem; /* Reduced padding */
+ 		background-color: #000000;
+		color: rgba(255, 255, 255, 0.85);
+		padding: 0.5rem 1rem;
 		font-family: 'Inter', sans-serif;
-		border-top: 1px solid rgba(255, 255, 255, 0.05);
+		border-top: none;
+		text-align: center;
 	}
 
 	.footer-container {
-		max-width: 1000px; /* Aligned with site layout */
+		max-width: 100%;
 		margin: 0 auto;
 	}
 
 	.footer-content {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-between;
-		gap: 3rem;
-		margin-bottom: 3rem;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-bottom: 0.5rem;
 	}
 
 	/* Brand Section */
 	.footer-brand-section {
-		flex: 0 0 250px;
+		flex: 0 0 auto;
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		align-items: center;
+		gap: 0.25rem;
 	}
 
 	.footer-logo {
-		font-size: 1.85rem; /* Increased from 1.5rem */
+		font-size: 1rem;
 		font-weight: 800;
 		color: #fff;
 		text-decoration: none;
 		letter-spacing: -0.01em;
 		display: inline-flex;
 		align-items: center;
-		white-space: nowrap; /* Ensure it stays in one line */
+		white-space: nowrap;
 	}
 
 	.logo-dot {
@@ -326,25 +327,27 @@
 	}
 
 	.footer-tagline {
-		font-size: 0.95rem; /* Larger */
-		color: #e2e8f0; /* Lighter */
-		line-height: 1.5;
+		font-size: 0.65rem;
+		color: rgba(255, 255, 255, 0.75);
+		line-height: 1.2;
 		margin: 0;
+		display: none;
 	}
 
 	/* Socials */
 	.social-links {
 		display: flex;
-		gap: 0.75rem;
+		justify-content: center;
+		gap: 0.25rem;
 	}
 
 	.social-btn {
-		width: 32px;
-		height: 32px;
+		width: 20px;
+		height: 20px;
 		display: flex;
 		align-items: center;
-		justify-content: flex-start;
-		color: #e2e8f0; /* Lighter */
+		justify-content: center;
+		color: rgba(255, 255, 255, 0.85);
 		transition: color 0.2s;
 	}
 
@@ -354,31 +357,37 @@
 
 	/* Link Matrix */
 	.footer-links-matrix {
-		flex: 1;
+		flex: 0 0 auto;
 		display: flex;
-		justify-content: space-between; /* Spread columns nicely */
-		gap: 2rem;
-		min-width: 300px;
+		justify-content: center;
+		gap: 0.5rem;
+		min-width: auto;
 		flex-wrap: wrap;
 	}
 
 	.link-group h4 {
 		color: #fff;
-		font-size: 1rem; /* Larger */
-		font-weight: 700;
+		font-size: 0.65rem;
+		font-weight: 600;
 		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		margin-bottom: 1rem;
-		opacity: 1; /* Full opacity */
+		letter-spacing: 0.04em;
+		margin-bottom: 0.15rem;
+		opacity: 1;
 	}
 
 	.link-group ul {
 		list-style: none;
+		list-style-type: none;
 		padding: 0;
 		margin: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 0.6rem;
+		gap: 0.1rem;
+	}
+
+	.link-group ul li {
+		list-style: none;
+		list-style-type: none;
 	}
 
 	.link-group ul li::before,
@@ -387,10 +396,15 @@
 		display: none !important;
 	}
 
+	.link-group ul li::marker {
+		display: none !important;
+		content: none !important;
+	}
+
 	.link-group a {
-		color: #e2e8f0; /* Very light gray, high contrast */
+		color: rgba(255, 255, 255, 0.85);
 		text-decoration: none;
-		font-size: 0.95rem; /* Slightly larger */
+		font-size: 0.6rem;
 		transition: color 0.2s;
 		font-weight: 400;
 	}
@@ -402,29 +416,49 @@
 
 	/* Bottom Bar */
 	.footer-bottom {
-		border-top: 1px solid rgba(255, 255, 255, 0.15);
-		padding-top: 1.5rem;
+		border-top: none;
+		padding-top: 0.25rem;
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
 		flex-wrap: wrap;
-		gap: 1rem;
-		font-size: 0.85rem;
-		color: #cbd5e1; /* Lighter than before */
+		gap: 0.5rem;
+		font-size: 0.75rem;
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	.copyright {
+		color: rgba(255, 255, 255, 0.85);
+		font-size: 0.75rem;
 	}
 
 	.legal-links {
 		display: flex;
-		gap: 1.5rem;
+		justify-content: center;
+		gap: 0.75rem;
 		list-style: none;
+		list-style-type: none;
 		padding: 0;
 		margin: 0;
 	}
 
+	.legal-links li {
+		list-style: none;
+		list-style-type: none;
+	}
+
+	.legal-links li::before,
+	.legal-links li::after,
+	.legal-links li::marker {
+		content: none !important;
+		display: none !important;
+	}
+
 	.legal-links a {
-		color: #cbd5e1;
+		color: rgba(255, 255, 255, 0.85);
 		text-decoration: none;
 		transition: color 0.2s;
+		font-size: 0.75rem;
 	}
 
 	.legal-links a:hover {
@@ -433,26 +467,45 @@
 
 	/* Mobile */
 	@media (max-width: 768px) {
+		.footer {
+			padding: 0.5rem 0.5rem;
+		}
+
 		.footer-content {
 			flex-direction: column;
-			gap: 2.5rem;
+			gap: 0.5rem;
 		}
 
 		.footer-brand-section {
 			flex: auto;
-			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-			padding-bottom: 2rem;
+			border-bottom: none;
+			padding-bottom: 0.5rem;
 		}
 
 		.footer-links-matrix {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 2rem 1rem;
+			display: flex;
+			justify-content: center;
+			gap: 0.5rem;
+		}
+
+		.link-group h4 {
+			font-size: 0.6rem;
+			margin-bottom: 0.1rem;
+		}
+
+		.link-group ul {
+			gap: 0.05rem;
+		}
+
+		.link-group a {
+			font-size: 0.55rem;
 		}
 
 		.footer-bottom {
-			flex-direction: column-reverse;
+			flex-direction: column;
 			text-align: center;
+			gap: 0.15rem;
+			padding-top: 0.15rem;
 		}
 	}
 </style>
