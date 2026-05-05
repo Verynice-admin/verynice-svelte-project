@@ -317,19 +317,22 @@ main {
 		background-color: #ffffff !important;
 	}
 
-	/* Typography overrides for mobile */
-	body,
-	p,
-	li,
-	span,
-	div,
-	.timeline-body,
-	.prose {
-		font-size: 17px !important;
-		line-height: 1.78 !important;
-		color: #1c1c1e !important;
-		font-weight: 400 !important;
-	}
+/* Typography overrides for mobile */
+body,
+p,
+li,
+span,
+div,
+.timeline-body,
+.prose {
+  font-size: 17px !important;
+  line-height: 1.78 !important;
+  color: #1c1c1e !important;
+  font-weight: 400 !important;
+  text-align: justify !important;
+  text-justify: inter-word;
+  hyphens: auto;
+}
 
 	/* H1 article */
 	h1,
@@ -340,6 +343,7 @@ main {
 		font-weight: 800 !important;
 		line-height: 1.25 !important;
 		color: #0a0a0a !important;
+		text-align: center !important;
 	}
 
 	/* H2 section */
@@ -352,6 +356,7 @@ main {
 		line-height: 1.3 !important;
 		margin: 32px 0 12px !important;
 		color: #0a0a0a !important;
+		text-align: center !important;
 	}
 
 	/* Bold inline */

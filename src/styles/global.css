@@ -336,7 +336,7 @@ body>*:last-child:not(main):not(footer):not(script)::after {
   font-size: 1.0625rem;
   line-height: 1.75;
   max-width: 65ch !important;
-  text-align: left !important;
+  text-align: justify !important;
   text-justify: inter-word;
   hyphens: auto;
   margin-left: auto !important;
@@ -345,6 +345,15 @@ body>*:last-child:not(main):not(footer):not(script)::after {
 }
 
 /* Headings in prose */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  text-align: center !important;
+}
+
 .prose h2 {
   font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 800;
@@ -514,6 +523,9 @@ body>*:last-child:not(main):not(footer):not(script)::after {
     line-height: 1.8;
     padding: 0 0.5rem;
     max-width: 100%;
+    text-align: justify !important;
+    text-justify: inter-word;
+    hyphens: auto;
   }
 
   .prose h2 {
@@ -658,6 +670,12 @@ body>*:last-child:not(main):not(footer):not(script)::after {
   /* Make prose scrollable for wide tables */
   .prose {
     overflow-x: auto;
+  }
+  
+  /* Ensure headings remain centered in mobile view */
+  .prose h2,
+  .prose h3 {
+    text-align: center !important;
   }
 }
 
