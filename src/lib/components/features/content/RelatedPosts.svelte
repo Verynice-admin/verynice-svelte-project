@@ -16,22 +16,83 @@
 
 	// Carousel logic
 	let scrollContainer: HTMLElement;
+	let touchStartX = 0;
+	let touchEndX = 0;
 
 	function scroll(direction: 'left' | 'right') {
-		if (!scrollContainer) return;
-		const cardWidth = 320; // Approx card width + gap to scroll one by one or page
-		// Or better: scroll by container width / 3
-		const scrollAmount = scrollContainer.clientWidth;
+		// Get the container element if not already bound
+		const container = scrollContainer || document.querySelector('.carousel-container') as HTMLElement;
 
-		const targetScroll =
-			direction === 'left'
-				? scrollContainer.scrollLeft - scrollAmount
-				: scrollContainer.scrollLeft + scrollAmount;
+		if (!container) {
+			console.error('No carousel container found');
+			return;
+		}
 
-		scrollContainer.scrollTo({
-			left: targetScroll,
+		// For mobile: center each card in the viewport
+		// For desktop: scroll by container width (full page)
+		const isMobile = typeof window !== 'undefined' && window.innerWidth <= 767;
+
+		let targetScroll;
+		if (isMobile) {
+			// Calculate current centered card index
+			const currentScroll = container.scrollLeft;
+			const viewportWidth = window.innerWidth;
+			const cardSpacing = 318; // 270px + 48px margin
+			const firstCardOffset = 20; // margin-left of first card
+
+			// Find which card is currently most centered
+			const centeredPosition = currentScroll + (viewportWidth / 2);
+			const currentCardIndex = Math.round((centeredPosition - firstCardOffset) / cardSpacing);
+
+			// Calculate target card index
+			const targetCardIndex = direction === 'left'
+				? Math.max(0, currentCardIndex - 1)
+				: currentCardIndex + 1;
+
+			// Calculate scroll position to center the target card
+			const cardLeftPosition = firstCardOffset + (targetCardIndex * cardSpacing);
+			const cardCenter = cardLeftPosition + 135; // 270px / 2
+			const viewportCenter = viewportWidth / 2;
+			targetScroll = cardCenter - viewportCenter;
+		} else {
+			const currentScroll = container.scrollLeft;
+			targetScroll = direction === 'left'
+				? Math.max(0, currentScroll - container.clientWidth)
+				: currentScroll + container.clientWidth;
+		}
+
+		container.scrollTo({
+			left: Math.max(0, targetScroll),
 			behavior: 'smooth'
 		});
+	}
+
+	// Touch/Swipe handlers
+	function handleTouchStart(event: TouchEvent) {
+		touchStartX = event.changedTouches[0].screenX;
+	}
+
+	function handleTouchEnd(event: TouchEvent) {
+		touchEndX = event.changedTouches[0].screenX;
+		handleSwipe();
+	}
+
+	function handleSwipe() {
+		const container = scrollContainer || document.querySelector('.carousel-container') as HTMLElement;
+		if (!container) return;
+
+		const swipeThreshold = 50; // Minimum swipe distance
+		const swipeDistance = touchStartX - touchEndX;
+
+		if (Math.abs(swipeDistance) > swipeThreshold) {
+			if (swipeDistance > 0) {
+				// Swipe left - scroll right (next card)
+				scroll('right');
+			} else {
+				// Swipe right - scroll left (previous card)
+				scroll('left');
+			}
+		}
 	}
 
 	onMount(() => {
@@ -88,7 +149,7 @@
 			</h2>
 
 			<!-- Navigation Arrows -->
-			{#if displayPosts.length > 4}
+			{#if displayPosts.length > 1}
 				<div class="nav-arrows">
 					<button on:click={() => scroll('left')} aria-label="Scroll left" class="nav-btn">
 						<svg
@@ -122,7 +183,7 @@
 	{/if}
 
 	{#if displayPosts?.length}
-		<div class="carousel-container" bind:this={scrollContainer}>
+		<div class="carousel-container" bind:this={scrollContainer} on:touchstart={handleTouchStart} on:touchend={handleTouchEnd}>
 			<ul class="related-posts-list">
 				{#each displayPosts as post, index (post?.id || index)}
 					<li class="carousel-item" style="--rotation: {index % 2 === 0 ? '-1.5deg' : '1.5deg'};">
@@ -187,6 +248,8 @@
 		cursor: pointer;
 		transition: all 0.2s;
 		color: #64748b;
+		position: relative;
+		z-index: 10;
 	}
 
 	.nav-btn:hover {
@@ -237,23 +300,37 @@
 			padding-right: 20px !important;
 			margin: 0 0 0 -20px !important;
 			width: calc(100% + 40px) !important;
+			overflow-x: auto !important;
+			overflow-y: hidden !important;
+			scroll-snap-type: none !important;
+			-webkit-overflow-scrolling: touch !important;
+			min-height: 200px !important;
 		}
 
 		.related-posts-list {
 			gap: 0 !important;
+			white-space: nowrap !important;
+			padding-left: 0 !important;
+			justify-content: flex-start !important;
 		}
 
 		.carousel-item {
-			flex: 0 0 140px !important;
-			width: 140px !important;
-			min-width: 140px !important;
-			max-width: 140px !important;
-			scroll-snap-align: start !important;
+			flex: none !important;
+			width: 270px !important;
+			min-width: 270px !important;
+			max-width: 270px !important;
+			margin-right: 48px !important;
+			box-sizing: border-box !important;
+		}
+
+		.carousel-item:first-child {
+			margin-left: 20px !important;
 		}
 
 		.carousel-item :global(.attractions-item-card) {
-			border-radius: 12px !important;
+			border-radius: 16px !important;
 			overflow: hidden !important;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
 		}
 
 		.carousel-item :global(.card-image-wrapper) {
@@ -264,16 +341,17 @@
 		}
 
 		.carousel-item :global(.card-image) {
-			border-radius: 0 !important;
+			border-radius: 16px !important;
 		}
 
 		.attractions-item-content {
-			padding: 8px 10px !important;
+			padding: 12px 15px !important;
 		}
 
 		.attractions-item-content .item-title {
-			font-size: 13px !important;
+			font-size: 15px !important;
 			line-height: 1.3 !important;
+			font-weight: 600 !important;
 			display: -webkit-box !important;
 			-webkit-line-clamp: 3 !important;
 			-webkit-box-orient: vertical !important;
@@ -281,8 +359,8 @@
 		}
 
 		.category {
-			font-size: 10px !important;
-			margin-bottom: 2px !important;
+			font-size: 11px !important;
+			margin-bottom: 4px !important;
 		}
 	}
 

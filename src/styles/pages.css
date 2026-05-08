@@ -2929,13 +2929,7 @@ h2.history-section-title {
     margin-bottom: 0.75rem;
   }
 
-  /* Enhanced Related Posts on mobile */
-  .related-posts-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-top: 2rem;
-  }
+/* Related Posts mobile styles are in the component */
 
   .related-post-card {
     border-radius: 16px;
@@ -3654,17 +3648,23 @@ footer span:empty {
 /* Override transparent background for sticky header */
 #site-header,
 header#site-header {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 1000 !important;
-  background-color: rgb(17, 63, 114) !important;
-  /* Darker blue background */
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border-bottom: 1px solid rgba(17, 63, 114, 0.3) !important;
-  box-shadow: 0 2px 8px rgba(17, 63, 114, 0.2) !important;
-  transition: background-color 0.3s ease, border-bottom-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease !important;
-  width: 100% !important;
+	top: 0 !important;
+	z-index: 1000 !important;
+	background-color: rgb(17, 63, 114) !important;
+	/* Darker blue background */
+	backdrop-filter: blur(16px) !important;
+	-webkit-backdrop-filter: blur(16px) !important;
+	border-bottom: 1px solid rgba(17, 63, 114, 0.3) !important;
+	box-shadow: 0 2px 8px rgba(17, 63, 114, 0.2) !important;
+	transition: background-color 0.3s ease, border-bottom-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease !important;
+}
+
+@media (min-width: 1024px) {
+	#site-header,
+	header#site-header {
+		position: sticky !important;
+		width: 100% !important;
+	}
 }
 
 /* Mobile: blue header */
@@ -5687,14 +5687,15 @@ body:has(#page-hero-section) {
 
 /* Timeline Typography */
 .timeline-year {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   background: #d4a373;
   color: white;
   padding: 8px 20px;
   border-radius: 30px;
   font-weight: 800;
   font-size: 1.2rem;
-  margin-bottom: 1.5rem;
+  margin: 0 auto 1.5rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   text-align: center;

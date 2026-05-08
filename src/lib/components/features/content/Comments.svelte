@@ -692,7 +692,7 @@
 
 	@media (max-width: 640px) {
 		.comments-section {
-			padding: 1rem 0.5rem;
+			padding: 1rem 1.5rem;
 		}
 		
 		.comment-card {
