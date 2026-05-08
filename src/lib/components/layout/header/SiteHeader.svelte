@@ -445,7 +445,7 @@
 	}
 
 	.logo {
-		color: #e2e8f0;
+		color: #fff !important;
 		font-weight: 800;
 		text-decoration: none;
 		font-size: 1.5rem;
@@ -467,7 +467,7 @@
 			display: flex;
 			justify-content: flex-start;
 			align-items: center;
-			color: #fff;
+			color: #fff !important;
 			text-decoration: none;
 			letter-spacing: -0.01em;
 			transition: transform 0.2s ease-in-out;
