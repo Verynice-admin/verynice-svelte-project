@@ -153,7 +153,7 @@
 	.current-lang {
 		background: transparent;
 		border: none;
-		color: #f1f5f9;
+		color: #fff !important;
 		padding: 0.25rem 0.5rem;
 		border-radius: 8px;
 		cursor: pointer;
@@ -183,6 +183,7 @@
 	.lang-code {
 		position: relative;
 		top: 1px;
+		color: #fff !important;
 	}
 
 	.lang-spinner {
@@ -233,7 +234,7 @@
 		text-align: left;
 		padding: 0.4rem 0.6rem;
 		border-radius: 8px;
-		color: #334155;
+		color: #1e293b;
 		font-size: 0.8rem;
 		font-family: 'Inter', sans-serif;
 		cursor: pointer;
@@ -324,7 +325,7 @@
 		}
 
 		.current-lang {
-			padding: 0.3rem 0.6rem;
+			padding: 0.3rem 0 0.3rem 0.6rem;
 			font-size: 1.1rem;
 			gap: 0.3rem;
 		}
