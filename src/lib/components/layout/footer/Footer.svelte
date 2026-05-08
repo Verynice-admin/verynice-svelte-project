@@ -183,9 +183,9 @@
 </footer>
 
 <style>
-	.footer {
- 		background-color: #000000;
-		color: rgba(255, 255, 255, 0.85);
+.footer {
+  		background-color: #000000;
+		color: #fff;
 		padding: 0.5rem 1rem;
 		font-family: 'Inter', sans-serif;
 		border-top: none;
@@ -217,7 +217,7 @@
 	.footer-logo {
 		font-size: 1rem;
 		font-weight: 800;
-		color: #fff;
+		color: #fff !important;
 		text-decoration: none;
 		letter-spacing: -0.01em;
 		display: inline-flex;
@@ -237,7 +237,7 @@
 		top: -0.05em;
 	}
 	.tld {
-		color: rgb(125, 210, 251); /* Light Blue */
+		color: #fff; /* White */
 		font-weight: 400; /* Thinner */
 		/* margin-left: 6px; removed */
 		text-transform: lowercase; /* Ensure kz is lowercase */
@@ -327,8 +327,7 @@
 	}
 
 	.footer-tagline {
-		font-size: 0.65rem;
-		color: rgba(255, 255, 255, 0.75);
+		color: #fff;
 		line-height: 1.2;
 		margin: 0;
 		display: none;
@@ -347,7 +346,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: rgba(255, 255, 255, 0.85);
+		color: #fff;
 		transition: color 0.2s;
 	}
 
@@ -366,7 +365,7 @@
 	}
 
 	.link-group h4 {
-		color: #fff;
+		color: #fff !important;
 		font-size: 0.65rem;
 		font-weight: 600;
 		text-transform: uppercase;
@@ -402,7 +401,7 @@
 	}
 
 	.link-group a {
-		color: rgba(255, 255, 255, 0.85);
+		color: #fff !important;
 		text-decoration: none;
 		font-size: 0.6rem;
 		transition: color 0.2s;
@@ -424,11 +423,11 @@
 		flex-wrap: wrap;
 		gap: 0.5rem;
 		font-size: 0.75rem;
-		color: rgba(255, 255, 255, 0.85);
+		color: #fff;
 	}
 
 	.copyright {
-		color: rgba(255, 255, 255, 0.85);
+		color: #fff;
 		font-size: 0.75rem;
 	}
 
@@ -455,7 +454,7 @@
 	}
 
 	.legal-links a {
-		color: rgba(255, 255, 255, 0.85);
+		color: #fff !important;
 		text-decoration: none;
 		transition: color 0.2s;
 		font-size: 0.75rem;

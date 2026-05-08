@@ -1,7 +1,6 @@
 <script>
 	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
-	import { afterNavigate } from '$app/navigation';
 
 	import LanguageSelector from '$lib/components/ui/LanguageSelector.svelte';
 
@@ -21,10 +20,7 @@
 		String(text || '')
 			.replace(/[.•·]/g, '') // Remove dots, bullet points, and middle dots
 			.trim();
-	$: menu = (arr(config.menu).length ? arr(config.menu) : arr(config.menuLinks)).map((item) => ({
-		...item,
-		text: removeDots(item.text)
-	}));
+	$: menu = arr(config.menu).length ? arr(config.menu) : arr(config.menuLinks);
 
 	let isScrolled = false;
 	let isMobileMenuOpen = false;
@@ -104,10 +100,7 @@
 		}
 	}
 
-	// Re-check scroll state on navigation
-	afterNavigate(() => {
-		checkScroll();
-	});
+
 
 	onMount(() => {
 		if (browser) {
@@ -247,14 +240,26 @@
 
 	/* 1. Default Styles (Mobile < 1024px) */
 	@media (max-width: 1023.98px) {
+#site-header,
+		header#site-header {
+			width: 100% !important;
+			position: fixed !important;
+			top: 0 !important;
+			left: 0 !important;
+			right: 0 !important;
+			z-index: 100 !important;
+		}
+
 		.header-inner {
 			display: grid;
 			/* [Toggle: ~44px] [Logo: Shared] [Actions: ~90px] */
 			grid-template-columns: 44px 1fr 90px;
 			align-items: center;
-			padding: 0.5rem 0.75rem;
+			padding: 0.5rem 0 0.5rem 0.75rem;
 			min-height: 3.5rem;
 			gap: 0;
+			width: 100%;
+			max-width: none;
 		}
 
 		/* Hide desktop menu */
@@ -296,6 +301,11 @@
 			display: flex;
 			align-items: center;
 			gap: 0.75rem;
+		}
+
+		/* Language selector should touch right edge */
+		.language-selector {
+			margin-right: 0;
 		}
 	}
 
