@@ -192,10 +192,14 @@ header.header {
 
 @media (max-width: 1023.98px) {
   .header-inner {
-    padding: 0 0 0 0.75rem;
+    display: grid;
+    grid-template-columns: 44px 1fr 80px; /* Hamburger | Logo (centered) | Actions */
+    align-items: center;
+    padding: 0.5rem 0.75rem; /* Restore some padding */
+    min-height: 3.5rem;
+    gap: 0;
     width: 100%;
-    gap: 1rem;
-    justify-content: space-between;
+    max-width: none;
   }
 
   /* Hide desktop menu completely on mobile - hide the entire header-item container */
@@ -226,19 +230,54 @@ header.header {
     left: -9999px !important;
   }
 
-  /* Center logo slightly left towards menu on mobile */
-  .header-logo {
-    position: absolute;
-    left: 45%;
-    transform: translateX(-50%);
-    z-index: 1;
+  /* Hamburger button - left column */
+  .header-menu-toggle {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.4rem;
+    color: #fff;
+    background: transparent;
+    border: none;
+    order: unset; /* Remove order override */
   }
 
-  .header-buttons {
+  /* Logo - center column */
+  .header-logo {
+    grid-column: 2;
     display: flex;
-    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+    z-index: 10;
+    position: static; /* Remove absolute positioning */
+    left: auto;
+    transform: none;
+  }
+
+  /* Actions - right column */
+  .header-buttons {
+    grid-column: 3;
+    display: flex;
+    justify-content: center; /* Center the language selector */
+    align-items: center;
+    gap: 0.25rem;
     width: 100%;
-    justify-content: space-between;
+    padding: 0;
+    order: unset;
+  }
+
+  /* Ensure language selector fits */
+  .header-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Language selector margin reset */
+  .language-selector {
+    margin-right: 0;
   }
 
   .header-menu-toggle {
@@ -1243,4 +1282,27 @@ header.site-header {
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+}
+
+/* ============================================================
+   CATEGORY NAV LINKS - Global dark text override
+   Prevents browser-default visited/hover blue from bleeding in
+   ============================================================ */
+.category-nav-link,
+.category-nav-link:visited {
+  color: #1a1a1a !important;
+  text-decoration: none !important;
+}
+
+.category-nav-link .nav-text {
+  color: #1a1a1a !important;
+}
+
+.category-nav-link:hover {
+  color: #1a1a1a !important;
+  text-decoration: none !important;
+}
+
+.category-nav-link:hover .nav-text {
+  color: #1a1a1a !important;
 }

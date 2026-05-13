@@ -78,7 +78,7 @@
 		}
 
 		translationError = '';
-		isOpen = false; // Close immediately for better feedback
+		isOpen = false;
 
 		const previous = get(currentLanguage);
 		currentLanguage.set(code);
@@ -159,6 +159,7 @@
 		cursor: pointer;
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 0.25rem;
 		font-family: 'Inter', sans-serif;
 		font-size: 1rem;
@@ -186,25 +187,6 @@
 		color: #fff !important;
 	}
 
-	.lang-spinner {
-		width: 10px;
-		height: 10px;
-		border-radius: 999px;
-		margin-left: 0.35rem;
-		border: 2px solid rgba(255, 255, 255, 0.5);
-		border-top-color: #fff;
-		animation: spin 0.6s linear infinite;
-		display: inline-block;
-	}
-
-	.chevron {
-		transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-		opacity: 0.8;
-	}
-	.chevron.open {
-		transform: rotate(180deg);
-	}
-
 	.dropdown {
 		position: absolute;
 		top: calc(100% + 0.5rem);
@@ -225,7 +207,50 @@
 		overflow-x: hidden;
 	}
 
-	
+	/* Mobile: Mirror dropdown to left edge of button (matching nav menu behavior) */
+	@media (max-width: 1023.98px) {
+		.language-selector {
+			position: static;
+			z-index: 10001;
+		}
+
+	.dropdown {
+		position: absolute;
+		top: calc(100% + 0.5rem);
+		left: 0;
+		right: auto !important;
+		min-width: 160px;
+		max-width: 90vw;
+		transform-origin: top left;
+	}
+
+		.current-lang {
+			padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+			font-size: 0.95rem;
+			gap: 0.2rem;
+			max-width: 60px;
+			min-width: 0;
+			overflow: hidden;
+		}
+
+		.lang-option {
+			padding: 0.5rem 0.6rem;
+			gap: 0.4rem;
+			flex-wrap: wrap;
+		}
+
+		.option-label {
+			font-size: 0.75rem;
+			width: 2rem;
+		}
+
+		.option-name {
+			display: block;
+			font-size: 0.8rem;
+			flex: 1;
+			word-break: break-word;
+		}
+	}
 
 	.lang-option {
 		background: transparent;
@@ -302,50 +327,6 @@
 		}
 		to {
 			transform: rotate(360deg);
-		}
-	}
-
-	@media (max-width: 600px) {
-		.language-selector {
-			position: static;
-			z-index: 10001;
-		}
-
-		.dropdown {
-			position: fixed;
-			left: 50% !important;
-			top: 3.5rem !important;
-			transform: translateX(-50%);
-			min-width: 160px;
-			max-width: calc(100vw - 2rem);
-			max-height: 70vh;
-			overflow-y: auto;
-			padding: 0.4rem;
-			z-index: 10002;
-		}
-
-		.current-lang {
-			padding: 0.3rem 0 0.3rem 0.6rem;
-			font-size: 1.1rem;
-			gap: 0.3rem;
-		}
-
-		.lang-option {
-			padding: 0.5rem 0.6rem;
-			gap: 0.4rem;
-			flex-wrap: wrap;
-		}
-
-		.option-label {
-			font-size: 0.75rem;
-			width: 2rem;
-		}
-
-		.option-name {
-			display: block;
-			font-size: 0.8rem;
-			flex: 1;
-			word-break: break-word;
 		}
 	}
 </style>

@@ -355,7 +355,210 @@
 			position: fixed;
 			font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
 			z-index: 200;
-			transition: all 0.3s ease;
+			transition: opacity 0.3s ease, visibility 0.3s ease;
+		}
+
+		/* ========================================= */
+		/* DESKTOP TOC - Right-side rail (>900px)    */
+		/* ========================================= */
+		@media (min-width: 901px) {
+			/* --- Hero TOC: floating panel over hero image --- */
+			.toc-rail-hero {
+				position: fixed !important;
+				top: 50% !important;
+				right: 32px !important;
+				bottom: auto !important;
+				left: auto !important;
+				transform: translateY(-50%) !important;
+				background: rgba(0, 0, 0, 0.48) !important;
+				backdrop-filter: blur(10px) !important;
+				-webkit-backdrop-filter: blur(10px) !important;
+				border-radius: 12px !important;
+				padding: 1rem 1.25rem !important;
+				min-width: 160px !important;
+				max-width: 240px !important;
+				box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28) !important;
+				display: block !important;
+				transition: opacity 0.3s ease, visibility 0.3s ease !important;
+			}
+
+			.toc-rail-hero .toc-header {
+				display: block !important;
+				font-size: 0.62rem !important;
+				font-weight: 700 !important;
+				letter-spacing: 0.12em !important;
+				text-transform: uppercase !important;
+				color: rgba(255, 255, 255, 0.55) !important;
+				margin-bottom: 0.75rem !important;
+				padding: 0 !important;
+				text-align: left !important;
+			}
+
+			.toc-rail-hero ol {
+				list-style: none !important;
+				padding: 0 !important;
+				margin: 0 !important;
+				display: flex !important;
+				flex-direction: column !important;
+				gap: 0.2rem !important;
+			}
+
+			.toc-rail-hero li {
+				list-style: none !important;
+				height: auto !important;
+			}
+
+			.toc-rail-hero a {
+				display: block !important;
+				width: auto !important;
+				height: auto !important;
+				min-width: unset !important;
+				padding: 0.32rem 0.5rem !important;
+				border-radius: 6px !important;
+				background: transparent !important;
+				color: rgba(255, 255, 255, 0.78) !important;
+				text-decoration: none !important;
+				font-size: 0.82rem !important;
+				font-weight: 400 !important;
+				line-height: 1.4 !important;
+				text-align: left !important;
+				justify-content: flex-start !important;
+				border: none !important;
+				transform: none !important;
+				transition: background 0.15s, color 0.15s !important;
+			}
+
+			.toc-rail-hero li.active a,
+			.toc-rail-hero a:hover {
+				background: rgba(255, 255, 255, 0.14) !important;
+				color: #fff !important;
+				transform: none !important;
+			}
+
+			.toc-rail-hero .text-label { display: inline !important; }
+			.toc-rail-hero .number,
+			.toc-rail-hero .card,
+			.toc-rail-hero .dot { display: none !important; }
+
+			/* --- Article TOC: numbered right-side rail --- */
+			.toc-rail-article {
+				position: fixed !important;
+				top: 50% !important;
+				right: var(--rail-right, 32px) !important;
+				bottom: auto !important;
+				left: auto !important;
+				transform: translateY(-50%) !important;
+				background: transparent !important;
+				backdrop-filter: none !important;
+				-webkit-backdrop-filter: none !important;
+				padding: 0 !important;
+				border-radius: 0 !important;
+				box-shadow: none !important;
+				opacity: 0 !important;
+				pointer-events: none !important;
+				visibility: hidden !important;
+				display: block !important;
+				transition: opacity 0.3s ease, visibility 0.3s ease !important;
+			}
+
+			.toc-rail-article.visible {
+				opacity: 1 !important;
+				pointer-events: auto !important;
+				visibility: visible !important;
+			}
+
+			.toc-rail-article ol {
+				list-style: none !important;
+				padding: 0 !important;
+				margin: 0 !important;
+				display: flex !important;
+				flex-direction: column !important;
+				gap: 0.6rem !important;
+			}
+
+			.toc-rail-article li {
+				list-style: none !important;
+				height: auto !important;
+				position: relative !important;
+			}
+
+			.toc-rail-article a {
+				display: flex !important;
+				align-items: center !important;
+				gap: 0.5rem !important;
+				text-decoration: none !important;
+				width: auto !important;
+				height: auto !important;
+				min-width: unset !important;
+				background: transparent !important;
+				border: none !important;
+				justify-content: flex-end !important;
+			}
+
+			.toc-rail-article .rail-item {
+				display: flex !important;
+				align-items: center !important;
+				gap: 0.5rem !important;
+				justify-content: flex-end !important;
+			}
+
+			.toc-rail-article .number {
+				display: block !important;
+				font-size: 0.68rem !important;
+				font-weight: 700 !important;
+				color: rgba(0, 0, 0, 0.35) !important;
+				min-width: 22px !important;
+				text-align: right !important;
+				font-variant-numeric: tabular-nums !important;
+				letter-spacing: 0.03em !important;
+				transition: color 0.2s ease !important;
+			}
+
+			.toc-rail-article .dot {
+				display: block !important;
+				width: 6px !important;
+				height: 6px !important;
+				border-radius: 50% !important;
+				background: rgba(0, 0, 0, 0.22) !important;
+				flex-shrink: 0 !important;
+				transition: all 0.2s ease !important;
+			}
+
+			/* Card label: hidden by default, revealed on hover/active */
+			.toc-rail-article .card {
+				display: none !important;
+				position: absolute !important;
+				right: calc(100% + 0.75rem) !important;
+				top: 50% !important;
+				transform: translateY(-50%) !important;
+				background: #fff !important;
+				border: 1px solid rgba(0, 0, 0, 0.09) !important;
+				border-radius: 8px !important;
+				padding: 0.4rem 0.75rem !important;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+				white-space: nowrap !important;
+				pointer-events: none !important;
+				z-index: 10 !important;
+			}
+
+			.toc-rail-article li:hover .card,
+			.toc-rail-article li.active .card { display: block !important; }
+
+			.toc-rail-article .card-label {
+				font-size: 0.78rem !important;
+				font-weight: 500 !important;
+				color: #0f172a !important;
+			}
+
+			.toc-rail-article li.active .number,
+			.toc-rail-article li:hover .number { color: rgba(5, 115, 179, 0.9) !important; }
+
+			.toc-rail-article li.active .dot,
+			.toc-rail-article li:hover .dot {
+				background: rgba(5, 115, 179, 0.8) !important;
+				width: 8px !important;
+				height: 8px !important;
+			}
 		}
 
 		/* ========================================= */
@@ -461,17 +664,10 @@
 			}
 		}
 
-		/* Desktop TOC hidden on mobile is already handled by existing media query at bottom */
+		/* Hide the entire TOC on narrow tablets (769-900px): no room for the rail */
 		@media (max-width: 900px) {
 			.toc-rail {
 				display: none !important;
-			}
-		}
-
-		/* Desktop TOC overrides for large screens */
-		@media (min-width: 769px) {
-			.toc-rail {
-				display: block !important;
 			}
 		}
 	</style>

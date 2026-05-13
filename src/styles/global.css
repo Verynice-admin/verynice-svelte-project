@@ -177,6 +177,16 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   color: #222;
+  /* Prevent transforms from affecting fixed positioning */
+  transform: none !important;
+  perspective: none !important;
+  filter: none !important;
+}
+
+body > div {
+  transform: none !important;
+  perspective: none !important;
+  filter: none !important;
 }
 
 ::-webkit-scrollbar {

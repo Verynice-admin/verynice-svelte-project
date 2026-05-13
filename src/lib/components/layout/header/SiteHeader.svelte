@@ -177,9 +177,21 @@
 			</ul>
 		</div>
 
-		<!-- 4. Right Actions (Language only - search moved to bottom bar) -->
+		<!-- 4. Right Actions -->
 		<div class="header-item header-buttons">
 			<div class="header-right-actions">
+				{#if !isMobile}
+					<button
+						class="header-search-btn"
+						aria-label="Search"
+						on:click={openSearch}
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="11" cy="11" r="8"></circle>
+							<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+						</svg>
+					</button>
+				{/if}
 				<LanguageSelector isCompact={isMobile} />
 			</div>
 		</div>
@@ -238,7 +250,7 @@
 
 	/* --- Mobile-First Refactoring --- */
 
-	/* 1. Default Styles (Mobile < 1024px) */
+/* 1. Default Styles (Mobile < 1024px) */
 	@media (max-width: 1023.98px) {
 #site-header,
 		header#site-header {
@@ -252,8 +264,8 @@
 
 		.header-inner {
 			display: grid;
-			/* [Toggle: ~44px] [Logo: Shared] [Actions: ~90px] */
-			grid-template-columns: 44px 1fr 90px;
+			/* [Toggle: ~44px] [Logo: Shared] [Actions: ~100px] */
+			grid-template-columns: 44px 1fr 100px;
 			align-items: center;
 			padding: 0.5rem 0 0.5rem 0.75rem;
 			min-height: 3.5rem;
@@ -301,6 +313,7 @@
 			display: flex;
 			align-items: center;
 			gap: 0.75rem;
+			padding: 0 1.75rem;
 		}
 
 		/* Language selector should touch right edge */

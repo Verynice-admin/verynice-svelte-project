@@ -236,7 +236,7 @@
 		z-index: 2;
 		width: 100%;
 		padding: 2rem;
-		background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+		background: transparent;
 	}
 
 	:global(.section-header-content-row) {

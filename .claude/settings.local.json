@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"http://localhost:5173/api/firebase/doc?path=pages/heritage/articles/kazakh-melodies/sections\")",
+      "Bash(python -c \"import json,sys; data=json.load\\(sys.stdin\\); [print\\(f\\\\\"id={d['id']}, order={d.get\\('order'\\)}, imagePublicId={d.get\\('imagePublicId','MISSING'\\)}\\\\\"\\) for d in data.get\\('data',[]\\)]\")",
+      "Bash(curl -s -X PATCH http://localhost:5173/api/firebase/doc -H \"Content-Type: application/json\" -d '{\"path\":\"pages/heritage/articles/kazakh-melodies/sections/the-dombra\",\"data\":{\"imagePublicId\":\"content/pages/heritage/kazakhMelodies/dombra\"}}')",
+      "Bash(curl -s -X PATCH http://localhost:5173/api/firebase/doc -H \"Content-Type: application/json\" -d '{\"path\":\"pages/heritage/articles/kazakh-melodies/sections/traditional-instruments\",\"data\":{\"imagePublicId\":\"content/pages/heritage/kazakhMelodies/Kobyz\"}}')",
+      "Bash(curl -s -X PATCH http://localhost:5173/api/firebase/doc -H \"Content-Type: application/json\" -d '{\"path\":\"pages/heritage/articles/kazakh-melodies/sections/traditional-dances\",\"data\":{\"imagePublicId\":\"content/pages/heritage/kazakhMelodies/KaraZhorga\"}}')",
+      "Bash(curl -s -X PATCH http://localhost:5173/api/firebase/doc -H \"Content-Type: application/json\" -d '{\"path\":\"pages/heritage/articles/kazakh-melodies/sections/epic-poetry\",\"data\":{\"imagePublicId\":\"content/pages/heritage/kazakhMelodies/Alpamys\"}}')"
+    ]
+  }
+}

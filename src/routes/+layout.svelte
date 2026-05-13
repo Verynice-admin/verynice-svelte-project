@@ -194,7 +194,7 @@
 
 <!-- Search Bar -->
 <div class="global-search-bar">
-	<div style="position: relative; width: 100%; max-width: 600px; display: flex; align-items: center;">
+	<div class="global-search-wrapper">
 		<input
 			type="text"
 			autocomplete="off"
@@ -211,10 +211,9 @@
 					isSearchOpen = true;
 				}
 			}}
-			style="width: 100%; padding: 0.6rem 3rem 0.6rem 1rem; font-size: 16px; border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 30px; outline: none; z-index: 10001; pointer-events: auto;"
 		/>
 		{#if searchQuery}
-			<button type="button" style="position: absolute; right: 0.75rem; z-index: 10002; background: rgba(0, 0, 0, 0.1); border: none; cursor: pointer; padding: 0.4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; min-width: 28px; min-height: 28px;" aria-label="Clear search" on:click={() => { searchQuery = ''; searchInput?.focus(); }}>
+			<button type="button" class="global-search-clear" aria-label="Clear search" on:click={() => { searchQuery = ''; searchInput?.focus(); }}>
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 				</svg>
@@ -322,25 +321,91 @@
 		display: none;
 	}
 
+	/* Override any potential issues with parent containers */
+	html, body {
+		height: 100% !important;
+		overflow-x: hidden !important;
+		transform: none !important;
+		perspective: none !important;
+		filter: none !important;
+	}
+
+	/* Ensure search bar is always visible */
 	@media (max-width: 767px) {
 		.global-search-bar {
 			display: flex !important;
 			position: fixed !important;
-			bottom: 0 !important;
+			bottom: max(0px, env(safe-area-inset-bottom)) !important;
 			left: 0 !important;
 			right: 0 !important;
-			padding: 0.75rem 1rem;
+			width: 100vw !important;
+			max-width: 100% !important;
+			padding: 0.75rem 1rem !important;
+			padding-bottom: calc(0.75rem + max(0px, env(safe-area-inset-bottom))) !important;
 			background: rgba(255, 255, 255, 0.95);
 			backdrop-filter: blur(10px);
-			z-index: 9998;
+			z-index: 10000 !important;
 			box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-			justify-content: center;
+			justify-content: center !important;
+			align-items: center !important;
+			box-sizing: border-box !important;
+			/* Remove properties that can interfere with fixed positioning */
+			transform: none !important;
+			will-change: auto !important;
+			contain: initial !important;
 		}
 
-		.global-search-bar > div {
-			width: 100%;
-			max-width: 600px;
-			position: relative;
+		.global-search-wrapper {
+			width: 100% !important;
+			max-width: 600px !important;
+			position: relative !important;
+			display: flex !important;
+			align-items: center !important;
+			margin: 0 auto !important;
+			justify-content: center !important;
+			flex-shrink: 0 !important;
+		}
+
+		.global-search-wrapper input {
+			width: 100% !important;
+			max-width: 100% !important;
+			padding: 0.55rem 2.5rem 0.55rem 1rem !important;
+			font-size: 16px !important;
+			border: 1px solid rgba(0, 0, 0, 0.2) !important;
+			border-radius: 0.75rem !important;
+			background: #fff !important;
+			color: #0f172a !important;
+			outline: none !important;
+			font-weight: 500 !important;
+			box-sizing: border-box !important;
+			text-align: left !important;
+			flex: 1 !important;
+		}
+
+		.global-search-wrapper input::placeholder {
+			color: rgba(0, 0, 0, 0.4);
+		}
+
+		.global-search-clear {
+			position: absolute;
+			right: 0.5rem;
+			top: 50%;
+			transform: translateY(-50%);
+			background: rgba(0, 0, 0, 0.1);
+			border: none;
+			cursor: pointer;
+			padding: 0.4rem;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-width: 28px;
+			min-height: 28px;
+			z-index: 2;
+		}
+
+		.global-search-clear:hover {
+			background: rgba(0, 0, 0, 0.15);
 		}
 	}
 </style>

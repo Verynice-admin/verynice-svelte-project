@@ -382,8 +382,7 @@ div,
 		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
 	}
 
-	/* Hide floating TOC on mobile (we show custom one) */
-	.toc-rail,
+	/* Hide floating TOC on mobile (we show custom one) - but keep the rail one visible */
 	.toc-rail-hero,
 	.toc-rail-article {
 		display: none !important;
@@ -738,12 +737,13 @@ a:hover {
 		color: #1a1a1a !important;
 	}
 
-	/* Hide floating TOC on mobile to prevent overlap */
-	.toc-rail,
+	/* Hide floating TOC on mobile to prevent overlap with content - only hide hero/article variants */
 	.toc-rail-hero,
 	.toc-rail-article {
 		display: none !important;
 	}
+
+	/* Keep .toc-rail visible for mobile navigation */
 
 	/* Full-width timeline layout */
 	.timeline-item {
