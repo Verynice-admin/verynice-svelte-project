@@ -487,14 +487,13 @@
 					<PhotoGallery title={photoGalleryTitle} photos={normalizedPhotoGallery} />
 				</div>
 			{/if}
-			{#if pageData.relatedPosts && pageData.relatedPosts.length > 0}
-				<div class="dark-component-wrapper">
-					<RelatedPosts
-						title={pageData.relatedPostsTitle || 'Related Posts'}
-						posts={pageData.relatedPosts}
-					/>
-				</div>
-			{/if}
+			<div class="dark-component-wrapper">
+				<RelatedPosts
+					title={pageData.relatedPostsTitle || 'Related Posts'}
+					posts={pageData.relatedPosts || []}
+					collectionPath="destinations"
+				/>
+			</div>
 			{#if pageData.video?.url}
 				<div class="video-single">
 					<VideoEmbed title={pageData.video.title || 'Video'} url={pageData.video.url} />

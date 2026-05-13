@@ -824,12 +824,11 @@
 			{#if hasPhotoGallery}
 				<PhotoGallery title={photoGalleryTitle} photos={normalizedPhotoGallery} />
 			{/if}
-			{#if pageData.relatedPosts && pageData.relatedPosts.length > 0}
-				<RelatedPosts
-					title={pageData.relatedPostsTitle || 'Related Posts'}
-					posts={pageData.relatedPosts}
-				/>
-			{/if}
+			<RelatedPosts
+				title={pageData.relatedPostsTitle || 'More to Explore'}
+				posts={pageData.relatedPosts || []}
+				collectionPath="destinations"
+			/>
 
 			{#if pageData.map?.coordinates}
 				<MapComponent

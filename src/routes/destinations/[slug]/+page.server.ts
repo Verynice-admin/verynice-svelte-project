@@ -501,9 +501,10 @@ export const load: PageServerLoad = async ({ params }) => {
                     id: attraction.id,
                     title: attraction.title || attraction.name || 'Discover',
                     category: attraction.category || attraction.region || 'Destinations',
-                    imagePublicId: imagePublicId, // Mapped correctly for Card
+                    imagePublicId: imagePublicId,
+                    headerBackgroundPublicId: imagePublicId,
                     url: url,
-                    mainTitle: attraction.mainTitle // Pass mainTitle if available
+                    mainTitle: attraction.mainTitle
                 });
             });
 

@@ -207,9 +207,12 @@
 			{#if hasPhotoGallery}
 				<PhotoGallery title={photoGalleryTitle} photos={normalizedPhotoGallery} />
 			{/if}
-			{#if pageData.relatedPosts && pageData.relatedPosts.length > 0}
-				<RelatedPosts title="More to Explore" posts={pageData.relatedPosts} />
-			{/if}
+			<RelatedPosts
+				title="More to Explore"
+				posts={pageData.relatedPosts || []}
+				collectionPath="destinations"
+				postId={data.slug}
+			/>
 			{#if pageData.video}
 				<VideoEmbed title={pageData.video.title} url={pageData.video.url} />
 			{/if}

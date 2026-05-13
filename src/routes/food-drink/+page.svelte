@@ -330,11 +330,9 @@
 			</section>
 		{/if}
 
-		{#if relatedPosts && relatedPosts.length}
-			<section class="themed-content-block">
-				<RelatedPosts title="Related Posts" posts={relatedPosts} />
-			</section>
-		{/if}
+		<section class="themed-content-block">
+			<RelatedPosts title="Related Posts" posts={relatedPosts || []} collectionPath="destinations" />
+		</section>
 
 		{#if faq?.items?.length}
 			<section class="themed-content-block">

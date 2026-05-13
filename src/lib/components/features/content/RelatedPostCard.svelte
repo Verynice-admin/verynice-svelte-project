@@ -41,7 +41,7 @@
 		{#if post.category}
 			<span class="category">{post.category}</span>
 		{/if}
-		<h3 class="card-title">{post.mainTitle || post.title}</h3>
+		<h3 class="card-title">{post.mainTitle || post.title || post.name || 'Discover'}</h3>
 		{#if description}
 			<p class="card-desc">{description}</p>
 		{/if}
@@ -59,7 +59,7 @@
 		display: flex;
 		flex-direction: column;
 		background: #fff;
-		border: 1px solid rgba(0,0,0,0.08);
+		border: 1.5px solid #9ca3af;
 		border-radius: 14px;
 		overflow: hidden;
 		text-decoration: none;
@@ -67,12 +67,12 @@
 		width: 100%;
 		height: 100%;
 		transition: transform 0.2s ease, box-shadow 0.2s ease;
-		box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+		box-shadow: 0 3px 14px rgba(0,0,0,0.18);
 	}
 
 	.card:hover {
 		transform: translateY(-3px);
-		box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+		box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 	}
 
 	.card-image-wrapper {

@@ -37,8 +37,10 @@
 			// Calculate current centered card index
 			const currentScroll = container.scrollLeft;
 			const viewportWidth = window.innerWidth;
-			const cardSpacing = 318; // 270px + 48px margin
-			const firstCardOffset = 20; // margin-left of first card
+			const firstItem = container.querySelector('.carousel-item') as HTMLElement;
+			const cardWidth = firstItem ? firstItem.offsetWidth : viewportWidth - 48;
+			const cardSpacing = cardWidth + 12; // card width + gap
+			const firstCardOffset = 24; // margin-left of first card
 
 			// Find which card is currently most centered
 			const centeredPosition = currentScroll + (viewportWidth / 2);
@@ -51,7 +53,7 @@
 
 			// Calculate scroll position to center the target card
 			const cardLeftPosition = firstCardOffset + (targetCardIndex * cardSpacing);
-			const cardCenter = cardLeftPosition + 135; // 270px / 2
+			const cardCenter = cardLeftPosition + cardWidth / 2;
 			const viewportCenter = viewportWidth / 2;
 			targetScroll = cardCenter - viewportCenter;
 		} else {
@@ -199,7 +201,7 @@
 
 <style>
 	.related-posts {
-		margin-top: var(--vnk-spacing-xl);
+		margin-top: 1rem;
 		position: relative;
 	}
 
@@ -212,7 +214,7 @@
 
 	.related-posts-header h2 {
 		font-family: 'Outfit', sans-serif;
-		font-size: clamp(2rem, 3vw, 3rem);
+		font-size: clamp(1.25rem, 3vw, 3rem);
 		font-weight: 800;
 		text-align: left;
 		margin: 0;
@@ -223,12 +225,12 @@
 
 	.related-posts-header h2 a {
 		text-decoration: none;
-		color: inherit;
+		color: #2d2d2d !important;
 		transition: color 0.3s ease;
 	}
 
 	.related-posts-header h2 a:hover {
-		color: var(--vnk-accent-color, #22d3ee);
+		color: #555 !important;
 	}
 
 	.nav-arrows {
@@ -293,38 +295,61 @@
 		min-width: 0;
 	}
 
-	/* Mobile: 140px cards with horizontal scroll */
+	/* Mobile: nearly full-width snap cards */
 	@media (max-width: 767px) {
+		.related-posts {
+			margin-top: 0 !important;
+			padding: 0 !important;
+		}
+
+		.related-posts-header {
+			padding: 0 1rem !important;
+			margin-bottom: 0.75rem !important;
+		}
+
+		.related-posts-header h2 {
+			font-size: 1.1rem !important;
+			letter-spacing: -0.01em !important;
+		}
+
+		.nav-btn {
+			width: 36px !important;
+			height: 36px !important;
+		}
+
 		.carousel-container {
-			padding-left: 20px !important;
-			padding-right: 20px !important;
-			margin: 0 0 0 -20px !important;
-			width: calc(100% + 40px) !important;
+			padding: 6px 0 1rem !important;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+			margin: 0 !important;
+			width: 100% !important;
 			overflow-x: auto !important;
-			overflow-y: hidden !important;
-			scroll-snap-type: none !important;
+			overflow-y: clip !important;
+			scroll-snap-type: x mandatory !important;
 			-webkit-overflow-scrolling: touch !important;
-			min-height: 200px !important;
+			min-height: 0 !important;
 		}
 
 		.related-posts-list {
-			gap: 0 !important;
+			gap: 12px !important;
 			white-space: nowrap !important;
-			padding-left: 0 !important;
+			padding-left: 16px !important;
+			padding-right: 16px !important;
 			justify-content: flex-start !important;
 		}
 
 		.carousel-item {
 			flex: none !important;
-			width: 270px !important;
-			min-width: 270px !important;
-			max-width: 270px !important;
-			margin-right: 48px !important;
+			width: calc(100vw - 72px) !important;
+			min-width: calc(100vw - 72px) !important;
+			max-width: calc(100vw - 72px) !important;
+			margin-right: 0 !important;
+			scroll-snap-align: center !important;
 			box-sizing: border-box !important;
 		}
 
 		.carousel-item:first-child {
-			margin-left: 20px !important;
+			margin-left: 0 !important;
 		}
 
 		.carousel-item :global(.attractions-item-card) {

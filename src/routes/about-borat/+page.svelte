@@ -409,15 +409,13 @@
 
 		<!-- Footer Content -->
 		<div class="timeline-footer wrapper">
-			{#if pageData.relatedPosts && pageData.relatedPosts.length > 0}
-				<!-- Wrap generic components in a dark container if they don't support dark mode natively -->
-				<div class="dark-component-wrapper">
-					<RelatedPosts
-						title={pageData.relatedPostsTitle || 'Related Posts'}
-						posts={pageData.relatedPosts}
-					/>
-				</div>
-			{/if}
+			<div class="dark-component-wrapper">
+				<RelatedPosts
+					title={pageData.relatedPostsTitle || 'Related Posts'}
+					posts={pageData.relatedPosts || []}
+					collectionPath="destinations"
+				/>
+			</div>
 			{#if pageData.videos && pageData.videos.length > 0}
 				<div class="videos-grid">
 					{#each pageData.videos as video}

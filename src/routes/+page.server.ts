@@ -44,14 +44,15 @@ export async function load() {
     const allAttractionsSnap = await adminDB.collectionGroup('attractions').limit(300).get();
     const attractions = allAttractionsSnap.docs.map(doc => {
       const data = doc.data();
+      const rawSlug = data.slug || doc.id;
+      const normalizedSlug = rawSlug.toLowerCase().replace(/_/g, '-');
+      const slugTitle = normalizedSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
       return {
-        id: doc.id,
-        title: data.title,
-        slug: data.slug || doc.id,
-        // Start Fix: Prioritize headerBackgroundPublicId
+        id: normalizedSlug,
+        title: data.title || data.mainTitle || data.name || data.heroTitle || data.heading || slugTitle,
+        slug: normalizedSlug,
         headerBackgroundPublicId: data.headerBackgroundPublicId || null,
         mainImage: data.headerBackgroundPublicId || data.mainImage || (data.photos && data.photos[0]) || null,
-        // End Fix
         image: data.image || null,
         region: doc.ref.parent.parent?.id || 'other'
       };

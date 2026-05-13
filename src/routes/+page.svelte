@@ -67,7 +67,6 @@
 					<button type="submit" class="btn-primary-neon">Discover</button>
 				</form>
 				<div class="search-suggestions">
-					<span>Popular:</span>
 					<a href="/destinations/charyn-canyon">Charyn Canyon</a>
 					<a href="/destinations/astana-city">Astana</a>
 					<a href="/destinations/kolsai-lakes">Kolsai Lakes</a>
@@ -457,8 +456,9 @@
 	}
 
 	.card-badge {
-		background: var(--vnk-accent-color);
-		color: #000;
+		background: rgba(255, 255, 255, 0.15);
+		color: #fff;
+		border: 1px solid rgba(255, 255, 255, 0.4);
 		padding: 0.4rem 1rem;
 		border-radius: 30px;
 		font-size: 0.75rem;
@@ -466,6 +466,8 @@
 		text-transform: uppercase;
 		display: inline-block;
 		margin-bottom: 1.5rem;
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
 	}
 
 	.featured-card-glass h3 {
@@ -792,9 +794,10 @@
 		text-decoration: none;
 	}
 
-	/* MOBILE ADAPTATIONS */
+	/* ============================================================
+	   TABLET — ≤ 1024px
+	   ============================================================ */
 	@media (max-width: 1024px) {
-		.welcome-grid,
 		.newsletter-card-premium {
 			grid-template-columns: 1fr;
 			gap: 3rem;
@@ -811,32 +814,394 @@
 		}
 	}
 
-	@media (max-width: 600px) {
-		.hero-text-box h1 {
-			font-size: 3rem;
+	/* ============================================================
+	   MOBILE — ≤ 767px
+	   ============================================================ */
+	@media (max-width: 767px) {
+
+		/* — Global section rhythm (÷3 vs desktop) — */
+		.section-padding { padding: 1.5rem 0 !important; }
+
+		/* ── 1. HERO: CENTER EVERYTHING ───────────────────────────── */
+
+		.hero-premium {
+			min-height: 100svh !important;
+			padding-top: 0 !important;
+			padding-bottom: 0 !important;
+			/* Let global center/center stand — we center WITHIN hero-content */
+		}
+
+		/* Kill the dark gradient the global responsive.css adds over the hero image */
+		.hero-overlay {
+			background: none !important;
+		}
+
+		/* Fight global responsive.css flex-start → center */
+		.hero-content {
+			align-items: center !important;
+			text-align: center !important;
+			padding: 0 1.25rem !important;
+			padding-top: max(6rem, env(safe-area-inset-top, 0px) + 5.5rem) !important;
+			padding-bottom: 2.5rem !important;
+		}
+
+		.hero-text-box {
+			align-items: center !important;
+			text-align: center !important;
+			max-width: 100% !important;
+		}
+
+		.hero-lead {
+			text-align: center !important;
+			font-size: 1rem !important;
+			line-height: 1.65 !important;
+			color: rgba(255, 255, 255, 0.88) !important;
+			margin-bottom: 1.5rem !important;
+			max-width: 100% !important;
+		}
+
+		/* Search glass — compact, inline row + small chips below */
+		.hero-search-glass {
+			max-width: 100% !important;
+			padding: 0.5rem !important;
+			border-radius: 14px !important;
+			margin: 0 auto !important;
+		}
+
+		/* Single inline row: input + button side by side */
+		.premium-search-form {
+			flex-direction: row !important;
+			gap: 0.4rem !important;
+			align-items: center !important;
+		}
+
+		.search-input-wrapper {
+			border-radius: 10px !important;
+			min-height: 44px !important;
+			padding: 0 0.75rem !important;
+			flex: 1 !important;
+		}
+
+		.search-input-wrapper input {
+			font-size: 0.9rem !important;
+			color: #fff !important;
+			padding: 0 !important;
 		}
 
 		.btn-primary-neon {
-			padding: 1rem 1.5rem;
+			width: auto !important;
+			flex-shrink: 0 !important;
+			min-height: 44px !important;
+			padding: 0 1rem !important;
+			border-radius: 10px !important;
+			font-size: 0.78rem !important;
+			display: flex !important;
+			align-items: center !important;
+			justify-content: center !important;
 		}
 
-		.featured-card-glass,
-		.newsletter-glass-card {
-			padding: 2rem;
-			margin: 0 1rem;
+		/* Compact centered chips */
+		.search-suggestions {
+			display: flex !important;
+			flex-wrap: wrap !important;
+			justify-content: center !important;
+			gap: 0.35rem !important;
+			margin-top: 0.5rem !important;
+			padding: 0 !important;
 		}
 
-		.section-padding {
-			padding: 4rem 0;
+		.search-suggestions a {
+			white-space: nowrap !important;
+			font-size: 0.72rem !important;
+			font-weight: 600 !important;
+			background: rgba(255, 255, 255, 0.1) !important;
+			padding: 0.25rem 0.7rem !important;
+			border-radius: 50px !important;
+			border: 1px solid rgba(255, 255, 255, 0.2) !important;
+			color: #fff !important;
+			opacity: 1 !important;
+			text-decoration: none !important;
 		}
 
-		.glass-input-form {
-			flex-direction: column;
+		/* ── 2. WELCOME ───────────────────────────────────────────── */
+
+		.welcome-section {
+			min-height: auto !important;
+			padding: 0 !important;
+			margin: 0.75rem 1rem !important;
+			align-items: flex-start !important;
+			background: #ffffff !important;
+			border-radius: 16px !important;
+			overflow: hidden !important;
+			box-shadow: 0 2px 12px rgba(0,0,0,0.08) !important;
 		}
 
-		.glass-input-form input {
-			padding: 1rem;
+		.welcome-centered-stack {
+			padding: 1rem 1rem 0 !important;
 		}
+
+		.welcome-text-body {
+			padding: 0 !important;
+			margin-bottom: 0.75rem !important;
+			background: transparent !important;
+		}
+
+		.welcome-header-center {
+			text-align: center !important;
+			display: flex !important;
+			justify-content: center !important;
+			width: 100% !important;
+		}
+
+		.welcome-header-center .section-title-premium {
+			font-size: 1.25rem !important;
+			line-height: 1.3 !important;
+			margin-bottom: 0.75rem !important;
+			text-align: center !important;
+			width: auto !important;
+			color: #0a0a0a !important;
+			letter-spacing: -0.01em !important;
+		}
+
+		.welcome-header-center .text-highlight {
+			color: #0a0a0a !important;
+		}
+
+		.centered-text-block {
+			font-size: 0.82rem !important;
+			line-height: 1.6 !important;
+			margin-bottom: 0 !important;
+			color: #555 !important;
+		}
+
+		/* Video bleeds to card edges */
+		.welcome-video-wide {
+			padding: 0 !important;
+			margin: 0.75rem -1rem -0rem -1rem !important;
+			max-width: calc(100% + 2rem) !important;
+			width: calc(100% + 2rem) !important;
+		}
+
+		/* Strip glass frame entirely on mobile */
+		.video-frame-glass-wide {
+			padding: 0 !important;
+			background: none !important;
+			border: none !important;
+			border-radius: 0 !important;
+			box-shadow: none !important;
+			backdrop-filter: none !important;
+		}
+
+		/* Hide decorative label & glow on mobile */
+		.video-label-large {
+			display: none !important;
+		}
+
+		.video-glow-wide {
+			display: none !important;
+		}
+
+		/* Strip the VideoEmbed component's themed-content-block white frame */
+		.video-content-area-wide :global(.themed-content-block),
+		.video-content-area-wide :global(#video-section) {
+			padding: 0 !important;
+			background: transparent !important;
+			border: none !important;
+			border-radius: 0 !important;
+			box-shadow: none !important;
+			margin: 0 !important;
+		}
+
+		/* Ensure the iframe itself is edge-to-edge */
+		.video-content-area-wide :global(.video-wrapper) {
+			border-radius: 0 !important;
+			margin: 0 !important;
+			width: 100% !important;
+		}
+
+		.video-content-area-wide :global(.video-wrapper iframe) {
+			border-radius: 0 !important;
+		}
+
+		/* ── 3. FEATURED DESTINATION ──────────────────────────────── */
+
+		.featured-impact-section {
+			min-height: 380px !important;
+			height: auto !important;
+			align-items: flex-end !important;
+		}
+
+		.featured-impact-section .wrapper {
+			width: 100% !important;
+			max-width: 100% !important;
+			padding: 0 !important;
+		}
+
+		.featured-card-glass {
+			max-width: 100% !important;
+			width: 100% !important;
+			border-radius: 0 !important;
+			padding: 1.5rem 1.25rem 2.5rem !important;
+			margin-bottom: 2rem !important;
+			background: none !important;
+			border: none !important;
+			backdrop-filter: none !important;
+			-webkit-backdrop-filter: none !important;
+			box-shadow: none !important;
+		}
+
+		.featured-card-glass h3 {
+			font-size: 1.5rem !important;
+			color: #fff !important;
+			margin-bottom: 0.75rem !important;
+			line-height: 1.2 !important;
+			text-shadow: 0 2px 12px rgba(0,0,0,0.7) !important;
+		}
+
+		.featured-card-glass p {
+			font-size: 0.9rem !important;
+			color: #fff !important;
+			line-height: 1.6 !important;
+			margin-bottom: 1.25rem !important;
+			text-shadow: 0 1px 8px rgba(0,0,0,0.7) !important;
+		}
+
+		.card-badge {
+			font-size: 0.65rem !important;
+			margin-bottom: 0.75rem !important;
+		}
+
+		.btn-outline-white {
+			display: block !important;
+			text-align: center !important;
+			padding: 0.75rem 1.5rem !important;
+			font-size: 0.9rem !important;
+			min-height: 48px !important;
+		}
+
+		/* ── 4. CATEGORY EXPLORER ─────────────────────────────────── */
+
+		.category-explorer-section {
+			padding: 1.5rem 0 1rem !important;
+		}
+
+		.section-title-premium.centered {
+			font-size: 1.5rem !important;
+			margin-bottom: 1.25rem !important;
+			text-align: center !important;
+			color: #0a0a0a !important;
+		}
+
+		.sliders-stack {
+			gap: 0.5rem !important;
+		}
+
+		/* ── 5. CULINARY / NEWSLETTER ─────────────────────────────── */
+
+		.newsletter-section {
+			padding: 1.5rem 0 !important;
+		}
+
+		.newsletter-card-premium {
+			grid-template-columns: 1fr !important;
+			gap: 1.5rem !important;
+			padding: 1.5rem 1.25rem !important;
+			border-radius: 20px !important;
+			text-align: center !important;
+			margin: 0 0.75rem !important;
+		}
+
+		.newsletter-text-content h2 {
+			font-size: 1.5rem !important;
+			color: #fff !important;
+			line-height: 1.25 !important;
+			margin-bottom: 0.75rem !important;
+		}
+
+		.newsletter-text-content p {
+			font-size: 0.9rem !important;
+			color: #94a3b8 !important;
+			line-height: 1.65 !important;
+			margin: 0 auto !important;
+		}
+
+		.newsletter-badge {
+			font-size: 0.65rem !important;
+			color: #22d3ee !important;
+			margin-bottom: 0.75rem !important;
+		}
+
+		.centered-action { display: flex !important; justify-content: center !important; }
+
+		.btn-glow-gold.large-btn {
+			display: inline-flex !important;
+			align-items: center !important;
+			gap: 0.5rem !important;
+			padding: 0.875rem 2rem !important;
+			border-radius: 14px !important;
+			font-size: 0.95rem !important;
+			font-weight: 800 !important;
+			min-height: 50px !important;
+			background: linear-gradient(135deg, #fbbf24, #d97706) !important;
+			color: #0f172a !important;
+			white-space: nowrap !important;
+		}
+
+		/* ── 6. HISTORY ───────────────────────────────────────────── */
+
+		.history-promo-section {
+			height: auto !important;
+			min-height: auto !important;
+			padding: 3.5rem 0 2.5rem !important;
+		}
+
+		.history-content-centered {
+			padding: 0 1.25rem !important;
+			max-width: 100% !important;
+		}
+
+		.section-kicker-gold {
+			font-size: 0.7rem !important;
+			letter-spacing: 0.2em !important;
+			margin-bottom: 1rem !important;
+			color: #fbbf24 !important;
+		}
+
+		.history-content-centered h2 {
+			font-size: 1.75rem !important;
+			line-height: 1.2 !important;
+			margin-bottom: 1rem !important;
+			color: #fff !important;
+		}
+
+		.history-content-centered p {
+			font-size: 0.95rem !important;
+			line-height: 1.65 !important;
+			color: rgba(255, 255, 255, 0.88) !important;
+			margin-bottom: 2rem !important;
+		}
+
+		.btn-outline-gold-large {
+			padding: 0.75rem 2rem !important;
+			font-size: 0.9rem !important;
+			border-radius: 50px !important;
+			color: #ffffff !important;
+			min-height: 48px !important;
+			border-color: rgba(255, 255, 255, 0.5) !important;
+		}
+
+		.btn-outline-gold-large span {
+			color: #ffffff !important;
+		}
+	}
+
+	/* Landscape phone */
+	@media (max-width: 767px) and (orientation: landscape) {
+		.hero-premium { min-height: 100vw !important; }
+		.history-promo-section { padding: 2.5rem 0 !important; }
+		.welcome-section { margin: 0.5rem 0.75rem !important; }
+		.featured-impact-section { min-height: 260px !important; }
+		.section-padding { padding: 1rem 0 !important; }
 	}
 	/* --- NEW WELCOME SECTION STYLES --- */
 
