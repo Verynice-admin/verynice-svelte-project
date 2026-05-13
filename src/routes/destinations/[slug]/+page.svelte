@@ -236,9 +236,4 @@
 		<AsideToc articles={allArticles} heroElement={heroSection} />
 	{/if}
 
-	{#if windowWidth <= 1023}
-		<nav class="mobile-bottom-nav-local">
-			<a href="/" aria-label="Home"><i class="fa fa-home"></i></a>
-		</nav>
-	{/if}
 {/if}

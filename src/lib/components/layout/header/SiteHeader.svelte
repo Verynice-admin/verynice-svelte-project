@@ -259,7 +259,11 @@
 			top: 0 !important;
 			left: 0 !important;
 			right: 0 !important;
-			z-index: 100 !important;
+			z-index: 2001 !important;
+			-webkit-transform: translateZ(0) !important;
+			transform: translateZ(0) !important;
+			-webkit-backface-visibility: hidden !important;
+			backface-visibility: hidden !important;
 		}
 
 		.header-inner {

@@ -2762,9 +2762,7 @@ h2.history-section-title {
     right: 0;
     bottom: 0;
     height: 64px;
-    background: rgba(33, 41, 58, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgb(33, 41, 58);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: center;

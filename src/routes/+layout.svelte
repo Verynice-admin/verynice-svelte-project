@@ -168,6 +168,23 @@
 			setTimeout(loadComponents, 100);
 		}
 		
+		// VisualViewport fix: keep mobile search bar pinned to visual viewport bottom
+		// (Chrome mobile shrinks the visual viewport when the URL bar appears on scroll-up)
+		let visualViewportCleanup: (() => void) | null = null;
+		if (window.visualViewport) {
+			const bar = document.querySelector('.global-search-bar') as HTMLElement | null;
+			const updateBarBottom = () => {
+				if (!bar || window.innerWidth > 767) return;
+				const offset = Math.max(0, window.innerHeight - window.visualViewport!.height);
+				bar.style.bottom = offset + 'px';
+			};
+			updateBarBottom();
+			window.visualViewport.addEventListener('resize', updateBarBottom);
+			visualViewportCleanup = () => {
+				window.visualViewport!.removeEventListener('resize', updateBarBottom);
+			};
+		}
+
 		// Cleanup function - returned at the END of onMount
 		return () => {
 			if (authUnsubscribe) authUnsubscribe();
@@ -177,6 +194,7 @@
 			clearTimeout(idleTimer);
 			clearTimeout(sessionTimer);
 			clearInterval(countdownInterval);
+			visualViewportCleanup?.();
 		};
 	});
 </script>
@@ -342,17 +360,17 @@
 			max-width: 100% !important;
 			padding: 0.75rem 1rem !important;
 			padding-bottom: calc(0.75rem + max(0px, env(safe-area-inset-bottom))) !important;
-			background: rgba(255, 255, 255, 0.95);
-			backdrop-filter: blur(10px);
+			background: rgba(255, 255, 255, 0.97);
 			z-index: 10000 !important;
 			box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 			justify-content: center !important;
 			align-items: center !important;
 			box-sizing: border-box !important;
-			/* Remove properties that can interfere with fixed positioning */
-			transform: none !important;
-			will-change: auto !important;
-			contain: initial !important;
+			-webkit-transform: translateZ(0) !important;
+			transform: translateZ(0) !important;
+			will-change: transform !important;
+			-webkit-backface-visibility: hidden !important;
+			backface-visibility: hidden !important;
 		}
 
 		.global-search-wrapper {
