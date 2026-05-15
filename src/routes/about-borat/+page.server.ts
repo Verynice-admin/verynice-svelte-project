@@ -1,6 +1,41 @@
 import { adminDB } from '$lib/server/firebaseAdmin';
 import { validateImage, generateQualityReport } from '$lib/utils/sanitize';
 
+const FALLBACK_RELATED_POSTS = [
+  {
+    id: 'almaty',
+    title: 'Almaty',
+    slug: 'almaty',
+    category: 'Destinations',
+    headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/Almaty_city/almaty_city-08',
+    description: 'The cultural capital of Kazakhstan — mountains, markets and modern life.'
+  },
+  {
+    id: 'history',
+    title: 'Kazakhstan History',
+    url: '/history',
+    category: 'Heritage',
+    headerBackgroundPublicId: 'content/pages/heritage/yurtNomadiclife/yurt-nomadic-life-hero',
+    description: 'From the Silk Road empires to the modern republic.'
+  },
+  {
+    id: 'traditional-dastarkhan',
+    title: 'Traditional Dastarkhan',
+    slug: 'traditional-dastarkhan',
+    category: 'Food & Drinks',
+    headerBackgroundPublicId: 'content/pages/foodDrinks/traditionalDastarkhan/hero',
+    description: 'A generous spread of Kazakh delicacies showcasing hospitality.'
+  },
+  {
+    id: 'charyn-canyon',
+    title: 'Charyn Canyon',
+    slug: 'charyn-canyon',
+    category: 'Destinations',
+    headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-14',
+    description: 'The Grand Canyon\'s dramatic Central Asian cousin.'
+  }
+];
+
 // Mock data generator for fallback
 const getBoratData = () => {
   return {
@@ -18,7 +53,8 @@ const getBoratData = () => {
       articleComments: 128,
       articleLikes: 3005,
       breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'About Borat' }],
-      labels: { authorSectionTitle: 'Fact Checker' }
+      labels: { authorSectionTitle: 'Fact Checker' },
+      relatedPosts: FALLBACK_RELATED_POSTS
     },
     articles: [
       // Fallback content in case DB is down
@@ -294,11 +330,12 @@ export async function load() {
       };
     }
 
-    // Load relatedPosts
-    const relatedPosts = relatedPostsSnap.docs
+    // Load relatedPosts — fall back to curated list when subcollection is empty
+    const firestoreRelatedPosts = relatedPostsSnap.docs
       .filter((doc) => doc.id !== 'main')
       .map((doc) => serializeDates(doc.data()))
       .sort((a, b) => (a.order || 0) - (b.order || 0));
+    const relatedPosts = firestoreRelatedPosts.length > 0 ? firestoreRelatedPosts : FALLBACK_RELATED_POSTS;
 
     return {
       page: {

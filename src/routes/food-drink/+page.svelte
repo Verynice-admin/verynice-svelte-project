@@ -1,4 +1,4 @@
-<script>
+﻿<script>
 	import { browser } from '$app/environment';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import { processContent } from '$lib/utils/markdown';
@@ -88,11 +88,11 @@
 	const defaultPage = {
 		seo: {
 			title: 'Food & Drinks | VeryNice',
-			description: 'A rich guide to Kazakhstan’s signature dishes, tea culture, markets, and dining.'
+			description: "A rich guide to Kazakhstan's signature dishes, tea culture, markets, and dining."
 		},
 		mainTitle: 'Food & Drinks of Kazakhstan',
 		headerDescription:
-			'Signature dishes, tea rituals, regional specialties, and modern dining — a complete guide to the country’s table.',
+			"Signature dishes, tea rituals, regional specialties, and modern dining — a complete guide to the country's table.",
 		heroKicker: 'Taste the Tradition',
 		location: 'Kazakhstan',
 		articleViews: 0,
@@ -124,11 +124,17 @@
 <svelte:window bind:innerWidth={windowWidth} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Food & Drinks | VeryNice'}</title>
-	<meta
-		name="description"
-		content={pageData?.seo?.description || 'A rich guide to Kazakhstan’s signature dishes and drinks.'}
-	/>
+	<title>{pageData?.seo?.title || 'Kazakhstan Food & Drinks | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Explore Kazakhstan\'s cuisine: from the iconic beshbarmak to Silk Road noodles, traditional dastarkhan feasts, and chaikhana tea houses.'} />
+	<link rel="canonical" href="https://verynice.kz/food-drink" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/food-drink" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Kazakhstan Food & Drinks | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Explore Kazakhstan\'s cuisine: from the iconic beshbarmak to Silk Road noodles, traditional dastarkhan feasts, and chaikhana tea houses.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Kazakhstan Food & Drinks | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Explore Kazakhstan\'s cuisine: from the iconic beshbarmak to Silk Road noodles, traditional dastarkhan feasts, and chaikhana tea houses.'} />
 </svelte:head>
 
 {#if pageData}

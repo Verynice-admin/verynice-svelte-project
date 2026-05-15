@@ -119,18 +119,9 @@
 /* ========================================= */
 
 @supports (backdrop-filter: blur(20px)) {
-	.faq-section .faq-card,
-	.comments-section .comment-card,
 	.author-info-section .author-info-unified-box {
 		backdrop-filter: blur(20px);
 		-webkit-backdrop-filter: blur(20px);
-	}
-}
-
-@supports not (backdrop-filter: blur(20px)) {
-	.faq-section .faq-card,
-	.comments-section .comment-card {
-		background: rgba(30, 41, 59, 0.95) !important;
 	}
 }
 

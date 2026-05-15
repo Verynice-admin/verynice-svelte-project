@@ -41,8 +41,17 @@
 <AsideToc articles={tocSections} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Traditions & Customs | VeryNice'}</title>
-	<meta name="description" content={pageData?.seo?.description || 'Discover Kazakh hospitality, ceremonies, and social customs.'} />
+	<title>{pageData?.seo?.title || 'Kazakh Traditions & Customs | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Discover Kazakh hospitality rituals, Nauryz celebrations, wedding ceremonies, and the social customs that bind nomadic communities.'} />
+	<link rel="canonical" href="https://verynice.kz/culture/traditions-customs" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/culture/traditions-customs" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Kazakh Traditions & Customs | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Discover Kazakh hospitality rituals, Nauryz celebrations, wedding ceremonies, and the social customs that bind nomadic communities.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Kazakh Traditions & Customs | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Discover Kazakh hospitality rituals, Nauryz celebrations, wedding ceremonies, and the social customs that bind nomadic communities.'} />
 </svelte:head>
 
 <div class="attractions-page">

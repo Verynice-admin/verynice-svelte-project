@@ -59,14 +59,17 @@
 <AsideToc articles={tocSections} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Traditional Dastarkhan | VeryNice'}</title>
-	<meta
-		name="description"
-		content={
-			pageData?.seo?.description ||
-			'An advanced guide to the Kazakh dastarkhan: ritual etiquette, symbolic serving order, tea choreography, and ceremonial table culture.'
-		}
-	/>
+	<title>{pageData?.seo?.title || 'Traditional Kazakh Dastarkhan | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'An advanced guide to the Kazakh dastarkhan: ritual etiquette, symbolic serving order, tea choreography, and ceremonial table culture.'} />
+	<link rel="canonical" href="https://verynice.kz/food-drink/traditional-dastarkhan" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/food-drink/traditional-dastarkhan" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Traditional Kazakh Dastarkhan | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'An advanced guide to the Kazakh dastarkhan: ritual etiquette, symbolic serving order, tea choreography, and ceremonial table culture.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Traditional Kazakh Dastarkhan | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'An advanced guide to the Kazakh dastarkhan: ritual etiquette, symbolic serving order, tea choreography, and ceremonial table culture.'} />
 </svelte:head>
 
 <div class="attractions-page">
@@ -282,11 +285,19 @@
 	}
 
 	.category-nav-link .nav-icon {
-		font-size: 1.1rem;
+		font-size: 0.7rem !important;
+		width: 52px !important;
+		height: 52px !important;
+		min-width: 52px !important;
 	}
 
 	.category-nav-link .nav-text {
 		white-space: nowrap;
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+		color: #0f172a !important;
+		font-size: 0.875rem !important;
 	}
 
 	/* Category Section */
@@ -523,11 +534,18 @@
 		}
 
 		.category-nav-link .nav-text {
-			display: none;
+			display: flex !important;
+			justify-content: center !important;
+			align-items: center !important;
+			color: #0f172a !important;
+			font-size: 0.8rem !important;
 		}
 
 		.category-nav-link .nav-icon {
-			font-size: 1.3rem;
+			font-size: 0.7rem !important;
+			width: 52px !important;
+			height: 52px !important;
+			min-width: 52px !important;
 		}
 
 		.category-header {

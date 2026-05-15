@@ -7,6 +7,17 @@
 	export let data;
 	const { page, sections = [] } = data;
 	let pageData = page ?? {};
+
+	const sectionIcons = {
+		'lagman-quick-guide':    '🍜',
+		'suyru-lagman':          '🍲',
+		'guyru-lagman':          '🥢',
+		'qovurma-lagman':        '🍳',
+		'boso-lagman':           '🫕',
+		'ganpan-style-lagman':   '🍽️',
+		'vegetarian-lagman':     '🥦',
+		'regional-ordering-map': '🍜'
+	};
 	$: breadcrumbs = pageData.breadcrumbs || [];
 	$: tocSections = (sections || []).map((x) => ({ id: x.id, title: x.title }));
 	let windowWidth = 1200;
@@ -25,7 +36,16 @@
 
 <svelte:head>
 	<title>{pageData?.seo?.title || 'Silk Road Noodles | VeryNice'}</title>
-	<meta name="description" content={pageData?.seo?.description || ''} />
+	<meta name="description" content={pageData?.seo?.description || 'Explore Central Asia\'s noodle heritage along the Silk Road — from Kazakh lagman and naryn to the cross-cultural flavors of the ancient trade routes.'} />
+	<link rel="canonical" href="https://verynice.kz/food-drink/silk-road-noodles" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/food-drink/silk-road-noodles" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Silk Road Noodles | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Explore Central Asia\'s noodle heritage along the Silk Road — from Kazakh lagman and naryn to the cross-cultural flavors of the ancient trade routes.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Silk Road Noodles | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Explore Central Asia\'s noodle heritage along the Silk Road — from Kazakh lagman and naryn to the cross-cultural flavors of the ancient trade routes.'} />
 </svelte:head>
 
 <div class="attractions-page">
@@ -78,7 +98,7 @@
 		<nav class="category-nav" aria-label="Jump to section">
 			{#each sections as section (section.id)}
 				<a href="#{section.id}" class="category-nav-link" on:click={(e) => scrollToSection(e, section.id)}>
-					<span class="nav-icon">N</span><span class="nav-text">{section.title}</span>
+					<span class="nav-icon">{sectionIcons[section.id] || '🍜'}</span><span class="nav-text">{section.title}</span>
 				</a>
 			{/each}
 		</nav>
@@ -90,7 +110,7 @@
 							{#if section.imagePublicId}
 								<div class="dish-image" role="img" aria-label={section.title} style={`background-image: url("${getCloudinaryUrl(section.imagePublicId, { width: 1000, height: 760, crop: 'fill', gravity: 'auto', quality: 'auto:good', fetch_format: 'auto' })}")`}></div>
 							{:else}
-								<div class="image-placeholder" role="img" aria-label={section.title}><span class="placeholder-text">{section.title}</span><span class="placeholder-icon">N</span></div>
+								<div class="image-placeholder" role="img" aria-label={section.title}><span class="placeholder-text">{section.title}</span><span class="placeholder-icon">{sectionIcons[section.id] || '🍜'}</span></div>
 							{/if}
 						</div>
 						<div class="dish-article-content">
@@ -117,6 +137,8 @@
 	.category-nav { display:flex; flex-wrap:wrap; justify-content:center; gap:.75rem; margin-bottom:3rem; padding:1.5rem; background:rgba(255,255,255,.05); border-radius:24px; }
 	.category-nav-link { display:flex; align-items:center; gap:.5rem; padding:.6rem 1.2rem; background:var(--vnk-text-secondary-color); border-radius:20px; text-decoration:none; color:#fff; font-family:'Inter',sans-serif; font-size:.85rem; font-weight:500; transition:all .2s ease; box-shadow:0 2px 6px rgba(0,0,0,.1); }
 	.category-nav-link:hover { background:var(--vnk-primary-color); transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.15); }
+	.category-nav-link .nav-icon { font-size:1.4rem !important; width:52px !important; height:52px !important; min-width:52px !important; }
+	.category-nav-link .nav-text { display:flex !important; justify-content:center !important; align-items:center !important; color:#0f172a !important; font-size:0.875rem !important; }
 	.category-section { margin-bottom:2.25rem; scroll-margin-top:110px; }
 	.dishes-list { display:flex; flex-direction:column; gap:1.5rem; }
 	.dish-article { display:grid; grid-template-columns:1.2fr .8fr; gap:0; background:var(--vnk-card-bg); border-radius:24px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.6); }

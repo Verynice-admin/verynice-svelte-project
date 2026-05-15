@@ -48,12 +48,20 @@
 
 	// Category icons
 	const categoryIcons = {
-		asian: '🍜',
-		european: '🍝',
-		regional: '🥟',
-		'middle-eastern': '🥙',
-		americas: '🍔',
-		'desserts-drinks': '🍰'
+		japan: '🇯🇵',
+		korea: '🇰🇷',
+		china: '🇨🇳',
+		thailand: '🇹🇭',
+		taiwan: '🇹🇼',
+		italy: '🇮🇹',
+		france: '🇫🇷',
+		usa: '🇺🇸',
+		mexico: '🇲🇽',
+		'middle-east': '🇹🇷',
+		'central-asia': '🌏',
+		'eastern-europe': '🇵🇱',
+		caucasus: '🇬🇪',
+		mediterranean: '🇬🇷'
 	};
 
 	// Smooth scroll navigation
@@ -77,11 +85,17 @@
 <AsideToc articles={categories} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'International Tastes | VeryNice'}</title>
-	<meta
-		name="description"
-		content={pageData?.seo?.description || 'Explore the international flavors found across Kazakhstan.'}
-	/>
+	<title>{pageData?.seo?.title || 'International Tastes in Kazakhstan | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Explore the diverse international flavors found across Kazakhstan — from Russian dumplings to Uighur cuisine and modern fusion dining in Almaty.'} />
+	<link rel="canonical" href="https://verynice.kz/food-drink/international-tastes" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/food-drink/international-tastes" />
+	<meta property="og:title" content={pageData?.seo?.title || 'International Tastes in Kazakhstan | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Explore the diverse international flavors found across Kazakhstan — from Russian dumplings to Uighur cuisine and modern fusion dining in Almaty.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'International Tastes in Kazakhstan | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Explore the diverse international flavors found across Kazakhstan — from Russian dumplings to Uighur cuisine and modern fusion dining in Almaty.'} />
 </svelte:head>
 
 <div class="attractions-page">
@@ -319,11 +333,17 @@
 	}
 
 	.category-nav-link .nav-icon {
-		font-size: 1.1rem;
+		font-size: 1.5rem !important;
+		width: 52px !important;
+		height: 52px !important;
+		min-width: 52px !important;
 	}
 
 	.category-nav-link .nav-text {
 		white-space: nowrap;
+		color: #0f172a !important;
+		font-size: 0.875rem !important;
+		display: flex !important;
 	}
 
 	/* Category Section */
@@ -578,11 +598,16 @@
 		}
 
 		.category-nav-link .nav-text {
-			display: none;
+			display: flex !important;
+			color: #0f172a !important;
+			font-size: 0.8rem !important;
 		}
 
 		.category-nav-link .nav-icon {
-			font-size: 1.3rem;
+			font-size: 1.5rem !important;
+			width: 52px !important;
+			height: 52px !important;
+			min-width: 52px !important;
 		}
 
 		.category-header {

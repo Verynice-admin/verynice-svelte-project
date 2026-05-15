@@ -48,15 +48,15 @@ main {
 	}
 
 /* ========================================= */
-/* 3. FAQ SECTION - Dark Glassmorphism */
+/* 3. FAQ SECTION */
 /* ========================================= */
 
 .faq-section .faq-card {
-	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
-	backdrop-filter: blur(20px) !important;
-	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	background: #ffffff !important;
+	backdrop-filter: none !important;
+	border: 1.5px solid #374151 !important;
 	border-radius: 999px !important;
-	box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
+	box-shadow: none !important;
 }
 
 .faq-section .faq-card.is-open {
@@ -64,11 +64,12 @@ main {
 }
 
 .faq-section .faq-card:hover {
-	box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.6) !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+	border-color: #1f2937 !important;
 }
 
 .faq-section .faq-question-text {
-	color: #fbbf24 !important; /* Gold */
+	color: #0f172a !important;
 }
 
 .faq-section .faq-body-inner,
@@ -76,52 +77,94 @@ main {
 .faq-section .faq-body-inner li,
 .faq-section .faq-body-inner span,
 .faq-section .faq-body-inner div {
-	color: #e2e8f0 !important; /* Very light slate */
+	color: #1e293b !important;
 }
 
 .faq-section .faq-body-inner strong,
 .faq-section .faq-body-inner b {
-	color: #fff !important;
+	color: #0f172a !important;
 }
 
 /* FAQ Ask Question Section */
 .faq-ask-wrapper .ask-container {
-	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
-	border: 1px solid rgba(255, 255, 255, 0.1) !important;
-	box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
+	background: #ffffff !important;
+	border: 1.5px solid #374151 !important;
+	box-shadow: none !important;
+}
+
+.faq-ask-wrapper .new-answer-alert {
+	background: #f8fafc !important;
+	border: 1.5px solid #374151 !important;
+	box-shadow: none !important;
+	position: relative !important;
+}
+
+.faq-ask-wrapper .new-answer-dismiss {
+	position: absolute !important;
+	top: 0.625rem !important;
+	right: 0.625rem !important;
+	background: #f1f5f9 !important;
+	border: 1.5px solid #374151 !important;
+	border-radius: 999px !important;
+	width: 2.25rem !important;
+	height: 2.25rem !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	font-size: 1rem !important;
+	font-weight: 700 !important;
+	color: #0f172a !important;
+	cursor: pointer !important;
+	z-index: 10 !important;
+	padding: 0 !important;
+	line-height: 1 !important;
+}
+
+.faq-ask-wrapper .new-answer-dismiss:hover {
+	background: #e2e8f0 !important;
+}
+
+.faq-ask-wrapper .new-answer-header h4 {
+	color: #0f172a !important;
+}
+
+.faq-ask-wrapper .new-answer-body,
+.faq-ask-wrapper .new-answer-body p {
+	color: #334155 !important;
 }
 
 .faq-ask-wrapper .ask-container h3 {
-	color: #fbbf24 !important; /* Gold */
+	color: #0f172a !important;
 }
 
 .faq-ask-wrapper .ask-subtitle {
-	color: #94a3b8 !important;
+	color: #475569 !important;
 }
 
 .faq-ask-wrapper .input-wrapper {
-	background: rgba(15, 23, 42, 0.8) !important;
-	border-color: rgba(255, 255, 255, 0.1) !important;
+	background: #ffffff !important;
+	border: 1.5px solid #374151 !important;
 }
 
 .faq-ask-wrapper input {
 	background: transparent !important;
-	color: #fff !important;
+	color: #0f172a !important;
 }
 
 .faq-ask-wrapper input::placeholder {
-	color: #64748b !important;
+	color: #94a3b8 !important;
 }
 
 .faq-toggle-btn {
-	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
-	border: 1px solid rgba(255, 255, 255, 0.1) !important;
-	color: #fbbf24 !important; /* Gold */
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+	background: #ffffff !important;
+	border: 1.5px solid #374151 !important;
+	color: #0f172a !important;
+	box-shadow: none !important;
 }
 
 .faq-toggle-btn:hover {
-	background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9)) !important;
+	background: #f1f5f9 !important;
+	border-color: #1f2937 !important;
 }
 
 /* ========================================= */
@@ -171,80 +214,84 @@ main {
 /* ========================================= */
 
 .comments-section .comment-card {
-	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
-	border: 1px solid rgba(255, 255, 255, 0.1) !important;
-	box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3) !important;
+	background: #ffffff !important;
+	border: 1.5px solid #374151 !important;
+	box-shadow: none !important;
 }
 
 .comments-section .comment-card:hover {
-	box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.4) !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+	border-color: #1f2937 !important;
 }
 
 .comments-section .author-name {
-	color: #fbbf24 !important; /* Gold */
+	color: #0f172a !important;
 }
 
 .comments-section .comment-text {
-	color: #cbd5e1 !important;
+	color: #1e293b !important;
 }
 
 .comments-section .comment-date {
-	color: #94a3b8 !important;
+	color: #64748b !important;
 }
 
 .comments-section .comment-form-wrapper {
-	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
-	border: 1px solid rgba(255, 255, 255, 0.1) !important;
-	box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5) !important;
+	background: #ffffff !important;
+	border: 1.5px solid #374151 !important;
+	box-shadow: none !important;
 }
 
 .comments-section .comment-form-wrapper h3 {
-	color: #fbbf24 !important; /* Gold */
+	color: #0f172a !important;
 }
 
 .comments-section .input-group:has(.modern-input),
 .comments-section .input-group:has(.modern-textarea) {
-	background: rgba(15, 23, 42, 0.8) !important;
-	border-color: rgba(255, 255, 255, 0.1) !important;
+	background: #ffffff !important;
+	border: 1.5px solid #374151 !important;
 }
 
 .comments-section .input-group:has(.modern-input):focus-within,
 .comments-section .input-group:has(.modern-textarea):focus-within {
-	background: rgba(15, 23, 42, 0.9) !important;
-	border-color: rgba(255, 255, 255, 0.2) !important;
+	background: #ffffff !important;
+	border-color: #1f2937 !important;
+	box-shadow: 0 0 0 3px rgba(55, 65, 81, 0.15) !important;
 }
 
 .comments-section .modern-input,
 .comments-section .modern-textarea {
 	background: transparent !important;
-	color: #fff !important;
+	color: #0f172a !important;
 }
 
 .comments-section .modern-input::placeholder,
 .comments-section .modern-textarea::placeholder {
-	color: #64748b !important;
-}
-
-.comments-section .empty-state {
-	background: rgba(30, 41, 59, 0.5) !important;
 	color: #94a3b8 !important;
 }
 
+.comments-section .empty-state {
+	background: #ffffff !important;
+	border: 1.5px solid #374151 !important;
+	color: #475569 !important;
+}
+
 .comments-section .text-btn {
-	background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8)) !important;
-	border: 1px solid rgba(255, 255, 255, 0.1) !important;
-	color: #cbd5e1 !important;
+	background: #ffffff !important;
+	border: 1.5px solid #374151 !important;
+	color: #0f172a !important;
 }
 
 .comments-section .text-btn:hover {
-	background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9)) !important;
-	color: #ffffff !important;
+	background: #f1f5f9 !important;
+	border-color: #1f2937 !important;
+	color: #0f172a !important;
 }
 
 .comments-header .count {
-	background: rgba(251, 191, 36, 0.2) !important; /* Gold tint */
-	color: #fbbf24 !important;
-	border: 1px solid rgba(251, 191, 36, 0.3) !important;
+	background: #eff6ff !important;
+	color: #3b82f6 !important;
+	border: 1px solid #bfdbfe !important;
 }
 
 /* ========================================= */
@@ -325,13 +372,12 @@ span,
 div,
 .timeline-body,
 .prose {
-  font-size: 17px !important;
-  line-height: 1.78 !important;
-  color: #1c1c1e !important;
-  font-weight: 400 !important;
-  text-align: justify !important;
-  text-justify: inter-word;
-  hyphens: auto;
+  font-size: 1.0625rem;
+  line-height: 1.78;
+  color: #1c1c1e;
+  font-weight: 400;
+  text-align: left;
+  hyphens: none;
 }
 
 	/* H1 article */
@@ -534,57 +580,115 @@ a:hover {
 	backdrop-filter: none !important;
 	border: none !important;
 	box-shadow: none !important;
+	padding: 0 0 1.5rem 0 !important;
+	margin-bottom: 1.5rem !important;
 }
 
 .attractions-tier-heading {
-	color: #ffffff !important;
-	font-family: 'Segoe UI', 'Inter', sans-serif !important;
-	font-weight: 600 !important;
-	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+	display: block !important;
+	font-size: 1.1rem !important;
+	font-weight: 700 !important;
+	color: #0f172a !important;
+	text-align: center !important;
+	text-shadow: none !important;
+	font-family: 'Inter', sans-serif !important;
+	margin: 0 0 0.75rem 0 !important;
 }
 
 .attractions-tier-description {
-	color: #e0e0e0 !important;
+	display: none !important;
 }
 
-/* Tier items styled in pages.css for square Copilot look */
-
-/* Tier titles - dark color like Copilot cards */
-.attractions-tier-item .tier-title {
-	color: #1a1a1a !important;
-	text-align: center !important;
-	font-weight: 600 !important;
-	font-size: 1rem !important;
-	font-family: 'Segoe UI', 'Inter', sans-serif !important;
+/* ── Compact pill legend ── */
+.attractions-tier-list {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: wrap !important;
+	gap: 0.5rem !important;
+	align-items: stretch !important;
+	justify-content: center !important;
 }
 
-.attractions-tier-item p {
-	color: #616161 !important;
-	font-family: 'Segoe UI', 'Inter', sans-serif !important;
+.attractions-tier-item {
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: center !important;
+	gap: 8px !important;
+	padding: 5px 14px 5px 6px !important;
+	background: #ffffff !important;
+	border: 1.5px solid #374151 !important;
+	border-radius: 999px !important;
+	flex: 1 1 0 !important;
+	min-width: 160px !important;
+	max-width: 220px !important;
+	aspect-ratio: unset !important;
+	text-align: left !important;
+	box-shadow: none !important;
+	transform: none !important;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+	justify-content: center !important;
 }
 
-/* Tier boxes with matching colors */
+.attractions-tier-item:hover {
+	border-color: #1f2937 !important;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+	transform: none !important;
+}
+
+/* Small circular tier badge */
+.attractions-tier-item .tier-box {
+	width: 28px !important;
+	height: 28px !important;
+	min-width: 28px !important;
+	border-radius: 50% !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	justify-content: center !important;
+	box-shadow: none !important;
+}
+
 .attractions-tier-item:nth-child(1) .tier-box {
 	background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
 	border: none !important;
 }
 
 .attractions-tier-item:nth-child(2) .tier-box {
-	background: linear-gradient(135deg, #10b981, #34d399) !important;
+	background: linear-gradient(135deg, #059669, #10b981) !important;
 	border: none !important;
 }
 
 .attractions-tier-item:nth-child(3) .tier-box {
-	background: linear-gradient(135deg, #f59e0b, #fbbf24) !important;
+	background: linear-gradient(135deg, #d97706, #f59e0b) !important;
 	border: none !important;
 }
 
-.tier-label {
-	color: #ffffff !important;
+.attractions-tier-item .tier-label {
+	display: none !important;
 }
 
-.tier-number {
+.attractions-tier-item .tier-number {
 	color: #ffffff !important;
+	font-size: 0.8rem !important;
+	font-weight: 700 !important;
+	line-height: 1 !important;
+	margin: 0 !important;
+}
+
+/* Title — compact single line */
+.attractions-tier-item .tier-title {
+	color: #0f172a !important;
+	font-weight: 600 !important;
+	font-size: 0.8rem !important;
+	font-family: 'Inter', 'Segoe UI', sans-serif !important;
+	text-align: center !important;
+	white-space: normal !important;
+	margin: 0 !important;
+	line-height: 1.3 !important;
+}
+
+/* Hide verbose description */
+.attractions-tier-item p {
+	display: none !important;
 }
 
 /* ========================================= */
@@ -596,17 +700,19 @@ a:hover {
 /* ========================================= */
 
 .attractions-region-summary {
-	background: #d1d4da !important; /* Gray like destination cards */
+	background: #ffffff !important;
 	backdrop-filter: none !important;
-	border: none !important;
-	border-radius: 20px !important;
+	border: 1.5px solid #374151 !important;
+	border-radius: 1rem !important;
 	padding: 1rem 1.25rem !important;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1) !important;
 	margin-bottom: 1rem !important;
 }
 
 .attractions-region-summary:hover {
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+	background: #f8fafc !important;
+	border-color: #1f2937 !important;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
 }
 
 .attractions-region-title {

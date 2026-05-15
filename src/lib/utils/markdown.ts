@@ -7,21 +7,33 @@ import { marked } from 'marked';
 import { sanitizeHTML } from './sanitize';
 import { getCloudinaryUrl } from './cloudinary';
 
+// Custom renderer: convert markdown lists to normal paragraphs (no bullet points)
+const humanRenderer = new marked.Renderer();
+// marked v17 passes a token object; render each item's inline tokens as a <p>
+humanRenderer.list = function(token: any) {
+  let html = '';
+  for (const item of token.items) {
+    html += `<p>${this.parser.parse(item.tokens)}</p>\n`;
+  }
+  return html;
+};
+
 /**
  * Configuration for marked parser
  * The CSS already handles all styling via .prose class, so we just need clean HTML output
  */
 const markedOptions = {
-  breaks: true, // Convert line breaks to <br>
-  gfm: true, // GitHub Flavored Markdown
-  headerIds: true, // Add IDs to headers for navigation
-  mangle: false, // Don't mangle email addresses
-  pedantic: false, // Don't use original markdown.pl behavior
-  sanitize: false, // We'll sanitize ourselves with DOMPurify
-  silent: false, // Throw on errors
-  smartLists: true, // Use smarter list behavior
-  smartypants: false, // Don't use smart typographic punctuation
-  xhtml: false // Don't use XHTML-style self-closing tags
+  breaks: true,
+  gfm: true,
+  headerIds: true,
+  mangle: false,
+  pedantic: false,
+  sanitize: false,
+  silent: false,
+  smartLists: true,
+  smartypants: false,
+  xhtml: false,
+  renderer: humanRenderer
 };
 
 /**

@@ -1,7 +1,6 @@
 <!-- src/routes/history/+page.svelte -->
 <script>
 	import { onMount } from 'svelte';
-	import mermaid from 'mermaid';
 	import { browser } from '$app/environment';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import { processContent } from '$lib/utils/markdown';
@@ -20,12 +19,13 @@
 
 	onMount(async () => {
 		if (browser) {
+			const { default: mermaid } = await import('mermaid');
 			mermaid.initialize({
 				startOnLoad: false,
 				theme: 'neutral',
 				securityLevel: 'loose',
 				fontFamily: 'Inter, sans-serif',
-				fontSize: 56, // Significantly increased base font size
+				fontSize: 14,
 				themeVariables: {
 					primaryColor: '#fff',
 					primaryTextColor: '#000',
@@ -60,6 +60,26 @@
 			await mermaid.run({
 				querySelector: '.language-mermaid'
 			});
+
+			// Trim oversized mermaid viewBoxes — mermaid often reserves far more
+			// space than the content needs, leaving huge blank areas below diagrams.
+			setTimeout(() => {
+				document.querySelectorAll('.language-mermaid svg').forEach((svg) => {
+					try {
+						const bbox = svg.getBBox();
+						if (bbox.width > 10 && bbox.height > 10) {
+							const pad = 40;
+							svg.setAttribute(
+								'viewBox',
+								`${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`
+							);
+							svg.removeAttribute('height');
+							svg.style.maxWidth = '';
+							svg.style.height = 'auto';
+						}
+					} catch (_) {}
+				});
+			}, 300);
 		}
 	});
 
@@ -72,6 +92,7 @@
 			description: 'Learn about the rich history of Kazakhstan.'
 		},
 		mainTitle: 'History of Kazakhstan',
+		heroKicker: 'History of Kazakhstan',
 		headerDescription: 'From ancient nomads to modern nationhood',
 		location: 'Kazakhstan',
 		articleViews: 0,
@@ -291,10 +312,7 @@
 		name="description"
 		content={pageData?.seo?.description || 'Learn about the rich history of Kazakhstan.'}
 	/>
-	<meta
-		name="keywords"
-		content={pageData?.seo?.keywords || 'Kazakhstan, history, culture, Central Asia'}
-	/>
+	<link rel="canonical" href="https://verynice.kz/history" />
 
 	<!-- Open Graph / Facebook -->
 	<meta property="og:type" content="article" />
@@ -303,10 +321,7 @@
 		property="og:description"
 		content={pageData?.seo?.description || pageData.headerDescription}
 	/>
-	<meta
-		property="og:url"
-		content={browser ? window.location.href : 'https://verynice.kz/history'}
-	/>
+	<meta property="og:url" content="https://verynice.kz/history" />
 	{#if pageData.headerBackgroundPublicId}
 		<meta
 			property="og:image"
@@ -375,81 +390,68 @@
 </svelte:head>
 
 {#if pageData}
-	<!-- apply .section styles from pages.css -->
-	<!-- PREMIUM HERO SECTION (BORAT STYLE) -->
-	<section id="page-hero-section" class="hero-premium" bind:this={heroSection}>
-		<div class="hero-bg-container">
-			{#if pageData.headerBackgroundPublicId}
-				<div
-					class="hero-bg-image"
-					role="img"
-					aria-label={pageData.headerBackgroundImageAriaLabel || 'Background image for page'}
-					style={`background-image: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, {
-						width: 2200,
-						height: 1200,
-						crop: 'fill',
-						gravity: 'auto',
-						quality: 100,
-						fetch_format: 'auto'
-					})}")`}
-				></div>
-			{/if}
-			<div class="hero-overlay"></div>
-		</div>
-
-		<div class="hero-content wrapper">
-			<div class="hero-text-box">
-				<!-- Breadcrumbs (Keep them but subtle) -->
-				<nav aria-label="Breadcrumb" class="breadcrumb-premium">
-					<ol class="breadcrumb-list">
-						{#each breadcrumbs as crumb, index}
-							<li class="breadcrumb-item">
-								{#if crumb.href && index !== breadcrumbs.length - 1}
-									<a class="breadcrumb-link" href={crumb.href}>{crumb.label}</a>
-									<span class="breadcrumb-divider">/</span>
-								{:else}
-									<span class="breadcrumb-current" aria-current="page">{crumb.label}</span>
-								{/if}
-							</li>
-						{/each}
-					</ol>
-				</nav>
-
-				<span class="hero-kicker">HISTORY OF KAZAKHSTAN</span>
-				<h1 itemprop="headline">{pageData.mainTitle}</h1>
-				<p class="hero-lead" itemprop="description">
-					{pageData.headerDescription}
-				</p>
-
-				<!-- Stats Bar (Integrated into Hero) -->
-				<div class="post-info-premium" role="group" aria-label="Article statistics">
-					{#if pageData.location}
-						<div class="stat-pill" aria-label="Location: {pageData.location}">
-							<span class="icon-location" aria-hidden="true"></span>
-							<span>{pageData.location}</span>
-						</div>
+	<section id="page-hero-section" class="section" bind:this={heroSection} style="min-height: 100vh !important; height: 100vh !important;">
+		<div class="section-header wrapper">
+			<nav aria-label="Breadcrumb" class="breadcrumb-modern">
+				<ol class="breadcrumb-modern__list">
+					{#each breadcrumbs as crumb, index}
+						<li class="breadcrumb-modern__item">
+							{#if crumb.href && index !== breadcrumbs.length - 1}
+								<a class="breadcrumb-modern__link" href={crumb.href}>{crumb.label}</a>
+							{:else}
+								<span class="breadcrumb-modern__current" aria-current="page">{crumb.label}</span>
+							{/if}
+							{#if index < breadcrumbs.length - 1}
+								<span class="breadcrumb-modern__divider" aria-hidden="true"></span>
+							{/if}
+						</li>
+					{/each}
+				</ol>
+			</nav>
+			<div class="section-header-content-row">
+				<div class="section-header-text">
+					{#if pageData.heroKicker}
+						<span class="hero-kicker">{pageData.heroKicker}</span>
 					{/if}
-					{#if pageData.articleViews > 0}
-						<div class="stat-pill" aria-label="{pageData.articleViews} views">
-							<span class="icon-view" aria-hidden="true"></span>
-							<span>{pageData.articleViews.toLocaleString()}</span>
-						</div>
-					{/if}
-					{#if pageData.articleLikes > 0}
-						<div class="stat-pill" aria-label="{pageData.articleLikes} likes">
-							<span class="icon-like" aria-hidden="true"></span>
-							<span>{pageData.articleLikes.toLocaleString()}</span>
-						</div>
-					{/if}
-					{#if pageData.articleComments > 0}
-						<div class="stat-pill" aria-label="{pageData.articleComments} comments">
-							<span class="icon-comment" aria-hidden="true"></span>
-							<span>{pageData.articleComments.toLocaleString()}</span>
-						</div>
-					{/if}
+					<h1 itemprop="headline">{pageData.mainTitle}</h1>
+					<p class="section-description" itemprop="description">{pageData.headerDescription}</p>
+					<div class="post-info" role="group" aria-label="Article statistics">
+						{#if pageData.location}
+							<div class="post-info-inner" aria-label="Location: {pageData.location}">
+								<span class="icon-location" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.location}</div>
+							</div>
+						{/if}
+						{#if pageData.articleViews > 0}
+							<div class="post-info-inner" aria-label="{pageData.articleViews} views">
+								<span class="icon-view" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.articleViews.toLocaleString()}</div>
+							</div>
+						{/if}
+						{#if pageData.articleLikes > 0}
+							<div class="post-info-inner" aria-label="{pageData.articleLikes} likes">
+								<span class="icon-like" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.articleLikes.toLocaleString()}</div>
+							</div>
+						{/if}
+						{#if pageData.articleComments > 0}
+							<div class="post-info-inner" aria-label="{pageData.articleComments} comments">
+								<span class="icon-comment" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.articleComments.toLocaleString()}</div>
+							</div>
+						{/if}
+					</div>
 				</div>
 			</div>
 		</div>
+		{#if pageData.headerBackgroundPublicId}
+			<div
+				class="header-background"
+				role="img"
+				aria-label={pageData.headerBackgroundImageAriaLabel || 'History of Kazakhstan background'}
+				style={`--hero-bg-url: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, { width: 2200, height: 1600, crop: 'fill', gravity: 'auto', quality: 'auto:good', fetch_format: 'auto' })}")`}
+			><div class="background-image"></div></div>
+		{/if}
 	</section>
 
 	<div class="timeline-container">

@@ -2,6 +2,7 @@
 	import { fade, fly } from 'svelte/transition';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
 
 	export let isOpen = false;
 	export let initialQuery: string;
@@ -12,11 +13,18 @@
 	}
 
 	function formatAiAnswer(text: string): string {
-		return text
-			// Simple line break handling for natural text
+		// Escape HTML special chars first to prevent injection from AI output,
+		// then apply safe structural formatting.
+		const escaped = text
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#39;');
+
+		return escaped
 			.replace(/\n\n+/g, '</p><p>')
 			.replace(/\n/g, '<br>')
-			// Wrap in paragraph
 			.replace(/^(.)/, '<p>$1')
 			.replace(/(.)$/, '$1</p>');
 	}
@@ -289,12 +297,11 @@
 				<!-- Search Header / Input -->
 			<div class="search-header" style="display: flex; align-items: center; padding: 1rem; gap: 0.75rem; border-bottom: 1px solid rgba(0,0,0,0.06); position: relative; z-index: 10000;">
 				{#if aiResponse}
-					<button type="button" class="back-btn" style="background: none; border: none; cursor: pointer; padding: 0.5rem; display: flex; align-items: center; justify-content: center;" on:click={() => aiResponse = null} aria-label="Back to results">
+					<button type="button" class="back-btn" on:click={() => aiResponse = null} aria-label="Back to results">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
 					</button>
-					<!-- Show search summary when viewing AI results -->
 					<div style="flex: 1; text-align: center; color: #64748b; font-size: 0.9rem;">
 						Search results for "{query}"
 					</div>
@@ -335,12 +342,13 @@ bind:this={inputElement}
 						{/if}
 					</div>
 				{/if}
-			</div>
-				<button style="z-index: 10002; position: relative; background: rgba(0, 0, 0, 0.08); border: none; cursor: pointer; padding: 0.5rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; min-width: 40px; min-height: 40px;" on:click={close} aria-label="Close">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: #475569;">
+				<!-- Close button always visible inside header -->
+				<button class="close-btn" on:click={close} aria-label="Close">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 					</svg>
 				</button>
+			</div>
 
 			<!-- Search Body -->
 			<div class="search-body">
@@ -420,6 +428,9 @@ bind:this={inputElement}
 						<span>to close</span>
 					</span>
 				</div>
+				<button class="mobile-close-btn" on:click={close} aria-label="Close search">
+					✕ Close
+				</button>
 			</div>
 		</div>
 	</div>
@@ -562,6 +573,14 @@ bind:this={inputElement}
 		.action-btn {
 			width: 100%;
 			justify-content: center;
+		}
+
+		.key-hints {
+			display: none;
+		}
+
+		.mobile-close-btn {
+			display: flex;
 		}
 	}
 
@@ -994,6 +1013,7 @@ bind:this={inputElement}
 		font-size: 0.75rem;
 		display: flex;
 		justify-content: flex-end;
+		align-items: center;
 		backdrop-filter: blur(10px);
 	}
 
@@ -1007,6 +1027,27 @@ bind:this={inputElement}
 		align-items: center;
 		gap: 0.5rem;
 		font-weight: 500;
+	}
+
+	.mobile-close-btn {
+		display: none;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		background: rgba(0, 0, 0, 0.07);
+		border: none;
+		border-radius: 999px;
+		padding: 0.75rem 1.5rem;
+		font-size: 1rem;
+		font-weight: 600;
+		color: #0f172a;
+		cursor: pointer;
+		min-height: 48px;
+	}
+
+	.mobile-close-btn:hover {
+		background: rgba(0, 0, 0, 0.12);
 	}
 
 	/* AI Related Links */
@@ -1624,5 +1665,46 @@ bind:this={inputElement}
 		min-width: 1.5em;
 
 		text-align: center;
+	}
+
+	/* Mobile overrides — must be last to win the cascade */
+	@media (max-width: 767px) {
+		.key-hints {
+			display: none !important;
+		}
+
+		.mobile-close-btn {
+			display: flex !important;
+			width: 100%;
+			align-items: center;
+			justify-content: center;
+			gap: 0.5rem;
+			background: rgba(0, 0, 0, 0.07) !important;
+			border: none;
+			border-radius: 999px;
+			padding: 0.75rem 1.5rem;
+			font-size: 1rem !important;
+			font-weight: 600;
+			color: #0f172a !important;
+			cursor: pointer;
+			min-height: 48px;
+			touch-action: manipulation;
+		}
+
+		.close-btn {
+			background: rgba(0, 0, 0, 0.08) !important;
+			border-radius: 50% !important;
+			min-width: 40px !important;
+			min-height: 40px !important;
+			display: flex !important;
+			align-items: center !important;
+			justify-content: center !important;
+			flex-shrink: 0 !important;
+		}
+
+		.search-footer {
+			padding: 0.75rem 1rem !important;
+			justify-content: center !important;
+		}
 	}
 </style>

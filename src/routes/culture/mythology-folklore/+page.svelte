@@ -54,8 +54,17 @@
 <AsideToc articles={tocSections} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Mythology & Folklore | VeryNice'}</title>
-	<meta name="description" content={pageData?.seo?.description || 'Explore Kazakh epic heroes, the Tulpar, and ancient shamanic traditions.'} />
+	<title>{pageData?.seo?.title || 'Kazakh Mythology & Folklore | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Explore Kazakh epic heroes, the winged Tulpar horse, ancient Tengri beliefs, and shamanic traditions rooted in the steppe.'} />
+	<link rel="canonical" href="https://verynice.kz/culture/mythology-folklore" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/culture/mythology-folklore" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Kazakh Mythology & Folklore | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Explore Kazakh epic heroes, the winged Tulpar horse, ancient Tengri beliefs, and shamanic traditions rooted in the steppe.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Kazakh Mythology & Folklore | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Explore Kazakh epic heroes, the winged Tulpar horse, ancient Tengri beliefs, and shamanic traditions rooted in the steppe.'} />
 </svelte:head>
 
 <div class="attractions-page">

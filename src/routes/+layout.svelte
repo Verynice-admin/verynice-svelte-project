@@ -4,8 +4,9 @@
 	import Footer from '$components/layout/footer/Footer.svelte';
 	import TimeWeatherDock from '$components/features/widgets/TimeWeatherDock.svelte';
 	import SearchModal from '$components/features/search/SearchModal.svelte';
+	import CookieConsent from '$lib/components/ui/CookieConsent.svelte';
 	// Lazy load non-critical components for better performance
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy, tick } from 'svelte';
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
@@ -19,6 +20,9 @@
 	const headerConfig = data.headerConfig ?? {};
 	const footerConfig = data.footerContent ?? {};
 
+	// Keep <html lang> in sync with the active language
+	$: if (browser) document.documentElement.lang = ($currentLanguage as string).toLowerCase();
+
 	// Lazy loaded components
 	let BackToTop: any;
 	let TranslationProgressBar: any;
@@ -28,6 +32,31 @@
 	let showTimeoutWarning = false;
 	let timeRemaining = 300;
 	let isAuthenticated = false;
+	let timeoutModalRef: HTMLDivElement;
+	let preModalFocus: HTMLElement | null = null;
+
+	$: if (browser && showTimeoutWarning) {
+		preModalFocus = document.activeElement as HTMLElement;
+		tick().then(() => (timeoutModalRef?.querySelector('button') as HTMLButtonElement | null)?.focus());
+	} else if (browser && !showTimeoutWarning && preModalFocus) {
+		preModalFocus.focus();
+		preModalFocus = null;
+	}
+
+	function trapFocus(e: KeyboardEvent) {
+		if (e.key !== 'Tab' || !timeoutModalRef) return;
+		const focusable = Array.from(
+			timeoutModalRef.querySelectorAll<HTMLElement>('button:not([disabled]),[href],[tabindex]:not([tabindex="-1"])')
+		);
+		if (!focusable.length) return;
+		const first = focusable[0];
+		const last = focusable[focusable.length - 1];
+		if (e.shiftKey) {
+			if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+		} else {
+			if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+		}
+	}
 
 	// Search state
 	let isSearchOpen = false;
@@ -249,10 +278,11 @@
 {/if}
 <TimeWeatherDock city="Almaty" timeZone="Asia/Almaty" dockLeft={32} />
 <Footer {footerConfig} />
+<CookieConsent />
 
 <!-- Session Timeout Warning Modal -->
 {#if showTimeoutWarning}
-	<div class="timeout-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="timeout-title">
+	<div class="timeout-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="timeout-title" bind:this={timeoutModalRef} on:keydown={trapFocus}>
 		<div class="timeout-modal">
 			<h2 id="timeout-title">Session Timeout</h2>
 			<p>Your session will expire due to inactivity.</p>

@@ -1,7 +1,6 @@
 <!-- src/routes/destinations/+page.svelte -->
 <script>
 	import { onMount } from 'svelte';
-	import mermaid from 'mermaid';
 	import { browser } from '$app/environment';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import { processContent } from '$lib/utils/markdown';
@@ -69,12 +68,13 @@
 
 	onMount(async () => {
 		if (browser) {
+			const { default: mermaid } = await import('mermaid');
 			mermaid.initialize({
 				startOnLoad: false,
 				theme: 'neutral',
 				securityLevel: 'loose',
 				fontFamily: 'Inter, sans-serif',
-				fontSize: 56, // Significantly increased base font size
+				fontSize: 56,
 				themeVariables: {
 					primaryColor: '#fff',
 					primaryTextColor: '#000',
@@ -820,7 +820,7 @@
 		</div>
 
 		<!-- Footer Content (Video, Map, FAQ, Author) -->
-		<div class="timeline-footer wrapper">
+		<div class="timeline-footer wrapper" style="max-width: 1260px; padding: 0 min(2rem, 4vw);">
 			{#if hasPhotoGallery}
 				<PhotoGallery title={photoGalleryTitle} photos={normalizedPhotoGallery} />
 			{/if}

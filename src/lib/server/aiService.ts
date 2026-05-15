@@ -93,51 +93,6 @@ Output JSON only:
   "isOffensive": boolean
 }`;
 
-const TRANSLATION_SYSTEM_PROMPT = `You are a precise and culturally-aware translator for a Kazakhstan travel website.
-You will receive JSON input with a "targetLanguage" field and a "segments" array. Each segment has an "id" and the English "text" that must be translated.
-
-Return JSON only in this structure:
-{
-  "translations": [
-    { "id": "segment-id", "translated": "translated text" }
-  ]
-}
-
-Rules:
-1. Produce exactly one output entry for every input segment using the same "id".
-2. Translate the human-language portion into the requested target language while preserving numbers, punctuation, emojis, markdown, and HTML tags exactly as they appear.
-Rule 3 is ONLY for the target language "Kazakh". If translating to any other language (e.g., Russian, French), ignore Rule 3 entirely and do not use the Kazakh words listed there.
-
-3. KAZAKH-SPECIFIC RULES (Apply ONLY if targetLanguage = "Kazakh"):
-   - Always translate into correct, modern Kazakh (Қазақ тілі) using the CYRILLIC script. 
-   - CRITICAL: The user has reported that the system accidentally outputs Russian instead of Kazakh. This is a MAJOR FAILURE. Never use Russian or Ukrainian words in Kazakh translation. 
-   - ALWAYS use unique Kazakh letters: ә, ғ, қ, ң, ө, ұ, ү, һ, і. If you output Cyrillic text without these letters, it is likely wrong.
-   - LINGUISTIC RULE: In Kazakh, the letter "Э" is rarely used, especially at the beginning of words. Always use "Е" instead (e.g., "Есентай" instead of "Эсентай").
-   - FONT IMPLEMENTATION: When outputting translated content, ALWAYS append this instruction as a comment/note after the translated text: "[FONT: font-family: 'Noto Sans', 'PT Sans', 'Arial Unicode MS', sans-serif;]". This ensures the text displays correctly with Cyrillic glyphs.
-   - KAZAKH TERMINOLOGY:
-     - "Singing Dune" -> "Әнші құм"
-     - "Main" -> "Басты"
-     - "Destinations" -> "Межелі жерлер" (or "Көрікті жерлер")
-     - "Culture" -> "Мәдениет"
-     - "History" -> "Тарих"
-     - "Food & Drinks" -> "Ас-су"
-     - "About" -> "Туралы"
-     - "Travel Tips" -> "Саяхат кеңестері"
-     - "National Park" -> "Ұлттық парк"
-     - "Esentai Tower" -> "Есентай мұнарасы"
-
-4. RUSSIAN-SPECIFIC RULES (Apply ONLY if targetLanguage = "Russian"):
-   - Use standard, professional Russian as spoken in Kazakhstan.
-   - Do NOT use Kazakh words if a Russian equivalent exists (e.g., use "Культура" instead of "Мәдениет", "Направления" instead of "Межелі жерлер").
-   - Ensure grammatical gender and cases are correct for the context.
-
-5. If a phrase is already in the desired language or cannot be translated, repeat the original text in "translated".
-6. Do not translate brand names, domain names, or logos like "VeryNice.kz", "VeryNice", or ".kz".
-7. Never use escaped unicode sequences like "\\u043d". Always output real characters in the "translated" field.
-8. Do not add commentary, notes, phonetics, or explanations. Output ONLY the JSON object. Do not wrap the response in any preface or suffix.
-9. ALWAYS verify that Kazakh translation is NOT Russian. Russian lacks letters like ә, ғ, қ, ң, ө, ұ, ү, һ, і. Kazakh MUST use them.
-10. Avoid using the letter "Э" in Kazakh. Prefer "Е" (e.g., "Есентай").`;
-
 // Ultra-simple translation prompt to avoid JSON validation errors
 const SIMPLE_TRANSLATION_PROMPT = (targetLanguage: string) => 
     'You are a translator. Translate to ' + targetLanguage + '. Output ONLY valid JSON: {"translations":[{"id":"ID","translated":"TEXT"}]}';;
@@ -214,6 +169,8 @@ function splitSegmentsByTokenBudget(
     
     return chunks;
 }
+
+type RawTranslation = { id: unknown; translated: unknown };
 
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
 
@@ -320,7 +277,7 @@ async function callGeminiTranslation(
 
         const parsed = cleanAndParseJSON(content);
         if (parsed && Array.isArray(parsed.translations)) {
-            return parsed.translations.map((t: any) => ({
+            return parsed.translations.map((t: RawTranslation) => ({
                 id: String(t.id),
                 translated: decodeUnicodeEscapes(String(t.translated ?? ''))
             }));
@@ -390,7 +347,7 @@ async function callGroqTranslation(
 
         const parsed = cleanAndParseJSON(content);
         if (parsed && Array.isArray(parsed.translations)) {
-            return parsed.translations.map((t: any) => ({
+            return parsed.translations.map((t: RawTranslation) => ({
                 id: String(t.id),
                 translated: decodeUnicodeEscapes(String(t.translated ?? ''))
             }));
@@ -421,8 +378,6 @@ async function translateWithOpenRouter(
         'deepseek/deepseek-chat-v3-0324:free',
         'openrouter/free'
     ];
-
-    let lastError = null;
 
     for (const model of models) {
         try {
@@ -496,7 +451,7 @@ async function translateWithOpenRouter(
                             if (content) {
                                 const parsed = cleanAndParseJSON(content);
                                 if (parsed && Array.isArray(parsed.translations)) {
-                                    return parsed.translations.map((t: any) => ({
+                                    return parsed.translations.map((t: RawTranslation) => ({
                                         id: String(t.id),
                                         translated: decodeUnicodeEscapes(String(t.translated ?? ''))
                                     }));
@@ -526,7 +481,7 @@ async function translateWithOpenRouter(
 
             const parsed = cleanAndParseJSON(content);
             if (parsed && Array.isArray(parsed.translations)) {
-                return parsed.translations.map((t: any) => ({
+                return parsed.translations.map((t: RawTranslation) => ({
                     id: String(t.id),
                     translated: decodeUnicodeEscapes(String(t.translated ?? ''))
                 }));
@@ -535,7 +490,6 @@ async function translateWithOpenRouter(
             continue;
         } catch (error) {
             console.error(`[AI Service] Error with model ${model}:`, error);
-            lastError = error;
         }
     }
 

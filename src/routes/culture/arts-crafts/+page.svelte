@@ -41,8 +41,17 @@
 <AsideToc articles={tocSections} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Arts & Crafts | VeryNice'}</title>
-	<meta name="description" content={pageData?.seo?.description || 'Discover Kazakh felt-making, embroidery, and traditional crafts.'} />
+	<title>{pageData?.seo?.title || 'Kazakh Arts & Crafts | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Discover Kazakh felt-making, shyrdak carpets, embroidery, and traditional crafts passed down through generations.'} />
+	<link rel="canonical" href="https://verynice.kz/culture/arts-crafts" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/culture/arts-crafts" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Kazakh Arts & Crafts | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Discover Kazakh felt-making, shyrdak carpets, embroidery, and traditional crafts passed down through generations.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Kazakh Arts & Crafts | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Discover Kazakh felt-making, shyrdak carpets, embroidery, and traditional crafts passed down through generations.'} />
 </svelte:head>
 
 <div class="attractions-page">

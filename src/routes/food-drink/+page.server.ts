@@ -341,6 +341,49 @@ const FALLBACK_FAQ = {
   ]
 };
 
+const FALLBACK_RELATED_POSTS = [
+  {
+    id: 'signature-dishes',
+    url: '/food-drink/signature-dishes',
+    title: 'Signature Dishes',
+    category: 'Food & Drinks',
+    description: 'Beshbarmak, kazy, manty, lagman, and the street-time classic, samsa.',
+    imagePublicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes'
+  },
+  {
+    id: 'traditional-dastarkhan',
+    url: '/food-drink/traditional-dastarkhan',
+    title: 'Traditional Dastarkhan',
+    category: 'Food & Drinks',
+    description: 'A generous spread of Kazakh delicacies showcasing hospitality and culinary heritage.',
+    imagePublicId: 'content/pages/foodDrinks/traditionalDastarkhan/hero'
+  },
+  {
+    id: 'silk-road-noodles',
+    url: '/food-drink/silk-road-noodles',
+    title: 'Silk Road Noodles',
+    category: 'Food & Drinks',
+    description: 'Hand-pulled lagman and bold southern spices from the Silk Road.',
+    imagePublicId: 'content/pages/foodDrinks/silkRoadNoodles/hero'
+  },
+  {
+    id: 'tea-house-courtyard',
+    url: '/food-drink/tea-house-courtyard',
+    title: 'Tea House Courtyard',
+    category: 'Food & Drinks',
+    description: 'Slow tea rituals with dried fruits and sweets around the dastarkhan.',
+    imagePublicId: 'content/pages/foodDrinks/TeaHouseCourtyard/hero'
+  },
+  {
+    id: 'international-tastes',
+    url: '/food-drink/international-tastes',
+    title: 'International Tastes',
+    category: 'Food & Drinks',
+    description: 'Global flavors from sushi and ramen to shawarma and pizza.',
+    imagePublicId: 'content/pages/foodDrinks/internationalTastes/tom_yam'
+  }
+];
+
 const BLOCKED_HIGHLIGHT_TITLES = new Set([
   'traditional drinks',
   'markets & food halls',
@@ -526,7 +569,7 @@ export async function load() {
       articles: filterArticles(FALLBACK_ARTICLES),
       photoGallery: FALLBACK_GALLERY,
       faq: FALLBACK_FAQ,
-      relatedPosts: [],
+      relatedPosts: FALLBACK_RELATED_POSTS,
       author: null,
       error: 'Server database connection failed.'
     };
@@ -617,7 +660,7 @@ export async function load() {
       articles: filterArticles(articles.length ? articles : FALLBACK_ARTICLES),
       photoGallery: photoGallery,
       faq: faq || FALLBACK_FAQ,
-      relatedPosts,
+      relatedPosts: relatedPosts.length ? relatedPosts : FALLBACK_RELATED_POSTS,
       author: null
     };
   } catch (error) {
@@ -632,7 +675,7 @@ export async function load() {
       articles: filterArticles(FALLBACK_ARTICLES),
       photoGallery: FALLBACK_GALLERY,
       faq: FALLBACK_FAQ,
-      relatedPosts: [],
+      relatedPosts: FALLBACK_RELATED_POSTS,
       author: null,
       error: 'Failed to load food & drink data.'
     };

@@ -169,6 +169,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--vnk-spacing-md);
+		background: transparent !important;
 	}
 
   .photo-gallery-block h2 {

@@ -49,16 +49,50 @@ export async function load() {
   ];
 
   const FALLBACK_ATTRACTIONS = [
-    { id: 'charyn-canyon', title: 'Charyn Canyon', region: 'Almaty & Nearby', tier: 1, image: { publicId: 'content/locations/charyn/charyn-main', alt: 'Charyn Canyon' }, shortDescription: 'The Valley of Castles.' },
-    { id: 'big-almaty-lake', title: 'Big Almaty Lake', region: 'Almaty & Nearby', tier: 1, image: { publicId: 'content/locations/bal/bal-main', alt: 'Big Almaty Lake' }, shortDescription: 'Turquoise alpine lake.' },
-    { id: 'baiterek-tower', title: 'Baiterek Tower', region: 'Astana & Nearby', tier: 1, image: { publicId: 'content/locations/astana/baiterek', alt: 'Baiterek Tower' }, shortDescription: 'Symbol of Astana.' },
-    { id: 'khan-shatyr', title: 'Khan Shatyr', region: 'Astana & Nearby', tier: 1, image: { publicId: 'content/locations/astana/khan-shatyr', alt: 'Khan Shatyr' }, shortDescription: 'Massive entertainment tent.' }
+    { id: 'charyn-canyon', title: 'Charyn Canyon', region: 'Almaty & Nearby', tier: 1, image: { publicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-14', alt: 'Charyn Canyon' }, shortDescription: 'The Valley of Castles.' },
+    { id: 'big-almaty-lake', title: 'Big Almaty Lake', region: 'Almaty & Nearby', tier: 1, image: { publicId: 'content/pages/destinations/Almaty_nearby/big-almaty-lake/big-almaty-lake-14', alt: 'Big Almaty Lake' }, shortDescription: 'Turquoise alpine lake.' },
+    { id: 'baiterek-tower', title: 'Baiterek Tower', region: 'Astana & Nearby', tier: 1, image: { publicId: 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-06', alt: 'Baiterek Tower' }, shortDescription: 'Symbol of Astana.' },
+    { id: 'khan-shatyr', title: 'Khan Shatyr', region: 'Astana & Nearby', tier: 1, image: { publicId: 'content/pages/destinations/Astana_Nearby/khan-shatyr/khan-shatyr-02', alt: 'Khan Shatyr' }, shortDescription: 'Massive entertainment tent.' }
+  ];
+
+  const FALLBACK_RELATED_POSTS = [
+    {
+      id: 'food-drink',
+      url: '/food-drink',
+      title: 'Food & Drinks',
+      category: 'Cuisine',
+      shortDescription: 'Beshbarmak, kazy, tea rituals, and the modern dining scene across Kazakhstan.',
+      imagePublicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes'
+    },
+    {
+      id: 'culture',
+      url: '/culture',
+      title: 'Heritage & Culture',
+      category: 'Culture',
+      shortDescription: 'Nomadic traditions, yurt life, Kazakh melodies, and living customs.',
+      imagePublicId: 'content/pages/heritage/mainHeritage'
+    },
+    {
+      id: 'history',
+      url: '/history',
+      title: 'History of Kazakhstan',
+      category: 'History',
+      shortDescription: 'From the ancient Silk Road to Soviet legacy and modern independence.',
+      imagePublicId: 'content/pages/heritage/yurtNomadiclife/yurt-nomadic-life-hero'
+    },
+    {
+      id: 'tips',
+      url: '/tips',
+      title: 'Travel Tips',
+      category: 'Tips',
+      shortDescription: 'Visas, currency, transport, and practical advice for visiting Kazakhstan.',
+      imagePublicId: 'content/pages/heritage/artAndCrafts/eagle-hunting/hunter'
+    }
   ];
 
   try {
     const destPageRef = adminDB.collection('pages').doc('destinationsPage');
     const destArticlesColRef = destPageRef.collection('articles');
-    const destAttractionsColRef = destPageRef.collection('attractions');
     const keyFactsColRef = destPageRef.collection('keyFacts');
     const videoColRef = destPageRef.collection('video');
     const mapColRef = destPageRef.collection('map');
@@ -556,7 +590,7 @@ export async function load() {
       if (docsToMigrate.length > 0) {
         // Run migration in a transaction
         // Note: We need to use adminDB directly here
-        const migrationPromise = adminDB!.runTransaction(async (t) => {
+        await adminDB!.runTransaction(async (t) => {
           const faqDocRef = adminDB!.collection('pages').doc('destinationsPage').collection('faq').doc('main');
           const currentFaqSnap = await t.get(faqDocRef);
 
@@ -575,15 +609,8 @@ export async function load() {
           docsToMigrate.forEach(ref => {
             t.delete(ref);
           });
-        }).then(() => {
-          console.log(`[Destinations Page] Successfully migrated ${docsToMigrate.length} docs.`);
-        }).catch(err => {
-          console.error('[Destinations Page] Migration failed:', err);
         });
-
-        // We can await it or let it run in background. Await is safer for consistency.
-        // await migrationPromise; // However, we are inside load() which is async. 
-        // We can't await easily inside this forEach/map structure if we were keeping old logic, but here we are in the main body.
+        console.log(`[Destinations Page] Successfully migrated ${docsToMigrate.length} docs.`);
       }
 
       // Update local data for immediate rendering
@@ -592,54 +619,6 @@ export async function load() {
           faq = { title: 'Frequently Asked Questions', items: [] };
         }
         faq.items = [...(faq.items || []), ...newFaqItems];
-      }
-    }
-
-    // Old Logic (Disabled)
-    if (false) {
-      const userQuestions = userQuestionsSnap.docs
-        .map(doc => {
-          const data = doc.data();
-          const placeholderText = 'TYPE ANSWER HERE (Then refresh website)';
-          const rawAnswer = data.answer;
-
-          // Check if answer is valid (exists, string, not empty, and NOT the placeholder)
-          const isValidAnswer = rawAnswer &&
-            typeof rawAnswer === 'string' &&
-            rawAnswer.trim().length > 0 &&
-            rawAnswer !== placeholderText;
-
-          const isPending = data.status === 'pending';
-
-          // Check if we need to auto-update status
-          if (isValidAnswer && isPending) {
-            // Queue an update to set status to 'answered'
-            doc.ref.update({ status: 'answered' }).catch(err => console.error('[Destinations Page] Auto-update failed', err));
-          }
-
-          // Only include if it has a valid answer
-          if (isValidAnswer) {
-            return {
-              question: data.question || '',
-              answer: rawAnswer,
-              answerFormat: 'markdown', // Default to markdown for user answers
-              source: 'user' // Flag to identify origin if needed
-            };
-          }
-          return null;
-        })
-        .filter(item => item !== null);
-
-      if (userQuestions.length > 0) {
-        // Initialize FAQ object if it didn't exist from manual items
-        if (!faq) {
-          faq = {
-            title: 'Frequently Asked Questions',
-            items: []
-          };
-        }
-        // Append user questions to the end (or beginning? users typically want to see new stuff, but pinned/manual might be priority. Let's append.)
-        faq.items = [...(faq.items || []), ...userQuestions];
       }
     }
 
@@ -664,12 +643,17 @@ export async function load() {
       };
     }
 
-    // Load related posts from subcollection (no fallback - subcollection is source of truth)
-    // Filter out the 'main' document if it exists (it only contained title, which is now in document)
-    const relatedPosts = relatedPostsSnap.docs
+    const relatedPostsFromDB = relatedPostsSnap.docs
       .filter(doc => doc.id !== 'main')
       .map(doc => serializeDates(doc.data()))
       .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+    // Fall back to main document's relatedPosts field, then to hardcoded fallback
+    const relatedPosts = relatedPostsFromDB.length
+      ? relatedPostsFromDB
+      : Array.isArray((destPage as any)?.relatedPosts) && (destPage as any).relatedPosts.length
+        ? (destPage as any).relatedPosts
+        : FALLBACK_RELATED_POSTS;
 
     // Small data is now in the document (labels, breadcrumbs, seo, nextUpPreview, relatedPostsTitle)
     // These are read directly from the page object below

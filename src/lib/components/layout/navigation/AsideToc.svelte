@@ -289,7 +289,7 @@
 		class:in-hero-area={isInHeroArea}
 		class:interactive={heroTocOpacity > 0.1}
 		data-aside-toc
-		style={`opacity: ${heroTocOpacity}; pointer-events: none; visibility: ${heroTocOpacity > 0 ? 'visible' : 'hidden'};`}
+		style={`opacity: ${heroTocOpacity}; pointer-events: ${heroTocOpacity > 0.1 ? 'auto' : 'none'}; visibility: ${heroTocOpacity > 0 ? 'visible' : 'hidden'};`}
 		aria-label="Table of contents"
 	>
 		<div class="toc-header">Contents</div>

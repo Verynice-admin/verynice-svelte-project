@@ -174,6 +174,7 @@
 
 		{#if newAnswerItem}
 			<div class="new-answer-alert" transition:slide>
+				<button class="new-answer-dismiss" on:click={() => (newAnswerItem = null)} aria-label="Close answer">✕</button>
 				<div class="new-answer-header">
 					<span class="new-answer-badge">Just Answered</span>
 					<h4>{newAnswerItem.question}</h4>
@@ -235,6 +236,7 @@
 		width: 100%;
 		margin: 6rem auto;
 		padding: 0 1.5rem;
+		background: transparent !important;
 	}
 
 	.faq-header-wrapper {
@@ -263,24 +265,24 @@
 	}
 
 	.faq-card {
-		/* Background controlled by global theme */
-		border-radius: 999px; /* Pill-shaped like Google */
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-		border: 1px solid rgba(0, 0, 0, 0.06);
+		background: #ffffff;
+		border-radius: 999px;
+		box-shadow: none;
+		border: 1.5px solid #374151;
 		overflow: hidden;
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	.faq-card:hover {
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-		border-color: rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		border-color: #1f2937;
 	}
 
 	.faq-card.is-open {
-		background: #d1d4da; /* Light gray background */
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-		border-color: rgba(0, 0, 0, 0.1);
-		border-radius: 24px; /* Less rounded when open to show content better */
+		background: #ffffff;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		border-color: #1f2937;
+		border-radius: 24px;
 	}
 
 	.faq-btn {
@@ -414,8 +416,12 @@
 	/* Mobile Responsiveness */
 	@media (max-width: 768px) {
 		.faq-section {
-			margin: 4rem auto;
+			margin: 0 auto;
 			padding: 0 1rem;
+		}
+
+		.faq-ask-wrapper {
+			margin: 0 auto 1rem;
 		}
 
 		.faq-header-wrapper h2 {
@@ -440,8 +446,9 @@
 	/* ... existing styles ... */
 	.faq-section {
 		width: 100%;
-		margin: 6rem auto 4rem; /* Adjusted margin */
+		margin: 6rem auto 4rem;
 		padding: 0 1.5rem;
+		background: transparent !important;
 	}
 
 	/* ... existing styles ... */
@@ -451,18 +458,18 @@
 		width: 100%;
 		max-width: 800px; /* Match FAQ grid width */
 		margin: 0 auto 6rem;
-		padding: 0 1.5rem;
+		padding: 0 0.75rem;
 		text-align: center;
 		position: relative;
 		z-index: 5;
 	}
 
 	.ask-container {
-		/* Background controlled by global theme */
-		padding: 1.25rem 1.5rem; /* Further reduced for slimmer look */
-		border-radius: 20px; /* Reduced from 32px for sleeker look */
-		box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.1);
-		border: 1px solid rgba(0, 0, 0, 0.02);
+		background: #ffffff;
+		padding: 1.25rem 1.5rem;
+		border-radius: 20px;
+		box-shadow: none;
+		border: 1.5px solid #374151;
 		position: relative;
 		z-index: 10;
 	}
@@ -490,18 +497,18 @@
 		display: flex;
 		gap: 0;
 		width: 100%;
-		/* Background controlled by global theme */
-		border-radius: 999px; /* Pill-shaped like Google */
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-		border: 1px solid rgba(0, 0, 0, 0.08);
+		background: #ffffff;
+		border-radius: 999px;
+		box-shadow: none;
+		border: 1.5px solid #374151;
 		padding: 0.5rem 0.5rem 0.5rem 1.5rem;
 		transition: all 0.2s;
 	}
 
 	.input-wrapper:focus-within {
-		background: #e8eaee; /* Slightly lighter on focus */
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-		border-color: rgba(0, 0, 0, 0.1);
+		background: #ffffff;
+		box-shadow: 0 0 0 3px rgba(55, 65, 81, 0.15);
+		border-color: #1f2937;
 	}
 
 	input {
@@ -555,8 +562,9 @@
 	}
 
 	button[type='submit']:disabled {
-		background: rgba(255, 255, 255, 0.3);
-		opacity: 0.6;
+		background: #e2e8f0;
+		color: #64748b;
+		opacity: 1;
 		cursor: not-allowed;
 		transform: none;
 	}
@@ -647,13 +655,41 @@
 	}
 
 	.new-answer-alert {
-		background: #f0f9ff;
-		border: 1px solid #bae6fd;
-		border-radius: 20px; /* More rounded like Google */
+		background: linear-gradient(145deg, rgba(30, 41, 59, 0.75), rgba(15, 23, 42, 0.9));
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 20px;
 		padding: 1.25rem 1.5rem;
+		padding-top: 1rem;
 		margin-bottom: 1.5rem;
 		text-align: left;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+		position: relative;
+	}
+
+	.new-answer-dismiss {
+		position: absolute;
+		top: 0.625rem;
+		right: 0.625rem;
+		background: rgba(255, 255, 255, 0.15);
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 999px;
+		width: 2.25rem;
+		height: 2.25rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 1rem;
+		font-weight: 700;
+		color: #ffffff;
+		cursor: pointer;
+		line-height: 1;
+		padding: 0;
+		z-index: 10;
+	}
+
+	.new-answer-dismiss:hover {
+		background: rgba(255, 255, 255, 0.28);
+		color: #ffffff;
 	}
 
 	.new-answer-header {
@@ -675,13 +711,13 @@
 
 	.new-answer-header h4 {
 		margin: 0;
-		color: #0f172a;
+		color: #fbbf24;
 		font-size: 1.05rem;
 		font-weight: 700;
 	}
 
 	.new-answer-body {
-		color: #334155;
+		color: #e2e8f0;
 		font-size: 0.95rem;
 		line-height: 1.6;
 		margin-bottom: 1.25rem;
@@ -692,9 +728,9 @@
 	}
 
 	.new-answer-close {
-		background: #d1d4da; /* Light gray background */
-		border: 1px solid rgba(0, 0, 0, 0.08);
-		color: #475569;
+		background: #ffffff;
+		border: 1.5px solid #374151;
+		color: #1e293b;
 		font-weight: 600;
 		padding: 0.5rem 1.25rem;
 		border-radius: 999px; /* Pill-shaped like Google */

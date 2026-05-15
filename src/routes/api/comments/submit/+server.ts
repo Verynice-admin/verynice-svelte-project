@@ -41,7 +41,7 @@ export const POST: RequestHandler = async ({ request }) => {
             if (aiResult) {
                 if (aiResult.isOffensive) {
                     return json({
-                        valiationError: 'Your comment was flagged as inappropriate.',
+                        validationError: 'Your comment was flagged as inappropriate.',
                         isOffensive: true
                     }, { status: 400 });
                 }
@@ -80,8 +80,7 @@ export const POST: RequestHandler = async ({ request }) => {
         return json({ success: true, comment: newComment });
 
     } catch (error) {
-        const message = error instanceof Error ? error.message : 'Unknown error';
         console.error('[API] Error submitting comment:', error);
-        return json({ error: 'Internal Server Error: ' + message }, { status: 500 });
+        return json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

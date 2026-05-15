@@ -98,14 +98,17 @@
 <AsideToc articles={tocSections} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Traditional Games | VeryNice'}</title>
-	<meta
-		name="description"
-		content={
-			pageData?.seo?.description ||
-			'Discover Kokpar, Audaryspak, Kyz Kuu and other ancient Kazakh games.'
-		}
-	/>
+	<title>{pageData?.seo?.title || 'Kazakh Traditional Games | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Discover Kokpar, Audaryspak, Kyz Kuu, and other ancient Kazakh equestrian and steppe games played for centuries.'} />
+	<link rel="canonical" href="https://verynice.kz/culture/traditional-games" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/culture/traditional-games" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Kazakh Traditional Games | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Discover Kokpar, Audaryspak, Kyz Kuu, and other ancient Kazakh equestrian and steppe games played for centuries.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Kazakh Traditional Games | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Discover Kokpar, Audaryspak, Kyz Kuu, and other ancient Kazakh equestrian and steppe games played for centuries.'} />
 </svelte:head>
 
 <div class="attractions-page">

@@ -1,7 +1,6 @@
 <!-- src/routes/about-borat/+page.svelte -->
 <script>
 	import { onMount } from 'svelte';
-	import mermaid from 'mermaid';
 	import { browser } from '$app/environment';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import { processContent } from '$lib/utils/markdown';
@@ -27,6 +26,7 @@
 
 	onMount(async () => {
 		if (browser) {
+			const { default: mermaid } = await import('mermaid');
 			mermaid.initialize({
 				startOnLoad: false,
 				theme: 'neutral',
@@ -208,10 +208,7 @@
 		name="description"
 		content={pageData?.seo?.description || 'The truth about Borat and Kazakhstan.'}
 	/>
-	<meta
-		name="keywords"
-		content={pageData?.seo?.keywords || 'Borat, Kazakhstan, movie, Sacha Baron Cohen'}
-	/>
+	<link rel="canonical" href="https://verynice.kz/about-borat" />
 
 	<!-- Open Graph / Facebook -->
 	<meta property="og:type" content="article" />
@@ -220,10 +217,7 @@
 		property="og:description"
 		content={pageData?.seo?.description || pageData.headerDescription}
 	/>
-	<meta
-		property="og:url"
-		content={browser ? window.location.href : 'https://verynice.kz/about-borat'}
-	/>
+	<meta property="og:url" content="https://verynice.kz/about-borat" />
 	{#if pageData.headerBackgroundPublicId}
 		<meta
 			property="og:image"
@@ -292,80 +286,64 @@
 </svelte:head>
 
 {#if pageData}
-	<!-- PREMIUM HERO SECTION (BORAT STYLE) -->
-	<section id="page-hero-section" class="hero-premium" bind:this={heroSection}>
-		<div class="hero-bg-container">
-			{#if pageData.headerBackgroundPublicId}
-				<div
-					class="hero-bg-image"
-					role="img"
-					aria-label={pageData.headerBackgroundImageAriaLabel || 'Background image for page'}
-					style={`background-image: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, {
-						width: 2200,
-						height: 1200,
-						crop: 'fill',
-						gravity: 'auto',
-						quality: 'auto:good',
-						fetch_format: 'auto'
-					})}")`}
-				></div>
-			{/if}
-			<div class="hero-overlay"></div>
-		</div>
-
-		<div class="hero-content wrapper">
-			<div class="hero-text-box">
-				<!-- Breadcrumbs (Keep them but subtle) -->
-				<nav aria-label="Breadcrumb" class="breadcrumb-premium">
-					<ol class="breadcrumb-list">
-						{#each breadcrumbs as crumb, index}
-							<li class="breadcrumb-item">
-								{#if crumb.href && index !== breadcrumbs.length - 1}
-									<a class="breadcrumb-link" href={crumb.href}>{crumb.label}</a>
-									<span class="breadcrumb-divider">/</span>
-								{:else}
-									<span class="breadcrumb-current" aria-current="page">{crumb.label}</span>
-								{/if}
-							</li>
-						{/each}
-					</ol>
-				</nav>
-
-				<span class="hero-kicker">Fact vs Fiction</span>
-				<h1>{pageData.mainTitle}</h1>
-				<p class="hero-lead">
-					{pageData.headerDescription}
-				</p>
-
-				<!-- Stats Bar (Integrated into Hero) -->
-				<div class="post-info-premium" role="group" aria-label="Article statistics">
-					{#if pageData.location}
-						<div class="stat-pill" aria-label="Location: {pageData.location}">
-							<span class="icon-location" aria-hidden="true"></span>
-							<span>{pageData.location}</span>
-						</div>
-					{/if}
-					{#if pageData.articleViews > 0}
-						<div class="stat-pill" aria-label="{pageData.articleViews} views">
-							<span class="icon-view" aria-hidden="true"></span>
-							<span>{pageData.articleViews.toLocaleString()}</span>
-						</div>
-					{/if}
-					{#if pageData.articleLikes > 0}
-						<div class="stat-pill" aria-label="{pageData.articleLikes} likes">
-							<span class="icon-like" aria-hidden="true"></span>
-							<span>{pageData.articleLikes.toLocaleString()}</span>
-						</div>
-					{/if}
+	<section id="page-hero-section" class="section" bind:this={heroSection} style="min-height: 100vh !important; height: 100vh !important;">
+		<div class="section-header wrapper">
+			<nav aria-label="Breadcrumb" class="breadcrumb-modern">
+				<ol class="breadcrumb-modern__list">
+					{#each breadcrumbs as crumb, index}
+						<li class="breadcrumb-modern__item">
+							{#if crumb.href && index !== breadcrumbs.length - 1}
+								<a class="breadcrumb-modern__link" href={crumb.href}>{crumb.label}</a>
+							{:else}
+								<span class="breadcrumb-modern__current" aria-current="page">{crumb.label}</span>
+							{/if}
+							{#if index < breadcrumbs.length - 1}
+								<span class="breadcrumb-modern__divider" aria-hidden="true"></span>
+							{/if}
+						</li>
+					{/each}
+				</ol>
+			</nav>
+			<div class="section-header-content-row">
+				<div class="section-header-text">
+					<span class="hero-kicker">{pageData.heroKicker || 'Fact vs Fiction'}</span>
+					<h1 itemprop="headline">{pageData.mainTitle}</h1>
+					<p class="section-description" itemprop="description">{pageData.headerDescription}</p>
+					<div class="post-info" role="group" aria-label="Article statistics">
+						{#if pageData.location}
+							<div class="post-info-inner" aria-label="Location: {pageData.location}">
+								<span class="icon-location" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.location}</div>
+							</div>
+						{/if}
+						{#if pageData.articleViews > 0}
+							<div class="post-info-inner" aria-label="{pageData.articleViews} views">
+								<span class="icon-view" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.articleViews.toLocaleString()}</div>
+							</div>
+						{/if}
+						{#if pageData.articleLikes > 0}
+							<div class="post-info-inner" aria-label="{pageData.articleLikes} likes">
+								<span class="icon-like" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.articleLikes.toLocaleString()}</div>
+							</div>
+						{/if}
+					</div>
+					<button class="hero-search-btn" on:click={openSearch}>
+						<span class="search-icon">🔍</span>
+						<span>Search or ask anything...</span>
+					</button>
 				</div>
-
-				<!-- Search Button -->
-				<button class="hero-search-btn" on:click={openSearch}>
-					<span class="search-icon">🔍</span>
-					<span>Search or ask anything...</span>
-				</button>
 			</div>
 		</div>
+		{#if pageData.headerBackgroundPublicId}
+			<div
+				class="header-background"
+				role="img"
+				aria-label={pageData.headerBackgroundImageAriaLabel || 'Background image'}
+				style={`--hero-bg-url: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, { width: 2200, height: 1600, crop: 'fill', gravity: 'auto', quality: 'auto:good', fetch_format: 'auto' })}")`}
+			><div class="background-image"></div></div>
+		{/if}
 	</section>
 
 	<!-- DARK TIMELINE SECTION -->
@@ -480,8 +458,18 @@
 <SearchModal isOpen={isSearchOpen} on:close={closeSearch} />
 
 <style>
-	/* PREMIUM DARK STYLING FOR BORAT PAGE */
-	/* Global theme handles body background - removed duplicate */
+	/* Override global dark theme for this page */
+	:global(body.premium-theme-page) {
+		background: #ffffff !important;
+		color: #0f172a !important;
+	}
+
+	:global(body.premium-theme-page) main,
+	:global(body.premium-theme-page) .section,
+	:global(body.premium-theme-page) .timeline-container {
+		background: #ffffff !important;
+		color: #0f172a !important;
+	}
 
 	.wrapper {
 		max-width: 1200px;
@@ -492,47 +480,6 @@
 	.max-w-content {
 		max-width: 1000px;
 		margin: 0 auto;
-	}
-
-	/* HERO SECTION */
-	.hero-premium {
-		position: relative;
-		height: 80vh; /* Slightly shorter than home */
-		min-height: 600px;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		padding-top: 80px; /* Header clearance */
-		overflow: hidden;
- 		background: #000;
-		margin-bottom: 0;
-	}
-
-	.hero-bg-container {
-		position: absolute;
-		inset: 0;
-		z-index: 1;
-	}
-
-	.hero-bg-image {
-		width: 100%;
-		height: 100%;
-		background-size: cover;
-		background-position: center 20%; /* Focus on top part of image usually */
-		filter: none !important;
-	}
-
-	.hero-overlay {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.95) 100%);
-	}
-
-	.hero-content {
-		position: relative;
-		z-index: 10;
-		width: 100%;
-		padding-top: 10vh; /* Visual balance */
 	}
 
 	/* Hero Search Button */
@@ -563,114 +510,10 @@
 		font-size: 1.25rem;
 	}
 
-	.hero-text-box {
-  max-width: 800px;
-  margin: 0;
-  text-align: left;
-	}
-
-	/* Breadcrumbs - Premium */
-	.breadcrumb-premium {
-		margin-bottom: 2rem;
-		display: inline-block;
-	}
-
-	.breadcrumb-list {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		margin: 0;
-		list-style: none;
-		gap: 0.5rem;
-		font-family: 'Inter', sans-serif;
-		font-size: 0.9rem;
-		color: #94a3b8;
-	}
-
-	.breadcrumb-link {
-		color: #cbd5e1;
-		text-decoration: none;
-		transition: color 0.2s;
-	}
-
-	.breadcrumb-link:hover {
-		color: var(--vnk-accent-color);
-	}
-
-	.breadcrumb-divider {
-		color: #475569;
-		margin-left: 0.5rem;
-	}
-
-	.breadcrumb-current {
-		color: var(--vnk-accent-color);
-		font-weight: 600;
-	}
-
-	.hero-kicker {
-		display: block;
-		font-family: 'Outfit', sans-serif;
-		text-transform: uppercase;
-  letter-spacing: 0.3em;
-  color: var(--vnk-accent-color);
-		font-weight: 700;
-		font-size: 0.9rem;
-  margin-bottom: 1.5rem;
-	}
-
-	.hero-text-box h1 {
-		font-family: 'Outfit', sans-serif;
-  font-size: clamp(3rem, 7vw, 6rem);
-		font-weight: 900;
-  line-height: 1;
-		margin-bottom: 1.5rem;
-		color: #fff;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  letter-spacing: -0.04em;
-	}
-
-	.hero-lead {
-		font-family: 'Inter', sans-serif;
-  font-size: clamp(1.1rem, 1.5vw, 1.4rem);
-		line-height: 1.6;
-  color: #cbd5e1;
-  margin-bottom: 3.5rem;
-  max-width: 600px;
-  margin-left: 0;
-  margin-right: 0;
-	}
-
-	/* Post Info Pills */
-	.post-info-premium {
-		display: flex;
-  justify-content: flex-start;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
-
-	.stat-pill {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		background: rgba(255, 255, 255, 0.08);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		padding: 0.5rem 1.25rem;
-		border-radius: 50px;
-		font-size: 0.9rem;
-		color: #fff;
-		font-weight: 500;
-		backdrop-filter: blur(10px);
-	}
-
-	.stat-pill span[class^='icon-'] {
-		color: var(--vnk-accent-color);
-	}
-
 	/* TIMELINE CONTAINER */
 	.timeline-container-premium {
 		position: relative;
-		background: #0f172a; /* Match body */
+		background: #ffffff;
 		padding-bottom: 5rem;
 		overflow: hidden;
 	}
@@ -717,38 +560,38 @@
 		transform: translateX(-50%);
 		width: 24px;
 		height: 24px;
-		background: #0f172a;
-		border: 2px solid #fbbf24;
+		background: #ffffff;
+		border: 2px solid #374151;
 		border-radius: 50%;
 		z-index: 5;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+		box-shadow: none;
 	}
 
 	.node-inner {
 		width: 8px;
 		height: 8px;
-		background: #fbbf24;
+		background: #374151;
 		border-radius: 50%;
 	}
 
 	/* Cards positioning - No Yellow Lines */
 	.timeline-card-wrapper.left .timeline-card-glass {
 		margin-right: 50%;
-		transform: translateX(-3rem); /* Gap from spine */
+		transform: translateX(-3rem);
 		text-align: right;
-		border-right: 1px solid rgba(255, 255, 255, 0.1);
-		border-left: 1px solid rgba(255, 255, 255, 0.05);
+		border-right: 1.5px solid #374151;
+		border-left: 1px solid #e2e8f0;
 	}
 
 	.timeline-card-wrapper.right .timeline-card-glass {
 		margin-left: 50%;
-		transform: translateX(3rem); /* Gap from spine */
+		transform: translateX(3rem);
 		text-align: left;
-		border-left: 1px solid rgba(255, 255, 255, 0.1);
-		border-right: 1px solid rgba(255, 255, 255, 0.05);
+		border-left: 1.5px solid #374151;
+		border-right: 1px solid #e2e8f0;
 	}
 
 	/* Common Card Styles */
@@ -895,8 +738,8 @@
 			margin: 0;
 			transform: none;
 			text-align: left;
-			border-left: 4px solid #fbbf24;
-			border-right: 1px solid rgba(255, 255, 255, 0.05); /* Reset borders */
+			border-left: 4px solid #374151;
+			border-right: 1px solid #e2e8f0;
 		}
 
 		/* Remove hover transforms on mobile for simplicity */

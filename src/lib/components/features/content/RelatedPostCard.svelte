@@ -97,31 +97,35 @@
 
 	.tier-badge {
 		position: absolute;
-		top: 0.6rem;
-		right: 0.6rem;
+		top: 1.25rem;
+		right: 0.85rem;
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
 		display: flex;
+		flex-direction: column;
 		align-items: center;
-		gap: 3px;
-		padding: 3px 8px;
-		border-radius: 20px;
+		justify-content: center;
 		color: #fff;
 		font-weight: 700;
 		z-index: 2;
+		padding: 0;
+		gap: 0;
 	}
 
-	.tier-badge.tier-1 { background: linear-gradient(135deg, #2563eb, #3b82f6); }
-	.tier-badge.tier-2 { background: linear-gradient(135deg, #059669, #10b981); }
-	.tier-badge.tier-3 { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+	.tier-badge.tier-1 { background: linear-gradient(135deg, #2563eb, #3b82f6); box-shadow: 0 2px 8px rgba(37,99,235,0.4); }
+	.tier-badge.tier-2 { background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 2px 8px rgba(5,150,105,0.4); }
+	.tier-badge.tier-3 { background: linear-gradient(135deg, #d97706, #f59e0b); box-shadow: 0 2px 8px rgba(245,158,11,0.4); }
 
 	.tier-label {
-		font-size: 0.5rem;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
+		display: none;
 	}
 
 	.tier-num {
-		font-size: 0.85rem;
+		font-size: 0.7rem;
+		font-weight: 700;
 		line-height: 1;
+		color: #fff;
 	}
 
 	.card-body {
@@ -152,6 +156,9 @@
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
+		text-align: center;
+		word-spacing: normal;
+		word-break: normal;
 	}
 
 	.card-desc {
@@ -172,18 +179,18 @@
 		align-items: center;
 		gap: 6px;
 		padding: 7px 16px;
-		background: #f4f4f5;
-		border: 1.5px solid #d1d5db;
+		background: #ffffff;
+		border: 1.5px solid #374151;
 		border-radius: 999px;
 		font-size: 0.78rem;
 		font-weight: 600;
-		color: #111;
+		color: #0f172a;
 		transition: background 0.2s, border-color 0.2s;
 	}
 
 	.card:hover .explore-btn {
-		background: #e5e7eb;
-		border-color: #9ca3af;
+		background: #f1f5f9;
+		border-color: #1f2937;
 	}
 
 	/* Mobile: bigger fonts for readability */

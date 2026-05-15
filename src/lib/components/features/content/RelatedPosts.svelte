@@ -201,7 +201,7 @@
 
 <style>
 	.related-posts {
-		margin-top: 1rem;
+		margin-top: 0;
 		position: relative;
 	}
 
@@ -209,28 +209,30 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin-bottom: var(--vnk-spacing-lg);
+		margin-bottom: 1.5rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid rgba(5, 115, 179, 0.12);
 	}
 
 	.related-posts-header h2 {
 		font-family: 'Outfit', sans-serif;
-		font-size: clamp(1.25rem, 3vw, 3rem);
+		font-size: clamp(1.1rem, 2.5vw, 1.6rem);
 		font-weight: 800;
 		text-align: left;
 		margin: 0;
-		color: #1c1c1e !important;
-		letter-spacing: -0.03em;
+		color: #0f172a !important;
+		letter-spacing: -0.02em;
 		text-shadow: none;
 	}
 
-	.related-posts-header h2 a {
+.related-posts-header h2 a {
 		text-decoration: none;
-		color: #2d2d2d !important;
+		color: #0f172a !important;
 		transition: color 0.3s ease;
 	}
 
 	.related-posts-header h2 a:hover {
-		color: #555 !important;
+		color: #0573b3 !important;
 	}
 
 	.nav-arrows {
@@ -240,7 +242,7 @@
 
 	.nav-btn {
 		background: white;
-		border: 1px solid #e2e8f0;
+		border: 1px solid rgba(5, 115, 179, 0.25);
 		border-radius: 50%;
 		width: 40px;
 		height: 40px;
@@ -255,10 +257,11 @@
 	}
 
 	.nav-btn:hover {
-		background: #f8fafc;
-		border-color: #cbd5e1;
-		color: #0f172a;
-		transform: scale(1.05);
+		background: linear-gradient(135deg, #0573b3, #034f8a);
+		border-color: #0573b3;
+		color: #fff;
+		transform: scale(1.08);
+		box-shadow: 0 4px 12px rgba(5, 115, 179, 0.35);
 	}
 
 	.carousel-container {
@@ -317,35 +320,42 @@
 			height: 36px !important;
 		}
 
+		/* Full-bleed: centers exactly on viewport regardless of parent padding */
 		.carousel-container {
+			width: 100vw !important;
+			margin-left: calc(50% - 50vw) !important;
+			margin-right: 0 !important;
 			padding: 6px 0 1rem !important;
-			padding-left: 0 !important;
-			padding-right: 0 !important;
-			margin: 0 !important;
-			width: 100% !important;
 			overflow-x: auto !important;
 			overflow-y: clip !important;
 			scroll-snap-type: x mandatory !important;
 			-webkit-overflow-scrolling: touch !important;
-			min-height: 0 !important;
 		}
 
 		.related-posts-list {
-			gap: 12px !important;
-			white-space: nowrap !important;
-			padding-left: 16px !important;
-			padding-right: 16px !important;
+			gap: 0 !important;
+			padding: 0 !important;
 			justify-content: flex-start !important;
 		}
 
+		/* Each item fills exactly one viewport → one card per screen guaranteed */
 		.carousel-item {
 			flex: none !important;
-			width: calc(100vw - 72px) !important;
-			min-width: calc(100vw - 72px) !important;
-			max-width: calc(100vw - 72px) !important;
+			width: 100vw !important;
+			min-width: 100vw !important;
+			max-width: 100vw !important;
+			padding: 0 28px !important;
 			margin-right: 0 !important;
-			scroll-snap-align: center !important;
+			scroll-snap-align: start !important;
 			box-sizing: border-box !important;
+			display: flex !important;
+			justify-content: center !important;
+			align-items: flex-start !important;
+		}
+
+		.carousel-item > :global(*) {
+			width: 100% !important;
+			max-width: 100% !important;
 		}
 
 		.carousel-item:first-child {
@@ -428,6 +438,9 @@
 
 	.related-posts-empty {
 		margin-top: var(--vnk-spacing-md);
-		color: var(--vnk-text-secondary-color);
+		color: #64748b;
+		text-align: center;
+		font-style: italic;
+		font-size: 0.95rem;
 	}
 </style>

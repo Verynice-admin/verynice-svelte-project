@@ -50,12 +50,17 @@
 <!-- AsideToc hidden for this page - TOC is too lengthy -->
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Traditional Clothing | VeryNice'}</title>
-	<meta
-		name="description"
-		content={pageData?.seo?.description ||
-			'Discover the Saukele, Chapan, Shapan, and ornate jewelry that define Kazakh traditional dress.'}
-	/>
+	<title>{pageData?.seo?.title || 'Kazakh Traditional Clothing | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Discover the Saukele, Chapan, Shapan, and ornate silver jewelry that define Kazakh traditional dress and nomadic identity.'} />
+	<link rel="canonical" href="https://verynice.kz/culture/traditional-clothing" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/culture/traditional-clothing" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Kazakh Traditional Clothing | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Discover the Saukele, Chapan, Shapan, and ornate silver jewelry that define Kazakh traditional dress and nomadic identity.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Kazakh Traditional Clothing | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Discover the Saukele, Chapan, Shapan, and ornate silver jewelry that define Kazakh traditional dress and nomadic identity.'} />
 </svelte:head>
 
 <div class="attractions-page">

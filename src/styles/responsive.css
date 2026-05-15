@@ -271,7 +271,7 @@
     border: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    padding: 32px 20px !important;
+    padding: 16px 10px !important;
     margin: 0 !important;
   }
 
@@ -280,19 +280,21 @@
     display: none !important;
   }
 
-/* 4. TYPOGRAPHY STANDARDS */
-body, .timeline-body, .tip-content, p, li, span, div {
-  font-size: 17px !important;
-  line-height: 1.78 !important;
-  color: #1c1c1e !important;
-  font-weight: 400 !important;
+/* 4. TYPOGRAPHY STANDARDS — scoped to prose/timeline only */
+.timeline-body p,
+.timeline-body li,
+.prose p,
+.prose li {
+  font-size: 1.0625rem;
+  line-height: 1.78;
+  color: #1c1c1e;
+  font-weight: 400;
 }
 
-/* Prose-specific typography for justified text */
+/* Prose: left-aligned, readable, no forced justification */
 .prose {
-  text-align: justify !important;
-  text-justify: inter-word;
-  hyphens: auto;
+  text-align: left;
+  hyphens: none;
 }
 
 /* H1 article */
@@ -349,10 +351,19 @@ h3, .timeline-body :global(h3), .prose :global(h3) {
   }
 
   /* 5. LAYOUT */
-  .article-container, .content-wrapper, .timeline, .timeline-content,
-  .content-container, .content-wrapper {
+  .article-container, .content-wrapper,
+  .content-container {
     max-width: 100% !important;
     padding: 0 20px !important;
+  }
+
+  .timeline {
+    padding: 0 !important;
+  }
+
+  .timeline-content {
+    max-width: 100% !important;
+    padding: 0 !important;
   }
 
   .section-spacing,

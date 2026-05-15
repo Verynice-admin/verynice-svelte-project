@@ -602,6 +602,9 @@ small {
   font-weight: 700;
   font-size: 0.9rem;
   margin-bottom: 1.5rem;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (max-width: 768px) {
@@ -1567,7 +1570,7 @@ html {
   line-height: 1.8;
   letter-spacing: 0.01em;
   margin-bottom: 1.2em;
-  text-align: justify;
+  text-align: left;
   padding: 0 var(--prose-inline-gap);
   /* More spacing from borders */
 }
@@ -1601,15 +1604,17 @@ html {
   margin-bottom: var(--inc-heading-spacing-bottom);
 }
 
-/* Ensure lists are styled */
+/* Lists in prose render as prose paragraphs — no bullets, no indentation */
 .prose :global(ul),
 .prose :global(ol) {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
   margin-bottom: var(--inc-paragraph-spacing);
-  padding-left: 1.5em;
 }
 
 .prose :global(li) {
-  margin-bottom: 0.625em;
+  margin-bottom: 0.875em;
   line-height: var(--inc-leading-relaxed);
   color: var(--inc-text-primary);
 }
@@ -2250,13 +2255,15 @@ h2.history-section-title {
 
 .main-column-content .prose :global(ul),
 .main-column-content .prose :global(ol) {
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
   margin-bottom: var(--inc-paragraph-spacing);
-  padding-left: 1.5em;
   max-width: 70ch;
 }
 
 .main-column-content .prose :global(li) {
-  margin-bottom: 0.625em;
+  margin-bottom: 0.875em;
   line-height: var(--inc-leading-relaxed);
   font-size: var(--inc-text-base);
   color: var(--inc-text-primary);
@@ -3830,30 +3837,34 @@ body:has(#page-hero-section) {
   margin-top: clamp(1.5rem, 3vw, 2.75rem);
 }
 
+.attractions-tier-block .additional-content-header {
+  width: 100%;
+  text-align: center;
+}
+
 .attractions-tier-block .additional-content-header h2,
 .attractions-tier-heading {
-  font-size: 2rem;
-  font-weight: 800;
+  font-size: 1.1rem;
+  font-weight: 700;
   margin: 0 0 0.75rem 0;
-  color: #000000 !important;
-  font-family: 'Outfit', sans-serif !important;
+  color: #0f172a !important;
+  font-family: 'Inter', sans-serif !important;
   text-shadow: none !important;
-  text-align: center;
+  text-align: center !important;
+  width: 100%;
+  display: block;
   letter-spacing: -0.01em;
 }
 
 .attractions-tier-body {
-  display: grid;
-  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .attractions-tier-description {
-  color: #000000 !important;
-  margin: 0 auto 1.5rem auto;
-  max-width: 70ch;
-  font-size: 1.25rem;
-  line-height: 2;
-  text-align: center;
+  display: none;
 }
 
 .attractions-tier-list {
@@ -3872,19 +3883,18 @@ body:has(#page-hero-section) {
 
 .attractions-tier-item {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 12px 0.7cm; /* More left/right spacing */
-  background: #d1d4da; /* Match destination card image frame */
-  border-radius: 66px; /* Match image rounding */
-  flex: 1;
+  gap: 8px;
+  padding: 5px 14px 5px 6px;
+  background: #ffffff;
+  border: 1.5px solid #374151;
+  border-radius: 999px;
+  flex: 0 0 auto;
   min-width: 0;
-  transition: all 0.25s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   text-align: left;
-  aspect-ratio: 16 / 9; /* Same shape as card image */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
 }
 
 .attractions-tier-item:hover {
@@ -3999,24 +4009,29 @@ body:has(#page-hero-section) {
 .attractions-region-summary {
   list-style: none;
   padding: 1rem 1.25rem;
-  /* Move header right (increased left padding) */
-  /* Revert padding so header stays left */
   margin: 0 auto 1rem;
   width: min(1200px, 100%);
   cursor: pointer;
   border-radius: 1rem;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
 
   /* Flex layout for icon */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
-  /* For absolute centering of icon */
+
+  /* Sticky: stays pinned just below the site header while scrolling */
+  position: sticky;
+  top: calc(var(--vnk-header-height, 72px) + 20px);
+  z-index: 50;
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  border: 1.5px solid #374151;
 }
 
 .attractions-region-summary:hover {
-  background: linear-gradient(to right, #f8fafc, transparent);
+  background: #f8fafc;
+  border-color: #1f2937;
 }
 
 .attractions-region-summary::marker,
@@ -4122,10 +4137,10 @@ body:has(#page-hero-section) {
 
   .attractions-region-summary {
     position: sticky;
-    top: 64px;
+    top: calc(var(--vnk-header-height, 64px) + 20px);
     z-index: 100;
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1.5px solid #374151;
     border-radius: 16px;
     padding: 16px 20px;
     margin: 0 20px 16px 20px;
@@ -4135,7 +4150,7 @@ body:has(#page-hero-section) {
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   }
 
   .attractions-region-title {
@@ -4310,52 +4325,61 @@ body:has(#page-hero-section) {
   transform: scale(1.03);
 }
 
- /* Tier Badge - Corner Tag */
- .attractions-item-card .tier-badge {
-   position: absolute;
-   bottom: 1rem;
-   right: 1rem;
-   background: transparent;
-   backdrop-filter: blur(8px);
-   color: #fff;
-   padding: 0.75rem 1.2rem; /* 3x size */
-   font-size: 1.95rem; /* 3x size */
-   font-weight: 700;
-   z-index: 10;
-   text-transform: uppercase;
-   letter-spacing: 0.03em;
-   display: flex;
-   gap: 0.35rem;
-   align-items: center;
-   border-radius: 18px;
- }
+/* Tier Badge — circular, matches legend tier-box */
+.attractions-item-card .tier-badge,
+.tier-badge {
+  position: absolute;
+  top: 1.25rem;
+  right: 0.85rem;
+  bottom: auto;
+  left: auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  z-index: 10;
+  padding: 0;
+  gap: 0;
+  backdrop-filter: none;
+  letter-spacing: 0;
+}
 
 .tier-badge.tier-1 {
   background: linear-gradient(135deg, #2563eb, #3b82f6);
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
 }
 
-/* Blue for Tier 1 (Must-see) */
 .tier-badge.tier-2 {
-  background: linear-gradient(135deg, #10b981, #34d399);
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, #059669, #10b981);
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.4);
 }
 
-/* Green for Tier 2 (Recommended) */
 .tier-badge.tier-3 {
-  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  background: linear-gradient(135deg, #d97706, #f59e0b);
   box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
 }
 
-/* Gold for Tier 3 (Nice to see) */
+.tier-badge .tier-label,
+.attractions-item-card .tier-label {
+  display: none;
+}
+
+.tier-badge .tier-number,
+.tier-badge .tier-num {
+  font-size: 0.7rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+}
 
 .attractions-tier-description {
   max-width: 100% !important;
   width: 100%;
-}
-
-.attractions-item-card .tier-label {
-  display: none;
 }
 
 /* Hide label to save space */
@@ -4879,7 +4903,7 @@ body:has(#page-hero-section) {
     width: calc(100% - 40px) !important;
     max-width: 100% !important;
     background: #ffffff !important;
-    border: 1px solid rgba(128, 128, 128, 0.4) !important;
+    border: 1.5px solid #374151 !important;
     border-radius: 30px !important;
     padding: 10px 20px !important;
     margin: 0 20px 10px 20px !important;
@@ -5051,19 +5075,25 @@ body:has(#page-hero-section) {
     line-clamp: 3 !important;
   }
 
-  /* Tier Badge - Black on White */
-   .attractions-page .attractions-item-card .tier-badge {
-      background: transparent !important;
-     color: #ffffff !important;
-     border: none !important;
-     box-shadow: none !important;
-     font-size: 0.7rem !important;
-     font-weight: 700 !important;
-     padding: 0.4rem 0.75rem !important;
-     border-radius: 20px !important;
-   }
+  /* Tier Badge — circle, matches legend */
+  .attractions-page .attractions-item-card .tier-badge {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    top: 1.25rem !important;
+    right: 0.85rem !important;
+    bottom: auto !important;
+    font-size: 0 !important;
+    border: none !important;
+  }
 
-  /* Tier Badge Colors - Blue tier-1, Green tier-2, Yellow tier-3 */
+  .attractions-page .attractions-item-card .tier-badge .tier-number,
+  .attractions-page .attractions-item-card .tier-badge .tier-num {
+    font-size: 0.7rem !important;
+    display: block !important;
+  }
+
   .attractions-page .attractions-item-card .tier-badge.tier-1 {
     background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
     box-shadow: 0 2px 10px rgba(37, 99, 235, 0.4) !important;
@@ -5075,7 +5105,7 @@ body:has(#page-hero-section) {
   }
 
   .attractions-page .attractions-item-card .tier-badge.tier-3 {
-    background: linear-gradient(135deg, #f59e0b, #fbbf24) !important;
+    background: linear-gradient(135deg, #d97706, #f59e0b) !important;
     box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4) !important;
   }
 
@@ -5267,34 +5297,38 @@ body:has(#page-hero-section) {
     text-align: center !important;
   }
 
-   /* Tier Badge - Black on white for B&W */
-   .attractions-page .attractions-item-card .tier-badge {
-     position: absolute !important;
-     top: 12px !important;
-     right: 12px !important;
-     width: 48px !important;
-     height: 48px !important;
-     min-width: 48px !important;
-      background: transparent !important;
-     color: #ffffff !important;
-     padding: 0 !important;
-     font-size: 0.7rem !important;
-     font-weight: 800 !important;
-     text-transform: uppercase !important;
-     letter-spacing: 0 !important;
-     border-radius: 12px !important;
-     box-shadow: none !important;
-     z-index: 5 !important;
-     display: flex !important;
-     flex-direction: column !important;
-     align-items: center !important;
-     justify-content: center !important;
-     gap: 0 !important;
-     border: none !important;
-     line-height: 1 !important;
-   }
+  /* Tier Badge — circle, matches legend */
+  .attractions-page .attractions-item-card .tier-badge {
+    position: absolute !important;
+    top: 1.25rem !important;
+    right: 0.85rem !important;
+    bottom: auto !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    font-size: 0 !important;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+    box-shadow: none !important;
+    z-index: 5 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    border: none !important;
+    line-height: 1 !important;
+  }
 
-  /* Tier Badge Colors - Blue tier-1, Green tier-2, Yellow tier-3 */
+  .attractions-page .attractions-item-card .tier-badge .tier-number,
+  .attractions-page .attractions-item-card .tier-badge .tier-num {
+    font-size: 0.7rem !important;
+    display: block !important;
+    color: #fff !important;
+  }
+
   .attractions-page .attractions-item-card .tier-badge.tier-1 {
     background: linear-gradient(135deg, #2563eb, #3b82f6) !important;
     box-shadow: 0 2px 10px rgba(37, 99, 235, 0.4) !important;
@@ -5306,13 +5340,13 @@ body:has(#page-hero-section) {
   }
 
   .attractions-page .attractions-item-card .tier-badge.tier-3 {
-    background: linear-gradient(135deg, #f59e0b, #fbbf24) !important;
+    background: linear-gradient(135deg, #d97706, #f59e0b) !important;
     box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4) !important;
   }
 
-  /* Show "TIER" label above number */
+  /* Hide TIER label — number only */
   .attractions-page .attractions-item-card .tier-label {
-    display: flex !important;
+    display: none !important;
     font-size: 0.45rem !important;
     font-weight: 700 !important;
     letter-spacing: 0.08em !important;
@@ -5712,7 +5746,36 @@ body:has(#page-hero-section) {
 .timeline-body {
   color: black;
   line-height: 1.8;
-  font-size: 1.4rem;
+  font-size: 1.05rem;
+}
+
+.timeline-body h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 1.75rem;
+  margin-bottom: 0.6rem;
+  color: #1e293b;
+  line-height: 1.3;
+}
+
+.timeline-body h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+  line-height: 1.3;
+}
+
+.timeline-body h4,
+.timeline-body h5,
+.timeline-body h6 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+  color: #334155;
+  line-height: 1.3;
 }
 
 .timeline-body ul,
@@ -5723,7 +5786,7 @@ body:has(#page-hero-section) {
 
 .timeline-body li {
   margin-bottom: 0.75rem;
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 
 /* Timeline Footer */
@@ -5828,11 +5891,17 @@ pre.language-mermaid {
   padding: 0 !important;
   box-shadow: none !important;
   margin: 2rem 0 !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 
 .language-mermaid {
   background-color: transparent !important;
   text-shadow: none !important;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  display: block;
 }
 
 /* Hide Mermaid error messages */
@@ -5853,10 +5922,32 @@ pre:has-text('mermaid version'),
   display: none !important;
 }
 
-/* Force SVG text to be visible and larger - TARGETING ALL TEXT ELEMENTS */
+/* Mermaid SVG: scale to container, cap at readable max width */
 .language-mermaid svg {
-  max-width: 100%;
-  height: auto;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+/* Mermaid container: block, scrollable if diagram overflows */
+pre:has(.language-mermaid),
+pre.language-mermaid,
+.language-mermaid {
+  display: block !important;
+  scrollbar-width: thin;
+  scrollbar-color: #d4a373 transparent;
+}
+
+pre:has(.language-mermaid)::-webkit-scrollbar,
+.language-mermaid::-webkit-scrollbar {
+  height: 6px;
+}
+pre:has(.language-mermaid)::-webkit-scrollbar-thumb,
+.language-mermaid::-webkit-scrollbar-thumb {
+  background: #d4a373;
+  border-radius: 3px;
 }
 
 /* Mermaid Typography */
@@ -5864,7 +5955,6 @@ pre:has-text('mermaid version'),
 .language-mermaid tspan {
   font-family: 'Inter', sans-serif !important;
   fill: #000 !important;
-  font-size: 48px !important;
   font-weight: 600 !important;
 }
 
@@ -5903,35 +5993,40 @@ pre:has-text('mermaid version'),
 /* Diagram Titles */
 .language-mermaid .titleText,
 .language-mermaid .header {
-  font-size: 64px !important;
   font-weight: 800 !important;
   fill: #2c3e50 !important;
 }
 
-/* Node Labels */
-.language-mermaid .node text,
-.language-mermaid .label text {
-  font-size: 52px !important;
+/* ==========================================================================
+   MOBILE: Reduce timeline article left/right white space by 50%
+   ========================================================================== */
+@media (max-width: 767px) {
+  .timeline-footer {
+    padding: 0 !important;
+  }
+
+  .timeline-content {
+    padding: 4px !important;
+    text-align: left !important;
+  }
+
+  .timeline-body {
+    text-align: left !important;
+  }
+
+  .timeline-item {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  /* Hide timeline dots on mobile — they force asymmetric left padding */
+  .timeline-item::after,
+  .timeline-item.left::after,
+  .timeline-item.right::after {
+    display: none !important;
+  }
 }
 
-/* Sequence Diagram Actors */
-.language-mermaid .actor {
-  font-size: 56px !important;
-}
-
-/* Notes & Signals */
-.language-mermaid .messageText,
-.language-mermaid .noteText,
-.language-mermaid .loopText {
-  font-size: 48px !important;
-}
-
-/* Timeline/Gantt */
-.language-mermaid .taskText,
-.language-mermaid .taskTextOutside,
-.language-mermaid .sectionTitle {
-  font-size: 48px !important;
-}
 
 /* Shapes & Lines */
 .language-mermaid .node rect,

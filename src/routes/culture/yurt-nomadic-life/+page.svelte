@@ -64,13 +64,16 @@
 
 <svelte:head>
 	<title>{pageData?.seo?.title || 'Yurt & Nomadic Life | VeryNice'}</title>
-	<meta
-		name="description"
-		content={
-			pageData?.seo?.description ||
-			'Discover the Kazakh yurt — the portable home that embodies nomadic heritage and family unity.'
-		}
-	/>
+	<meta name="description" content={pageData?.seo?.description || 'Discover the Kazakh yurt — the portable felt home that embodies nomadic heritage, family unity, and centuries of steppe wisdom.'} />
+	<link rel="canonical" href="https://verynice.kz/culture/yurt-nomadic-life" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/culture/yurt-nomadic-life" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Yurt & Nomadic Life | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Discover the Kazakh yurt — the portable felt home that embodies nomadic heritage, family unity, and centuries of steppe wisdom.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Yurt & Nomadic Life | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Discover the Kazakh yurt — the portable felt home that embodies nomadic heritage, family unity, and centuries of steppe wisdom.'} />
 </svelte:head>
 
 <div class="attractions-page">
@@ -232,48 +235,72 @@
 	}
 
 	.category-nav {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.75rem;
-		justify-content: center;
-		margin-bottom: 3rem;
-		padding: 1rem;
-		background: linear-gradient(135deg, rgba(5, 115, 179, 0.1), rgba(3, 80, 130, 0.15));
-		border-radius: 12px;
-		border: 1px solid rgba(5, 115, 179, 0.2);
+		display: flex !important;
+		flex-direction: column !important;
+		gap: 0.375rem !important;
+		margin-bottom: 2rem !important;
+		padding: 0 !important;
+		background: none !important;
+		border: none !important;
+		box-shadow: none !important;
 	}
 
 	.category-nav-link {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.75rem 1rem;
-		background: linear-gradient(135deg, rgba(5, 115, 179, 0.15), rgba(3, 80, 130, 0.2));
-		border: 1px solid rgba(5, 115, 179, 0.3);
-		border-radius: 8px;
-		color: #000000;
-		text-decoration: none;
-		transition: all 0.2s ease;
-		font-size: 0.9rem;
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.5rem !important;
+		padding: 0.25rem 1.25rem 0.25rem 0.25rem !important;
+		background: rgba(255, 255, 255, 0.75) !important;
+		border: 1px solid rgba(5, 115, 179, 0.22) !important;
+		border-radius: 999px !important;
+		color: #0f172a !important;
+		text-decoration: none !important;
+		transition: background 0.18s ease, border-color 0.18s ease !important;
+		min-height: 50px !important;
+		text-align: left !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
 	}
 
-	.category-nav-link:hover {
-		background: linear-gradient(135deg, rgba(5, 115, 179, 0.25), rgba(3, 80, 130, 0.3));
-		border-color: rgba(5, 115, 179, 0.5);
-		transform: translateY(-2px);
+	.category-nav-link:hover,
+	.category-nav-link:active {
+		background: rgba(5, 115, 179, 0.1) !important;
+		border-color: rgba(5, 115, 179, 0.4) !important;
 	}
 
 	.nav-icon {
-		font-weight: 600;
-		font-size: 0.75rem;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		color: #000000;
-		background: #ffffff;
-		padding: 0.35rem 0.75rem;
-		border-radius: 999px;
-		border: 1px solid rgba(5, 115, 179, 0.3);
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		flex-shrink: 0 !important;
+		width: 42px !important;
+		height: 42px !important;
+		min-width: 42px !important;
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		overflow: hidden !important;
+		background: linear-gradient(135deg, #0573b3, #034f8a) !important;
+		color: #ffffff !important;
+		border-radius: 50% !important;
+		font-size: 0.44rem !important;
+		font-weight: 800 !important;
+		letter-spacing: 0.02em !important;
+		text-transform: uppercase !important;
+		text-align: center !important;
+		line-height: 1.1 !important;
+		white-space: nowrap !important;
+		box-shadow: 0 2px 6px rgba(5, 115, 179, 0.3) !important;
+		padding: 0 !important;
+	}
+
+	.nav-text {
+		flex: 1 !important;
+		font-size: 0.875rem !important;
+		font-weight: 500 !important;
+		color: #1e293b !important;
+		line-height: 1.2 !important;
+		text-align: center !important;
+		word-spacing: normal !important;
+		letter-spacing: normal !important;
+		align-self: center !important;
 	}
 
 	.category-section {
@@ -409,12 +436,29 @@
 
 	@media (max-width: 768px) {
 		.category-nav {
-			gap: 0.5rem;
+			gap: 0.3rem !important;
+			padding: 0 !important;
 		}
 
 		.category-nav-link {
-			padding: 0.5rem 0.75rem;
-			font-size: 0.8rem;
+			min-height: 50px !important;
+			padding: 0.25rem 1.25rem 0.25rem 0.25rem !important;
+			gap: 0.5rem !important;
+		}
+
+		.nav-icon {
+			width: 42px !important;
+			height: 42px !important;
+			min-width: 42px !important;
+			font-size: 0.44rem !important;
+			white-space: nowrap !important;
+		}
+
+		.nav-text {
+			font-size: 0.875rem !important;
+			line-height: 1.2 !important;
+			text-align: center !important;
+			align-self: center !important;
 		}
 
 		.category-section {

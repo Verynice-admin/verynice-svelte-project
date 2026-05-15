@@ -11,7 +11,7 @@ export async function verifyFirebaseSessionCookie(
   sessionCookie: string | undefined
 ): Promise<SessionAuthResult> {
   if (dev) {
-    return { isAuthenticated: true, uid: null };
+    return { isAuthenticated: true, uid: 'dev-user-uid' };
   }
 
   if (!sessionCookie || !sessionCookie.trim()) {

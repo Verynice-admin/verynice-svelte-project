@@ -353,9 +353,8 @@ body>*:last-child:not(main):not(footer):not(script)::after {
   font-size: 1.0625rem;
   line-height: 1.75;
   max-width: 65ch !important;
-  text-align: justify !important;
-  text-justify: inter-word;
-  hyphens: auto;
+  text-align: left;
+  hyphens: none;
   margin-left: auto !important;
   margin-right: auto !important;
   padding: 0 1rem !important;
@@ -421,36 +420,35 @@ body>*:last-child:not(main):not(footer):not(script)::after {
 }
 
 .prose ul {
-  list-style-type: none;
+  list-style: none;
   padding-left: 0;
+  margin-left: 0;
 }
 
 .prose ul li {
-  position: relative;
-  padding-left: 1.75rem;
-  margin-bottom: 0.75rem;
+  padding-left: 0;
+  margin-bottom: 0.875rem;
+  line-height: 1.8;
 }
 
 .prose ul li::before {
-  content: '◼';
-  position: absolute;
-  left: 0;
-  top: 0.4rem;
-  font-size: 0.6rem;
-  color: var(--vnk-accent-color);
+  content: none;
+  display: none;
 }
 
 .prose ol {
-  list-style-type: decimal;
+  list-style: none;
+  padding-left: 0;
+  margin-left: 0;
 }
 
 .prose li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.875rem;
+  line-height: 1.8;
 }
 
 .prose li::marker {
-  color: var(--vnk-accent-color);
-  font-weight: 600;
+  content: none;
 }
 
 /* Links in prose */
@@ -540,9 +538,8 @@ body>*:last-child:not(main):not(footer):not(script)::after {
     line-height: 1.8;
     padding: 0 0.5rem;
     max-width: 100%;
-    text-align: justify !important;
-    text-justify: inter-word;
-    hyphens: auto;
+    text-align: left;
+    hyphens: none;
   }
 
   .prose h2 {
@@ -562,9 +559,9 @@ body>*:last-child:not(main):not(footer):not(script)::after {
 
   .prose ul li,
   .prose ol li {
-    padding-left: 1.5rem;
+    padding-left: 0;
     font-size: 0.95rem;
-    line-height: 1.7;
+    line-height: 1.8;
   }
 
   .prose blockquote {

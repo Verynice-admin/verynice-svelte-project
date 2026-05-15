@@ -330,14 +330,13 @@
 		margin: 0;
 		font-size: 1.5rem;
 		font-weight: 600;
-		color: #ffffff;
-		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+		color: #0f172a;
+		text-shadow: none;
 	}
 
 	.loading-indicator {
-		color: #ffffff;
+		color: #64748b;
 		font-size: 0.875rem;
-		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 	}
 
 	.error-message {
@@ -404,8 +403,8 @@
 	/* Mobile-first: clean map container with proper sizing */
 	.map-container {
 		width: 100%;
-		min-height: 300px;
-		height: 300px;
+		height: clamp(320px, 45vw, 520px);
+		min-height: 320px;
 		border-radius: 12px;
 		overflow: hidden;
 		background: #f1f5f9;

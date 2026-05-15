@@ -89,83 +89,82 @@
 <svelte:window bind:innerWidth={windowWidth} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Travel Tips | VeryNice'}</title>
-	<meta name="description" content={pageData?.seo?.description || 'Essential travel tips for Kazakhstan.'} />
+	<title>{pageData?.seo?.title || 'Kazakhstan Travel Tips | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Essential travel tips for visiting Kazakhstan: visa requirements, best time to visit, safety, getting around, money, and more.'} />
+	<link rel="canonical" href="https://verynice.kz/tips" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/tips" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Kazakhstan Travel Tips | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Essential travel tips for visiting Kazakhstan: visa requirements, best time to visit, safety, getting around, money, and more.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Kazakhstan Travel Tips | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Essential travel tips for visiting Kazakhstan: visa requirements, best time to visit, safety, getting around, money, and more.'} />
 </svelte:head>
 
 {#if pageData}
-	<section id="page-hero-section" class="hero-premium" bind:this={heroSection}>
-		<div class="hero-bg-container">
-			{#if pageData.headerBackgroundPublicId}
-				<div
-					class="hero-bg-image"
-					role="img"
-					aria-label={pageData.mainTitle || 'Travel tips background'}
-					style={`background-image: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, {
-						width: 2200,
-						height: 1200,
-						crop: 'fill',
-						gravity: 'auto',
-						quality: 100,
-						fetch_format: 'auto'
-					})}")`}
-				></div>
-			{/if}
-			<div class="hero-overlay"></div>
-		</div>
-
-		<div class="hero-content wrapper">
-			<nav aria-label="Breadcrumb" class="breadcrumb-premium">
-				<ol class="breadcrumb-list">
+	<section id="page-hero-section" class="section" bind:this={heroSection} style="min-height: 100vh !important; height: 100vh !important;">
+		<div class="section-header wrapper">
+			<nav aria-label="Breadcrumb" class="breadcrumb-modern">
+				<ol class="breadcrumb-modern__list">
 					{#each breadcrumbs as crumb, index}
-						<li class="breadcrumb-item">
+						<li class="breadcrumb-modern__item">
 							{#if crumb.href && index !== breadcrumbs.length - 1}
-								<a class="breadcrumb-link" href={crumb.href}>{crumb.label}</a>
-								<span class="breadcrumb-divider">/</span>
+								<a class="breadcrumb-modern__link" href={crumb.href}>{crumb.label}</a>
 							{:else}
-								<span class="breadcrumb-current" aria-current="page">{crumb.label}</span>
+								<span class="breadcrumb-modern__current" aria-current="page">{crumb.label}</span>
+							{/if}
+							{#if index < breadcrumbs.length - 1}
+								<span class="breadcrumb-modern__divider" aria-hidden="true"></span>
 							{/if}
 						</li>
 					{/each}
 				</ol>
 			</nav>
-			<div class="hero-text-box">
-				{#if pageData.heroKicker}
-					<span class="hero-kicker">{pageData.heroKicker}</span>
-				{/if}
-				<h1 itemprop="headline">{pageData.mainTitle}</h1>
-				<p class="hero-lead" itemprop="description">
-					{pageData.headerDescription}
-				</p>
-				<!-- Stats Bar (Integrated into Hero) -->
-				<div class="post-info-premium" role="group" aria-label="Article statistics">
-					{#if pageData.location}
-						<div class="stat-pill" aria-label="Location: {pageData.location}">
-							<span class="icon-location" aria-hidden="true"></span>
-							<span>{pageData.location}</span>
-						</div>
+			<div class="section-header-content-row">
+				<div class="section-header-text">
+					{#if pageData.heroKicker}
+						<span class="hero-kicker">{pageData.heroKicker}</span>
 					{/if}
-					{#if pageData.articleViews > 0}
-						<div class="stat-pill" aria-label="{pageData.articleViews} views">
-							<span class="icon-view" aria-hidden="true"></span>
-							<span>{pageData.articleViews.toLocaleString()}</span>
-						</div>
-					{/if}
-					{#if pageData.articleLikes > 0}
-						<div class="stat-pill" aria-label="{pageData.articleLikes} likes">
-							<span class="icon-like" aria-hidden="true"></span>
-							<span>{pageData.articleLikes.toLocaleString()}</span>
-						</div>
-					{/if}
-					{#if pageData.articleComments > 0}
-						<div class="stat-pill" aria-label="{pageData.articleComments} comments">
-							<span class="icon-comment" aria-hidden="true"></span>
-							<span>{pageData.articleComments.toLocaleString()}</span>
-						</div>
-					{/if}
+					<h1 itemprop="headline">{pageData.mainTitle}</h1>
+					<p class="section-description" itemprop="description">{pageData.headerDescription}</p>
+					<div class="post-info" role="group" aria-label="Article statistics">
+						{#if pageData.location}
+							<div class="post-info-inner" aria-label="Location: {pageData.location}">
+								<span class="icon-location" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.location}</div>
+							</div>
+						{/if}
+						{#if pageData.articleViews > 0}
+							<div class="post-info-inner" aria-label="{pageData.articleViews} views">
+								<span class="icon-view" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.articleViews.toLocaleString()}</div>
+							</div>
+						{/if}
+						{#if pageData.articleLikes > 0}
+							<div class="post-info-inner" aria-label="{pageData.articleLikes} likes">
+								<span class="icon-like" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.articleLikes.toLocaleString()}</div>
+							</div>
+						{/if}
+						{#if pageData.articleComments > 0}
+							<div class="post-info-inner" aria-label="{pageData.articleComments} comments">
+								<span class="icon-comment" aria-hidden="true"></span>
+								<div class="post-info-content">{pageData.articleComments.toLocaleString()}</div>
+							</div>
+						{/if}
+					</div>
 				</div>
 			</div>
 		</div>
+		{#if pageData.headerBackgroundPublicId}
+			<div
+				class="header-background"
+				role="img"
+				aria-label="Travel Tips for Kazakhstan background"
+				style={`--hero-bg-url: url("${getCloudinaryUrl(pageData.headerBackgroundPublicId, { width: 2200, height: 1600, crop: 'fill', gravity: 'auto', quality: 'auto:good', fetch_format: 'auto' })}")`}
+			><div class="background-image"></div></div>
+		{/if}
 	</section>
 
 	<div class="attractions-page timeline-container">
@@ -247,298 +246,12 @@
 {/if}
 
 <style>
-	/* HERO PREMIUM Styles (matching history page) */
-	.hero-premium {
-		position: relative;
-		height: 80vh;
-		min-height: 600px;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		padding-top: 80px;
-		overflow: hidden;
- 		background: #000;
-		margin-bottom: 0;
-	}
-
-	.hero-bg-container {
-		position: absolute;
-		inset: 0;
-		z-index: 1;
-	}
-
-	.hero-bg-image {
-		width: 100%;
-		height: 100%;
-		background-size: cover;
-		background-position: center 20%;
-		filter: none !important;
-	}
-
-	.hero-overlay {
-		position: absolute;
-		inset: 0;
-		background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.65) 100%);
-	}
-
-	.hero-content {
-		position: relative;
-		z-index: 10;
-		width: 100%;
-		padding-top: 10vh;
-	}
-
-	.wrapper {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 0 2rem;
-	}
-
-	.hero-text-box {
-		max-width: 800px;
-		margin: 0;
-		text-align: left;
-	}
-
-	/* Breadcrumbs - Premium */
-	.breadcrumb-premium {
-		margin-bottom: 2rem;
-		display: inline-block;
-	}
-
-	.breadcrumb-list {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		padding: 0;
-		margin: 0;
-		list-style: none;
-		gap: 0.5rem;
-		font-family: 'Inter', sans-serif;
-		font-size: 0.9rem;
-		color: #94a3b8;
-	}
-
-	.breadcrumb-link {
-		color: #cbd5e1;
-		text-decoration: none;
-		transition: color 0.2s;
-	}
-
-	.breadcrumb-link:hover {
-		color: var(--vnk-accent-color);
-	}
-
-	.breadcrumb-divider {
-		color: #475569;
-		margin-left: 0.5rem;
-	}
-
-	.breadcrumb-current {
-		color: var(--vnk-accent-color);
-		font-weight: 600;
-	}
-
-	.hero-kicker {
-		display: block;
-		font-family: 'Outfit', sans-serif;
-		text-transform: uppercase;
-		letter-spacing: 0.3em;
-		color: var(--vnk-accent-color);
-		font-weight: 700;
-		font-size: 0.9rem;
-		margin-bottom: 1.5rem;
-	}
-
-	.hero-text-box h1 {
-		font-family: 'Outfit', sans-serif;
-		font-size: clamp(3rem, 7vw, 6rem);
-		font-weight: 900;
-		line-height: 1;
-		margin-bottom: 1.5rem;
-		color: #fff;
-		text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-		letter-spacing: -0.04em;
-	}
-
-	.hero-lead {
-		font-family: 'Inter', sans-serif;
-		font-size: clamp(1.1rem, 1.5vw, 1.4rem);
-		line-height: 1.6;
-		color: #cbd5e1;
-		margin-bottom: 3.5rem;
-		max-width: 600px;
-		margin-left: 0;
-		margin-right: 0;
-	}
-
-	/* Post Info Pills */
-	.post-info-premium {
-		display: flex;
-		justify-content: flex-start;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
-
-	.stat-pill {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		background: transparent;
-		border: none;
-		padding: 0.5rem 1.25rem;
-		border-radius: 50px;
-		font-size: 0.9rem;
-		color: #fff;
-		font-weight: 500;
-		backdrop-filter: none;
-	}
-
-	.stat-pill span[class^='icon-'] {
-		color: var(--vnk-accent-color);
-	}
-
-	.food-intro {
-		padding: 0;
-		background: transparent;
-		border: none;
-		box-shadow: none;
-		max-width: 800px;
-		margin: 0 auto 2rem;
-		text-align: center;
-	}
-
-	.food-intro :global(.prose),
-	.food-intro :global(.prose p),
-	.food-intro :global(.prose li) {
-		color: rgba(255, 255, 255, 0.82);
-		font-size: 1.15rem;
-		line-height: 1.7;
-	}
-
-	.food-intro :global(.prose strong) {
-		color: #fff;
-		font-weight: 600;
-	}
-
-	.food-intro :global(.prose em) {
-		color: var(--vnk-accent-color);
-		font-style: italic;
-	}
-
-	.section-header {
-		position: relative;
-		z-index: 2;
-		padding: 3rem 0;
-	}
-
-	.breadcrumb-modern {
-		margin-bottom: 1.5rem;
-	}
-
-	.breadcrumb-modern__list {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.5rem;
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-
-	.breadcrumb-modern__item {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
-
-	.breadcrumb-modern__link {
-		color: rgba(255, 255, 255, 0.7);
-		text-decoration: none;
-		font-size: 0.9rem;
-		transition: color 0.2s;
-	}
-
-	.breadcrumb-modern__link:hover {
-		color: #fff;
-	}
-
-	.breadcrumb-modern__current {
-		color: #fff;
-		font-weight: 500;
-		font-size: 0.9rem;
-	}
-
-	.breadcrumb-modern__divider {
-		color: rgba(255, 255, 255, 0.4);
-	}
-
-	.section-header-content-row {
-		display: flex;
-		align-items: flex-end;
-		justify-content: space-between;
-		gap: 2rem;
-		flex-wrap: wrap;
-	}
-
-	.section-header-text {
-		flex: 1;
-		min-width: 280px;
-	}
-
-	.section-header h1 {
-		font-size: clamp(2rem, 5vw, 3.5rem);
-		font-weight: 700;
-		line-height: 1.1;
-		margin: 0 0 1rem;
-		color: #fff;
-		font-family: var(--vnk-font-primary, 'Outfit', sans-serif);
-	}
-
-	.section-description {
-		font-size: 1.15rem;
-		line-height: 1.6;
-		color: rgba(255, 255, 255, 0.8);
-		margin: 0;
-		max-width: 600px;
-	}
-
-	.section-background {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		z-index: 1;
-		overflow: hidden;
-	}
-
-	.background-image {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-size: cover;
-		background-position: center;
-		filter: brightness(0.5);
-	}
-
-	.section {
-		position: relative;
-		overflow: hidden;
-	}
-
 	.timeline-container {
 		position: relative;
 		z-index: 2;
 		margin-top: -2rem;
 		padding-top: 2rem;
 	}
-
-	/* Card styles now taken from destinations page via attractions-page class */
-
-	/* Mobile card layout now taken from destinations page via attractions-page class */
 
 	.mobile-bottom-nav-local {
 		position: fixed;

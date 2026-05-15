@@ -21,6 +21,107 @@
 
 	$: pageData = { ...(page ?? {}) };
 
+	// Split a single article at NUMBERED ## headings (e.g. "## 1. Title", "## 5. Tips")
+	// Non-numbered H2 subsections are folded into the preceding numbered section.
+	// Falls back to all-H2 splitting when no numbered headings exist.
+	function splitArticleByHeadings(article) {
+		const rawContent = article.contentMarkdown || article.contentHTML || '';
+		if (!rawContent) return [article];
+
+		const isHTML = !article.contentMarkdown && rawContent.includes('<');
+		const useMd = !!article.contentMarkdown;
+
+		if (!isHTML) {
+			// --- Markdown path ---
+			const hasAnyH2 = rawContent.includes('\n## ') || rawContent.startsWith('## ');
+			if (!hasAnyH2) return [article];
+
+			const hasNumberedH2 = /^## \d/m.test(rawContent);
+			const isNumbered = (line) => hasNumberedH2 ? /^## \d/.test(line) : line.startsWith('## ');
+
+			const lines = rawContent.split('\n');
+			const sections = [];
+			let current = [];
+			for (const line of lines) {
+				if (line.startsWith('## ') && isNumbered(line)) {
+					if (current.length > 0) sections.push(current.join('\n'));
+					current = [line];
+				} else {
+					current.push(line);
+				}
+			}
+			if (current.length > 0) sections.push(current.join('\n'));
+			const trimmed = sections.filter(s => s.trim());
+			if (trimmed.length <= 1) return [article];
+
+			return trimmed.map((part, i) => {
+				const firstLine = part.split('\n')[0];
+				const startsH2 = firstLine.startsWith('## ');
+				const rawTitle = startsH2 ? firstLine.slice(3).trim() : (i === 0 ? article.title : `Section ${i + 1}`);
+				const title = rawTitle.replace(/^\d+\.\s*/, '');
+				const body = startsH2 ? part.slice(firstLine.length).trim() : part.trim();
+				return {
+					...article,
+					id: `${article.id || 'art'}-s${i}`,
+					articleId: `${article.articleId || article.id || 'art'}-s${i}`,
+					title,
+					contentMarkdown: useMd ? body : '',
+					contentHTML: useMd ? '' : body,
+					year: i === 0 ? article.year : ''
+				};
+			});
+		}
+
+		// --- HTML path ---
+		if (!rawContent.includes('<h2')) return [article];
+		const allParts = rawContent.split(/(?=<h2[\s>])/i).filter(Boolean);
+		if (allParts.length <= 1) return [article];
+
+		const headingText = (part) => {
+			const m = part.match(/^<h2[^>]*>([\s\S]*?)<\/h2>/i);
+			return m ? m[1].replace(/<[^>]+>/g, '').trim() : '';
+		};
+		const hasNumberedHTML = allParts.some(p => /^\d/.test(headingText(p)));
+		const isNumberedPart = (part) => hasNumberedHTML ? /^\d/.test(headingText(part)) : true;
+
+		// Merge non-numbered HTML parts into the preceding numbered part
+		const merged = [];
+		let currentPart = '';
+		for (const part of allParts) {
+			const startsH2 = /^<h2[\s>]/i.test(part);
+			if (startsH2 && isNumberedPart(part)) {
+				if (currentPart) merged.push(currentPart);
+				currentPart = part;
+			} else {
+				currentPart += part;
+			}
+		}
+		if (currentPart) merged.push(currentPart);
+		if (merged.length <= 1) return [article];
+
+		return merged.map((part, i) => {
+			const m = part.match(/^<h2[^>]*>([\s\S]*?)<\/h2>/i);
+			const title = m ? m[1].replace(/<[^>]+>/g, '').trim() : `Section ${i + 1}`;
+			const body = m ? part.slice(m[0].length).trim() : part.trim();
+			return {
+				...article,
+				id: `${article.id || 'art'}-s${i}`,
+				articleId: `${article.articleId || article.id || 'art'}-s${i}`,
+				title,
+				contentHTML: body,
+				contentMarkdown: '',
+				year: i === 0 ? article.year : ''
+			};
+		});
+	}
+
+	// Expand articles: split single rich articles at H2 to create chess-order timeline items
+	$: expandedArticles = (() => {
+		const arts = articles || [];
+		if (arts.length !== 1) return arts;
+		return splitArticleByHeadings(arts[0]);
+	})();
+
 	// Derived State
 	// Fix [object Object] issue:
 	$: locationLabel = (() => {
@@ -103,7 +204,7 @@
 		contentHTML: ''
 	};
 
-	$: allArticles = [...(articles || []), keyFactsSection];
+	$: allArticles = [...expandedArticles, keyFactsSection];
 
 	let heroSection;
 	let windowWidth;

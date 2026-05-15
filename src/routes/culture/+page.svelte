@@ -101,11 +101,17 @@
 <svelte:window bind:innerWidth={windowWidth} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Culture | VeryNice'}</title>
-	<meta
-		name="description"
-		content={pageData?.seo?.description || 'Discover the rich traditions and heritage of Kazakh culture.'}
-	/>
+	<title>{pageData?.seo?.title || 'Kazakh Culture & Heritage | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Discover the rich traditions, arts, music, and heritage of Kazakh culture — from nomadic yurts to epic poetry.'} />
+	<link rel="canonical" href="https://verynice.kz/culture" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/culture" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Kazakh Culture & Heritage | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Discover the rich traditions, arts, music, and heritage of Kazakh culture — from nomadic yurts to epic poetry.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Kazakh Culture & Heritage | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Discover the rich traditions, arts, music, and heritage of Kazakh culture — from nomadic yurts to epic poetry.'} />
 </svelte:head>
 
 {#if pageData}

@@ -44,8 +44,17 @@
 <AsideToc articles={tocSections} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Music & Dance | VeryNice'}</title>
-	<meta name="description" content={pageData?.seo?.description || 'Explore Kazakh musical traditions and dances.'} />
+	<title>{pageData?.seo?.title || 'Kazakh Melodies & Music | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Explore the sounds of the dombra, kobyz, and ancient Kazakh musical traditions — from epic jyrau poetry to modern folk performances.'} />
+	<link rel="canonical" href="https://verynice.kz/culture/kazakh-melodies" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/culture/kazakh-melodies" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Kazakh Melodies & Music | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Explore the sounds of the dombra, kobyz, and ancient Kazakh musical traditions — from epic jyrau poetry to modern folk performances.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Kazakh Melodies & Music | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Explore the sounds of the dombra, kobyz, and ancient Kazakh musical traditions — from epic jyrau poetry to modern folk performances.'} />
 </svelte:head>
 
 <div class="attractions-page">

@@ -15,18 +15,9 @@ const config = {
       crawl: true,
       entries: ['*'],
       handleHttpError: 'warn'
-    },
-    csp: {
-      mode: 'auto',
-      directives: {
-        'default-src': ['self'],
-        'script-src': ['self', 'unsafe-inline', 'https://fonts.googleapis.com'],
-        'style-src': ['self', 'unsafe-inline', 'https://fonts.googleapis.com'],
-        'font-src': ['self', 'https://fonts.gstatic.com'],
-        'img-src': ['self', 'data:', 'https:', 'res.cloudinary.com'],
-        'connect-src': ['self', 'https:']
-      }
     }
+    // CSP is managed exclusively in src/hooks.server.ts via response headers
+    // to avoid duplicate/conflicting policies.
   }
 };
 

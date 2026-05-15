@@ -69,11 +69,17 @@
 <AsideToc articles={categories} />
 
 <svelte:head>
-	<title>{pageData?.seo?.title || 'Signature Dishes | VeryNice'}</title>
-	<meta
-		name="description"
-		content={pageData?.seo?.description || 'Explore the iconic dishes of Kazakhstan.'}
-	/>
+	<title>{pageData?.seo?.title || 'Kazakhstan Signature Dishes | VeryNice'}</title>
+	<meta name="description" content={pageData?.seo?.description || 'Explore the iconic dishes of Kazakhstan: beshbarmak, kuyrdak, shashlik, baursak, and more traditional staples of Kazakh cuisine.'} />
+	<link rel="canonical" href="https://verynice.kz/food-drink/signature-dishes" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/food-drink/signature-dishes" />
+	<meta property="og:title" content={pageData?.seo?.title || 'Kazakhstan Signature Dishes | VeryNice'} />
+	<meta property="og:description" content={pageData?.seo?.description || 'Explore the iconic dishes of Kazakhstan: beshbarmak, kuyrdak, shashlik, baursak, and more traditional staples of Kazakh cuisine.'} />
+	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData?.seo?.title || 'Kazakhstan Signature Dishes | VeryNice'} />
+	<meta name="twitter:description" content={pageData?.seo?.description || 'Explore the iconic dishes of Kazakhstan: beshbarmak, kuyrdak, shashlik, baursak, and more traditional staples of Kazakh cuisine.'} />
 </svelte:head>
 
 <div class="attractions-page">
@@ -332,11 +338,19 @@
 	}
 
 	.category-nav-link .nav-icon {
-		font-size: 1.1rem;
+		font-size: 1.5rem !important;
+		width: 52px !important;
+		height: 52px !important;
+		min-width: 52px !important;
 	}
 
 	.category-nav-link .nav-text {
 		white-space: nowrap;
+		color: #0f172a !important;
+		font-size: 0.875rem !important;
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
 	}
 
 	/* Category Section */
@@ -492,32 +506,37 @@
 	.dish-header {
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 		gap: 0.5rem;
 	}
 
 	.dish-tier {
-		display: inline-block;
+		display: block;
 		width: fit-content;
 		font-family: 'Inter', sans-serif;
 		font-size: 0.7rem;
-		font-weight: 600;
+		font-weight: 700;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
-		padding: 4px 10px;
+		padding: 4px 12px;
 		border-radius: 12px;
 		color: #fff;
+		align-self: center;
 	}
 
 	.dish-tier.tier-1 {
-		background: linear-gradient(135deg, var(--vnk-primary-color), rgb(126, 197, 179));
+		background: linear-gradient(135deg, #2563eb, #3b82f6);
+		box-shadow: 0 3px 10px rgba(37, 99, 235, 0.35);
 	}
 
 	.dish-tier.tier-2 {
-		background: linear-gradient(135deg, rgb(2, 114, 112), var(--vnk-primary-color));
+		background: linear-gradient(135deg, #059669, #10b981);
+		box-shadow: 0 3px 10px rgba(5, 150, 105, 0.35);
 	}
 
 	.dish-tier.tier-3 {
-		background: linear-gradient(135deg, var(--vnk-accent-color), rgb(255, 173, 177));
+		background: linear-gradient(135deg, #f59e0b, #fbbf24);
+		box-shadow: 0 3px 10px rgba(245, 158, 11, 0.35);
 	}
 
 	.dish-article-content h3 {
@@ -589,11 +608,18 @@
 		}
 
 		.category-nav-link .nav-text {
-			display: none;
+			display: flex !important;
+			justify-content: center !important;
+			align-items: center !important;
+			color: #0f172a !important;
+			font-size: 0.8rem !important;
 		}
 
 		.category-nav-link .nav-icon {
-			font-size: 1.3rem;
+			font-size: 1.5rem !important;
+			width: 52px !important;
+			height: 52px !important;
+			min-width: 52px !important;
 		}
 
 		.category-header {

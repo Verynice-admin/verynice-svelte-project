@@ -146,10 +146,11 @@ header.header {
   border-bottom: 2px solid transparent;
   color: #fff;
   display: flex;
+  align-items: center;
   font-family: var(--vnk-font-secondary);
   font-size: 14px;
   font-weight: 700;
-  line-height: 25px;
+  line-height: 1;
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1233,6 +1234,9 @@ header#site-header {
 #page-hero-section .section-header.wrapper {
   min-height: 100vh;
   height: 100vh;
+  justify-content: center;
+  padding-top: calc(var(--vnk-header-height, 72px) + 2rem) !important;
+  padding-bottom: 3rem !important;
 }
 
 /* Mobile: Extend hero behind search bar at bottom */
@@ -1247,7 +1251,8 @@ header#site-header {
 
   #page-hero-section .section-header.wrapper,
   #page-hero-section .hero-content.wrapper {
-    padding-bottom: 0 !important;
+    padding-bottom: 1.5rem !important;
+    padding-top: calc(var(--vnk-header-height, 64px) + 1rem) !important;
   }
 
   #page-hero-section .header-background,

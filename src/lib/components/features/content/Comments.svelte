@@ -74,6 +74,7 @@
 	let visibleCommentCount = INITIAL_VISIBLE_COUNT;
 	let commenterName = '';
 	let newCommentText = '';
+	let consentGiven = false;
 	let pendingComment = null;
 	let unsubscribe = () => {};
 	let isSubmitting = false;
@@ -121,7 +122,7 @@
 	});
 
 	async function handleSubmit() {
-		if (!newCommentText.trim() || !postId || isSubmitting) return;
+		if (!newCommentText.trim() || !postId || isSubmitting || !consentGiven) return;
 
 		isSubmitting = true;
 		submitMessage = 'Posting...';
@@ -317,6 +318,19 @@
 					></textarea>
 				</div>
 
+				<div class="consent-row">
+					<input
+						type="checkbox"
+						id="comment-consent"
+						bind:checked={consentGiven}
+						required
+					/>
+					<label for="comment-consent" class="consent-label">
+						I agree that my name and comment may be stored and displayed publicly on this page.
+						See our <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.
+					</label>
+				</div>
+
 				<div class="form-actions">
 					{#if submitMessage === 'posted'}
 						<span class="success-msg">Posted!</span>
@@ -327,7 +341,7 @@
 					<button
 						type="submit"
 						class="modern-btn"
-						disabled={!newCommentText.trim() || isSubmitting}
+						disabled={!newCommentText.trim() || isSubmitting || !consentGiven}
 					>
 						{isSubmitting ? 'Posting...' : 'Post Comment'}
 					</button>
@@ -338,12 +352,67 @@
 </section>
 
 <style>
+	.consent-row {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.consent-row input[type='checkbox'] {
+		flex-shrink: 0;
+		appearance: none;
+		-webkit-appearance: none;
+		width: 0.8rem !important;
+		height: 0.8rem !important;
+		min-width: 0.8rem !important;
+		min-height: 0.8rem !important;
+		max-width: 0.8rem !important;
+		max-height: 0.8rem !important;
+		margin-top: 0.18rem;
+		cursor: pointer;
+		border: 1.5px solid #374151;
+		border-radius: 3px;
+		background: transparent;
+		position: relative;
+		box-sizing: border-box !important;
+	}
+
+	.consent-row input[type='checkbox']:checked {
+		background: #0573b3;
+		border-color: #0573b3;
+	}
+
+	.consent-row input[type='checkbox']:checked::after {
+		content: '';
+		position: absolute;
+		left: 2px;
+		top: -1px;
+		width: 3px;
+		height: 6px;
+		border: 1.5px solid #fff;
+		border-top: none;
+		border-left: none;
+		transform: rotate(45deg);
+	}
+
+	.consent-label {
+		font-size: 0.8rem;
+		color: #475569;
+		line-height: 1.4;
+	}
+
+	.consent-label a {
+		color: #0369a1;
+		text-decoration: underline;
+	}
+
 	/* -- Advanced Comments Section -- */
 	.comments-section {
 		width: 100%;
 		max-width: 800px; /* Optimal reading width */
 		margin: 4rem auto;
-		padding: 1.5rem 1rem; /* Reduced padding */
+		padding: 1.5rem 0.5rem; /* Reduced padding */
 		font-family:
 			'Inter',
 			system-ui,
@@ -408,19 +477,19 @@
 		display: grid;
 		grid-template-columns: 48px 1fr;
 		gap: 1rem;
-		background: #d1d4da; /* Light gray background */
-		padding: 0.875rem 1.5rem; /* Slimmer padding for pill shape */
-		border-radius: 999px; /* Pill-shaped like Google */
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+		background: #ffffff;
+		padding: 0.875rem 1.5rem;
+		border-radius: 999px;
+		box-shadow: none;
 		transition:
 			transform 0.2s ease,
 			box-shadow 0.2s ease;
-		border: 1px solid rgba(0, 0, 0, 0.06);
+		border: 1.5px solid #374151;
 	}
 
 	.comment-card:hover {
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-		border-color: rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		border-color: #1f2937;
 	}
 
 	.avatar {
@@ -478,9 +547,9 @@
 	.empty-state {
 		text-align: center;
 		padding: 2rem;
-		/* Background controlled by global theme */
-		border-radius: 999px; /* Pill-shaped */
-		/* Color controlled by global theme */
+		background: #ffffff;
+		border: 1.5px solid #374151;
+		border-radius: 999px;
 		font-style: italic;
 		font-size: 0.9rem;
 	}
@@ -492,15 +561,12 @@
 
 	/* -- Premium Form -- */
 	.comment-form-wrapper {
-		/* Background controlled by global theme */
-		border-radius: 20px; /* Reduced from 40px for sleeker look */
-		padding: 1.25rem 1.5rem; /* Further reduced for slimmer look */
-		box-shadow:
-			0 20px 40px -5px rgba(0, 0, 0, 0.1),
-			0 8px 10px -6px rgba(0, 0, 0, 0.1);
-		border: 1px solid #f1f5f9;
+		background: #ffffff;
+		border-radius: 20px;
+		padding: 1.25rem 1.5rem;
+		box-shadow: none;
+		border: 1.5px solid #374151;
 		position: relative;
-		/* overflow: hidden; Removed to prevent clipping */
 	}
 
 	/* Decorative gradient top border */
@@ -533,32 +599,32 @@
 
 	/* Google-style input wrapper */
 	.input-group:has(.modern-input) {
-		background: #e8eaee; /* Slightly lighter gray for input fields */
+		background: #ffffff;
 		border-radius: 999px;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-		border: 1px solid rgba(0, 0, 0, 0.08);
+		box-shadow: none;
+		border: 1.5px solid #374151;
 		transition: all 0.2s;
 	}
 
 	.input-group:has(.modern-input):focus-within {
-		background: #f0f1f4; /* Even lighter on focus */
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-		border-color: rgba(0, 0, 0, 0.1);
+		background: #ffffff;
+		box-shadow: 0 0 0 3px rgba(55, 65, 81, 0.15);
+		border-color: #1f2937;
 	}
 
 	/* Google-style textarea wrapper */
 	.input-group:has(.modern-textarea) {
-		background: #e8eaee; /* Slightly lighter gray for input fields */
+		background: #ffffff;
 		border-radius: 24px;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-		border: 1px solid rgba(0, 0, 0, 0.08);
+		box-shadow: none;
+		border: 1.5px solid #374151;
 		transition: all 0.2s;
 	}
 
 	.input-group:has(.modern-textarea):focus-within {
-		background: #f0f1f4; /* Even lighter on focus */
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-		border-color: rgba(0, 0, 0, 0.1);
+		background: #ffffff;
+		box-shadow: 0 0 0 3px rgba(55, 65, 81, 0.15);
+		border-color: #1f2937;
 	}
 
 	.modern-input,
@@ -645,11 +711,12 @@
 	}
 
 	.modern-btn:disabled {
-		background: rgba(255, 255, 255, 0.3) !important;
+		background: #e2e8f0 !important;
+		color: #64748b !important;
 		cursor: not-allowed;
 		box-shadow: none !important;
 		transform: none;
-		opacity: 0.6 !important;
+		opacity: 1 !important;
 	}
 
 	.text-btn {
@@ -692,7 +759,8 @@
 
 	@media (max-width: 640px) {
 		.comments-section {
-			padding: 1rem 1.5rem;
+			padding: 1rem 0.75rem;
+			margin: 0 auto;
 		}
 		
 		.comment-card {

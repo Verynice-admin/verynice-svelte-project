@@ -1,5 +1,4 @@
 import { adminDB } from '$lib/server/firebaseAdmin';
-import { validateImage, generateQualityReport } from '$lib/utils/sanitize';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { DocumentReference, DocumentSnapshot } from 'firebase-admin/firestore';
@@ -37,13 +36,6 @@ export const load: PageServerLoad = async ({ params }) => {
     if (!adminDB) {
         console.error("Firebase Admin has not been initialized.");
         // Try to provide more details about why it might be null
-        try {
-            // Check if we can import the admin module
-            const adminCheck = import('$lib/server/firebaseAdmin');
-            console.log('[Destination] Firebase admin module can be imported');
-        } catch (importErr) {
-            console.error('[Destination] Failed to import firebaseAdmin module:', importErr);
-        }
         throw error(500, "Server database connection failed.");
     }
 
@@ -79,6 +71,7 @@ export const load: PageServerLoad = async ({ params }) => {
         'almaty-metro': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/almaty-metro',
         'kok-tobe-hill': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/kok-tobe-hill',
         'park-of-the-first-president': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/park-first-president',
+        'park-first-president': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/park-first-president',
         'almaty-zoo': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/almaty-zoo',
         'aktau-mountains': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/aktau-mountains',
         'tamgaly-tas': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/tamgaly-tas',
@@ -97,6 +90,7 @@ export const load: PageServerLoad = async ({ params }) => {
         'nursultan-peak': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/nursultan-peak',
         'pobeda-peak': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/pobeda-peak',
         'rakhat-candy-factory-tours': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/rakhat-candy-factory',
+        'rakhat-candy-factory': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/rakhat-candy-factory',
         'respublika-alany': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/respublika-alany',
         'sairan-lake': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/sairan-lake',
         'sunkar-falcon-center': 'pages/destinationsPage/articles/section-almaty-and-nearby/attractions/sunkar-falcon-center',
@@ -330,17 +324,14 @@ export const load: PageServerLoad = async ({ params }) => {
         const faqColRef = pageDocRef.collection('faq');
         const photoGalleryColRef = pageDocRef.collection('photoGallery');
         const relatedPostsColRef = pageDocRef.collection('relatedPosts');
-        const userQuestionsColRef = pageDocRef.collection('user_questions');
-
-        const [articlesSnap, keyFactsSnap, videoSnap, mapSnap, faqSnap, photoGallerySnap, relatedPostsSnap, userQuestionsSnap] = await Promise.all([
+        const [articlesSnap, keyFactsSnap, videoSnap, mapSnap, faqSnap, photoGallerySnap, relatedPostsSnap] = await Promise.all([
             articlesColRef.orderBy('order', 'asc').get(),
             keyFactsColRef.orderBy('order', 'asc').get(),
             videoColRef.get(),
             mapColRef.get(),
             faqColRef.get(),
             photoGalleryColRef.get(),
-            relatedPostsColRef.orderBy('order', 'asc').get(),
-            userQuestionsColRef.orderBy('createdAt', 'asc').get()
+            relatedPostsColRef.orderBy('order', 'asc').get()
         ]);
 
         const page = serializeDates(pageSnap.data());

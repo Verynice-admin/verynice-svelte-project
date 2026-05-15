@@ -172,7 +172,7 @@
 		<div class="header-item header-menu" role="navigation" aria-label="Main">
 			<ul id="menu-topmenu">
 				{#each menu as item}
-					<li><a href={item.url}>{item.text}</a></li>
+					<li class={item.url === '/about-borat' ? 'nav-borat' : ''}><a href={item.url}>{item.text}</a></li>
 				{/each}
 			</ul>
 		</div>
@@ -369,6 +369,7 @@
 			list-style: none;
 			margin: 0;
 			padding: 0;
+			padding-top: 8px;
 			white-space: nowrap;
 			align-items: center;
 			justify-content: center;
@@ -384,9 +385,19 @@
 			font-weight: 700;
 			letter-spacing: 0.05em;
 			text-transform: uppercase;
-			color: #fff;
+			color: #ffffff !important;
 			transition: all 0.2s ease;
 			padding: 0.5rem 0;
+			display: flex;
+			align-items: center;
+		}
+
+		#menu-topmenu li.nav-borat a {
+			color: #f59e0b !important;
+		}
+
+		#menu-topmenu li.nav-borat a:hover {
+			color: #fbbf24 !important;
 		}
 
 		/* Actions on right */
