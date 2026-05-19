@@ -16,8 +16,10 @@ function safeCompare(a: string, b: string): boolean {
 }
 
 export function requireAdminAccess(request: Request, url: URL): AuthResult {
-  // Keep local developer workflows working without extra setup.
-  if (dev && localHostnames.has(url.hostname)) {
+  // Dev bypass: only when BYPASS_ADMIN_AUTH_IN_DEV=true is explicitly set in .env
+  // Prevents a developer running `npm run dev` against the production database from
+  // having silent admin access without a token.
+  if (dev && localHostnames.has(url.hostname) && env.BYPASS_ADMIN_AUTH_IN_DEV === 'true') {
     return { ok: true };
   }
 
