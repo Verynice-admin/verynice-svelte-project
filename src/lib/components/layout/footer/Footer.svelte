@@ -36,6 +36,7 @@
 			{ text: 'Tips', url: '/travel-tips' }
 		],
 		techMenuLinks: [
+			{ text: 'About Us', url: '/about-us' },
 			{ text: 'Privacy Policy', url: '/privacy' },
 			{ text: 'Terms of Use', url: '/terms' },
 			{ text: 'Contact', url: '/contact' }
@@ -139,45 +140,20 @@
 				{/if}
 			</div>
 
-			<!-- Links Section (Compact Grid) -->
-			<div class="footer-links-matrix">
-				<!-- Group 1: Explore -->
-				<div class="link-group">
-					<h4>Explore</h4>
-					<ul>
-						{#each cfg.footerMenuLinks as link}
-							<li><a href={link.url}>{link.text}</a></li>
-						{/each}
-					</ul>
-				</div>
-
-				<!-- Dynamic Column Groups -->
-				{#each cfg.columns as col}
-					<div class="link-group">
-						<h4>{col.title}</h4>
-						<ul>
-							{#each col.links as link}
-								<li><a href={link.url}>{link.text}</a></li>
-							{/each}
-						</ul>
-					</div>
-				{/each}
-			</div>
 		</div>
 
-		<!-- Compact Bottom Bar -->
+		<!-- Bottom Bar -->
 		<div class="footer-bottom">
+			<div class="footer-bottom-inner">
+				<a href="/about-us" class="bottom-link">About Us</a>
+				{#each cfg.techMenuLinks as link}
+					<span class="sep" aria-hidden="true">·</span>
+					<a href={link.url} class="bottom-link">{link.text}</a>
+				{/each}
+			</div>
 			<div class="copyright">
 				{cfg.copyrightTemplate.replace('{year}', new Date().getFullYear())}
 			</div>
-
-			{#if cfg.techMenuLinks.length}
-				<ul class="legal-links">
-					{#each cfg.techMenuLinks as link}
-						<li><a href={link.url}>{link.text}</a></li>
-					{/each}
-				</ul>
-			{/if}
 		</div>
 	</div>
 </footer>
@@ -415,53 +391,44 @@
 
 	/* Bottom Bar */
 	.footer-bottom {
-		border-top: none;
-		padding-top: 0.25rem;
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.3rem;
+		padding-top: 0.25rem;
+	}
+
+	.footer-bottom-inner {
+		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
-		gap: 0.5rem;
-		font-size: 0.75rem;
-		color: #fff;
+		justify-content: center;
+		gap: 0.4rem;
+		font-size: 0.72rem;
 	}
 
 	.copyright {
-		color: #fff;
-		font-size: 0.75rem;
+		color: rgba(255,255,255,0.55);
+		font-size: 0.68rem;
+		white-space: nowrap;
 	}
 
-	.legal-links {
-		display: flex;
-		justify-content: center;
-		gap: 0.75rem;
-		list-style: none;
-		list-style-type: none;
-		padding: 0;
-		margin: 0;
+	.sep {
+		color: rgba(255,255,255,0.3);
+		font-size: 0.65rem;
 	}
 
-	.legal-links li {
-		list-style: none;
-		list-style-type: none;
-	}
-
-	.legal-links li::before,
-	.legal-links li::after,
-	.legal-links li::marker {
-		content: none !important;
-		display: none !important;
-	}
-
-	.legal-links a {
+	.bottom-link {
 		color: #fff !important;
 		text-decoration: none;
-		transition: color 0.2s;
-		font-size: 0.75rem;
+		white-space: nowrap;
+		transition: opacity 0.15s;
+		font-size: 0.72rem;
 	}
 
-	.legal-links a:hover {
-		color: #fff;
+	.bottom-link:hover {
+		opacity: 0.75;
+		text-decoration: underline;
 	}
 
 	/* Mobile */
@@ -481,30 +448,8 @@
 			padding-bottom: 0.5rem;
 		}
 
-		.footer-links-matrix {
-			display: flex;
+		.footer-bottom-inner {
 			justify-content: center;
-			gap: 0.5rem;
-		}
-
-		.link-group h4 {
-			font-size: 0.6rem;
-			margin-bottom: 0.1rem;
-		}
-
-		.link-group ul {
-			gap: 0.05rem;
-		}
-
-		.link-group a {
-			font-size: 0.55rem;
-		}
-
-		.footer-bottom {
-			flex-direction: column;
-			text-align: center;
-			gap: 0.15rem;
-			padding-top: 0.15rem;
 		}
 	}
 </style>

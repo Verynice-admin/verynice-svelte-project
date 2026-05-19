@@ -12,7 +12,16 @@
 
 	let fetched: any[] = [];
 
-	$: displayPosts = (fetched?.length ? fetched : posts) ?? [];
+	$: displayPosts = (() => {
+		const raw = (fetched?.length ? fetched : posts) ?? [];
+		const seen = new Set<string>();
+		return raw.filter((p: any) => {
+			if (!p?.id) return true;
+			if (seen.has(p.id)) return false;
+			seen.add(p.id);
+			return true;
+		});
+	})();
 
 	// Carousel logic
 	let scrollContainer: HTMLElement;
@@ -125,9 +134,15 @@
 							limit(10)
 						);
 						const res = await getDocs(q);
-						fetched = res.docs
-							.filter((d) => d.id !== postId)
-							.map((d) => ({ id: d.id, ...d.data() }));
+						const seen = new Set<string>();
+					fetched = res.docs
+						.filter((d) => d.id !== postId)
+						.map((d) => ({ id: d.id, ...d.data() }))
+						.filter((p) => {
+							if (seen.has(p.id)) return false;
+							seen.add(p.id);
+							return true;
+						});
 					}
 				}
 			} catch (e) {

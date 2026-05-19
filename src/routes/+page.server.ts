@@ -42,21 +42,28 @@ export async function load() {
 
     // Dynamic Queries for Sliders
     const allAttractionsSnap = await adminDB.collectionGroup('attractions').limit(300).get();
-    const attractions = allAttractionsSnap.docs.map(doc => {
-      const data = doc.data();
-      const rawSlug = data.slug || doc.id;
-      const normalizedSlug = rawSlug.toLowerCase().replace(/_/g, '-');
-      const slugTitle = normalizedSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-      return {
-        id: normalizedSlug,
-        title: data.title || data.mainTitle || data.name || data.heroTitle || data.heading || slugTitle,
-        slug: normalizedSlug,
-        headerBackgroundPublicId: data.headerBackgroundPublicId || null,
-        mainImage: data.headerBackgroundPublicId || data.mainImage || (data.photos && data.photos[0]) || null,
-        image: data.image || null,
-        region: doc.ref.parent.parent?.id || 'other'
-      };
-    });
+    const seenIds = new Set<string>();
+    const attractions = allAttractionsSnap.docs
+      .map(doc => {
+        const data = doc.data();
+        const rawSlug = data.slug || doc.id;
+        const normalizedSlug = rawSlug.toLowerCase().replace(/_/g, '-');
+        const slugTitle = normalizedSlug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
+        return {
+          id: normalizedSlug,
+          title: data.title || data.mainTitle || data.name || data.heroTitle || data.heading || slugTitle,
+          slug: normalizedSlug,
+          headerBackgroundPublicId: data.headerBackgroundPublicId || null,
+          mainImage: data.headerBackgroundPublicId || data.mainImage || (data.photos && data.photos[0]) || null,
+          image: data.image || null,
+          region: doc.ref.parent.parent?.id || 'other'
+        };
+      })
+      .filter(a => {
+        if (seenIds.has(a.id)) return false;
+        seenIds.add(a.id);
+        return true;
+      });
 
     const filter = (search: string[]) => attractions.filter(a =>
       search.some(s => (a.title || '').toLowerCase().includes(s.toLowerCase())) ||

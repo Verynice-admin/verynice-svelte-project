@@ -52,6 +52,7 @@
       { "text": "Tips", "url": "/travel-tips" }
     ],
     "techMenuLinks": [
+      { "text": "About Us", "url": "/about-us" },
       { "text": "Privacy Policy", "url": "/privacy" },
       { "text": "Terms of Use", "url": "/terms" },
       { "text": "Contact", "url": "/contact" }
