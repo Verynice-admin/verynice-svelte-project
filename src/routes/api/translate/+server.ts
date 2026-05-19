@@ -27,7 +27,7 @@ const sanitizeSegments = (segments: unknown): SegmentPayload[] => {
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
-		const rate = enforceRateLimit({
+		const rate = await enforceRateLimit({
 			request,
 			scope: 'api-translate',
 			maxRequests: 30,

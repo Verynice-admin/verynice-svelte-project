@@ -8,7 +8,7 @@ import type { RequestHandler } from './$types';
 
 export const POST: RequestHandler = async ({ request }) => {
     try {
-        const rate = enforceRateLimit({
+        const rate = await enforceRateLimit({
             request,
             scope: 'api-comments-submit',
             maxRequests: 10,
