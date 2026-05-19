@@ -36,7 +36,9 @@ service cloud.firestore {
     // ========================================
     match /pages/{pageId}/comments/{commentId} {
       allow read: if true;
-      allow create: if isValidComment();
+      // request.auth != null blocks direct client writes from unauthenticated attackers.
+      // Legitimate comments go through /api/comments/submit (Admin SDK) which bypasses rules.
+      allow create: if request.auth != null && isValidComment();
 
       function isValidComment() {
         return request.resource.data.size() <= 3 &&
