@@ -1,4 +1,5 @@
 import { adminDB } from '$lib/server/firebaseAdmin';
+import { getOrFetch } from '$lib/server/cache';
 
 const FALLBACK_HOMEPAGE = {
   title: 'VeryNice - Discover Kazakhstan',
@@ -31,62 +32,65 @@ function serializeDocument(data: any) {
   return serializeValue(data);
 }
 
+const HOMEPAGE_TTL = 5 * 60 * 1000; // 5 minutes
+
 export async function load() {
   if (!adminDB) {
     return { homepage: FALLBACK_HOMEPAGE, sliders: {} };
   }
 
-  try {
-    const homepageSnap = await adminDB.collection('pages').doc('homepage').get();
-    const homepage = homepageSnap.exists ? serializeDocument(homepageSnap.data()) : FALLBACK_HOMEPAGE;
+  return getOrFetch(
+    'homepage',
+    async () => {
+      const homepageSnap = await adminDB!.collection('pages').doc('homepage').get();
+      const homepage = homepageSnap.exists ? serializeDocument(homepageSnap.data()) : FALLBACK_HOMEPAGE;
 
-    // Dynamic Queries for Sliders
-    const allAttractionsSnap = await adminDB.collectionGroup('attractions').limit(300).get();
-    const seenIds = new Set<string>();
-    const attractions = allAttractionsSnap.docs
-      .map(doc => {
-        const data = doc.data();
-        const rawSlug = data.slug || doc.id;
-        const normalizedSlug = rawSlug.toLowerCase().replace(/_/g, '-');
-        const slugTitle = normalizedSlug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
-        return {
-          id: normalizedSlug,
-          title: data.title || data.mainTitle || data.name || data.heroTitle || data.heading || slugTitle,
-          slug: normalizedSlug,
-          headerBackgroundPublicId: data.headerBackgroundPublicId || null,
-          mainImage: data.headerBackgroundPublicId || data.mainImage || (data.photos && data.photos[0]) || null,
-          image: data.image || null,
-          region: doc.ref.parent.parent?.id || 'other'
-        };
-      })
-      .filter(a => {
-        if (seenIds.has(a.id)) return false;
-        seenIds.add(a.id);
-        return true;
-      });
+      // Dynamic Queries for Sliders
+      const allAttractionsSnap = await adminDB!.collectionGroup('attractions').limit(300).get();
+      const seenIds = new Set<string>();
+      const attractions = allAttractionsSnap.docs
+        .map(doc => {
+          const data = doc.data();
+          const rawSlug = data.slug || doc.id;
+          const normalizedSlug = rawSlug.toLowerCase().replace(/_/g, '-');
+          const slugTitle = normalizedSlug.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
+          return {
+            id: normalizedSlug,
+            title: data.title || data.mainTitle || data.name || data.heroTitle || data.heading || slugTitle,
+            slug: normalizedSlug,
+            headerBackgroundPublicId: data.headerBackgroundPublicId || null,
+            mainImage: data.headerBackgroundPublicId || data.mainImage || (data.photos && data.photos[0]) || null,
+            image: data.image || null,
+            region: doc.ref.parent.parent?.id || 'other'
+          };
+        })
+        .filter(a => {
+          if (seenIds.has(a.id)) return false;
+          seenIds.add(a.id);
+          return true;
+        });
 
-    const filter = (search: string[]) => attractions.filter(a =>
-      search.some(s => (a.title || '').toLowerCase().includes(s.toLowerCase())) ||
-      search.some(s => (a.slug || '').toLowerCase().includes(s.toLowerCase()))
-    ).slice(0, 8);
+      const filter = (search: string[]) => attractions.filter(a =>
+        search.some(s => (a.title || '').toLowerCase().includes(s.toLowerCase())) ||
+        search.some(s => (a.slug || '').toLowerCase().includes(s.toLowerCase()))
+      ).slice(0, 8);
 
-    const sliders = {
-      cities: filter(['city', 'almaty', 'astana', 'aktau', 'shymkent', 'turkistan']),
-      nationalParks: filter(['national park', 'reserve', 'nature park']),
-      lakes: filter(['lake', 'reservoir', 'river']),
-      mountains: filter(['mountain', 'peak', 'canyon', 'plateau']),
-      culture: filter(['mausoleum', 'mosque', 'museum', 'monument'])
-    };
+      const sliders = {
+        cities: filter(['city', 'almaty', 'astana', 'aktau', 'shymkent', 'turkistan']),
+        nationalParks: filter(['national park', 'reserve', 'nature park']),
+        lakes: filter(['lake', 'reservoir', 'river']),
+        mountains: filter(['mountain', 'peak', 'canyon', 'plateau']),
+        culture: filter(['mausoleum', 'mosque', 'museum', 'monument'])
+      };
 
-    return {
-      homepage: { ...FALLBACK_HOMEPAGE, ...homepage },
-      sliders
-    };
-  } catch (error) {
+      return {
+        homepage: { ...FALLBACK_HOMEPAGE, ...homepage },
+        sliders
+      };
+    },
+    HOMEPAGE_TTL
+  ).catch((error) => {
     console.error('[+page.server] Error loading dynamic homepage:', error);
-    return {
-      homepage: FALLBACK_HOMEPAGE,
-      sliders: {}
-    };
-  }
+    return { homepage: FALLBACK_HOMEPAGE, sliders: {} };
+  });
 }

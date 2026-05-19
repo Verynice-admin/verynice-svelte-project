@@ -2,6 +2,9 @@ import { adminDB } from '$lib/server/firebaseAdmin';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { DocumentReference, DocumentSnapshot } from 'firebase-admin/firestore';
+import { getOrFetch } from '$lib/server/cache';
+
+const ATTRACTIONS_TTL = 10 * 60 * 1000; // 10 minutes
 
 // Serialize Firestore Timestamps to ISO strings for client-side
 function serializeDates(obj: any): any {
@@ -414,14 +417,17 @@ export const load: PageServerLoad = async ({ params }) => {
 
         // Universal "More to Explore" Logic: Fetch ~10 Random Attractions
         try {
-            // Fetch all attractions from the database
-            const allAttractionsSnap = await adminDB.collectionGroup('attractions').limit(50).get();
+            // Cached attractions list shared across all destination pages (10 min TTL)
+            const cachedAttractions = await getOrFetch(
+                'attractions:explore',
+                async () => {
+                    const snap = await adminDB!.collectionGroup('attractions').limit(50).get();
+                    return snap.docs.map((doc: any) => ({ id: doc.id, ...doc.data() }));
+                },
+                ATTRACTIONS_TTL
+            );
 
-            let allAttractions = allAttractionsSnap.docs
-                .map((doc: any) => {
-                    const data = doc.data();
-                    return { id: doc.id, ...data };
-                })
+            let allAttractions = (cachedAttractions as any[])
                 .filter((item: any) => {
                     // Exclude current page
                     if (item.id === slug) return false;
