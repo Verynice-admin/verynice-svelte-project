@@ -108,7 +108,7 @@
 	let authError = '';
 	let isSigningIn = false; // Prevent race condition with onAuthStateChanged
 
-	function getErrorMessage(code: string): string {
+	function getErrorMessage(code: string | undefined): string {
 		switch (code) {
 			case 'auth/popup-blocked':
 				return 'Please allow popups for this site';
@@ -215,7 +215,7 @@
 			console.error('[ERROR] Stack:', error?.stack);
 			
 			// Show inline error to user
-			authError = error?.message ?? 'Sign in failed. Please try again.';
+			authError = getErrorMessage(error?.code);
 		} finally {
 			// Reset the flag so future onAuthStateChanged can work normally
 			isSigningIn = false;
