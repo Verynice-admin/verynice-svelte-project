@@ -26,22 +26,12 @@ function hasAllConfig(): boolean {
             firebaseConfig.projectId && firebaseConfig.appId);
 }
 
-// Debug: log which values are missing
-console.log('[Firebase] Config check:', {
-  hasApiKey: !!firebaseConfig.apiKey,
-  hasAuthDomain: !!firebaseConfig.authDomain,
-  hasProjectId: !!firebaseConfig.projectId,
-  hasAppId: !!firebaseConfig.appId
-});
 
 /**
  * Initialize and return Firebase app instance
  */
 export async function getFirebaseApp(): Promise<FirebaseApp | null> {
-  if (!browser || FIREBASE_DISABLED) {
-    console.log('[Firebase] Skipping init - not in browser or disabled');
-    return null;
-  }
+  if (!browser || FIREBASE_DISABLED) return null;
   
   if (app) return app;
 
@@ -61,7 +51,6 @@ export async function getFirebaseApp(): Promise<FirebaseApp | null> {
       ? initializeApp(firebaseConfig) 
       : getApps()[0];
       
-    console.log('[Firebase] App initialized:', app.name);
     return app;
   } catch (error) {
     console.error('[Firebase] Initialization error:', error);
@@ -85,7 +74,6 @@ export async function getFirestore(): Promise<Firestore | null> {
 
     const { getFirestore: getFirestoreFb } = await import('firebase/firestore');
     db = getFirestoreFb(appInstance);
-    console.log('[Firebase] Firestore initialized');
     return db;
   } catch (error) {
     console.error('[Firebase] Firestore initialization error:', error);
@@ -113,7 +101,6 @@ export async function getAuth(): Promise<Auth | null> {
     
     const { getAuth: getAuthFb } = await import('firebase/auth');
     auth = getAuthFb(appInstance);
-    console.log('[Firebase] Auth initialized');
     return auth;
   } catch (error) {
     console.error('[Firebase] Auth initialization error:', error);
