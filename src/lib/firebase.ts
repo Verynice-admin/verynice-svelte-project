@@ -1,10 +1,7 @@
 import { browser } from '$app/environment';
-import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import {
-  getAuth,
-  GoogleAuthProvider
-} from 'firebase/auth';
+import type { FirebaseApp } from 'firebase/app';
+import type { Firestore } from 'firebase/firestore';
+import type { Auth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
@@ -15,67 +12,57 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || ''
 };
 
-let _app: any = null;
-let _auth: any = null;
-let _db: any = null;
-let _googleProvider: any = null;
-let initialized = false;
+let _app: FirebaseApp | null = null;
+let _auth: Auth | null = null;
+let _db: Firestore | null = null;
+let _googleProvider: GoogleAuthProvider | null = null;
 
-function ensureInitialized() {
-  if (initialized || !browser) return;
+async function initialize(): Promise<void> {
+  if (!browser || !firebaseConfig.apiKey) return;
 
-  if (getApps().length > 0) {
-    _app = getApps()[0];
-  } else if (firebaseConfig.apiKey) {
-    _app = initializeApp(firebaseConfig);
-  }
+  const [
+    { initializeApp, getApps },
+    { getFirestore },
+    { getAuth: getAuthFn, GoogleAuthProvider: GP }
+  ] = await Promise.all([
+    import('firebase/app'),
+    import('firebase/firestore'),
+    import('firebase/auth')
+  ]);
+
+  _app = getApps().length > 0 ? getApps()[0] : initializeApp(firebaseConfig);
 
   if (_app) {
-    _auth = getAuth(_app);
+    _auth = getAuthFn(_app);
     _db = getFirestore(_app);
-    _googleProvider = new GoogleAuthProvider();
+    _googleProvider = new GP();
     _googleProvider.addScope('profile');
     _googleProvider.addScope('email');
   }
-
-  initialized = true;
 }
 
-const createLazyProxy = (getter: () => any) => {
-  return new Proxy({}, {
+// Kick off initialization immediately in the browser. Dynamic imports are
+// Vite-bundled and resolve in <1ms on a warm cache — _auth/_db will be set
+// well before any onMount callback fires.
+if (browser) {
+  initialize().catch(err => console.error('[Firebase] Init error:', err));
+}
+
+export const getFirebaseAuth = (): Auth | null => _auth;
+export const getFirebaseDb = (): Firestore | null => _db;
+export const getFirebaseGoogleProvider = (): GoogleAuthProvider | null => _googleProvider;
+
+// Synchronous proxy accessors — safe to use in onMount or reactive statements.
+// Property accesses delegate to the underlying instance once init completes.
+function lazyProxy<T>(getter: () => T | null): T {
+  return new Proxy({} as object, {
     get(_, prop) {
-      const value = getter();
-      if (value && typeof value === 'object') {
-        return value[prop as string];
-      }
-      return value;
-    },
-    apply(_, thisArg, args) {
-      const value = getter();
-      if (typeof value === 'function') {
-        return value.apply(thisArg, args);
-      }
-      throw new Error('Not a function');
+      const target = getter();
+      return target ? (target as Record<string | symbol, unknown>)[prop] : undefined;
     }
-  });
-};
+  }) as unknown as T;
+}
 
-export const getFirebaseAuth = () => {
-  ensureInitialized();
-  return _auth;
-};
-
-export const getFirebaseDb = () => {
-  ensureInitialized();
-  return _db;
-};
-
-export const getFirebaseGoogleProvider = () => {
-  ensureInitialized();
-  return _googleProvider;
-};
-
-export const auth = createLazyProxy(() => { ensureInitialized(); return _auth; });
-export const db = createLazyProxy(() => { ensureInitialized(); return _db; });
-export const googleProvider = createLazyProxy(() => { ensureInitialized(); return _googleProvider; });
-export default _app;
+export const auth = lazyProxy<Auth>(() => _auth);
+export const db = lazyProxy<Firestore>(() => _db);
+export const googleProvider = lazyProxy<GoogleAuthProvider>(() => _googleProvider);
