@@ -11,28 +11,41 @@
 	let fs: any = null;
 	let currentLikes = likes;
 	let pending = false;
+	let hasLiked = false;
+
+	const storageKey = () => `liked_${collectionPath}_${postId}`;
 
 	onMount(async () => {
 		if (!browser) return;
 		fs = await getFirestore();
+		try {
+			hasLiked = localStorage.getItem(storageKey()) === '1';
+		} catch {
+			// localStorage unavailable (private browsing, storage blocked) — allow like
+		}
 	});
 
 	async function like() {
-		if (!browser || !fs || !postId) return;
-		if (pending) return;
+		if (!browser || !fs || !postId || pending || hasLiked) return;
 		pending = true;
 		try {
 			const { doc, updateDoc, increment } = await import('firebase/firestore');
 			const ref = doc(fs, collectionPath, postId);
 			await updateDoc(ref, { articleLikes: increment(1) });
 			currentLikes += 1;
+			hasLiked = true;
+			try {
+				localStorage.setItem(storageKey(), '1');
+			} catch {
+				// localStorage write failed — in-memory hasLiked still prevents double-tap
+			}
 		} finally {
 			pending = false;
 		}
 	}
 </script>
 
-<button on:click={like} disabled={pending} aria-live="polite">
+<button on:click={like} disabled={pending || hasLiked} aria-live="polite" aria-label="Like this article">
 	🔥 {currentLikes}
 </button>
 
