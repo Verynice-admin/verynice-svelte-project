@@ -24,6 +24,8 @@ export async function GET({ request, url }: { request: Request; url: URL }) {
     return json({ success: false, error: 'Invalid path' }, { status: 400 });
   }
 
+  console.log(`[admin-api] GET ${path} at ${new Date().toISOString()}`);
+
   try {
     if (isDocPath(path)) {
       const snap = await adminDB.doc(path).get();
@@ -64,6 +66,8 @@ export async function POST({ request }: { request: Request }) {
     return json({ success: false, error: 'POST requires a collection path' }, { status: 400 });
   }
 
+  console.log(`[admin-api] POST ${path} at ${new Date().toISOString()}`);
+
   try {
     const collectionRef = adminDB.collection(path);
     const docRef = docId ? collectionRef.doc(docId) : collectionRef.doc();
@@ -100,6 +104,8 @@ async function updateDoc(request: Request, merge: boolean) {
     return json({ success: false, error: 'PUT/PATCH requires a document path' }, { status: 400 });
   }
 
+  console.log(`[admin-api] ${merge ? 'PATCH' : 'PUT'} ${path} at ${new Date().toISOString()}`);
+
   try {
     await adminDB.doc(path).set({ ...data }, { merge });
     return json({ success: true });
@@ -124,6 +130,8 @@ export async function DELETE({ request }: { request: Request }) {
   if (!isDocPath(path)) {
     return json({ success: false, error: 'DELETE requires a document path' }, { status: 400 });
   }
+
+  console.log(`[admin-api] DELETE ${path} at ${new Date().toISOString()}`);
 
   try {
     await adminDB.doc(path).delete();
