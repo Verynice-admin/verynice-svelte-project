@@ -60,7 +60,9 @@ function loadServiceAccount(): ServiceAccount | null {
   }
   
   // Priority 3: Environment variable with JSON string
-  const jsonStr = env.FIREBASE_SERVICE_ACCOUNT || env.VITE_FIREBASE_SERVICE_ACCOUNT;
+  // Use FIREBASE_SERVICE_ACCOUNT (no VITE_ prefix) — VITE_ vars are bundled into
+  // the client by Vite and must never hold server secrets.
+  const jsonStr = env.FIREBASE_SERVICE_ACCOUNT;
   if (jsonStr) {
     try {
       const sa: ServiceAccount = JSON.parse(jsonStr);
