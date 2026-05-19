@@ -415,7 +415,7 @@ export const load: PageServerLoad = async ({ params }) => {
         // Universal "More to Explore" Logic: Fetch ~10 Random Attractions
         try {
             // Fetch all attractions from the database
-            const allAttractionsSnap = await adminDB.collectionGroup('attractions').get();
+            const allAttractionsSnap = await adminDB.collectionGroup('attractions').limit(50).get();
 
             let allAttractions = allAttractionsSnap.docs
                 .map((doc: any) => {
