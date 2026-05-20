@@ -197,9 +197,19 @@
 			// Update user store
 			user.set(firebaseUser);
 
-			// Step 5 — Redirect
+			// Step 5 — Create session cookie then redirect
 			console.log('[Step 9] Redirecting to:', `/dashboard/${finalUserRole}`);
-			
+			try {
+				const idToken = await firebaseUser.getIdToken();
+				await fetch('/api/auth/session', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ idToken })
+				});
+			} catch (e) {
+				console.error('[auth] Failed to create session cookie:', e);
+			}
+
 			// Set loading to false before redirecting
 			pageLoading = false;
 			// Use goto() for proper client-side navigation
