@@ -572,7 +572,7 @@ export async function load() {
 
     try {
       // Fetch all attractions from the database
-      const allAttractionsSnap = await adminDB.collectionGroup('attractions').get();
+      const allAttractionsSnap = await adminDB.collectionGroup('attractions').limit(5000).get();
 
       let allAttractions = allAttractionsSnap.docs
         .map((doc: any) => {
