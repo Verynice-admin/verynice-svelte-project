@@ -10,7 +10,7 @@
 		createUserWithEmailAndPassword,
 		signInWithPopup 
 	} from 'firebase/auth';
-	import { doc, getDoc, setDoc } from 'firebase/firestore';
+	import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 	let name = '';
 	let email = '';
@@ -100,10 +100,13 @@
 
 			if (isSignUp) {
 				await setDoc(doc(db, 'users', firebaseUser.uid), {
+					uid: firebaseUser.uid,
 					email: firebaseUser.email,
-					name: name.trim(),
+					displayName: name.trim(),
+					photoURL: '',
 					role: 'traveller',
-					createdAt: new Date().toISOString()
+					createdAt: serverTimestamp(),
+					updatedAt: serverTimestamp()
 				});
 
 				userProfile.set({
@@ -149,10 +152,13 @@
 			if (!docSnap.exists()) {
 				// Create new user with traveller role
 				await setDoc(docRef, {
+					uid: firebaseUser.uid,
 					email: firebaseUser.email,
-					name: firebaseUser.displayName || '',
+					displayName: firebaseUser.displayName ?? '',
+					photoURL: firebaseUser.photoURL ?? '',
 					role: 'traveller',
-					createdAt: new Date().toISOString()
+					createdAt: serverTimestamp(),
+					updatedAt: serverTimestamp()
 				});
 			}
 
