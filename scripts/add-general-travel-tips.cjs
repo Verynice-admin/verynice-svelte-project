@@ -170,9 +170,9 @@ const newGeneralTips = [
 ];
 
 async function addGeneralTips() {
-  const tipsRef = db.collection('travelTips');
-  
-  console.log('Adding new general travel tips to travelTips collection...');
+  const tipsRef = db.collection('pages').doc('travelTipsPage').collection('tips');
+
+  console.log('Adding new general travel tips to pages/travelTipsPage/tips...');
   
   for (const tip of newGeneralTips) {
     const docRef = tipsRef.doc(tip.id);
