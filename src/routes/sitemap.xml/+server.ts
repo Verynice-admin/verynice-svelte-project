@@ -50,7 +50,7 @@ export const GET: RequestHandler = async () => {
 	// Fetch all destination slugs from Firestore
 	if (adminDB) {
 		try {
-			const attractionsSnap = await adminDB.collectionGroup('attractions').get();
+			const attractionsSnap = await adminDB.collectionGroup('attractions').limit(5000).get();
 			const seen = new Set<string>();
 
 			for (const doc of attractionsSnap.docs) {
