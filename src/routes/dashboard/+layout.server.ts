@@ -20,13 +20,19 @@ export async function load(event: LayoutServerLoadEvent) {
     return { isAuthenticated: true, uid, role: 'business' as const };
   }
 
-  let role: string | null = null;
-  if (adminDB) {
-    try {
-      const snap = await adminDB.collection('users').doc(uid).get();
-      role = snap.exists ? (snap.data()?.role ?? null) : null;
-    } catch (e) {
-      console.error('[dashboard layout] Failed to fetch user role:', e);
+  // Prefer role from JWT custom claim (zero Firestore reads on the happy path).
+  // Fall back to Firestore for sessions created before the claim was stamped —
+  // this covers existing sessions and the first sign-in after claim propagation.
+  let role: string | null = session.role;
+
+  if (role !== 'business' && role !== 'traveller') {
+    if (adminDB) {
+      try {
+        const snap = await adminDB.collection('users').doc(uid).get();
+        role = snap.exists ? (snap.data()?.role ?? null) : null;
+      } catch (e) {
+        console.error('[dashboard layout] Failed to fetch user role:', e);
+      }
     }
   }
 
