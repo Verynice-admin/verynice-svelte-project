@@ -24,6 +24,11 @@ vite.config.ts.timestamp-*
 
 # Ignore administrative scripts
 _scripts/
+scripts/
+
+# Cloudinary dumps and upload logs
+cloudinary_dump.json
+*-upload-log.txt
 
 # Ignore Firebase admin credentials and secrets directory
 serviceAccountKey.json
