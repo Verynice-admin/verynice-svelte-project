@@ -201,11 +201,15 @@
 			console.log('[Step 9] Redirecting to:', `/dashboard/${finalUserRole}`);
 			try {
 				const idToken = await firebaseUser.getIdToken();
-				await fetch('/api/auth/session', {
+				const sessionRes = await fetch('/api/auth/session', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ idToken })
 				});
+				if (!sessionRes.ok) {
+					const text = await sessionRes.text();
+					console.error(`[auth] Session endpoint returned ${sessionRes.status}:`, text);
+				}
 			} catch (e) {
 				console.error('[auth] Failed to create session cookie:', e);
 			}
