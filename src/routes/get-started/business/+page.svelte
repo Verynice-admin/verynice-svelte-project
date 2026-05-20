@@ -115,6 +115,7 @@
 				await loadUserProfile(firebaseUser.uid);
 			}
 
+			await createSession(firebaseUser);
 			goto('/dashboard/business');
 		} catch (err: any) {
 			console.error('Auth error:', err);
@@ -154,12 +155,26 @@
 			}
 
 			await loadUserProfile(firebaseUser.uid);
+			await createSession(firebaseUser);
 			goto('/dashboard/business');
 		} catch (err: any) {
 			console.error('Google auth error:', err);
 			error = getErrorMessage(err.code);
 		} finally {
 			isLoading = false;
+		}
+	}
+
+	async function createSession(firebaseUser: import('firebase/auth').User): Promise<void> {
+		try {
+			const idToken = await firebaseUser.getIdToken();
+			await fetch('/api/auth/session', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ idToken })
+			});
+		} catch (e) {
+			console.error('[auth] Failed to create session cookie:', e);
 		}
 	}
 
