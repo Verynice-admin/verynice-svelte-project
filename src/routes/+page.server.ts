@@ -76,11 +76,11 @@ export async function load() {
       ).slice(0, 8);
 
       const sliders = {
-        cities: filter(['city', 'almaty', 'astana', 'aktau', 'shymkent', 'turkistan']),
-        nationalParks: filter(['national park', 'reserve', 'nature park']),
-        lakes: filter(['lake', 'reservoir', 'river']),
-        mountains: filter(['mountain', 'peak', 'canyon', 'plateau']),
-        culture: filter(['mausoleum', 'mosque', 'museum', 'monument'])
+        cities: filter(['city', 'almaty', 'алматы', 'astana', 'астана', 'nur-sultan', 'aktau', 'актау', 'shymkent', 'shimkent', 'шымкент', 'turkistan', 'turkestan', 'түркістан', 'туркестан', 'atyrau', 'атырау', 'karaganda', 'қарағанды', 'semey', 'semei', 'oskemen', 'ust-kamenogorsk']),
+        nationalParks: filter(['national park', 'reserve', 'nature park', 'заповедник', 'қорық', 'national']),
+        lakes: filter(['lake', 'köl', 'көл', 'reservoir', 'river', 'озеро', 'өзен', 'sea', 'теңіз', 'море', 'balkhash', 'балқаш', 'alakol', 'алакөл', 'burabay', 'бурабай']),
+        mountains: filter(['mountain', 'peak', 'canyon', 'plateau', 'tau', 'тау', 'гора', 'шың', 'pass', 'асу', 'altai', 'алтай', 'tian shan', 'тянь-шань', 'alatau', 'алатау']),
+        culture: filter(['mausoleum', 'күмбез', 'мавзолей', 'mosque', 'мешіт', 'мечеть', 'museum', 'мұражай', 'музей', 'monument', 'ескерткіш', 'памятник', 'temple', 'shrine', 'ancient', 'ежелгі'])
       };
 
       return {
