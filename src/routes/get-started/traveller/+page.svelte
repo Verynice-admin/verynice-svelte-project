@@ -18,6 +18,7 @@
 	let confirmPassword = '';
 	let isSignUp = false;
 	let isLoading = false;
+	let isSigningIn = false;
 	let error = '';
 
 	onMount(async () => {
@@ -31,17 +32,19 @@
 		if (!auth) return;
 		
 		onAuthStateChanged(auth, async (firebaseUser) => {
-			if (firebaseUser) {
+			if (firebaseUser && !isSigningIn) {
 				user.set(firebaseUser);
-				await loadUserProfile(firebaseUser.uid);
+				const role = await loadUserProfile(firebaseUser.uid);
+				if (role === 'traveller') goto('/dashboard/traveller');
+				else if (role === 'business') goto('/dashboard/business');
 			}
 		});
 	});
 
-	async function loadUserProfile(uid: string) {
+	async function loadUserProfile(uid: string): Promise<string | null> {
 		const docRef = doc(db!, 'users', uid);
 		const docSnap = await getDoc(docRef);
-		
+
 		if (docSnap.exists()) {
 			const data = docSnap.data();
 			userProfile.set({
@@ -49,17 +52,14 @@
 				email: data.email || null,
 				role: data.role || null
 			});
-			
-			if (data.role === 'traveller') {
-				goto('/dashboard/traveller');
-			} else if (data.role === 'business') {
-				goto('/dashboard/business');
-			}
+			return data.role ?? null;
 		}
+		return null;
 	}
 
 	async function handleSubmit() {
 		isLoading = true;
+		isSigningIn = true;
 		error = '';
 
 		// Validation
@@ -122,11 +122,13 @@
 			error = getErrorMessage(err.code);
 		} finally {
 			isLoading = false;
+			isSigningIn = false;
 		}
 	}
 
 	async function handleGoogleSignIn() {
 		isLoading = true;
+		isSigningIn = true;
 		error = '';
 
 		try {
@@ -162,17 +164,22 @@
 			error = getErrorMessage(err.code);
 		} finally {
 			isLoading = false;
+			isSigningIn = false;
 		}
 	}
 
 	async function createSession(firebaseUser: import('firebase/auth').User): Promise<void> {
 		try {
 			const idToken = await firebaseUser.getIdToken();
-			await fetch('/api/auth/session', {
+			const res = await fetch('/api/auth/session', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ idToken })
 			});
+			if (!res.ok) {
+				const text = await res.text();
+				console.error(`[auth] Session endpoint returned ${res.status}:`, text);
+			}
 		} catch (e) {
 			console.error('[auth] Failed to create session cookie:', e);
 		}
