@@ -204,6 +204,9 @@
 	<div class="fullmenu-inner">
 		<nav class="menu-topmenu-container" role="navigation" aria-label="Mobile menu">
 			<ul class="menu">
+				<li>
+					<a href="/" on:click={closeMobileMenu}>Home</a>
+				</li>
 				{#each menu as item}
 					<li>
 						<a href={item.url} on:click={closeMobileMenu}>{item.text}</a>
@@ -268,14 +271,14 @@
 
 		.header-inner {
 			display: grid;
-			/* [Toggle: ~44px] [Logo: Shared] [Actions: ~100px] */
-			grid-template-columns: 44px 1fr 100px;
+			grid-template-columns: 1fr auto 1fr;
 			align-items: center;
-			padding: 0.5rem 0 0.5rem 0.75rem;
+			padding: 0.5rem 0.75rem;
 			min-height: 3.5rem;
 			gap: 0;
 			width: 100%;
 			max-width: none;
+			position: relative;
 		}
 
 		/* Hide desktop menu */
@@ -293,6 +296,7 @@
 			color: #fff;
 			background: transparent;
 			border: none;
+			justify-self: start;
 		}
 
 		/* Logo */
@@ -301,7 +305,6 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			min-width: 0;
 			z-index: 10;
 		}
 
@@ -311,13 +314,14 @@
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;
+			justify-self: end;
 		}
 
 		.header-right-actions {
 			display: flex;
 			align-items: center;
 			gap: 0.75rem;
-			padding: 0 1.75rem;
+			padding: 0 0.4rem;
 		}
 
 		/* Language selector should touch right edge */
@@ -386,7 +390,7 @@
 			letter-spacing: 0.05em;
 			text-transform: uppercase;
 			color: #ffffff !important;
-			transition: all 0.2s ease;
+			transition: color 0.2s ease, border-bottom-color 0.2s ease;
 			padding: 0.5rem 0;
 			display: flex;
 			align-items: center;

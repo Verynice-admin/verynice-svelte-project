@@ -609,7 +609,7 @@ small {
 
 @media (max-width: 768px) {
   .hero-kicker {
-    font-size: 0.75rem;
+    font-size: 1.13rem;
     letter-spacing: 0.2em;
     margin-bottom: 1rem;
   }
@@ -617,7 +617,7 @@ small {
 
 @media (max-width: 600px) {
   .hero-kicker {
-    font-size: 0.7rem;
+    font-size: 1.05rem;
     letter-spacing: 0.15em;
     margin-bottom: 0.75rem;
   }
@@ -825,7 +825,7 @@ small {
 
   /* Centered Title Global Override */
   .section .section-header-text h1 {
-    font-size: clamp(2.0rem, 7vw, 3.0rem) !important;
+    font-size: clamp(3.0rem, 10.5vw, 4.5rem) !important;
     line-height: 1.06 !important;
     margin-top: 0 !important;
     margin-bottom: 0.9rem;
@@ -834,7 +834,7 @@ small {
   }
 
   .section .section-description {
-    font-size: clamp(1rem, 3.5vw, 1.2rem) !important;
+    font-size: clamp(1.5rem, 5.25vw, 1.8rem) !important;
     text-align: center !important;
     margin-left: auto;
     margin-right: auto;
@@ -2403,7 +2403,7 @@ h2.history-section-title {
   }
 
   .section-header-text h1 {
-    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    font-size: clamp(3.0rem, 10.5vw, 4.5rem);
     line-height: 1.2;
     margin-bottom: 1rem;
     font-weight: 800;
@@ -4773,7 +4773,7 @@ body:has(#page-hero-section) {
 
   .attractions-page .section .section-header-text h1 {
     color: #ffffff !important;
-    font-size: clamp(2rem, 8vw, 2.5rem) !important;
+    font-size: clamp(3.0rem, 10.5vw, 4.5rem) !important;
     text-align: center !important;
     display: block !important;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3) !important;

@@ -851,9 +851,17 @@
 			max-width: 100% !important;
 		}
 
+		.hero-kicker {
+			font-size: 1.05rem !important;
+		}
+
+		.hero-text-box h1 {
+			font-size: clamp(3.0rem, 10.5vw, 4.5rem) !important;
+		}
+
 		.hero-lead {
 			text-align: center !important;
-			font-size: 1rem !important;
+			font-size: clamp(1.5rem, 5.25vw, 1.8rem) !important;
 			line-height: 1.65 !important;
 			color: rgba(255, 255, 255, 0.88) !important;
 			margin-bottom: 1.5rem !important;
@@ -908,11 +916,12 @@
 			gap: 0.35rem !important;
 			margin-top: 0.5rem !important;
 			padding: 0 !important;
+			font-size: 0.85rem !important;
 		}
 
 		.search-suggestions a {
 			white-space: nowrap !important;
-			font-size: 0.72rem !important;
+			font-size: 0.85rem !important;
 			font-weight: 600 !important;
 			background: rgba(255, 255, 255, 0.1) !important;
 			padding: 0.25rem 0.7rem !important;
