@@ -435,6 +435,7 @@
 	@media (max-width: 768px) {
 		.footer {
 			padding: 0.5rem 0.5rem;
+			padding-bottom: calc(6rem + max(0px, env(safe-area-inset-bottom)));
 		}
 
 		.footer-content {

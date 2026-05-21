@@ -2388,7 +2388,10 @@ h2.history-section-title {
 
   .section .section-header.wrapper {
     padding: clamp(3rem, 8vh, 4rem) 1rem clamp(1.5rem, 4vh, 2rem);
-    padding-top: max(clamp(3rem, 8vh, 4rem), calc(var(--vnk-header-height, 70px) + 1rem));
+    padding-top: max(clamp(2rem, 5vh, 3rem), calc(var(--vnk-header-height, 56px) + 1rem)) !important;
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    justify-content: flex-start !important;
     width: 100%;
     max-width: 100%;
     margin: 0;
