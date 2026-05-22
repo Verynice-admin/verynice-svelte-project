@@ -1,4 +1,5 @@
 import { json } from '@sveltejs/kit';
+import { dev } from '$app/environment';
 import { getCoordinates } from '$lib/server/aiService';
 import { enforceRateLimit } from '$lib/server/rateLimit';
 
@@ -25,7 +26,7 @@ export const POST: RequestHandler = async ({ request }) => {
             return json({ error: 'Invalid query' }, { status: 400 });
         }
 
-        console.log('[Map API] Received navigation query:', query);
+        if (dev) console.log('[Map API] Received navigation query:', query);
         const result = await getCoordinates(query);
 
         if (!result) {

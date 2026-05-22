@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import { adminDB } from '$lib/server/firebaseAdmin';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -35,7 +36,7 @@ function serializeDates(obj: any): any {
 }
 
 export const load: PageServerLoad = async ({ params }) => {
-    console.log(`[Destination] adminDB is ${adminDB ? 'initialized' : 'null'}`);
+    if (dev) console.log(`[Destination] adminDB is ${adminDB ? 'initialized' : 'null'}`);
     if (!adminDB) {
         console.error("Firebase Admin has not been initialized.");
         // Try to provide more details about why it might be null
@@ -263,7 +264,7 @@ export const load: PageServerLoad = async ({ params }) => {
     try {
         // Strategy A: Check Hardcoded Known Paths (Fastest & Safe)
         if (KNOWN_DESTINATION_PATHS[slug]) {
-            console.log(`[Destination] '${slug}' is a known path. fetching direct...`);
+            if (dev) console.log(`[Destination] '${slug}' is a known path. fetching direct...`);
             pageDocRef = adminDB.doc(KNOWN_DESTINATION_PATHS[slug]);
             pageSnap = await pageDocRef.get();
         }
@@ -284,7 +285,7 @@ export const load: PageServerLoad = async ({ params }) => {
         // Wrapped in try/catch to handle "Requires Index" errors gracefully
         if (!pageSnap.exists) {
             try {
-                console.log(`[Destination] ${slug} not found in 'pages'. Searching 'attractions' collection group...`);
+                if (dev) console.log(`[Destination] ${slug} not found in 'pages'. Searching 'attractions' collection group...`);
                 // Note: This query requires a Composite Index in Firestore.
                 // If it fails, we catch the error to avoid a 500 crash.
                 const attractionQuery = await adminDB.collectionGroup('attractions').where('id', '==', slug).limit(1).get();
@@ -292,7 +293,7 @@ export const load: PageServerLoad = async ({ params }) => {
                 if (!attractionQuery.empty) {
                     pageDocRef = attractionQuery.docs[0].ref;
                     pageSnap = await pageDocRef.get();
-                    console.log(`[Destination] Found ${slug} as nested attraction at: ${pageDocRef.path}`);
+                    if (dev) console.log(`[Destination] Found ${slug} as nested attraction at: ${pageDocRef.path}`);
                 } else {
                     // Try one last heuristic: 'almaty' -> 'almaty-city'
                     const slugWithCity = `${slug}-city`;
@@ -300,7 +301,7 @@ export const load: PageServerLoad = async ({ params }) => {
                     if (!attractionQuery2.empty) {
                         pageDocRef = attractionQuery2.docs[0].ref;
                         pageSnap = await pageDocRef.get();
-                        console.log(`[Destination] Found ${slug} (via ${slugWithCity}) as nested attraction at: ${pageDocRef.path}`);
+                        if (dev) console.log(`[Destination] Found ${slug} (via ${slugWithCity}) as nested attraction at: ${pageDocRef.path}`);
                     }
                 }
             } catch (queryErr) {
@@ -378,12 +379,12 @@ export const load: PageServerLoad = async ({ params }) => {
         if (!videoSnap.empty) video = serializeDates(videoSnap.docs[0].data());
 
         let map = null;
-        console.log(`[Destination] Checking map data... Snap empty? ${mapSnap.empty}`);
+        if (dev) console.log(`[Destination] Checking map data... Snap empty? ${mapSnap.empty}`);
         if (!mapSnap.empty) {
             map = serializeDates(mapSnap.docs[0].data());
-            console.log(`[Destination] Map data found:`, JSON.stringify(map));
+            if (dev) console.log(`[Destination] Map data found:`, JSON.stringify(map));
         } else {
-            console.log(`[Destination] No map data found in ${mapColRef.path}`);
+            if (dev) console.log(`[Destination] No map data found in ${mapColRef.path}`);
         }
 
         let faq = null;

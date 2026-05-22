@@ -1,4 +1,5 @@
-import { json } from '@sveltejs/kit';
+﻿import { json } from '@sveltejs/kit';
+import { dev } from '$app/environment';
 import { adminDB } from '$lib/server/firebaseAdmin';
 import { requireAdminAccess } from '$lib/server/apiAuth';
 
@@ -24,7 +25,7 @@ export async function GET({ request, url }: { request: Request; url: URL }) {
     return json({ success: false, error: 'Invalid path' }, { status: 400 });
   }
 
-  console.log(`[admin-api] GET ${path} at ${new Date().toISOString()}`);
+  if (dev) console.log(`[admin-api] GET ${path} at ${new Date().toISOString()}`);
 
   try {
     if (isDocPath(path)) {
@@ -66,7 +67,7 @@ export async function POST({ request }: { request: Request }) {
     return json({ success: false, error: 'POST requires a collection path' }, { status: 400 });
   }
 
-  console.log(`[admin-api] POST ${path} at ${new Date().toISOString()}`);
+  if (dev) console.log(`[admin-api] POST ${path} at ${new Date().toISOString()}`);
 
   try {
     const collectionRef = adminDB.collection(path);
@@ -104,7 +105,7 @@ async function updateDoc(request: Request, merge: boolean) {
     return json({ success: false, error: 'PUT/PATCH requires a document path' }, { status: 400 });
   }
 
-  console.log(`[admin-api] ${merge ? 'PATCH' : 'PUT'} ${path} at ${new Date().toISOString()}`);
+  if (dev) console.log(`[admin-api] ${merge ? 'PATCH' : 'PUT'} ${path} at ${new Date().toISOString()}`);
 
   try {
     await adminDB.doc(path).set({ ...data }, { merge });
@@ -131,7 +132,7 @@ export async function DELETE({ request }: { request: Request }) {
     return json({ success: false, error: 'DELETE requires a document path' }, { status: 400 });
   }
 
-  console.log(`[admin-api] DELETE ${path} at ${new Date().toISOString()}`);
+  if (dev) console.log(`[admin-api] DELETE ${path} at ${new Date().toISOString()}`);
 
   try {
     await adminDB.doc(path).delete();

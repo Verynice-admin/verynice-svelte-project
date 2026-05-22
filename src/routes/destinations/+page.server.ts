@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import { adminDB } from '$lib/server/firebaseAdmin';
 import { validateImage, generateQualityReport } from '$lib/utils/sanitize';
 
@@ -466,7 +467,7 @@ export async function load() {
               bio: authorData?.bio || authorData?.description || '',
               title: authorData?.title || authorData?.authorTitle || ''
             };
-            console.log(`[Destinations Page] Using fallback author: ${authorId}`);
+            if (dev) console.log(`[Destinations Page] Using fallback author: ${authorId}`);
             break;
           }
         } catch (err) {
@@ -610,7 +611,7 @@ export async function load() {
             t.delete(ref);
           });
         });
-        console.log(`[Destinations Page] Successfully migrated ${docsToMigrate.length} docs.`);
+        if (dev) console.log(`[Destinations Page] Successfully migrated ${docsToMigrate.length} docs.`);
       }
 
       // Update local data for immediate rendering

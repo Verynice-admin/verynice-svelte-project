@@ -1,4 +1,5 @@
 import { GROQ_API_KEY, GEMINI_API_KEY, OPENROUTER_API_KEY } from '$env/static/private';
+import { dev } from '$app/environment';
 
 const SITE_CONTENT = `
 Available Website Content:
@@ -175,7 +176,7 @@ type RawTranslation = { id: unknown; translated: unknown };
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
 
 export async function generateAnswer(rawQuestion: string): Promise<{ correctedQuestion: string, answer: string, relatedLinks: { title: string, url: string }[] } | null> {
-    console.log('[AI Service] Generating answer for:', rawQuestion);
+    if (dev) console.log('[AI Service] Generating answer for:', rawQuestion);
 
     if (!GROQ_API_KEY) {
         console.error('[AI Service] GROQ_API_KEY is missing');
@@ -183,7 +184,7 @@ export async function generateAnswer(rawQuestion: string): Promise<{ correctedQu
     }
 
     try {
-        console.log('[AI Service] Sending request to Groq with model:', GROQ_MODEL);
+        if (dev) console.log('[AI Service] Sending request to Groq with model:', GROQ_MODEL);
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -381,7 +382,7 @@ async function translateWithOpenRouter(
 
     for (const model of models) {
         try {
-            console.log(`[AI Service] Trying OpenRouter with model: ${model}`);
+            if (dev) console.log(`[AI Service] Trying OpenRouter with model: ${model}`);
             const response = await fetch(OPENROUTER_TRANSLATE_ENDPOINT, {
                 method: 'POST',
                 headers: {
@@ -505,7 +506,7 @@ export async function translateSegments(
 
     // Split segments by token budget to prevent oversized requests
     const chunks = splitSegmentsByTokenBudget(segments, 800);
-    console.log(`[AI Service] Split ${segments.length} segments into ${chunks.length} chunks for translation`);
+    if (dev) console.log(`[AI Service] Split ${segments.length} segments into ${chunks.length} chunks for translation`);
     
     let allTranslations: { id: string; translated: string }[] = [];
     
@@ -572,7 +573,7 @@ export async function getCoordinates(query: string): Promise<{ lat: number, lng:
     }
 
     try {
-        console.log('[AI Service] Getting coordinates for:', query);
+        if (dev) console.log('[AI Service] Getting coordinates for:', query);
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
