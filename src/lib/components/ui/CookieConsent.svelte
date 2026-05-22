@@ -3,32 +3,44 @@
 	import { onMount } from 'svelte';
 
 	const CONSENT_KEY = 'vn_cookie_consent';
-	const CONSENT_VERSION = '1';
+	const CONSENT_VERSION = '2';
+
+	// Non-essential localStorage keys cleared on decline
+	const NON_ESSENTIAL_KEYS = ['vn_lang', 'vn_translation_cache'];
 
 	let visible = false;
 
 	onMount(() => {
 		const stored = localStorage.getItem(CONSENT_KEY);
 		if (!stored) {
-			// Small delay so it doesn't flash immediately on page load
 			setTimeout(() => { visible = true; }, 800);
 		}
 	});
 
 	function accept() {
-		localStorage.setItem(CONSENT_KEY, CONSENT_VERSION);
+		localStorage.setItem(CONSENT_KEY, JSON.stringify({ v: CONSENT_VERSION, decision: 'accepted', ts: new Date().toISOString() }));
 		visible = false;
 	}
 
 	function decline() {
-		// Store decline decision so we don't keep re-asking
-		sessionStorage.setItem(CONSENT_KEY, 'declined');
+		// Persist decision so banner stays hidden across sessions
+		localStorage.setItem(CONSENT_KEY, JSON.stringify({ v: CONSENT_VERSION, decision: 'declined', ts: new Date().toISOString() }));
+		// Clear any non-essential data already stored
+		NON_ESSENTIAL_KEYS.forEach(k => localStorage.removeItem(k));
 		visible = false;
 	}
 
 	export function hasConsent(): boolean {
 		if (!browser) return false;
-		return localStorage.getItem(CONSENT_KEY) === CONSENT_VERSION;
+		const raw = localStorage.getItem(CONSENT_KEY);
+		if (!raw) return false;
+		try {
+			const parsed = JSON.parse(raw);
+			return parsed?.decision === 'accepted' && parsed?.v === CONSENT_VERSION;
+		} catch {
+			// legacy plain-string value from v1
+			return raw === '1';
+		}
 	}
 </script>
 

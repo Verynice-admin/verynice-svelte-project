@@ -1,5 +1,7 @@
 <script lang="ts">
 	import '../styles/index.css';
+	import { inject as injectAnalytics } from '@vercel/analytics';
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 	import SiteHeader from '$components/layout/header/SiteHeader.svelte';
 	import Footer from '$components/layout/footer/Footer.svelte';
 	import TimeWeatherDock from '$components/features/widgets/TimeWeatherDock.svelte';
@@ -95,6 +97,9 @@
 
 	// Lazy load non-critical components after initial render
 	onMount(async () => {
+		// Vercel observability — client-only, no-ops outside Vercel deployments
+		injectAnalytics({ mode: 'auto' });
+		injectSpeedInsights();
 		// Register openSearch listener with cleanup
 		const handleOpenSearch = () => { isSearchOpen = true; };
 		window.addEventListener('openSearch', handleOpenSearch);

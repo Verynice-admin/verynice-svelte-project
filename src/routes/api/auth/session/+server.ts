@@ -4,6 +4,10 @@ import { getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { adminDB } from '$lib/server/firebaseAdmin';
 
+function logAuthEvent(event: string, data: Record<string, unknown>) {
+	console.log(JSON.stringify({ ts: new Date().toISOString(), event, ...data }));
+}
+
 const SESSION_DURATION_MS = 5 * 24 * 60 * 60 * 1000; // 5 days
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
@@ -24,6 +28,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
   try {
     decoded = await adminAuth.verifyIdToken(idToken);
   } catch {
+    logAuthEvent('login_failure', { reason: 'invalid_id_token' });
     throw error(401, 'Invalid ID token');
   }
 
@@ -55,8 +60,11 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
       expiresIn: SESSION_DURATION_MS
     });
   } catch {
+    logAuthEvent('login_failure', { uid, reason: 'session_cookie_creation_failed' });
     throw error(500, 'Failed to create session cookie');
   }
+
+  logAuthEvent('login_success', { uid, role: role ?? 'none' });
 
   cookies.set('__session', sessionCookie, {
     httpOnly: true,

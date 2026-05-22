@@ -50,7 +50,10 @@
     "vitest": "^4.0.15"
   },
   "dependencies": {
+    "@sentry/sveltekit": "^10.53.1",
     "@types/dompurify": "^3.0.5",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "cloudinary": "^2.8.0",
     "dompurify": "^3.3.0",
     "dotenv": "^17.2.3",

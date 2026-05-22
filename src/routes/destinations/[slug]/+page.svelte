@@ -215,6 +215,19 @@
 <svelte:head>
 	<title>{pageData.seo?.title || `${pageData.mainTitle} | VeryNice`}</title>
 	<meta name="description" content={pageData.seo?.description || pageData.headerDescription} />
+	<link rel="canonical" href="https://verynice.kz/destinations/{data.slug}" />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content="https://verynice.kz/destinations/{data.slug}" />
+	<meta property="og:site_name" content="VeryNice.kz" />
+	<meta property="og:title" content={pageData.seo?.title || `${pageData.mainTitle} | VeryNice`} />
+	<meta property="og:description" content={pageData.seo?.description || pageData.headerDescription} />
+	{#if pageData.headerBackgroundPublicId}
+		<meta property="og:image" content={buildCloudinaryImage(pageData.headerBackgroundPublicId, { width: 1200, height: 630 })} />
+		<meta name="twitter:image" content={buildCloudinaryImage(pageData.headerBackgroundPublicId, { width: 1200, height: 630 })} />
+	{/if}
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={pageData.seo?.title || `${pageData.mainTitle} | VeryNice`} />
+	<meta name="twitter:description" content={pageData.seo?.description || pageData.headerDescription} />
 	{@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</script>`}
 </svelte:head>
 

@@ -43,6 +43,7 @@ export async function enforceRateLimit(options: {
 
         if (data.count >= maxRequests) {
           const retryAfterSeconds = Math.max(1, Math.ceil((data.resetAt.toMillis() - now) / 1000));
+          console.log(JSON.stringify({ ts: new Date().toISOString(), event: 'rate_limit_exceeded', scope, retryAfterSeconds }));
           return { allowed: false, retryAfterSeconds };
         }
 
@@ -62,6 +63,7 @@ export async function enforceRateLimit(options: {
   }
   if (existing.count >= maxRequests) {
     const retryAfterSeconds = Math.max(1, Math.ceil((existing.resetAt - now) / 1000));
+    console.log(JSON.stringify({ ts: new Date().toISOString(), event: 'rate_limit_exceeded', scope, retryAfterSeconds, source: 'memory' }));
     return { allowed: false, retryAfterSeconds };
   }
   existing.count += 1;

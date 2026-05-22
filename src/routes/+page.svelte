@@ -40,7 +40,18 @@
 
 <svelte:head>
 	<title>{homepage?.title || 'VeryNice.kz | Discover Kazakhstan'}</title>
-	<meta name="description" content={homepage?.metaDescription} />
+	<meta name="description" content={homepage?.metaDescription || 'Your professional guide to Kazakhstan — destinations, history, food, and travel tips.'} />
+	<link rel="canonical" href="https://verynice.kz/" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://verynice.kz/" />
+	<meta property="og:site_name" content="VeryNice.kz" />
+	<meta property="og:title" content={homepage?.title || 'VeryNice.kz | Discover Kazakhstan'} />
+	<meta property="og:description" content={homepage?.metaDescription || 'Your professional guide to Kazakhstan — destinations, history, food, and travel tips.'} />
+	<meta property="og:image" content={heroImageUrl} />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={homepage?.title || 'VeryNice.kz | Discover Kazakhstan'} />
+	<meta name="twitter:description" content={homepage?.metaDescription || 'Your professional guide to Kazakhstan — destinations, history, food, and travel tips.'} />
+	<meta name="twitter:image" content={heroImageUrl} />
 </svelte:head>
 
 <SplashScreen />

@@ -1,0 +1,21 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      svelte-ecosystem:
+        patterns:
+          - svelte
+          - "@sveltejs/*"
+          - vite
+      firebase:
+        patterns:
+          - firebase
+          - firebase-admin
+      sentry:
+        patterns:
+          - "@sentry/*"
