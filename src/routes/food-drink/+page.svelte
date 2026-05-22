@@ -389,13 +389,13 @@
 	.food-intro :global(.prose),
 	.food-intro :global(.prose p),
 	.food-intro :global(.prose li) {
-		color: rgba(255, 255, 255, 0.82);
+		color: #334155;
 		font-size: 1.15rem;
 		line-height: 1.7;
 	}
 
 	.food-intro :global(.prose strong) {
-		color: #fff;
+		color: #0f172a;
 		font-weight: 600;
 	}
 

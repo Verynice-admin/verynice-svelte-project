@@ -62,32 +62,68 @@
 	}
 
 	.handle {
-		width: 48px;
-		height: 48px;
+		width: 44px;
+		height: 44px;
 		border-radius: 50%;
-		border: 2px solid #0a84ff;
-		background: white;
+		border: 1.5px solid rgba(147, 210, 255, 0.7);
+		background: linear-gradient(145deg, rgba(255,255,255,0.96) 0%, rgba(224,242,255,0.92) 100%);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
 		cursor: pointer;
-		box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-		transition: all 0.2s ease;
+		box-shadow:
+			0 4px 18px rgba(59, 130, 246, 0.18),
+			0 1px 4px rgba(0, 0, 0, 0.07),
+			inset 0 1px 0 rgba(255, 255, 255, 1);
+		transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		position: relative;
+	}
+
+	.handle:hover {
+		transform: scale(1.1);
+		border-color: rgba(96, 165, 250, 0.9);
+		box-shadow:
+			0 6px 26px rgba(59, 130, 246, 0.28),
+			0 2px 8px rgba(0, 0, 0, 0.09),
+			inset 0 1px 0 rgba(255, 255, 255, 1);
+	}
+
+	.cu-weather-dock.open .handle {
+		border-color: rgba(52, 211, 153, 0.8);
+		box-shadow:
+			0 6px 24px rgba(16, 185, 129, 0.25),
+			0 0 0 5px rgba(52, 211, 153, 0.12),
+			inset 0 1px 0 rgba(255, 255, 255, 1);
 	}
 
 	.handle .dot {
-		width: 20px;
-		height: 20px;
+		width: 11px;
+		height: 11px;
 		border-radius: 50%;
-		background: #0a84ff;
-	}
-	
-	.handle:hover {
-		background: #0a84ff;
+		background: radial-gradient(circle at 35% 35%, #7dd3fc, #3b82f6);
+		box-shadow: 0 1px 4px rgba(59, 130, 246, 0.4);
+		animation: beacon-pulse 2.6s ease-out infinite;
+		flex-shrink: 0;
 	}
 
-	.handle:hover .dot {
-		background: white;
+	.cu-weather-dock.open .handle .dot {
+		background: radial-gradient(circle at 35% 35%, #6ee7b7, #10b981);
+		box-shadow: 0 1px 4px rgba(16, 185, 129, 0.4);
+		animation: beacon-pulse-green 2.2s ease-out infinite;
+	}
+
+	@keyframes beacon-pulse {
+		0%   { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.55); }
+		65%  { box-shadow: 0 0 0 9px rgba(59, 130, 246, 0); }
+		100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+	}
+
+	@keyframes beacon-pulse-green {
+		0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55); }
+		65%  { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); }
+		100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 	}
 
 	.card {

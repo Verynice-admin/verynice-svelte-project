@@ -4,6 +4,7 @@
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import RelatedPosts from '$components/features/content/RelatedPosts.svelte';
 	import VideoEmbed from '$components/features/content/VideoEmbed.svelte';
+	import SplashScreen from '$components/features/ui-elements/SplashScreen.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -41,6 +42,8 @@
 	<title>{homepage?.title || 'VeryNice.kz | Discover Kazakhstan'}</title>
 	<meta name="description" content={homepage?.metaDescription} />
 </svelte:head>
+
+<SplashScreen />
 
 <!-- PREMIUM HERO SECTION -->
 <section id="homepage-hero" class="hero-premium">
@@ -155,7 +158,7 @@
 <!-- CULINARY JOURNEY SECTION -->
 <section class="newsletter-section">
 	<div class="newsletter-bg-glow"></div>
-	<div class="wrapper relative z-10">
+	<div class="wrapper newsletter-wrapper">
 		<div class="newsletter-card-premium culinary-card">
 			<div class="newsletter-text-content">
 				<span class="newsletter-badge">Taste the Tradition</span>
@@ -515,6 +518,11 @@
 		overflow: hidden;
 	}
 
+	.newsletter-wrapper {
+		position: relative;
+		z-index: 2;
+	}
+
 	.newsletter-bg-glow {
 		position: absolute;
 		top: 50%;
@@ -524,6 +532,7 @@
 		height: 100%;
 		background: radial-gradient(circle at center, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
 		z-index: 1;
+		pointer-events: none;
 	}
 
 	.newsletter-card-premium {

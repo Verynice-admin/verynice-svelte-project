@@ -235,19 +235,19 @@
 		font-weight: 800;
 		text-align: left;
 		margin: 0;
-		color: #0f172a !important;
+		color: #ffffff !important;
 		letter-spacing: -0.02em;
 		text-shadow: none;
 	}
 
-.related-posts-header h2 a {
+	.related-posts-header h2 a {
 		text-decoration: none;
-		color: #0f172a !important;
+		color: #ffffff !important;
 		transition: color 0.3s ease;
 	}
 
 	.related-posts-header h2 a:hover {
-		color: #0573b3 !important;
+		color: #22d3ee !important;
 	}
 
 	.nav-arrows {
