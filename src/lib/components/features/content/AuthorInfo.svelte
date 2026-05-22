@@ -1,10 +1,10 @@
-<!-- src/lib/components/content/AuthorInfo.svelte (UPDATED TO BE REAL-TIME) -->
+﻿<!-- src/lib/components/content/AuthorInfo.svelte (UPDATED TO BE REAL-TIME) -->
 
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import { getFirestore } from '$lib/firebaseApp';
+	import { getFirestore } from '$lib/firebase';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import LikeButton from '$lib/components/features/ui-elements/LikeButton.svelte';
 	import SocialShare from '$lib/components/features/ui-elements/SocialShare.svelte';

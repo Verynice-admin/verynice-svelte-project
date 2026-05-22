@@ -22,7 +22,7 @@ async function initialize(): Promise<void> {
 
   const [
     { initializeApp, getApps },
-    { getFirestore },
+    { getFirestore: _getFirestoreFn },
     { getAuth: getAuthFn, GoogleAuthProvider: GP }
   ] = await Promise.all([
     import('firebase/app'),
@@ -34,7 +34,7 @@ async function initialize(): Promise<void> {
 
   if (_app) {
     _auth = getAuthFn(_app);
-    _db = getFirestore(_app);
+    _db = _getFirestoreFn(_app);
     _googleProvider = new GP();
     _googleProvider.addScope('profile');
     _googleProvider.addScope('email');
@@ -66,3 +66,9 @@ function lazyProxy<T>(getter: () => T | null): T {
 export const auth = lazyProxy<Auth>(() => _auth);
 export const db = lazyProxy<Firestore>(() => _db);
 export const googleProvider = lazyProxy<GoogleAuthProvider>(() => _googleProvider);
+
+export async function getFirestore(): Promise<Firestore | null> {
+  if (!browser) return null;
+  if (!_db) await initialize();
+  return _db;
+}

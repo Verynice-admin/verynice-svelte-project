@@ -1,9 +1,9 @@
-<!-- src/lib/components/content/Comments.svelte (FINAL, WITH "SHOW LESS" FUNCTIONALITY) -->
+﻿<!-- src/lib/components/content/Comments.svelte (FINAL, WITH "SHOW LESS" FUNCTIONALITY) -->
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
 	import { get } from 'svelte/store';
-	import { getFirestore } from '$lib/firebaseApp';
+	import { getFirestore } from '$lib/firebase';
 	import { currentLanguage } from '$lib/stores/languageStore';
 	import { translatePageTo } from '$lib/services/aiTranslator';
 
@@ -238,7 +238,7 @@
 						<div class="comment-body">
 							<div class="comment-meta">
 								<span class="author-name">{pendingComment.author || 'Anonymous'}</span>
-								<span class="dot">•</span>
+								<span class="dot">â€¢</span>
 								<span class="comment-date">Posting...</span>
 							</div>
 							<p class="comment-text">{pendingComment.text}</p>
@@ -259,7 +259,7 @@
 						<div class="comment-body">
 							<div class="comment-meta">
 								<span class="author-name">{comment.author || 'Anonymous'}</span>
-								<span class="dot">•</span>
+								<span class="dot">â€¢</span>
 								<span class="comment-date">{formatDate(comment.createdAt)}</span>
 							</div>
 							<p class="comment-text">{comment.text}</p>

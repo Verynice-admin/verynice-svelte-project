@@ -28,14 +28,10 @@ export function measurePerformance() {
 	if (typeof window === 'undefined' || !window.performance) return;
 
 	try {
-		// Get Navigation Timing
-		const perfData = window.performance.timing;
-		const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-		const connectTime = perfData.responseEnd - perfData.requestStart;
-		const renderTime = perfData.domComplete - perfData.domLoading;
+		const navEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
 
 		const metrics: PerformanceMetrics = {
-			ttfb: perfData.responseStart - perfData.navigationStart
+			ttfb: navEntry ? navEntry.responseStart - navEntry.startTime : undefined
 		};
 
 		// Get Paint Timing

@@ -1,8 +1,8 @@
-<!-- src/lib/ui-elements/LikeButton.svelte -->
+﻿<!-- src/lib/ui-elements/LikeButton.svelte -->
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { getFirestore } from '$lib/firebaseApp';
+	import { getFirestore } from '$lib/firebase';
 
 	export let likes: number = 0;
 	export let postId: string;
@@ -21,7 +21,7 @@
 		try {
 			hasLiked = localStorage.getItem(storageKey()) === '1';
 		} catch {
-			// localStorage unavailable (private browsing, storage blocked) — allow like
+			// localStorage unavailable (private browsing, storage blocked) â€” allow like
 		}
 	});
 
@@ -37,7 +37,7 @@
 			try {
 				localStorage.setItem(storageKey(), '1');
 			} catch {
-				// localStorage write failed — in-memory hasLiked still prevents double-tap
+				// localStorage write failed â€” in-memory hasLiked still prevents double-tap
 			}
 		} finally {
 			pending = false;
@@ -46,7 +46,7 @@
 </script>
 
 <button on:click={like} disabled={pending || hasLiked} aria-live="polite" aria-label="Like this article">
-	🔥 {currentLikes}
+	ðŸ”¥ {currentLikes}
 </button>
 
 <style>

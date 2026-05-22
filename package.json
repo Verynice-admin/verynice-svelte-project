@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
+  "engines": { "node": ">=20.0.0" },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -27,6 +28,8 @@
     "@types/leaflet": "^1.9.21",
     "@types/marked": "^5.0.2",
     "@types/turndown": "^5.0.6",
+    "@typescript-eslint/eslint-plugin": "^8.59.4",
+    "@typescript-eslint/parser": "^8.59.4",
     "@vitest/ui": "^4.0.15",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-svelte": "^3.16.0",

@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+﻿import { browser } from '$app/environment';
 
 const DEFAULTS = { site: { title: 'Verynice', locale: 'en', theme: 'light' } };
 let warnedOnce = false;
@@ -12,7 +12,7 @@ export async function loadSiteConfig() {
     return DEFAULTS;
   }
 
-  const db = await (await import('$lib/firebaseApp')).getFirestore();
+  const db = await (await import('$lib/firebase')).getFirestore();
   if (!db) return DEFAULTS;
 
   try {

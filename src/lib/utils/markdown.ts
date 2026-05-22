@@ -25,14 +25,8 @@ humanRenderer.list = function(token: any) {
 const markedOptions = {
   breaks: true,
   gfm: true,
-  headerIds: true,
-  mangle: false,
   pedantic: false,
-  sanitize: false,
   silent: false,
-  smartLists: true,
-  smartypants: false,
-  xhtml: false,
   renderer: humanRenderer
 };
 

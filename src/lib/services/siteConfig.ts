@@ -1,5 +1,5 @@
-import { browser } from '$app/environment';
-import { getFirestore } from '$lib/firebaseApp';
+﻿import { browser } from '$app/environment';
+import { getFirestore } from '$lib/firebase';
 import type { Firestore } from 'firebase/firestore';
 
 interface SiteLayout {

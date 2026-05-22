@@ -1,7 +1,7 @@
-<script lang="ts">
+﻿<script lang="ts">
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { getFirestore } from '$lib/firebaseApp';
+	import { getFirestore } from '$lib/firebase';
 	import RelatedPostCard from './RelatedPostCard.svelte';
 
 	export let title = '';
@@ -353,7 +353,7 @@
 			justify-content: flex-start !important;
 		}
 
-		/* Each item fills exactly one viewport → one card per screen guaranteed */
+		/* Each item fills exactly one viewport â†’ one card per screen guaranteed */
 		.carousel-item {
 			flex: none !important;
 			width: 100vw !important;

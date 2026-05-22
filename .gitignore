@@ -36,13 +36,6 @@ service-account.json
 .secrets/
 secrets/
 
-# Ignore environment variables and secrets
-.env
-
-# In .gitignore
-
-# ... any existing content ...
-
 # Temporary migration and utility scripts
 final_cleanup_rename.js
 final_migrate.js
@@ -62,4 +55,3 @@ plan_from_cloudinary.js
 verify_sources.js
 SOURCE_SNAPSHOT.txt
 project-structure.txt
-.vercel
