@@ -58,3 +58,9 @@ project-structure.txt
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Local tool configs
+.cursor/
+.mcp.json
+.vscode/
+opencode.json
