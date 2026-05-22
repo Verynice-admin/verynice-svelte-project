@@ -1,4 +1,5 @@
 import { dev } from '$app/environment';
+import { env } from '$env/dynamic/private';
 import { getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 
@@ -11,8 +12,8 @@ export type SessionAuthResult = {
 export async function verifyFirebaseSessionCookie(
   sessionCookie: string | undefined
 ): Promise<SessionAuthResult> {
-  if (dev) {
-    return { isAuthenticated: true, uid: 'dev-user-uid', role: null };
+  if (dev && env.SKIP_AUTH_IN_DEV === 'true') {
+    return { isAuthenticated: true, uid: 'dev-user-uid', role: env.DEV_USER_ROLE ?? 'traveller' };
   }
 
   if (!sessionCookie || !sessionCookie.trim()) {

@@ -64,11 +64,6 @@
 	let searchQuery = '';
 
 	if (browser) {
-		// Listen for search-open event from SiteHeader
-		window.addEventListener('openSearch', () => {
-			isSearchOpen = true;
-		});
-
 		beforeNavigate(() => {
 			const lang = get(currentLanguage) as string;
 			if (lang !== 'EN') {
@@ -100,12 +95,13 @@
 
 	// Lazy load non-critical components after initial render
 	onMount(async () => {
+		// Register openSearch listener with cleanup
+		const handleOpenSearch = () => { isSearchOpen = true; };
+		window.addEventListener('openSearch', handleOpenSearch);
+
 		// Session timeout variables
 		let idleTimer: any = null;
 		let sessionTimer: any = null;
-		let isAuthenticated = false;
-		let showTimeoutWarning = false;
-		let timeRemaining = 300; // 5 minutes in seconds
 		let countdownInterval: any = null;
 		let authUnsubscribe: any = null;
 		
@@ -216,6 +212,7 @@
 
 		// Cleanup function - returned at the END of onMount
 		return () => {
+			window.removeEventListener('openSearch', handleOpenSearch);
 			if (authUnsubscribe) authUnsubscribe();
 			activityEvents.forEach(event => {
 				window.removeEventListener(event, handleUserActivity);
@@ -367,15 +364,6 @@
 	/* Global Search Bar - Mobile only */
 	.global-search-bar {
 		display: none;
-	}
-
-	/* Override any potential issues with parent containers */
-	html, body {
-		height: 100% !important;
-		overflow-x: hidden !important;
-		transform: none !important;
-		perspective: none !important;
-		filter: none !important;
 	}
 
 	/* Ensure search bar is always visible */

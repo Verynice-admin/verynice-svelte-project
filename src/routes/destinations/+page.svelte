@@ -571,8 +571,8 @@
 	/>
 
 	<!-- Structured Data -->
-	{@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</script>`}
-	{@html `<script type="application/ld+json">${JSON.stringify(breadcrumbStructuredData)}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify(structuredData).replace(/</g, '\\u003c')}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify(breadcrumbStructuredData).replace(/</g, '\\u003c')}</script>`}
 </svelte:head>
 
 <div class="attractions-page">

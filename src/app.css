@@ -33,3 +33,12 @@ header#site-header {
 #mobile-menu[data-open="true"] {
   display: block;
 }
+
+/* Prevent horizontal scroll and layout jank across all pages */
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  transform: none;
+  perspective: none;
+  filter: none;
+}
