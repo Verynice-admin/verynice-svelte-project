@@ -47,7 +47,7 @@
     "terser": "^5.46.1",
     "typescript": "5.4.2",
     "vite": "^8.0.14",
-    "vitest": "^4.0.15"
+    "vitest": "^4.1.7"
   },
   "dependencies": {
     "@sentry/sveltekit": "^10.53.1",
