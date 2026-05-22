@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import { processContent } from '$lib/utils/markdown';
 	import { sanitizeHTML } from '$lib/utils/sanitize';
@@ -298,9 +298,9 @@
 <svelte:head>
 	<title>{tip?.seo?.title || resolvedPage?.seo?.title || 'Travel Tip | VeryNice'}</title>
 	<meta name="description" content={tip?.seo?.description || resolvedPage?.seo?.description || 'Essential travel tip for Kazakhstan.'} />
-	<link rel="canonical" href="https://verynice.kz/tips/{$page.params.slug}" />
+	<link rel="canonical" href="https://verynice.kz/tips/{page.params.slug}" />
 	<meta property="og:type" content="article" />
-	<meta property="og:url" content="https://verynice.kz/tips/{$page.params.slug}" />
+	<meta property="og:url" content="https://verynice.kz/tips/{page.params.slug}" />
 	<meta property="og:title" content={tip?.seo?.title || resolvedPage?.seo?.title || 'Travel Tip | VeryNice'} />
 	<meta property="og:description" content={tip?.seo?.description || resolvedPage?.seo?.description || 'Essential travel tip for Kazakhstan.'} />
 	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />

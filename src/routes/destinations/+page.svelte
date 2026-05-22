@@ -429,7 +429,7 @@
 		.filter((g) => g.attractions.length > 0);
 
 	import { slide } from 'svelte/transition';
-	import { page as pageStore } from '$app/stores';
+
 
 	// ... existing code ...
 

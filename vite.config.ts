@@ -1,8 +1,12 @@
+import { sentrySvelteKit } from "@sentry/sveltekit";
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  plugins: [sveltekit()],
+  plugins: [sentrySvelteKit({
+    org: "verynice-kz",
+    project: "javascript-sveltekit"
+  }), sveltekit()],
   build: {
     // Optimize chunk size for faster loading
     chunkSizeWarningLimit: 500,

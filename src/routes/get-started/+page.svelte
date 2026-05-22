@@ -5,7 +5,7 @@
 	import { onMount } from 'svelte';
 	import { user } from '$lib/stores/userStore';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
-	import { page as pageStore } from '$app/stores';
+	import { page } from '$app/state';
 	import { getFirebaseAuth, getFirebaseDb } from '$lib/firebase';
 	import { onAuthStateChanged } from 'firebase/auth';
 	import { doc, getDoc } from 'firebase/firestore';
@@ -29,7 +29,7 @@
 
 	onMount(() => {
 		// Check if user explicitly navigated here (via "Back to Site" button)
-		const explicitlyNavigated = $pageStore.url.searchParams.get('from') === 'true';
+		const explicitlyNavigated = page.url.searchParams.get('from') === 'true';
 		if (explicitlyNavigated) {
 			sessionStorage.removeItem('navigatingFromDashboard');
 			log('[get-started] User explicitly navigated here (from dashboard)');

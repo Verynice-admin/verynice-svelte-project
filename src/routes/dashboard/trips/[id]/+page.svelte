@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
@@ -14,7 +14,7 @@
 	let showDeleteConfirm = false;
 	let deleting = false;
 
-	$: tripId = $page.params.id;
+	$: tripId = page.params.id;
 
 	onMount(() => {
 		if (!browser || !auth || !db) {

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+
 	import { user, userProfile } from '$lib/stores/userStore';
 	import { auth, db, googleProvider } from '$lib/firebase';
 	import { 
