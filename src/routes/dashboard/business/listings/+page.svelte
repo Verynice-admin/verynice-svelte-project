@@ -3,12 +3,13 @@
 	import { goto } from '$app/navigation';
 	import { auth, db } from '$lib/firebase';
 	import { onAuthStateChanged } from 'firebase/auth';
-	import { 
-		collection, 
-		query, 
-		where, 
-		getDocs, 
+	import {
+		collection,
+		query,
+		where,
+		getDocs,
 		orderBy,
+		limit,
 		deleteDoc,
 		doc,
 		updateDoc
@@ -43,7 +44,8 @@
 			const listingsQuery = query(
 				collection(db!, 'listings'),
 				where('businessId', '==', uid),
-				orderBy('createdAt', 'desc')
+				orderBy('createdAt', 'desc'),
+				limit(100)
 			);
 			
 			const snapshot = await getDocs(listingsQuery);

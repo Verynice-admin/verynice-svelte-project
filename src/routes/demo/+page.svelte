@@ -20,6 +20,7 @@
 
 <svelte:head>
 	<title>Component Demo - VeryNice</title>
+	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
 <div class="demo-page">

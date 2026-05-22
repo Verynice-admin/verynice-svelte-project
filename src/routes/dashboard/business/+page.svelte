@@ -100,8 +100,15 @@
 
 	async function loadAllData(uid: string) {
 		try {
-			// Business Profile
-			const businessDoc = await getDoc(doc(db!, 'businesses', uid));
+			// Fetch all data in parallel with limits to prevent unbounded reads
+			const [businessDoc, listingsSnap, bookingsSnap, reviewsSnap, messagesSnap] = await Promise.all([
+				getDoc(doc(db!, 'businesses', uid)),
+				getDocs(query(collection(db!, 'listings'), where('businessId', '==', uid), limit(100))),
+				getDocs(query(collection(db!, 'bookings'), where('businessId', '==', uid), orderBy('createdAt', 'desc'), limit(100))),
+				getDocs(query(collection(db!, 'reviews'), where('businessId', '==', uid), orderBy('createdAt', 'desc'), limit(100))),
+				getDocs(query(collection(db!, 'messages'), where('businessId', '==', uid), orderBy('createdAt', 'desc'), limit(20)))
+			]);
+
 			if (businessDoc.exists()) {
 				const data = businessDoc.data();
 				businessData = data;
@@ -110,49 +117,28 @@
 				businessCity = data.city || '';
 				verified = data.verified || false;
 				profileForm = { ...data };
-				
-				let completed = 0;
 				const fields = ['businessName', 'category', 'city', 'description', 'phone', 'address', 'coverImage', 'logo'];
-				fields.forEach(f => { if (data[f]) completed++; });
+				const completed = fields.filter(f => data[f]).length;
 				profileCompletion = Math.round((completed / fields.length) * 100);
 			}
 
-			// Listings
-			const listingsQuery = query(collection(db!, 'listings'), where('businessId', '==', uid));
-			const listingsSnap = await getDocs(listingsQuery);
 			listings = listingsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 			stats.activeListings = listings.filter(l => l.status === 'published').length;
 			stats.views = listings.reduce((sum, l) => sum + (l.views || 0), 0);
 
-			// Bookings
-			const bookingsQuery = query(collection(db!, 'bookings'), where('businessId', '==', uid), orderBy('createdAt', 'desc'));
-			const bookingsSnap = await getDocs(bookingsQuery);
 			bookings = bookingsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 			stats.bookings = bookings.length;
 			stats.revenue = bookings.filter(b => b.status === 'completed' || b.status === 'confirmed').reduce((sum, b) => sum + (b.price || 0), 0);
 
-			// Reviews
-			const reviewsQuery = query(collection(db!, 'reviews'), where('businessId', '==', uid), orderBy('createdAt', 'desc'));
-			const reviewsSnap = await getDocs(reviewsQuery);
 			reviews = reviewsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 			if (reviews.length > 0) {
 				stats.avgRating = reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviews.length;
 			}
 
-			// Messages
-			const messagesQuery = query(collection(db!, 'messages'), where('businessId', '==', uid), orderBy('createdAt', 'desc'), limit(20));
-			const messagesSnap = await getDocs(messagesQuery);
 			messages = messagesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
 			stats.unreadMessages = messages.filter(m => !m.read).length;
 
-			// Notifications (mock)
-			notifications = [
-				{ id: 1, type: 'booking', title: 'New booking received', message: 'John Doe booked your tour', time: new Date(), read: false },
-				{ id: 2, type: 'review', title: 'New review posted', message: '5-star review from Sarah', time: new Date(Date.now() - 3600000), read: false },
-				{ id: 3, type: 'message', title: 'New message', message: 'You have a new inquiry', time: new Date(Date.now() - 7200000), read: true }
-			];
-
-			// Generate chart
+			// Generate chart from real booking data
 			generateChartData();
 
 			// Build activity feed
@@ -178,11 +164,20 @@
 		const now = new Date();
 		days = [];
 		chartData = [];
+		// Build a map of bookings per day over the last 30 days
+		const countByDay = new Map<string, number>();
+		bookings.forEach(b => {
+			if (!b.createdAt) return;
+			const d = b.createdAt.toDate ? b.createdAt.toDate() : new Date(b.createdAt);
+			const key = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+			countByDay.set(key, (countByDay.get(key) ?? 0) + 1);
+		});
 		for (let i = 29; i >= 0; i--) {
 			const date = new Date(now);
 			date.setDate(date.getDate() - i);
-			days.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-			chartData.push(Math.floor(Math.random() * 50) + (stats.views / 30));
+			const label = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+			days.push(label);
+			chartData.push(countByDay.get(label) ?? 0);
 		}
 	}
 

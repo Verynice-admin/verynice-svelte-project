@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 	import { auth, db } from '$lib/firebase';
 	import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -57,7 +57,7 @@
 						
 						// Check onboarding status - redirect if not complete
 						if (businessData.onboardingComplete !== true) {
-							const currentPath = $page.url.pathname;
+							const currentPath = page.url.pathname;
 							// Only redirect if not already on onboarding or settings
 							if (!currentPath.includes('/onboarding') && !currentPath.includes('/settings')) {
 								goto('/dashboard/business/onboarding');
@@ -66,7 +66,7 @@
 						}
 					} else if (!data.businessCreated) {
 						// No business doc means needs onboarding
-						const currentPath = $page.url.pathname;
+						const currentPath = page.url.pathname;
 						if (!currentPath.includes('/onboarding') && !currentPath.includes('/settings')) {
 							goto('/dashboard/business/onboarding');
 							return;
@@ -107,7 +107,7 @@
 	}
 
 	// Current path for active nav
-	$: currentPath = $page.url.pathname;
+	$: currentPath = page.url.pathname;
 	$: isActive = (path: string) => currentPath === path || currentPath.startsWith(path + '/');
 </script>
 

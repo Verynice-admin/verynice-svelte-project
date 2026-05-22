@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
+	import { page } from '$app/state';
+	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
 	import { auth, db } from '$lib/firebase';
 	import { onAuthStateChanged } from 'firebase/auth';
 	import { collection, query, where, onSnapshot, orderBy, limit } from 'firebase/firestore';
 
 	// Breadcrumb derivation from pathname
-	$: pathSegments = $page.url.pathname.split('/').filter(Boolean);
+	$: pathSegments = page.url.pathname.split('/').filter(Boolean);
 	$: breadcrumbs = pathSegments.map((segment, index) => {
 		const path = '/' + pathSegments.slice(0, index + 1).join('/');
 		const label = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
@@ -20,32 +20,39 @@
 	let showNotifications = false;
 	let currentUser: any = null;
 
+	// Kept outside onMount so onDestroy can reach it
+	let unsubscribeNotifs: (() => void) | null = null;
+
 	onMount(() => {
 		if (!browser || !auth || !db) return;
 
-		const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
+		const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
 			currentUser = user;
+			// Clean up previous subscription whenever auth state changes
+			unsubscribeNotifs?.();
+			unsubscribeNotifs = null;
+
 			if (user) {
-				// Subscribe to notifications
 				const notifQuery = query(
 					collection(db, 'users', user.uid, 'notifications'),
 					orderBy('createdAt', 'desc'),
 					limit(20)
 				);
-
-				const unsubscribeNotifs = onSnapshot(notifQuery, (snapshot) => {
-					notifications = snapshot.docs.map(doc => ({
-						id: doc.id,
-						...doc.data()
-					}));
+				unsubscribeNotifs = onSnapshot(notifQuery, (snapshot) => {
+					notifications = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
 					unreadCount = notifications.filter(n => !n.read).length;
 				});
-
-				return () => unsubscribeNotifs();
+			} else {
+				notifications = [];
+				unreadCount = 0;
 			}
 		});
 
 		return () => unsubscribeAuth();
+	});
+
+	onDestroy(() => {
+		unsubscribeNotifs?.();
 	});
 
 	function toggleNotifications() {
@@ -92,7 +99,7 @@
 		</div>
 		
 		<nav class="sidebar-nav">
-			<a href="/dashboard/traveller" class:active={$page.url.pathname === '/dashboard/traveller'}>
+			<a href="/dashboard/traveller" class:active={page.url.pathname === '/dashboard/traveller'}>
 				<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
 					<rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
 					<rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
@@ -101,20 +108,20 @@
 				</svg>
 				Dashboard
 			</a>
-			<a href="/dashboard/saved" class:active={$page.url.pathname.includes('/saved')}>
+			<a href="/dashboard/saved" class:active={page.url.pathname.includes('/saved')}>
 				<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
 					<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/>
 				</svg>
 				Saved
 			</a>
-			<a href="/dashboard/trips" class:active={$page.url.pathname.includes('/trips')}>
+			<a href="/dashboard/trips" class:active={page.url.pathname.includes('/trips')}>
 				<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
 					<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" stroke="currentColor" stroke-width="2"/>
 					<rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" stroke-width="2"/>
 				</svg>
 				Trips
 			</a>
-			<a href="/travel-tips" class:active={$page.url.pathname.includes('/travel-tips')}>
+			<a href="/travel-tips" class:active={page.url.pathname.includes('/travel-tips')}>
 				<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
 					<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
 					<path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -122,7 +129,7 @@
 				</svg>
 				Travel Tips
 			</a>
-			<a href="/dashboard/settings" class:active={$page.url.pathname.includes('/settings')}>
+			<a href="/dashboard/settings" class:active={page.url.pathname.includes('/settings')}>
 				<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
 					<circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
 					<path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="2"/>

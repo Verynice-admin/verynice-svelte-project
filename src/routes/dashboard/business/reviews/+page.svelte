@@ -3,12 +3,13 @@
 	import { goto } from '$app/navigation';
 	import { auth, db } from '$lib/firebase';
 	import { onAuthStateChanged } from 'firebase/auth';
-	import { 
-		collection, 
-		query, 
-		where, 
-		getDocs, 
+	import {
+		collection,
+		query,
+		where,
+		getDocs,
 		orderBy,
+		limit,
 		doc,
 		updateDoc,
 		serverTimestamp
@@ -49,7 +50,8 @@
 			const reviewsQuery = query(
 				collection(db!, 'reviews'),
 				where('businessId', '==', uid),
-				orderBy('createdAt', 'desc')
+				orderBy('createdAt', 'desc'),
+				limit(100)
 			);
 			
 			const snapshot = await getDocs(reviewsQuery);

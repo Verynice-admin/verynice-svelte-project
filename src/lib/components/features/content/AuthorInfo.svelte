@@ -1,9 +1,9 @@
 ﻿<!-- src/lib/components/content/AuthorInfo.svelte (UPDATED TO BE REAL-TIME) -->
 
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { getFirestore } from '$lib/firebase';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import LikeButton from '$lib/components/features/ui-elements/LikeButton.svelte';
@@ -16,7 +16,6 @@
 	export let collectionPath: string = 'pages';
 	export let showSocialActions: boolean = true;
 
-	let unsubscribe = () => {};
 
 	// Compute image public ID and URL with proper transformations
 	$: rawImagePublicId =
@@ -39,7 +38,7 @@
 	$: hasImage = !!(imageUrl && imageUrl.length > 0);
 
 	// Check if this is the about-borat page
-	$: isBoratPage = $page.url.pathname === '/about-borat';
+	$: isBoratPage = page.url.pathname === '/about-borat';
 
 	// Track image load state
 	let imageError = false;
@@ -71,20 +70,6 @@
 	// 	}
 	// }
 
-	onMount(() => {
-		if (!browser || !postId?.trim()) return;
-		(async () => {
-			const db = await getFirestore();
-			if (!db) return;
-			const { doc, onSnapshot } = await import('firebase/firestore');
-			const ref = doc(db, 'pages', postId);
-			unsubscribe = onSnapshot(ref, () => {
-				// keep subscription for future live counters; no-op for now
-			});
-		})();
-	});
-
-	onDestroy(() => unsubscribe());
 </script>
 
 {#if isBoratPage && author && (author.name || author.authorName)}

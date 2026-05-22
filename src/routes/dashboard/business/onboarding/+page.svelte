@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { auth, db } from '$lib/firebase';
 	import { onAuthStateChanged } from 'firebase/auth';
-	import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+	import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 
 	let loading = true;
 	let saving = false;
@@ -50,10 +50,13 @@
 			contactName = firebaseUser.displayName || '';
 			email = firebaseUser.email || '';
 			
-			// Check if business already exists
+			// Redirect if onboarding already complete
 			try {
-				const businessDoc = await doc(db!, 'businesses', firebaseUser.uid);
-				// Check if onboarding is already complete
+				const businessDoc = await getDoc(doc(db!, 'businesses', firebaseUser.uid));
+				if (businessDoc.exists() && businessDoc.data()?.onboardingComplete === true) {
+					goto('/dashboard/business');
+					return;
+				}
 			} catch (err) {
 				console.error('Error checking business:', err);
 			}

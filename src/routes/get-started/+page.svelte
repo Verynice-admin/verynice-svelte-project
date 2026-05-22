@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { browser } from '$app/environment';
+	import { browser, dev } from '$app/environment';
+	const log = dev ? console.log.bind(console) : () => {};
 	import { onMount } from 'svelte';
 	import { user } from '$lib/stores/userStore';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
@@ -31,7 +32,7 @@
 		const explicitlyNavigated = $pageStore.url.searchParams.get('from') === 'true';
 		if (explicitlyNavigated) {
 			sessionStorage.removeItem('navigatingFromDashboard');
-			console.log('[get-started] User explicitly navigated here (from dashboard)');
+			log('[get-started] User explicitly navigated here (from dashboard)');
 		}
 		
 		const auth = getFirebaseAuth();
@@ -39,19 +40,19 @@
 
 		// If no auth/db available, show the page
 		if (!auth || !db) {
-			console.log('[get-started] No auth/db, showing page');
+			log('[get-started] No auth/db, showing page');
 			pageLoading = false;
 			return;
 		}
 
-		console.log('[get-started] Auth available, waiting for state change...');
+		log('[get-started] Auth available, waiting for state change...');
 
 		const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-			console.log('[get-started] Auth state changed:', firebaseUser ? firebaseUser.email : 'no user');
+			log('[get-started] Auth state changed:', firebaseUser ? firebaseUser.email : 'no user');
 			
 			// Don't redirect if user explicitly came here
 			if (explicitlyNavigated) {
-				console.log('[get-started] User explicitly navigated here, not redirecting');
+				log('[get-started] User explicitly navigated here, not redirecting');
 				pageLoading = false;
 				return;
 			}
@@ -60,19 +61,19 @@
 				// User already signed in — check their role and redirect
 				// Skip if we're currently in the middle of a sign-in flow
 				try {
-					console.log('[get-started] Fetching user doc from Firestore...');
+					log('[get-started] Fetching user doc from Firestore...');
 					const snap = await getDoc(doc(db, 'users', firebaseUser.uid));
-					console.log('[get-started] User doc exists:', snap.exists());
+					log('[get-started] User doc exists:', snap.exists());
 					
 					if (snap.exists()) {
 						const role = snap.data().role;
-						console.log('[get-started] User role:', role);
-						console.log('[get-started] Redirecting to:', `/dashboard/${role}`);
+						log('[get-started] User role:', role);
+						log('[get-started] Redirecting to:', `/dashboard/${role}`);
 						pageLoading = false;
 						goto(`/dashboard/${role}`);
 						return;
 					} else {
-						console.log('[get-started] No user doc in Firestore, redirecting to traveller');
+						log('[get-started] No user doc in Firestore, redirecting to traveller');
 						pageLoading = false;
 						goto('/dashboard/traveller');
 						return;
@@ -90,7 +91,7 @@
 
 		// Safety timeout - if auth state doesn't resolve in 3 seconds, show the page
 		const timeout = setTimeout(() => {
-			console.log('[get-started] Timeout reached, showing page');
+			log('[get-started] Timeout reached, showing page');
 			pageLoading = false;
 		}, 3000);
 
@@ -130,14 +131,14 @@
 	async function handleGoogleSignIn(userType: 'traveller' | 'business') {
 		// Prevent onAuthStateChanged from redirecting while we're processing
 		isSigningIn = true;
-		console.log('[Step 1] Starting sign in for role:', userType);
+		log('[Step 1] Starting sign in for role:', userType);
 		
 		try {
 			const auth = getFirebaseAuth();
 			const db = getFirebaseDb();
 			const googleProvider = getFirebaseGoogleProvider();
 
-			console.log('[Step 1b] Firebase instances ready');
+			log('[Step 1b] Firebase instances ready');
 			
 			if (!auth || !db) {
 				authError = 'Firebase not initialized. Check configuration.';
@@ -148,21 +149,21 @@
 			// Step 1 — Google Sign In
 			const result = await signInWithPopup(auth, googleProvider);
 			const firebaseUser = result.user;
-			console.log('[Step 2] Auth success:', firebaseUser.email);
-			console.log('[Step 3] UID:', firebaseUser.uid);
+			log('[Step 2] Auth success:', firebaseUser.email);
+			log('[Step 3] UID:', firebaseUser.uid);
 
 			// Step 2 — Reference to user document
 			const docRef = doc(db, 'users', firebaseUser.uid);
-			console.log('[Step 4] User ref created');
+			log('[Step 4] User ref created');
 
 			// Step 3 — Check if user already exists
 			const docSnap = await getDoc(docRef);
-			console.log('[Step 5] User exists:', docSnap.exists());
+			log('[Step 5] User exists:', docSnap.exists());
 
 			let finalUserRole = userType;
 
 			if (!docSnap.exists()) {
-				console.log('[Step 6] Creating new user doc with role:', userType);
+				log('[Step 6] Creating new user doc with role:', userType);
 				
 				await setDoc(docRef, {
 					uid: firebaseUser.uid,
@@ -173,15 +174,15 @@
 					createdAt: serverTimestamp(),
 					updatedAt: serverTimestamp()
 				});
-				console.log('[Step 7] User doc created successfully');
+				log('[Step 7] User doc created successfully');
 			} else {
 				// Existing user - check if they want to switch roles
 				const existingRole = docSnap.data()?.role;
-				console.log('[Step 6] Existing user, current role:', existingRole);
+				log('[Step 6] Existing user, current role:', existingRole);
 				
 				// If clicking a different role than current, update it
 				if (existingRole && existingRole !== userType) {
-					console.log('[Step 6b] Switching role from', existingRole, 'to', userType);
+					log('[Step 6b] Switching role from', existingRole, 'to', userType);
 					await updateDoc(docRef, {
 						role: userType,
 						updatedAt: serverTimestamp()
@@ -192,13 +193,13 @@
 				}
 			}
 
-			console.log('[Step 8] Final role:', finalUserRole);
+			log('[Step 8] Final role:', finalUserRole);
 
 			// Update user store
 			user.set(firebaseUser);
 
 			// Step 5 — Create session cookie then redirect
-			console.log('[Step 9] Redirecting to:', `/dashboard/${finalUserRole}`);
+			log('[Step 9] Redirecting to:', `/dashboard/${finalUserRole}`);
 			try {
 				const idToken = await firebaseUser.getIdToken();
 				const sessionRes = await fetch('/api/auth/session', {
@@ -219,7 +220,7 @@
 			// Use goto() for proper client-side navigation
 			goto(`/dashboard/${finalUserRole}`);
 			
-			console.log('[Step 10] Redirect called');
+			log('[Step 10] Redirect called');
 
 		} catch (error: any) {
 			// Log EVERY detail of any error

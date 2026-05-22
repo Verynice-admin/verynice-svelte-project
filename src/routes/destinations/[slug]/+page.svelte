@@ -228,7 +228,7 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={pageData.seo?.title || `${pageData.mainTitle} | VeryNice`} />
 	<meta name="twitter:description" content={pageData.seo?.description || pageData.headerDescription} />
-	{@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</script>`}
+	{@html `<script type="application/ld+json">${JSON.stringify(structuredData).replace(/</g, '\\u003c')}</script>`}
 </svelte:head>
 
 {#if pageData}

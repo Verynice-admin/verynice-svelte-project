@@ -1,10 +1,7 @@
-
 import { json } from '@sveltejs/kit';
 import { destinationPrompts } from '$lib/server/destinationPrompts';
 import { generateDestinationPage } from '$lib/server/agentPageGenerator';
 import { requireAdminAccess } from '$lib/server/apiAuth';
-import * as fs from 'fs';
-import * as path from 'path';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ request, url }) => {
@@ -13,7 +10,6 @@ export const GET: RequestHandler = async ({ request, url }) => {
 
     const results = [];
 
-    // 1. GENERATE PAGES
     for (const prompt of destinationPrompts) {
         try {
             const res = await generateDestinationPage(prompt);
@@ -24,34 +20,15 @@ export const GET: RequestHandler = async ({ request, url }) => {
         }
     }
 
-    // 2. AUTO-UPDATE KNOWN_DESTINATION_PATHS
-    try {
-        const pageServerPath = path.resolve('src/routes/destinations/[slug]/+page.server.ts');
-        let content = fs.readFileSync(pageServerPath, 'utf-8');
-
-        let addedCount = 0;
-        const insertMarker = '// Add others here as they are generated';
-
-        for (const prompt of destinationPrompts) {
-            // Check if key exists
-            if (!content.includes(`'${prompt.slug}':`)) {
-                const newLine = `        '${prompt.slug}': '${prompt.targetPath}',\n`;
-                content = content.replace(insertMarker, `${newLine}        ${insertMarker}`);
-                addedCount++;
-                console.log(`[Agent] Injected ${prompt.slug} into KNOWN_DESTINATION_PATHS`);
-            }
-        }
-
-        if (addedCount > 0) {
-            fs.writeFileSync(pageServerPath, content, 'utf-8');
-        }
-
-    } catch (err) {
-        console.error("[Agent] Failed to auto-update +page.server.ts:", err);
-    }
+    // New slugs are reported in the response — add them to KNOWN_DESTINATION_PATHS manually
+    // (runtime source-file mutation via fs.writeFileSync is not safe in serverless environments)
+    const newSlugs = results.filter(r => r.status === 'success').map(r => r.slug);
 
     return json({
         message: "Agent generation complete",
-        results
+        results,
+        note: newSlugs.length > 0
+            ? `Add these slugs to KNOWN_DESTINATION_PATHS in +page.server.ts: ${newSlugs.join(', ')}`
+            : undefined
     });
 };
