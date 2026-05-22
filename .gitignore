@@ -55,3 +55,6 @@ plan_from_cloudinary.js
 verify_sources.js
 SOURCE_SNAPSHOT.txt
 project-structure.txt
+
+# Sentry Config File
+.env.sentry-build-plugin
