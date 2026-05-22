@@ -24,6 +24,11 @@
 		isSearchOpen = false;
 	}
 
+	onMount(() => {
+		document.body.classList.add('premium-theme-page');
+		return () => document.body.classList.remove('premium-theme-page');
+	});
+
 	onMount(async () => {
 		if (browser) {
 			const { default: mermaid } = await import('mermaid');
@@ -200,7 +205,6 @@
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} />
-<svelte:body class="premium-theme-page" />
 
 <svelte:head>
 	<title>{pageData?.seo?.title || 'About Borat | VeryNice'}</title>
@@ -464,9 +468,9 @@
 		color: #0f172a !important;
 	}
 
-	:global(body.premium-theme-page) main,
-	:global(body.premium-theme-page) .section,
-	:global(body.premium-theme-page) .timeline-container {
+	:global(body.premium-theme-page main),
+	:global(body.premium-theme-page .section),
+	:global(body.premium-theme-page .timeline-container) {
 		background: #ffffff !important;
 		color: #0f172a !important;
 	}

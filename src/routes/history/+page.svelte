@@ -17,6 +17,11 @@
 	import KazakhDivider from '$components/ui/KazakhDivider.svelte';
 	import FaqSection from '$components/features/content/FaqSection.svelte';
 
+	onMount(() => {
+		document.body.classList.add('premium-theme-page');
+		return () => document.body.classList.remove('premium-theme-page');
+	});
+
 	onMount(async () => {
 		if (browser) {
 			const { default: mermaid } = await import('mermaid');
@@ -303,7 +308,6 @@
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} />
-<svelte:body class="premium-theme-page" />
 
 <svelte:head>
 	<title>{pageData?.seo?.title || 'History | VeryNice'}</title>

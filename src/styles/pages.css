@@ -5908,8 +5908,6 @@ pre.language-mermaid {
 }
 
 /* Hide Mermaid error messages */
-pre:has-text('Syntax error'),
-pre:has-text('mermaid version'),
 [class*='error'],
 .mermaid-error {
   display: none !important;
@@ -5918,11 +5916,6 @@ pre:has-text('mermaid version'),
   overflow: hidden !important;
   margin: 0 !important;
   padding: 0 !important;
-}
-
-.timeline-body pre:has-text('Syntax error'),
-.timeline-body pre:has-text('mermaid version') {
-  display: none !important;
 }
 
 /* Mermaid SVG: scale to container, cap at readable max width */

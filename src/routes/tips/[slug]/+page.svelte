@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
 	import { processContent } from '$lib/utils/markdown';
@@ -285,10 +286,14 @@
 	};
 
 	let windowWidth = 1200;
+
+	onMount(() => {
+		document.body.classList.add('premium-theme-page');
+		return () => document.body.classList.remove('premium-theme-page');
+	});
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} />
-<svelte:body class="premium-theme-page" />
 
 <svelte:head>
 	<title>{tip?.seo?.title || resolvedPage?.seo?.title || 'Travel Tip | VeryNice'}</title>

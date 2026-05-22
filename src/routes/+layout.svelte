@@ -225,11 +225,6 @@
 	});
 </script>
 
-<svelte:body
-	data-sveltekit-preload-code="viewport"
-	data-sveltekit-preload-data="hover"
-/>
-
 <SiteHeader {headerConfig} bind:isSearchOpen on:search-open={() => isSearchOpen = true} />
 
 <main id="main-content" role="main">
