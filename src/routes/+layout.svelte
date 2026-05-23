@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../styles/index.css';
 	import { inject as injectAnalytics } from '@vercel/analytics';
-	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
+	import { injectSpeedInsights } from '@vercel/speed-insights';
 	import SiteHeader from '$components/layout/header/SiteHeader.svelte';
 	import Footer from '$components/layout/footer/Footer.svelte';
 	import TimeWeatherDock from '$components/features/widgets/TimeWeatherDock.svelte';
