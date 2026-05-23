@@ -1,13 +1,9 @@
 import { sequence } from '@sveltejs/kit/hooks';
 import type { Handle } from '@sveltejs/kit';
 import * as Sentry from '@sentry/sveltekit';
-import { env } from '$env/dynamic/public';
 
-Sentry.init({
-	dsn: env.PUBLIC_SENTRY_DSN,
-	tracesSampleRate: 0.1,
-	environment: process.env.NODE_ENV ?? 'production'
-});
+// Sentry.init() is called in src/instrumentation.server.ts (loaded first via experimental.instrumentation.server).
+// Do NOT call Sentry.init() here — a second init with undefined DSN re-registers the OTel TracerProvider and throws.
 
 export const handleError = Sentry.handleErrorWithSentry();
 

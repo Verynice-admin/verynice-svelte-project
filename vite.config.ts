@@ -5,7 +5,8 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [sentrySvelteKit({
     org: "verynice-kz",
-    project: "javascript-sveltekit"
+    project: "javascript-sveltekit",
+    autoUploadSourceMaps: !!process.env.SENTRY_AUTH_TOKEN,
   }), sveltekit()],
   build: {
     // Optimize chunk size for faster loading
