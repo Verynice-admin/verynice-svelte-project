@@ -21,28 +21,44 @@ export function sanitizeHTML(html: string | null | undefined, options?: DOMPurif
     return '';
   }
 
-  // In server-side rendering, use basic sanitization (DOMPurify needs DOM)
+  // In server-side rendering, use regex-based sanitization (DOMPurify requires a live DOM).
+  // These patterns are ordered from most-dangerous to least so nothing slips through a
+  // partial match of an earlier replacement.
   if (!browser) {
-    // Basic server-side sanitization - remove dangerous tags and attributes
     let sanitized = html
-      // Remove script tags and their content
+      // 1. Strip <script> blocks and their entire content.
       .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-      // Remove event handlers (onclick, onerror, etc.)
-      .replace(/\s*on\w+\s*=\s*["'][^"']*["']/gi, '')
-      // Remove javascript: URLs
-      .replace(/javascript:/gi, '')
-      // Remove data: URLs that could be dangerous
-      .replace(/data:text\/html/gi, '')
-      // Remove iframe tags (can be used for XSS)
-      .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
-      // Remove object and embed tags
-      .replace(/<(object|embed)\b[^<]*(?:(?!<\/\1>)<[^<]*)*<\/\1>/gi, '');
+      // 2. Strip <style> blocks (can host CSS-based data exfiltration / expression() attacks).
+      .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+      // 3. Strip <iframe>, <object>, <embed>, <applet>, <base> tags and their content.
+      .replace(/<(iframe|object|embed|applet|base)\b[^<]*(?:(?!<\/\1>)<[^<]*)*<\/\1>/gi, '')
+      // 4. Strip self-closing dangerous tags that have no body (<base />, <meta>, <link>).
+      .replace(/<(meta|link|base)\b[^>]*\/?>/gi, '')
+      // 5. Strip ALL event handler attributes regardless of quoting style.
+      //    Handles: onerror="x"  onerror='x'  onerror=x  onerror (bare)
+      .replace(/\s+on[a-zA-Z]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>\/]*))?/gi, '')
+      // 6. Strip javascript: and vbscript: URI schemes in attribute values.
+      .replace(/(?:javascript|vbscript)\s*:/gi, '')
+      // 7. Strip data:text/html and data:application/* URIs (HTML/JS payload delivery).
+      .replace(/data\s*:\s*(?:text\/html|application\/[^;,\s"'>]*)/gi, '')
+      // 8. Strip SVG <use> with external href (XSS via SVG sprite injection).
+      .replace(/<use\b[^>]*\bhref\s*=\s*["']?\s*(?:https?:|\/\/)/gi, '<use');
 
     return sanitized;
   }
 
-  // Configure DOMPurify with safe defaults
-  // Preserve classes and IDs for styling compatibility
+  // Enforce rel="noopener noreferrer" on every outbound link to prevent reverse tabnapping.
+  // Registered once at module load; DOMPurify deduplicates hook registrations per hook name.
+  DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+    if (node.tagName === 'A' && node.getAttribute('target') === '_blank') {
+      node.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
+
+  // Configure DOMPurify with safe defaults.
+  // `data:` is intentionally excluded from ALLOWED_URI_REGEXP — data:text/javascript and
+  // data:text/html can execute scripts in older browsers even via <img> or <a> attributes.
+  // If you need inline data images, serve them through Cloudinary instead.
   const defaultOptions: DOMPurifyConfig = {
     ALLOWED_TAGS: [
       'p', 'br', 'strong', 'em', 'u', 's', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
@@ -53,8 +69,9 @@ export function sanitizeHTML(html: string | null | undefined, options?: DOMPurif
       'href', 'title', 'alt', 'src', 'width', 'height', 'class', 'id',
       'target', 'rel', 'colspan', 'rowspan', 'align', 'start', 'language'
     ],
-    ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
-    KEEP_CONTENT: true, // Preserve classes for styling (but sanitize dangerous ones)
+    // `data:` removed — permits only http(s), mailto, tel, sms, and protocol-relative URLs.
+    ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+    KEEP_CONTENT: true,
     RETURN_DOM: false,
     RETURN_DOM_FRAGMENT: false,
     RETURN_TRUSTED_TYPE: false,
@@ -63,11 +80,10 @@ export function sanitizeHTML(html: string | null | undefined, options?: DOMPurif
 
   try {
     const sanitized = DOMPurify.sanitize(html, defaultOptions);
-    // DOMPurify can return TrustedHTML in some contexts, convert to string
     return typeof sanitized === 'string' ? sanitized : String(sanitized);
   } catch (error) {
     console.error('[Sanitize] Error sanitizing HTML:', error);
-    return ''; // Return empty string on error for safety
+    return '';
   }
 }
 

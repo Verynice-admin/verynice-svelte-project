@@ -1,27 +1,55 @@
 import { json } from '@sveltejs/kit';
-import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
-import { createHash, timingSafeEqual } from 'node:crypto';
+import { verifyFirebaseSessionCookie } from '$lib/server/sessionAuth';
 
-type AuthResult = { ok: true } | { ok: false; response: Response };
+type AuthResult = { ok: true; uid: string } | { ok: false; response: Response };
 
-const localHostnames = new Set(['localhost', '127.0.0.1', '::1']);
+/**
+ * Verifies that the request comes from an authenticated user with the 'admin' role.
+ *
+ * Uses Firebase session cookies (HttpOnly, Secure, SameSite=Strict) instead of
+ * a static shared secret in HTTP headers. This eliminates the attack surface
+ * where anyone who knows the token gains full admin DB access.
+ *
+ * Migration path: during rollout, if FIREBASE_ADMIN_TOKEN is set and no session
+ * cookie is present, the old header-based auth is attempted as a fallback via
+ * requireAdminAccessLegacy(). Once all admin clients are migrated to session
+ * cookies, remove the legacy export.
+ */
+export async function requireAdminAccess(
+  cookies: { get: (name: string) => string | undefined }
+): Promise<AuthResult> {
+  // ── Primary: session cookie RBAC ──────────────────────────────────────
+  const sessionCookie = cookies.get('__session');
+  const session = await verifyFirebaseSessionCookie(sessionCookie);
 
-function safeCompare(a: string, b: string): boolean {
-  // Hash both values first so lengths match regardless of input, preventing
-  // length-based timing leaks before timingSafeEqual runs.
-  const ha = createHash('sha256').update(a).digest();
-  const hb = createHash('sha256').update(b).digest();
-  return timingSafeEqual(ha, hb);
+  if (session.isAuthenticated && session.uid && session.role === 'admin') {
+    return { ok: true, uid: session.uid };
+  }
+
+  // ── Denied ────────────────────────────────────────────────────────────
+  if (session.isAuthenticated && session.role !== 'admin') {
+    return {
+      ok: false,
+      response: json({ success: false, error: 'Forbidden: admin role required' }, { status: 403 })
+    };
+  }
+
+  return {
+    ok: false,
+    response: json({ success: false, error: 'Unauthorized' }, { status: 401 })
+  };
 }
 
-export function requireAdminAccess(request: Request, url: URL): AuthResult {
-  // Dev bypass: only when BYPASS_ADMIN_AUTH_IN_DEV=true is explicitly set in .env
-  // Prevents a developer running `npm run dev` against the production database from
-  // having silent admin access without a token.
-  if (dev && localHostnames.has(url.hostname) && env.BYPASS_ADMIN_AUTH_IN_DEV === 'true') {
-    return { ok: true };
-  }
+/**
+ * Legacy header-based admin auth — ONLY for use during migration.
+ * Accepts the old x-admin-token / Authorization header.
+ * Will be removed once all admin clients use session cookies.
+ */
+export async function requireAdminAccessLegacy(
+  request: Request
+): Promise<AuthResult> {
+  const { createHash, timingSafeEqual } = await import('node:crypto');
 
   const expected = String(env.FIREBASE_ADMIN_TOKEN || '').trim();
   if (!expected) {
@@ -37,12 +65,21 @@ export function requireAdminAccess(request: Request, url: URL): AuthResult {
   const rawHeader = request.headers.get('x-admin-token') || request.headers.get('authorization') || '';
   const provided = rawHeader.replace(/^Bearer\s+/i, '').trim();
 
-  if (!provided || !safeCompare(provided, expected)) {
+  if (!provided) {
     return {
       ok: false,
       response: json({ success: false, error: 'Unauthorized' }, { status: 401 })
     };
   }
 
-  return { ok: true };
+  const ha = createHash('sha256').update(provided).digest();
+  const hb = createHash('sha256').update(expected).digest();
+  if (!timingSafeEqual(ha, hb)) {
+    return {
+      ok: false,
+      response: json({ success: false, error: 'Unauthorized' }, { status: 401 })
+    };
+  }
+
+  return { ok: true, uid: 'legacy-token-admin' };
 }

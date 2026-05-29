@@ -1,5 +1,6 @@
 import { GROQ_API_KEY, GEMINI_API_KEY, OPENROUTER_API_KEY } from '$env/static/private';
 import { dev } from '$app/environment';
+import { logger } from '$lib/server/logger';
 
 const SITE_CONTENT = `
 Available Website Content:
@@ -95,8 +96,8 @@ Output JSON only:
 }`;
 
 // Ultra-simple translation prompt to avoid JSON validation errors
-const SIMPLE_TRANSLATION_PROMPT = (targetLanguage: string) => 
-    'You are a translator. Translate to ' + targetLanguage + '. Output ONLY valid JSON: {"translations":[{"id":"ID","translated":"TEXT"}]}';;
+const SIMPLE_TRANSLATION_PROMPT = (targetLanguage: string) =>
+    'You are a translator. Translate to ' + targetLanguage + '. Output ONLY valid JSON: {"translations":[{"id":"ID","translated":"TEXT"}]}';
 
 function cleanAndParseJSON(text: string | undefined | null) {
     if (!text) return null;
@@ -119,14 +120,14 @@ function cleanAndParseJSON(text: string | undefined | null) {
                 return JSON.parse(cleaned + '}');
             }
         } catch (innerE) { }
-        console.error('Failed to parse JSON:', e, text);
+        logger.error('[ai] Failed to parse JSON response', { err: String(e), preview: text.slice(0, 200) });
         return null;
     }
 }
 
 // Decode sequences like "\\u043d" into real characters, even if they were
 // double-escaped inside a JSON string. This prevents artifacts such as
-// "\u043d\u0435\u0431\u043e" from appearing in the UI.
+// "небо" from appearing in the UI.
 function decodeUnicodeEscapes(value: string): string {
     if (!value || !value.includes('\\u')) return value;
     return value.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) =>
@@ -145,29 +146,29 @@ function splitSegmentsByTokenBudget(
     maxTokensPerChunk: number = 800
 ): { id: string; text: string }[][] {
     if (!segments.length) return [];
-    
+
     const chunks: { id: string; text: string }[][] = [];
     let currentChunk: { id: string; text: string }[] = [];
     let currentTokens = 0;
-    
+
     for (const segment of segments) {
         const segmentTokens = estimateTokens(segment.text);
-        
+
         // If single segment exceeds max, we must include it (will rely on API to handle)
         if (currentTokens + segmentTokens > maxTokensPerChunk && currentChunk.length > 0) {
             chunks.push(currentChunk);
             currentChunk = [];
             currentTokens = 0;
         }
-        
+
         currentChunk.push(segment);
         currentTokens += segmentTokens;
     }
-    
+
     if (currentChunk.length > 0) {
         chunks.push(currentChunk);
     }
-    
+
     return chunks;
 }
 
@@ -175,18 +176,23 @@ type RawTranslation = { id: unknown; translated: unknown };
 
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
 
+// Hard cap on how long any single AI API call may block a serverless function.
+// Prevents slow-loris abuse where an attacker holds connections open to exhaust concurrency.
+const AI_FETCH_TIMEOUT_MS = 25_000;
+
 export async function generateAnswer(rawQuestion: string): Promise<{ correctedQuestion: string, answer: string, relatedLinks: { title: string, url: string }[] } | null> {
-    if (dev) console.log('[AI Service] Generating answer for:', rawQuestion);
+    if (dev) logger.debug('[ai] Generating answer', { question: rawQuestion });
 
     if (!GROQ_API_KEY) {
-        console.error('[AI Service] GROQ_API_KEY is missing');
+        logger.error('[ai] GROQ_API_KEY is missing');
         return null;
     }
 
     try {
-        if (dev) console.log('[AI Service] Sending request to Groq with model:', GROQ_MODEL);
+        if (dev) logger.debug('[ai] Sending request to Groq', { model: GROQ_MODEL });
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
+            signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${GROQ_API_KEY}`
@@ -205,7 +211,7 @@ export async function generateAnswer(rawQuestion: string): Promise<{ correctedQu
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('[AI Service] Groq API error:', response.status, errorText);
+            logger.error('[ai] Groq API error', { status: response.status, body: errorText.slice(0, 500) });
             return null;
         }
 
@@ -215,8 +221,8 @@ export async function generateAnswer(rawQuestion: string): Promise<{ correctedQu
         return cleanAndParseJSON(content);
 
     } catch (e) {
-        console.error('Error calling Groq API:', e);
-        return null; // Fail gracefully
+        logger.error('[ai] Error calling Groq API', { err: String(e) });
+        return null;
     }
 }
 
@@ -232,13 +238,14 @@ async function callGeminiTranslation(
     segments: { id: string; text: string }[]
 ) {
     if (!GEMINI_API_KEY) {
-        console.warn('[AI Service] GEMINI_API_KEY not set, skipping Gemini translation.');
+        logger.warn('[ai] GEMINI_API_KEY not set, skipping Gemini translation');
         return null;
     }
 
     try {
         const response = await fetch(`${GEMINI_TRANSLATE_ENDPOINT}?key=${GEMINI_API_KEY}`, {
             method: 'POST',
+            signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -264,7 +271,7 @@ async function callGeminiTranslation(
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('[AI Service] Gemini translation error:', response.status, errorText);
+            logger.error('[ai] Gemini translation error', { status: response.status, body: errorText.slice(0, 500) });
             return null;
         }
 
@@ -272,7 +279,7 @@ async function callGeminiTranslation(
         const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
         if (!content) {
-            console.error('[AI Service] Gemini translation returned empty content', data);
+            logger.error('[ai] Gemini translation returned empty content');
             return null;
         }
 
@@ -283,10 +290,10 @@ async function callGeminiTranslation(
                 translated: decodeUnicodeEscapes(String(t.translated ?? ''))
             }));
         }
-        console.error('[AI Service] Gemini translation payload missing translations', parsed);
+        logger.error('[ai] Gemini translation payload missing translations');
         return null;
     } catch (error) {
-        console.error('[AI Service] Error translating content with Gemini:', error);
+        logger.error('[ai] Error translating content with Gemini', { err: String(error) });
         return null;
     }
 }
@@ -297,13 +304,14 @@ async function callGroqTranslation(
     retryCount = 0
 ): Promise<{ id: string, translated: string }[] | null> {
     if (!GROQ_API_KEY) {
-        console.warn('[AI Service] GROQ_API_KEY not set, skipping Groq translation.');
+        logger.warn('[ai] GROQ_API_KEY not set, skipping Groq translation');
         return null;
     }
 
     try {
         const response = await fetch(GROQ_TRANSLATE_ENDPOINT, {
             method: 'POST',
+            signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${GROQ_API_KEY}`
@@ -327,14 +335,14 @@ async function callGroqTranslation(
 
         if (response.status === 429 && retryCount < 2) {
             const waitMs = 1000 * (retryCount + 1);
-            console.warn(`[AI Service] Groq rate limit hit, attempt ${retryCount + 1}, waiting ${waitMs}ms...`);
+            logger.warn('[ai] Groq rate limit hit, retrying', { attempt: retryCount + 1, waitMs });
             await new Promise(r => setTimeout(r, waitMs));
             return callGroqTranslation(targetLanguage, segments, retryCount + 1);
         }
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('[AI Service] Groq translation error:', response.status, errorText);
+            logger.error('[ai] Groq translation error', { status: response.status, body: errorText.slice(0, 500) });
             return null;
         }
 
@@ -342,7 +350,7 @@ async function callGroqTranslation(
         const content = data.choices[0]?.message?.content;
 
         if (!content) {
-            console.error('[AI Service] Groq translation returned empty content');
+            logger.error('[ai] Groq translation returned empty content');
             return null;
         }
 
@@ -353,10 +361,10 @@ async function callGroqTranslation(
                 translated: decodeUnicodeEscapes(String(t.translated ?? ''))
             }));
         }
-        console.error('[AI Service] Groq translation parsing failed, content was:', content.substring(0, 200));
+        logger.error('[ai] Groq translation parsing failed', { preview: content.substring(0, 200) });
         return null;
     } catch (error) {
-        console.error('[AI Service] Error translating content with Groq:', error);
+        logger.error('[ai] Error translating content with Groq', { err: String(error) });
         return null;
     }
 }
@@ -366,7 +374,7 @@ async function translateWithOpenRouter(
     segments: { id: string; text: string }[]
 ): Promise<{ id: string, translated: string }[] | null> {
     if (!OPENROUTER_API_KEY) {
-        console.warn('[AI Service] OPENROUTER_API_KEY not set, skipping OpenRouter translation.');
+        logger.warn('[ai] OPENROUTER_API_KEY not set, skipping OpenRouter translation');
         return null;
     }
 
@@ -382,9 +390,10 @@ async function translateWithOpenRouter(
 
     for (const model of models) {
         try {
-            if (dev) console.log(`[AI Service] Trying OpenRouter with model: ${model}`);
+            if (dev) logger.debug('[ai] Trying OpenRouter model', { model });
             const response = await fetch(OPENROUTER_TRANSLATE_ENDPOINT, {
                 method: 'POST',
+                signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
@@ -408,22 +417,22 @@ async function translateWithOpenRouter(
             });
 
             if (response.status === 404) {
-                console.warn(`[AI Service] Model ${model} not found, trying next...`);
-                continue; // Try next model
+                logger.warn('[ai] OpenRouter model not found, trying next', { model });
+                continue;
             }
 
             // Handle 429 with exponential backoff - retry up to 2 times on same model
             if (response.status === 429) {
                 const errorText = await response.text();
-                // Check if it's a rate limit we should retry
                 if (errorText.includes('rate-limit') || errorText.includes('rate_limit')) {
                     for (let retryAttempt = 1; retryAttempt <= 2; retryAttempt++) {
                         const waitMs = 1000 * retryAttempt;
-                        console.warn(`[AI Service] OpenRouter 429 on ${model}, attempt ${retryAttempt}, waiting ${waitMs}ms...`);
+                        logger.warn('[ai] OpenRouter 429, retrying', { model, attempt: retryAttempt, waitMs });
                         await new Promise(r => setTimeout(r, waitMs));
-                        
+
                         const retryResponse = await fetch(OPENROUTER_TRANSLATE_ENDPOINT, {
                             method: 'POST',
+                            signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
@@ -445,7 +454,7 @@ async function translateWithOpenRouter(
                                 temperature: 0.1
                             })
                         });
-                        
+
                         if (retryResponse.ok) {
                             const data = await retryResponse.json();
                             const content = data.choices[0]?.message?.content;
@@ -462,21 +471,21 @@ async function translateWithOpenRouter(
                         if (retryResponse.status !== 429) break;
                     }
                 }
-                console.warn(`[AI Service] OpenRouter 429 on ${model}, skipping to next model...`);
+                logger.warn('[ai] OpenRouter 429 exhausted retries, skipping model', { model });
                 continue;
             }
 
             if (!response.ok) {
                 const errorText = await response.text();
-                console.error('[AI Service] OpenRouter translation error:', response.status, errorText);
-                continue; // Try next model
+                logger.error('[ai] OpenRouter translation error', { model, status: response.status, body: errorText.slice(0, 500) });
+                continue;
             }
 
             const data = await response.json();
             const content = data.choices[0]?.message?.content;
 
             if (!content) {
-                console.error('[AI Service] OpenRouter translation returned empty content', data);
+                logger.error('[ai] OpenRouter translation returned empty content', { model });
                 continue;
             }
 
@@ -487,14 +496,14 @@ async function translateWithOpenRouter(
                     translated: decodeUnicodeEscapes(String(t.translated ?? ''))
                 }));
             }
-            console.error('[AI Service] OpenRouter translation payload missing translations', parsed);
+            logger.error('[ai] OpenRouter translation payload missing translations', { model });
             continue;
         } catch (error) {
-            console.error(`[AI Service] Error with model ${model}:`, error);
+            logger.error('[ai] Error with OpenRouter model', { model, err: String(error) });
         }
     }
 
-    console.error('[AI Service] All OpenRouter models failed.');
+    logger.error('[ai] All OpenRouter models failed');
     return null;
 }
 
@@ -506,10 +515,10 @@ export async function translateSegments(
 
     // Split segments by token budget to prevent oversized requests
     const chunks = splitSegmentsByTokenBudget(segments, 800);
-    if (dev) console.log(`[AI Service] Split ${segments.length} segments into ${chunks.length} chunks for translation`);
-    
+    if (dev) logger.debug('[ai] Translation chunks', { segmentCount: segments.length, chunkCount: chunks.length });
+
     let allTranslations: { id: string; translated: string }[] = [];
-    
+
     // Process each chunk sequentially and merge results
     for (const chunk of chunks) {
         let translations: { id: string; translated: string }[] | null = null;
@@ -521,7 +530,7 @@ export async function translateSegments(
                 allTranslations = allTranslations.concat(translations);
                 continue;
             }
-            console.warn('[AI Service] Groq translation failed for chunk, attempting Gemini fallback.');
+            logger.warn('[ai] Groq translation failed for chunk, attempting Gemini fallback');
         }
 
         // Fallback 1: Gemini (gemini-2.5-flash-lite)
@@ -531,7 +540,7 @@ export async function translateSegments(
                 allTranslations = allTranslations.concat(translations);
                 continue;
             }
-            console.warn('[AI Service] Gemini translation failed for chunk, attempting OpenRouter fallback.');
+            logger.warn('[ai] Gemini translation failed for chunk, attempting OpenRouter fallback');
         }
 
         // Fallback 2: OpenRouter
@@ -541,11 +550,11 @@ export async function translateSegments(
                 allTranslations = allTranslations.concat(translations);
                 continue;
             }
-            console.error('[AI Service] OpenRouter translation failed for chunk.');
+            logger.error('[ai] OpenRouter translation failed for chunk');
         }
 
-        // If all providers failed for this chunk, try without token budgeting as fallback
-        console.warn('[AI Service] Trying chunk without token budgeting as last resort...');
+        // If all providers failed for this chunk, try without token budgeting as last resort
+        logger.warn('[ai] All providers failed for chunk, retrying without token budget');
         if (GROQ_API_KEY) {
             translations = await callGroqTranslation(targetLanguage, chunk);
             if (translations?.length) {
@@ -556,7 +565,6 @@ export async function translateSegments(
     }
 
     if (allTranslations.length === 0) {
-        // All providers failed or no API keys configured
         if (!GROQ_API_KEY && !GEMINI_API_KEY && !OPENROUTER_API_KEY) {
             throw new Error('All translation providers failed or no API keys configured');
         }
@@ -568,14 +576,15 @@ export async function translateSegments(
 
 export async function getCoordinates(query: string): Promise<{ lat: number, lng: number, title: string, description: string } | null> {
     if (!GROQ_API_KEY) {
-        console.error('[AI Service] GROQ_API_KEY is missing');
+        logger.error('[ai] GROQ_API_KEY is missing');
         return null;
     }
 
     try {
-        if (dev) console.log('[AI Service] Getting coordinates for:', query);
+        if (dev) logger.debug('[ai] Getting coordinates', { query });
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
+            signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${GROQ_API_KEY}`
@@ -586,13 +595,13 @@ export async function getCoordinates(query: string): Promise<{ lat: number, lng:
                     { role: 'system', content: MAP_SYSTEM_PROMPT },
                     { role: 'user', content: query }
                 ],
-                temperature: 0.1, // Lower temperature for more deterministic coordinates
+                temperature: 0.1,
                 response_format: { type: 'json_object' }
             })
         });
 
         if (!response.ok) {
-            console.error('[AI Service] Groq API error:', response.status);
+            logger.error('[ai] Groq API error for coordinates', { status: response.status });
             return null;
         }
 
@@ -601,20 +610,21 @@ export async function getCoordinates(query: string): Promise<{ lat: number, lng:
 
         return cleanAndParseJSON(content);
     } catch (e) {
-        console.error('[AI Service] Error getting coordinates:', e);
+        logger.error('[ai] Error getting coordinates', { err: String(e) });
         return null;
     }
 }
 
 export async function processComment(rawText: string): Promise<{ correctedText: string, isOffensive: boolean } | null> {
     if (!GROQ_API_KEY) {
-        console.error('[AI Service] GROQ_API_KEY is missing');
+        logger.error('[ai] GROQ_API_KEY is missing');
         return null;
     }
 
     try {
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
+            signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${GROQ_API_KEY}`
@@ -631,7 +641,7 @@ export async function processComment(rawText: string): Promise<{ correctedText: 
         });
 
         if (!response.ok) {
-            console.error('[AI Service] Groq API error:', response.status);
+            logger.error('[ai] Groq API error processing comment', { status: response.status });
             return null;
         }
 
@@ -640,7 +650,7 @@ export async function processComment(rawText: string): Promise<{ correctedText: 
 
         return cleanAndParseJSON(content);
     } catch (e) {
-        console.error('[AI Service] Error processing comment:', e);
-        return null; // Fail gracefully
+        logger.error('[ai] Error processing comment', { err: String(e) });
+        return null;
     }
 }

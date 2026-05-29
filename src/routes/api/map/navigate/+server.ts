@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 import { dev } from '$app/environment';
 import { getCoordinates } from '$lib/server/aiService';
 import { enforceRateLimit } from '$lib/server/rateLimit';
+import { logger } from '$lib/server/logger';
 
 import type { RequestHandler } from './$types';
 
@@ -22,11 +23,15 @@ export const POST: RequestHandler = async ({ request }) => {
 
         const { query } = await request.json();
 
-        if (!query || typeof query !== 'string') {
+        if (!query || typeof query !== 'string' || query.trim().length === 0) {
             return json({ error: 'Invalid query' }, { status: 400 });
         }
 
-        if (dev) console.log('[Map API] Received navigation query:', query);
+        if (query.trim().length > 200) {
+            return json({ error: 'Query must be 200 characters or fewer' }, { status: 400 });
+        }
+
+        if (dev) logger.debug('[map] Received navigation query', { query });
         const result = await getCoordinates(query);
 
         if (!result) {
@@ -38,7 +43,7 @@ export const POST: RequestHandler = async ({ request }) => {
             ...result
         });
     } catch (e) {
-        console.error('[Map API] Error processing request:', e);
+        logger.error('[map] Error processing request', { err: String(e) });
         return json({ error: 'Internal server error' }, { status: 500 });
     }
 }

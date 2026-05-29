@@ -61,7 +61,7 @@
 
 	%sveltekit.head%
 
-	<style>
+	<style nonce="%sveltekit.nonce%">
 		/* Critical CSS for instant paint */
 		body { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 	</style>
@@ -70,7 +70,7 @@
 <body data-sveltekit-preload-data="hover" data-sveltekit-preload-code="viewport">
 	<a href="#main-content" class="skip-to-content">Skip to main content</a>
 	<div style="display: contents">%sveltekit.body%</div>
-	<script>
+	<script nonce="%sveltekit.nonce%">
 		// Service Worker — register after page load (no arbitrary delay)
 		if ('serviceWorker' in navigator) {
 			window.addEventListener('load', () => {

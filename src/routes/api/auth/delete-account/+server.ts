@@ -4,6 +4,7 @@ import { getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { adminDB } from '$lib/server/firebaseAdmin';
 import { verifyFirebaseSessionCookie } from '$lib/server/sessionAuth';
+import { logger } from '$lib/server/logger';
 
 export const DELETE: RequestHandler = async ({ cookies }) => {
   const sessionCookie = cookies.get('__session');
@@ -36,7 +37,7 @@ export const DELETE: RequestHandler = async ({ cookies }) => {
       batch.delete(adminDB.collection('users').doc(uid));
       await batch.commit();
     } catch (e) {
-      console.error('[delete-account] Failed to delete Firestore data:', e);
+      logger.error('[delete-account] Failed to delete Firestore data', { err: String(e) });
     }
   }
 
@@ -45,7 +46,7 @@ export const DELETE: RequestHandler = async ({ cookies }) => {
     await adminAuth.revokeRefreshTokens(uid);
     await adminAuth.deleteUser(uid);
   } catch (e) {
-    console.error('[delete-account] Failed to delete Firebase Auth user:', e);
+    logger.error('[delete-account] Failed to delete Firebase Auth user', { err: String(e) });
     throw error(500, 'Failed to delete account');
   }
 

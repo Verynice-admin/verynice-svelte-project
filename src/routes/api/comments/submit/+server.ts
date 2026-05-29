@@ -3,6 +3,7 @@ import { adminDB } from '$lib/server/firebaseAdmin';
 import { Timestamp } from 'firebase-admin/firestore';
 import { processComment } from '$lib/server/aiService';
 import { enforceRateLimit } from '$lib/server/rateLimit';
+import { logger } from '$lib/server/logger';
 
 import type { RequestHandler } from './$types';
 
@@ -27,9 +28,28 @@ export const POST: RequestHandler = async ({ request }) => {
             return json({ error: 'Post ID and Text are required' }, { status: 400 });
         }
 
+        // Validate postId format: alphanumeric, hyphens, underscores only, 1–120 chars.
+        // Prevents writing comments to arbitrary Firestore namespaces via Admin SDK (which bypasses rules).
+        if (!/^[a-zA-Z0-9_-]{1,120}$/.test(postId)) {
+            return json({ error: 'Invalid post ID' }, { status: 400 });
+        }
+
+        // Cap comment text at 1000 characters to mirror the Firestore security rule limit and
+        // prevent AI token-budget exhaustion in the processComment() moderation step.
+        if (typeof text !== 'string' || text.trim().length > 1000) {
+            return json({ error: 'Comment text must be 1000 characters or fewer' }, { status: 400 });
+        }
+
         if (!adminDB) {
-            console.error('[API] Firebase Admin not initialized');
+            logger.error('[comments] Firebase Admin not initialized');
             return json({ error: 'Server configuration unavailable' }, { status: 503 });
+        }
+
+        // Verify the target page actually exists in Firestore before writing.
+        // Prevents database namespace pollution via Admin SDK (which bypasses security rules).
+        const pageSnap = await adminDB.collection('pages').doc(postId).get();
+        if (!pageSnap.exists) {
+            return json({ error: 'Post not found' }, { status: 404 });
         }
 
         // AI Processing check
@@ -46,12 +66,13 @@ export const POST: RequestHandler = async ({ request }) => {
                     }, { status: 400 });
                 }
                 if (aiResult.correctedText) {
-                    finalText = aiResult.correctedText;
+                    // Cap AI-returned text to prevent LLM response expansion beyond client-submitted limit.
+                    finalText = aiResult.correctedText.slice(0, 1000);
                     isAiCorrected = true;
                 }
             }
         } catch (aiError) {
-            console.warn('[API] AI Check failed, proceeding with original text:', aiError);
+            logger.warn('[comments] AI moderation failed, proceeding with original text', { err: String(aiError) });
         }
 
         // Generate ID
@@ -80,7 +101,7 @@ export const POST: RequestHandler = async ({ request }) => {
         return json({ success: true, comment: newComment });
 
     } catch (error) {
-        console.error('[API] Error submitting comment:', error);
+        logger.error('[comments] Error submitting comment', { err: String(error) });
         return json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

@@ -1,4 +1,5 @@
 import { adminDB } from '$lib/server/firebaseAdmin';
+import { logger } from '$lib/server/logger';
 
 // --- API KEYS ---
 const PEXELS_KEY = 'BH27zg0lfyEy7Gu6kHvC5QMPr99mUSKvud9JZwS5dMxHZFF9sdhB0yu3';
@@ -7,7 +8,7 @@ const PIXABAY_KEY = '53876619-d093f9b4c09d1b605177e5f99';
 
 // --- HELPER: FETCH IMAGE ---
 async function fetchStockImage(query: string): Promise<string | null> {
-    console.log(`[AI Agent] Verifying stock image availability for: "${query}"...`);
+    logger.debug('[seed] Checking stock image', { query });
 
     // 1. Try Unsplash
     try {
@@ -15,11 +16,11 @@ async function fetchStockImage(query: string): Promise<string | null> {
         if (res.ok) {
             const json = await res.json();
             if (json.results && json.results.length > 0) {
-                console.log(`[AI Agent] Found Unsplash image for "${query}".`);
+                logger.debug('[seed] Found Unsplash image', { query });
                 return json.results[0].urls.regular;
             }
         }
-    } catch (e) { console.warn("Unsplash fetch failed", e); }
+    } catch (e) { logger.warn('[seed] Unsplash fetch failed', { err: String(e) }); }
 
     // 2. Try Pexels
     try {
@@ -29,11 +30,11 @@ async function fetchStockImage(query: string): Promise<string | null> {
         if (res.ok) {
             const json = await res.json();
             if (json.photos && json.photos.length > 0) {
-                console.log(`[AI Agent] Found Pexels image for "${query}".`);
+                logger.debug('[seed] Found Pexels image', { query });
                 return json.photos[0].src.large2x;
             }
         }
-    } catch (e) { console.warn("Pexels fetch failed", e); }
+    } catch (e) { logger.warn('[seed] Pexels fetch failed', { err: String(e) }); }
 
     // 3. Try Pixabay
     try {
@@ -41,23 +42,23 @@ async function fetchStockImage(query: string): Promise<string | null> {
         if (res.ok) {
             const json = await res.json();
             if (json.hits && json.hits.length > 0) {
-                console.log(`[AI Agent] Found Pixabay image for "${query}".`);
+                logger.debug('[seed] Found Pixabay image', { query });
                 return json.hits[0].largeImageURL;
             }
         }
-    } catch (e) { console.warn("Pixabay fetch failed", e); }
+    } catch (e) { logger.warn('[seed] Pixabay fetch failed', { err: String(e) }); }
 
-    console.warn(`[AI Agent] No stock image found for "${query}". Using fallback.`);
+    logger.warn('[seed] No stock image found, using fallback', { query });
     return null;
 }
 
 export async function createBigAlmatyLakePage() {
     if (!adminDB) {
-        console.error('Firebase Admin not initialized');
+        logger.error('[seed] Firebase Admin not initialized');
         return;
     }
 
-    console.log("[AI Agent] Starting Content Enhancement Process for Big Almaty Lake...");
+    logger.info('[seed] Starting Big Almaty Lake content enhancement');
 
     // --- FETCH IMAGES DYNAMICALLY ---
     const imgMain = await fetchStockImage("Big Almaty Lake turquoise reflection mountains") || "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Big_Almaty_Lake_2017.jpg/1280px-Big_Almaty_Lake_2017.jpg";
@@ -227,9 +228,9 @@ export async function createBigAlmatyLakePage() {
         if (data.subcollections.photoGallery) batch.set(docRef.collection('photoGallery').doc('main'), data.subcollections.photoGallery);
 
         await batch.commit();
-        console.log('Successfully re-seeded Big Almaty Lake data!');
+        logger.info('[seed] Big Almaty Lake seeded successfully');
 
     } catch (e) {
-        console.error('Error uploading BAO data:', e);
+        logger.error('[seed] Error uploading Big Almaty Lake data', { err: String(e) });
     }
 }

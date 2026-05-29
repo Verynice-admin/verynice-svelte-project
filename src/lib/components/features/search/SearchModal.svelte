@@ -233,7 +233,14 @@
 		}
 	}
 
+	function isSafeUrl(url: string): boolean {
+		// Allow only root-relative paths (starts with '/' but NOT '//').
+		// '//example.com' is a protocol-relative external URL — block it.
+		return /^\/[^/]/.test(url);
+	}
+
 	function navigateTo(url: string) {
+		if (!isSafeUrl(url)) return;
 		// Close mobile menu if open before navigation
 		const mobileMenu = document.getElementById('mobile-menu');
 		const fadeBlock = document.querySelector('.fadeblock');
@@ -371,9 +378,11 @@ bind:this={inputElement}
 								<span class="related-label">Related Pages</span>
 								<div class="related-links-list">
 									{#each aiResponse.relatedLinks as link}
-										<a href={link.url} on:click|preventDefault={() => navigateTo(link.url)} class="related-link">
-											{link.title}
-										</a>
+										{#if isSafeUrl(link.url)}
+											<a href={link.url} on:click|preventDefault={() => navigateTo(link.url)} class="related-link">
+												{link.title}
+											</a>
+										{/if}
 									{/each}
 								</div>
 							</div>

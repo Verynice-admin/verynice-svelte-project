@@ -2,12 +2,22 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    // Only the verified project owner may write editorial content.
+    // Google OAuth always provides email_verified=true, which guards against
+    // unverified email/password accounts using the same address.
+    function isOwner() {
+      return request.auth != null
+          && request.auth.token.email_verified == true
+          && request.auth.token.email == 'contact.azamat@gmail.com';
+    }
+
     // ========================================
     // 1. PAGES - Public read (for website content)
     // ========================================
     match /pages/{pageId} {
       allow read: if true;
-      
+
       // Counter updates for view/like counts
       allow update: if isCounterOnlyUpdate();
 
@@ -32,7 +42,20 @@ service cloud.firestore {
     }
 
     // ========================================
-    // 2. COMMENTS - Public read, authenticated create
+    // 2. PAGES SUBCOLLECTIONS - Public read, owner write
+    //    Covers the deeply nested structure used by the admin panel:
+    //      pages/destinationsPage/articles/{region}/attractions/{slug}/articles/{id}
+    //      pages/travelTipsPage/tips/{id}
+    //    The content is already public (it IS the website). Writes are
+    //    restricted to the verified owner account via isOwner().
+    // ========================================
+    match /pages/{pageId}/{rest=**} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    // ========================================
+    // 3. COMMENTS - Public read, authenticated create
     // ========================================
     match /pages/{pageId}/comments/{commentId} {
       allow read: if true;
@@ -54,29 +77,27 @@ service cloud.firestore {
     }
 
     // ========================================
-    // 3. USERS - Authenticated users read/write own doc ONLY
+    // 4. USERS - Authenticated users read/write own doc ONLY
     // ========================================
     match /users/{userId} {
-      // Authenticated users can read/write ONLY their own document
       allow read, write: if request.auth != null && request.auth.uid == userId;
       allow create: if request.auth != null && request.auth.uid == userId;
     }
 
     // ========================================
-    // 4. USERS/PRIVATE - Sensitive PII subcollection (phone, address, etc.)
-    //    Independently secured so it can be locked down separately from
-    //    the public user profile in users/{userId}.
+    // 5. USERS/PRIVATE - Sensitive PII subcollection
     // ========================================
     match /users/{userId}/private/{docId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
     // ========================================
-    // 5. DEFAULT - Deny everything else
+    // 6. DEFAULT - Deny everything else
     // ========================================
     match /{document=**} {
       allow read: if false;
       allow write: if false;
     }
+
   }
 }

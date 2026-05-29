@@ -6,7 +6,8 @@
       "Bash(curl -s -X PATCH http://localhost:5173/api/firebase/doc -H \"Content-Type: application/json\" -d '{\"path\":\"pages/heritage/articles/kazakh-melodies/sections/the-dombra\",\"data\":{\"imagePublicId\":\"content/pages/heritage/kazakhMelodies/dombra\"}}')",
       "Bash(curl -s -X PATCH http://localhost:5173/api/firebase/doc -H \"Content-Type: application/json\" -d '{\"path\":\"pages/heritage/articles/kazakh-melodies/sections/traditional-instruments\",\"data\":{\"imagePublicId\":\"content/pages/heritage/kazakhMelodies/Kobyz\"}}')",
       "Bash(curl -s -X PATCH http://localhost:5173/api/firebase/doc -H \"Content-Type: application/json\" -d '{\"path\":\"pages/heritage/articles/kazakh-melodies/sections/traditional-dances\",\"data\":{\"imagePublicId\":\"content/pages/heritage/kazakhMelodies/KaraZhorga\"}}')",
-      "Bash(curl -s -X PATCH http://localhost:5173/api/firebase/doc -H \"Content-Type: application/json\" -d '{\"path\":\"pages/heritage/articles/kazakh-melodies/sections/epic-poetry\",\"data\":{\"imagePublicId\":\"content/pages/heritage/kazakhMelodies/Alpamys\"}}')"
+      "Bash(curl -s -X PATCH http://localhost:5173/api/firebase/doc -H \"Content-Type: application/json\" -d '{\"path\":\"pages/heritage/articles/kazakh-melodies/sections/epic-poetry\",\"data\":{\"imagePublicId\":\"content/pages/heritage/kazakhMelodies/Alpamys\"}}')",
+      "Bash(npx svelte-check *)"
     ]
   }
 }

@@ -4,6 +4,7 @@ import { getApps, initializeApp, cert, type App } from 'firebase-admin/app';
 import { getFirestore, type Firestore } from 'firebase-admin/firestore';
 import type { ServiceAccount as FirebaseServiceAccount } from 'firebase-admin/app';
 import { env } from '$env/dynamic/private';
+import { logger } from '$lib/server/logger';
 
 let app: App | undefined;
 let db: Firestore | null = null;
@@ -107,10 +108,10 @@ try {
         projectId: env.FIREBASE_PROJECT_ID || sa.project_id
       });
       db = getFirestore(app);
-      console.log('[Firebase Admin] Initialized successfully');
+      logger.info('[Firebase Admin] Initialized successfully');
     } else {
-      console.warn('[Firebase Admin] No service account found. App will run without Firebase Admin SDK.');
-      console.warn('[Firebase Admin] To enable: Place serviceAccountKey.json in .secrets/ directory or set GOOGLE_APPLICATION_CREDENTIALS env var');
+      logger.warn('[Firebase Admin] No service account found. App will run without Firebase Admin SDK.');
+      logger.warn('[Firebase Admin] To enable: Place serviceAccountKey.json in .secrets/ directory or set GOOGLE_APPLICATION_CREDENTIALS env var');
       db = null;
     }
   } else {
@@ -118,7 +119,7 @@ try {
     db = getFirestore(app);
   }
 } catch (e) {
-  console.error('[Firebase Admin] Initialization error:', e);
+  logger.error('[Firebase Admin] Initialization error', { err: String(e) });
   db = null;
   // Don't throw - allow app to continue without admin SDK
   // Server routes should check for null adminDB

@@ -3,14 +3,31 @@ import type { RequestHandler } from './$types';
 import { getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { adminDB } from '$lib/server/firebaseAdmin';
+import { enforceRateLimit } from '$lib/server/rateLimit';
+import { logger } from '$lib/server/logger';
 
 function logAuthEvent(event: string, data: Record<string, unknown>) {
-	console.log(JSON.stringify({ ts: new Date().toISOString(), event, ...data }));
+	logger.info(event, data);
 }
 
 const SESSION_DURATION_MS = 5 * 24 * 60 * 60 * 1000; // 5 days
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
+  // Tight rate limit on session creation: 5 attempts per 5 minutes per IP.
+  // Prevents Firebase ID-token exchange abuse and login-flow brute-forcing.
+  const rate = await enforceRateLimit({
+    request,
+    scope: 'api-auth-session',
+    maxRequests: 5,
+    windowMs: 5 * 60_000
+  });
+  if (!rate.allowed) {
+    return json(
+      { error: 'Too many login attempts. Please wait and try again.' },
+      { status: 429, headers: { 'Retry-After': String(rate.retryAfterSeconds) } }
+    );
+  }
+
   let idToken: string | undefined;
   try {
     const body = await request.json();
@@ -41,7 +58,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
       const snap = await adminDB.collection('users').doc(uid).get();
       role = snap.exists ? (snap.data()?.role ?? null) : null;
     } catch (e) {
-      console.error('[session] Failed to fetch user role:', e);
+      logger.error('[session] Failed to fetch user role', { err: String(e) });
     }
   }
 
@@ -50,7 +67,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     try {
       await adminAuth.setCustomUserClaims(uid, { role });
     } catch (e) {
-      console.error('[session] Failed to set custom claim:', e);
+      logger.error('[session] Failed to set custom claim', { err: String(e) });
     }
   }
 

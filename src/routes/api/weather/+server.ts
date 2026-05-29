@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { enforceRateLimit } from '$lib/server/rateLimit';
 
 interface GeocodingResult {
   results?: Array<{
@@ -21,8 +22,23 @@ interface WeatherResponse {
   };
 }
 
-export const GET: RequestHandler = async ({ url, fetch, setHeaders }) => {
-  const city = url.searchParams.get('city')?.trim() || 'Almaty';
+export const GET: RequestHandler = async ({ url, fetch, setHeaders, request }) => {
+  const rate = await enforceRateLimit({
+    request,
+    scope: 'api-weather',
+    maxRequests: 30,
+    windowMs: 60_000
+  });
+  if (!rate.allowed) {
+    return json(
+      { error: 'Too many weather requests. Please retry shortly.' },
+      { status: 429, headers: { 'Retry-After': String(rate.retryAfterSeconds) } }
+    );
+  }
+
+  const cityRaw = url.searchParams.get('city')?.trim() || 'Almaty';
+  // Cap city length to prevent oversized strings from being forwarded to upstream APIs.
+  const city = cityRaw.slice(0, 100);
 
   // 1) Geocode city -> lat/lon
   const geoRes = await fetch(

@@ -1,11 +1,12 @@
 import { json } from '@sveltejs/kit';
 import { adminDB } from '$lib/server/firebaseAdmin';
 import { requireAdminAccess } from '$lib/server/apiAuth';
+import { logger } from '$lib/server/logger';
 
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request, url }) => {
-    const auth = requireAdminAccess(request, url);
+export const POST: RequestHandler = async ({ cookies, request }) => {
+    const auth = await requireAdminAccess(cookies);
     if (!auth.ok) return auth.response;
 
     try {
@@ -16,7 +17,7 @@ export const POST: RequestHandler = async ({ request, url }) => {
         }
 
         if (!adminDB) {
-            console.error('Firebase Admin not initialized');
+            logger.error('[comments/cleanup] Firebase Admin not initialized');
             return json({ error: 'Server configuration error' }, { status: 500 });
         }
 
@@ -36,7 +37,7 @@ export const POST: RequestHandler = async ({ request, url }) => {
                 });
 
                 await batch.commit();
-                console.log(`[Comments Cleanup] Deleted ${docsToDelete.length} old comments from ${postId}`);
+                logger.info('[comments/cleanup] Deleted old comments', { postId, count: docsToDelete.length });
 
                 return json({
                     success: true,
@@ -48,7 +49,7 @@ export const POST: RequestHandler = async ({ request, url }) => {
         return json({ success: true, message: 'No cleanup needed.' });
 
     } catch (error) {
-        console.error('[Comments Cleanup] Error:', error);
+        logger.error('[comments/cleanup] Error during cleanup', { err: String(error) });
         return json({ error: 'Failed to cleanup comments' }, { status: 500 });
     }
 }

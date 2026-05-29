@@ -1,4 +1,5 @@
 import { adminDB } from './firebaseAdmin';
+import { logger } from '$lib/server/logger';
 
 // --- API KEYS ---
 const PEXELS_KEY = 'BH27zg0lfyEy7Gu6kHvC5QMPr99mUSKvud9JZwS5dMxHZFF9sdhB0yu3';
@@ -22,7 +23,7 @@ async function fetchStockImages(query: string, count: number = 6): Promise<Array
                 });
             });
         }
-    } catch (e) { console.warn("Unsplash fetch failed", e); }
+    } catch (e) { logger.warn('[seed] Unsplash fetch failed', { err: String(e) }); }
 
     // 2. Pexels (if needed)
     if (images.length < count) {
@@ -40,12 +41,12 @@ async function fetchStockImages(query: string, count: number = 6): Promise<Array
                     });
                 });
             }
-        } catch (e) { console.warn("Pexels fetch failed", e); }
+        } catch (e) { logger.warn('[seed] Pexels fetch failed', { err: String(e) }); }
     }
 
     // Fallbacks
     if (images.length === 0) {
-        console.warn("Stock API failed or returned no results. Using Wikimedia fallback.");
+        logger.warn('[seed] Stock APIs returned nothing, using Wikimedia fallback');
         const FALLBACK_URL = "https://upload.wikimedia.org/wikipedia/commons/9/98/Charyn_Canyon%2C_Kazakhstan.jpg";
         for (let i = 0; i < count; i++) {
             images.push({ url: FALLBACK_URL, caption: 'Charyn Canyon', photographer: 'Wikimedia Commons' });
@@ -61,7 +62,7 @@ export async function seedCharynCanyon() {
     const PAGE_TITLE = "Charyn Canyon";
     const PAGE_SLUG = "charyn-canyon";
 
-    console.log(`Starting seed for ${PAGE_TITLE}...`);
+    logger.info('[seed] Starting Charyn Canyon seed', { title: PAGE_TITLE });
 
     // Fetch Images
     const stockImages = await fetchStockImages("Charyn Canyon Kazakhstan", 8);
@@ -214,7 +215,7 @@ Charyn Canyon is located roughly **200 km east of Almaty**, making it a long but
     const wrongDocRef = db.collection('pages').doc(`destination-${PAGE_SLUG}`);
     const wrongDocSnap = await wrongDocRef.get();
     if (wrongDocSnap.exists) {
-        console.log("Found incorrectly located document. Removing...");
+        logger.info('[seed] Found incorrectly located document, removing');
         // Delete subcollections of wrong doc first
         const subCols = ['articles', 'keyFacts', 'faq', 'map', 'video', 'photoGallery'];
         for (const col of subCols) {
@@ -226,7 +227,7 @@ Charyn Canyon is located roughly **200 km east of Almaty**, making it a long but
             }
         }
         await wrongDocRef.delete();
-        console.log("Removed incorrect document.");
+        logger.info('[seed] Removed incorrect document');
     }
 
     // 0.5. CLEANUP: Delete existing subcollections on the CORRECT doc to prevent duplicates
@@ -237,7 +238,7 @@ Charyn Canyon is located roughly **200 km east of Almaty**, making it a long but
             const deleteBatch = db.batch();
             snap.docs.forEach(d => deleteBatch.delete(d.ref));
             await deleteBatch.commit();
-            console.log(`Cleaned up old ${colName} for ${PAGE_TITLE} at correct path`);
+            logger.info('[seed] Cleaned up old subcollection', { colName, title: PAGE_TITLE });
         }
     }
 
@@ -278,5 +279,5 @@ Charyn Canyon is located roughly **200 km east of Almaty**, making it a long but
     }
 
     await batch.commit();
-    console.log(`${PAGE_TITLE} seeded successfully!`);
+    logger.info('[seed] Charyn Canyon seeded successfully', { title: PAGE_TITLE });
 }

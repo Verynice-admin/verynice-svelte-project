@@ -1,4 +1,5 @@
 import { adminDB } from './firebaseAdmin';
+import { logger } from '$lib/server/logger';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
@@ -32,7 +33,7 @@ try {
 async function fetchFirebaseConfig(): Promise<any> {
   try {
     if (!adminDB) {
-      console.log('Firebase admin not initialized, using local config');
+      logger.info('[siteConfig] Firebase admin not initialized, using local config');
       return null;
     }
     
@@ -43,7 +44,7 @@ async function fetchFirebaseConfig(): Promise<any> {
     }
     return null;
   } catch (error) {
-    console.error('Error fetching Firebase config:', error);
+    logger.error('[siteConfig] Error fetching Firebase config', { err: String(error) });
     return null;
   }
 }

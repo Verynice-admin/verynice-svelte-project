@@ -5,8 +5,8 @@ import { requireAdminAccess } from '$lib/server/apiAuth';
 
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ request, url }) => {
-    const auth = requireAdminAccess(request, url);
+export const POST: RequestHandler = async ({ cookies }) => {
+    const auth = await requireAdminAccess(cookies);
     if (!auth.ok) return auth.response;
 
     try {

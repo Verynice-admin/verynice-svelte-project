@@ -1,0 +1,17 @@
+# CODEOWNERS — all PRs require review from the repo owner.
+# Syntax: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+* @Azamat
+
+# Security-sensitive files require explicit sign-off
+firestore.rules           @Azamat
+svelte.config.js          @Azamat
+src/hooks.server.ts       @Azamat
+src/lib/server/apiAuth.ts @Azamat
+src/lib/server/sessionAuth.ts @Azamat
+src/lib/server/rateLimit.ts   @Azamat
+src/lib/utils/sanitize.ts     @Azamat
+
+# CI pipeline
+.github/workflows/        @Azamat

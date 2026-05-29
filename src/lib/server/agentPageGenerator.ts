@@ -1,10 +1,11 @@
 
+import { env } from '$env/dynamic/private';
 import { adminDB } from './firebaseAdmin';
+import { logger } from '$lib/server/logger';
 import type { DestinationPrompt } from './destinationPrompts';
 
-// KEYS
-const UNSPLASH_KEY = 'dpb1QaJPK4n4IRfjlUrK3_lcfqLtxl-kE5-NEz3ali8';
-const PEXELS_KEY = 'BH27zg0lfyEy7Gu6kHvC5QMPr99mUSKvud9JZwS5dMxHZFF9sdhB0yu3';
+const UNSPLASH_KEY = env.UNSPLASH_ACCESS_KEY ?? '';
+const PEXELS_KEY   = env.PEXELS_API_KEY ?? '';
 
 async function fetchStockImages(query: string, count: number = 6, fallbackUrl: string): Promise<Array<{ url: string, caption: string, photographer: string }>> {
     const images: Array<{ url: string, caption: string, photographer: string }> = [];
@@ -22,7 +23,7 @@ async function fetchStockImages(query: string, count: number = 6, fallbackUrl: s
                 });
             });
         }
-    } catch (e) { console.warn("Unsplash fetch failed", e); }
+    } catch (e) { logger.warn('[agent] Unsplash fetch failed', { err: String(e) }); }
 
     // 2. Pexels (if needed)
     if (images.length < count) {
@@ -40,12 +41,12 @@ async function fetchStockImages(query: string, count: number = 6, fallbackUrl: s
                     });
                 });
             }
-        } catch (e) { console.warn("Pexels fetch failed", e); }
+        } catch (e) { logger.warn('[agent] Pexels fetch failed', { err: String(e) }); }
     }
 
     // Fallbacks
     if (images.length === 0) {
-        console.warn(`Stocks failed for ${query}. Using Falback.`);
+        logger.warn('[agent] Stock image APIs returned nothing, using fallback', { query });
         for (let i = 0; i < count; i++) {
             images.push({ url: fallbackUrl, caption: query, photographer: 'Common Archive' });
         }
@@ -58,7 +59,7 @@ export async function generateDestinationPage(prompt: DestinationPrompt) {
     if (!adminDB) throw new Error("Firebase Admin not initialized");
     const db = adminDB;
 
-    console.log(`[Agent] Generating ${prompt.data.title}...`);
+    logger.info('[agent] Generating destination page', { title: prompt.data.title });
 
     // 1. Fetch Images
     const stockImages = await fetchStockImages(prompt.data.mainTitle || prompt.data.title, 8, prompt.data.imageFallback);
@@ -89,7 +90,7 @@ export async function generateDestinationPage(prompt: DestinationPrompt) {
         const wrongDocRef = db.doc(prompt.deletePath);
         const wrongSnap = await wrongDocRef.get();
         if (wrongSnap.exists) {
-            console.log(`[Agent] Removing incorrect doc at ${prompt.deletePath}`);
+            logger.info('[agent] Removing incorrect doc', { path: prompt.deletePath });
             const subCols = ['articles', 'keyFacts', 'faq', 'map', 'video', 'photoGallery'];
             for (const col of subCols) {
                 const snap = await wrongDocRef.collection(col).get();
@@ -212,7 +213,7 @@ export async function generateDestinationPage(prompt: DestinationPrompt) {
 
     await batch2.commit();
 
-    console.log(`[Agent] SUCCESS: Generated ${prompt.data.title} at ${prompt.targetPath}`);
+    logger.info('[agent] SUCCESS: Generated destination page', { title: prompt.data.title, path: prompt.targetPath });
 
     return { success: true, path: prompt.targetPath };
 }

@@ -59,6 +59,10 @@ project-structure.txt
 # Sentry Config File
 .env.sentry-build-plugin
 
+# Log files — may contain request bodies, tokens, or Firestore query results
+dev.log
+*.log
+
 # Local tool configs
 .cursor/
 .mcp.json

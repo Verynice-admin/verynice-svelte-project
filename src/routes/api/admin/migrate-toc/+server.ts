@@ -13,8 +13,8 @@ function slugify(s: string) {
         .replace(/^-+|-+$/g, '');
 }
 
-export const GET: RequestHandler = async ({ request, url }) => {
-    const auth = requireAdminAccess(request, url);
+export const POST: RequestHandler = async ({ cookies }) => {
+    const auth = await requireAdminAccess(cookies);
     if (!auth.ok) return auth.response;
 
     if (!adminDB) return json({ error: 'No Admin DB' });

@@ -2,10 +2,40 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { translateSegments } from '$lib/server/aiService';
 import { enforceRateLimit } from '$lib/server/rateLimit';
+import { logger } from '$lib/server/logger';
 
 type SegmentPayload = { id: string; text: string };
 
 const MAX_SEGMENTS = 125;
+
+// Closed allowlist of supported display-language names.
+// Prevents prompt injection via targetLanguage string concatenation into the LLM system prompt.
+// To support additional languages, add the display name used by the translation prompt here.
+const ALLOWED_LANGUAGES = new Set([
+	'Afrikaans', 'Albanian', 'Amharic', 'Arabic', 'Armenian', 'Azerbaijani',
+	'Basque', 'Belarusian', 'Bengali', 'Bosnian', 'Bulgarian', 'Burmese',
+	'Catalan', 'Cebuano', 'Chichewa', 'Chinese', 'Chinese Simplified',
+	'Chinese Traditional', 'Corsican', 'Croatian', 'Czech',
+	'Danish', 'Dutch',
+	'English', 'Esperanto', 'Estonian',
+	'Filipino', 'Finnish', 'French', 'Frisian',
+	'Galician', 'Georgian', 'German', 'Greek', 'Gujarati',
+	'Haitian Creole', 'Hausa', 'Hawaiian', 'Hebrew', 'Hindi', 'Hmong', 'Hungarian',
+	'Icelandic', 'Igbo', 'Indonesian', 'Irish', 'Italian',
+	'Japanese', 'Javanese',
+	'Kannada', 'Kazakh', 'Khmer', 'Kinyarwanda', 'Korean', 'Kurdish', 'Kyrgyz',
+	'Lao', 'Latin', 'Latvian', 'Lithuanian', 'Luxembourgish',
+	'Macedonian', 'Malagasy', 'Malay', 'Malayalam', 'Maltese', 'Maori', 'Marathi',
+	'Mongolian', 'Nepali', 'Norwegian',
+	'Odia', 'Pashto', 'Persian', 'Polish', 'Portuguese', 'Punjabi',
+	'Romanian', 'Russian',
+	'Samoan', 'Scots Gaelic', 'Serbian', 'Sesotho', 'Shona', 'Sindhi', 'Sinhala',
+	'Slovak', 'Slovenian', 'Somali', 'Spanish', 'Sundanese', 'Swahili', 'Swedish',
+	'Tajik', 'Tamil', 'Tatar', 'Telugu', 'Thai', 'Turkish', 'Turkmen',
+	'Ukrainian', 'Urdu', 'Uyghur', 'Uzbek',
+	'Vietnamese',
+	'Welsh', 'Xhosa', 'Yiddish', 'Yoruba', 'Zulu',
+]);
 
 const sanitizeSegments = (segments: unknown): SegmentPayload[] => {
 	if (!Array.isArray(segments)) return [];
@@ -48,6 +78,12 @@ export const POST: RequestHandler = async ({ request }) => {
 			return json({ error: 'targetLanguage and segments are required' }, { status: 400 });
 		}
 
+		// Reject any targetLanguage not in the closed allowlist to prevent prompt injection.
+		// The value is string-concatenated directly into the LLM system prompt in aiService.ts.
+		if (!ALLOWED_LANGUAGES.has(targetLanguage)) {
+			return json({ error: 'Unsupported target language' }, { status: 400 });
+		}
+
 		const translations = await translateSegments(targetLanguage, segments);
 
 		if (!translations) {
@@ -56,7 +92,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		return json({ translations });
 	} catch (error) {
-		console.error('[Translate API] Failed to process request', error);
+		logger.error('[translate] Failed to process request', { err: String(error) });
 		return json({ error: 'Failed to translate content' }, { status: 500 });
 	}
 };

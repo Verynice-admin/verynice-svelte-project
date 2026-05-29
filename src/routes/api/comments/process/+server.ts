@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { processComment } from '$lib/server/aiService';
 import { enforceRateLimit } from '$lib/server/rateLimit';
+import { logger } from '$lib/server/logger';
 
 import type { RequestHandler } from './$types';
 
@@ -25,6 +26,11 @@ export const POST: RequestHandler = async ({ request }) => {
             return json({ error: 'Text is required' }, { status: 400 });
         }
 
+        // Mirror the same 1000-char limit enforced by Firestore rules and the submit endpoint.
+        if (text.trim().length > 1000) {
+            return json({ error: 'Text must be 1000 characters or fewer' }, { status: 400 });
+        }
+
         const result = await processComment(text);
 
         if (!result) {
@@ -35,7 +41,7 @@ export const POST: RequestHandler = async ({ request }) => {
         return json(result);
 
     } catch (error) {
-        console.error('Error processing comment:', error);
+        logger.error('[comments/process] Error processing comment', { err: String(error) });
         return json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

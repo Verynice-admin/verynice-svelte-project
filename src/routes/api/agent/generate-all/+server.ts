@@ -2,10 +2,11 @@ import { json } from '@sveltejs/kit';
 import { destinationPrompts } from '$lib/server/destinationPrompts';
 import { generateDestinationPage } from '$lib/server/agentPageGenerator';
 import { requireAdminAccess } from '$lib/server/apiAuth';
+import { logger } from '$lib/server/logger';
 import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ request, url }) => {
-    const auth = requireAdminAccess(request, url);
+export const POST: RequestHandler = async ({ cookies }) => {
+    const auth = await requireAdminAccess(cookies);
     if (!auth.ok) return auth.response;
 
     const results = [];
@@ -15,7 +16,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
             const res = await generateDestinationPage(prompt);
             results.push({ slug: prompt.slug, status: 'success', path: res.path });
         } catch (e: any) {
-            console.error(`Error generating ${prompt.slug}:`, e);
+            logger.error('[agent] Error generating page', { slug: prompt.slug, err: String(e) });
             results.push({ slug: prompt.slug, status: 'error', error: e.message });
         }
     }

@@ -25,9 +25,11 @@ jobs:
       - name: Type check
         run: npm run type-check
 
-      - name: Svelte check (non-blocking baseline)
+      - name: Svelte check
         run: npm run check
-        continue-on-error: true
+
+      - name: Unit & server tests
+        run: npm test -- --run
 
       - name: Build
         run: npm run build
