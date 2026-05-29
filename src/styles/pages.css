@@ -2281,7 +2281,6 @@ h2.history-section-title {
 .main-column-content * {
   border-left: none !important;
   border-right: none !important;
-  outline: none !important;
 }
 
 /* Ensure no borders on prose elements */

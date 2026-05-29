@@ -533,9 +533,14 @@ header.header {
   color: var(--vnk-text-accent-color);
   text-shadow: var(--vnk-shadow-neon-md);
   text-decoration: none;
-  outline: none;
   transform: translateX(8px);
   background: rgba(255, 255, 255, 0.05);
+}
+
+/* outline: none only for pointer interactions, not keyboard focus */
+.fullmenu-inner ul.menu li a:hover,
+.fullmenu-inner ul.menu li a:active {
+  outline: none;
 }
 
 .fullmenu-inner ul.sub-menu {
@@ -1063,12 +1068,6 @@ header#site-header {
   justify-content: space-between;
   min-height: 56px;
   gap: .75rem;
-}
-
-.wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 16px;
 }
 
 .brand {

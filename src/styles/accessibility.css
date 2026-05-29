@@ -120,6 +120,14 @@ li a,
 	min-width: auto;
 }
 
+/* Exception for native controls that use browser UA sizing */
+input[type="checkbox"],
+input[type="radio"],
+input[type="hidden"] {
+	min-height: auto;
+	min-width: auto;
+}
+
 /* ========================================= */
 /* 6. SKIP LINKS */
 /* ========================================= */

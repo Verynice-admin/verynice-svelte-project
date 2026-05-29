@@ -94,27 +94,6 @@
 }
 
 /* ========================================= */
-/* 6. CUSTOM PROPERTIES WITH FALLBACKS */
-/* ========================================= */
-
-:root {
-	--primary-color: rgb(242, 132, 137);
-	--primary-rgb: 242, 132, 137;
-	--bg-dark: rgb(126, 197, 179);
-	--text-light: #f8fafc;
-	--card-bg: #e8e8e3;
-	--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-	--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-	--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-	--shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-	--radius-sm: 0.5rem;
-	--radius-md: 1rem;
-	--radius-lg: 1.5rem;
-	--radius-xl: 2rem;
-	--radius-full: 9999px;
-}
-
-/* ========================================= */
 /* 7. BACKDROP FILTERS WITH FALLBACKS */
 /* ========================================= */
 
@@ -180,14 +159,6 @@
 }
 
 /* ========================================= */
-/* 12. SUBGRID SUPPORT */
-/* ========================================= */
-
-@supports (grid-template-rows: subgrid) {
-	/* Subgrid disabled for destination cards to keep square layout */
-}
-
-/* ========================================= */
 /* 13. COLOR SCHEMES */
 /* ========================================= */
 
@@ -224,22 +195,4 @@
 	scrollbar-color: #666666 #eeeeee;
 }
 
-/* Webkit scrollbars */
-::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
-}
-
-::-webkit-scrollbar-track {
-	background: #eeeeee;
-	border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-	background: rgb(242, 132, 137);
-	border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: rgba(242, 132, 137, 0.85);
-}
+/* Webkit scrollbars governed by global.css — no duplicate needed here */
