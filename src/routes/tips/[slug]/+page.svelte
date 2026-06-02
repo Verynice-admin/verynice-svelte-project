@@ -52,8 +52,8 @@
 		{ code: 'ir', name: 'Iran', visaType: 'evisa', stay: '30 days', fee: '~$35' },
 		{ code: 'other', name: 'Other Country', visaType: 'check', stay: 'Check' }
 	];
-	function getVisaInfo(code) {
-		return nationalities.find(n => n.code === code) || { name: 'Unknown', visaType: 'check', stay: 'Check' };
+	function getVisaInfo(code: string) {
+		return nationalities.find(n => n.code === code) || { name: 'Unknown', visaType: 'check', stay: 'Check', fee: undefined };
 	}
 	
 	const tabs = [
@@ -781,7 +781,7 @@
 								{:else if info.visaType === 'evisa'}
 									<div class="visa-badge visa-evisa">📝 e-Visa Required</div>
 									<p><strong>Max stay:</strong> {info.stay}</p>
-									<p><strong>Fee:</strong> {info.fee} USD</p>
+									{#if info.fee}<p><strong>Fee:</strong> {info.fee} USD</p>{/if}
 									<p><strong>Apply at:</strong> evisa.mfa.gov.kz</p>
 								{:else}
 									<div class="visa-badge visa-check">⚠️ Check Requirements</div>

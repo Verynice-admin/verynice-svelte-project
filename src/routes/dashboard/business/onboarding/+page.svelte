@@ -34,7 +34,7 @@
 		{ value: 'other', label: 'Other', icon: '📍', desc: 'Other services' }
 	];
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) {
 			goto('/get-started');
 			return;

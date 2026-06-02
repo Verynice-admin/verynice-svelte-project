@@ -8,7 +8,7 @@
 	let loading = true;
 	let listings: any[] = [];
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) {
 			goto('/get-started');
 			return;

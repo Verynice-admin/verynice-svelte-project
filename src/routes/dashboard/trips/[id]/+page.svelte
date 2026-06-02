@@ -30,7 +30,8 @@
 			}
 
 			try {
-				const tripRef = doc(db, 'users', user.uid, 'trips', tripId);
+				if (!tripId) { error = 'Trip ID missing'; loading = false; return; }
+				const tripRef = doc(db!, 'users', user.uid, 'trips', tripId);
 				const tripDoc = await getDoc(tripRef);
 				
 				if (tripDoc.exists()) {
@@ -124,10 +125,10 @@
 	async function exportToCalendar() {
 		if (!trip) return;
 		
-		// Dynamic import ical-generator
-		const ical = await import('ical-generator');
-		
-		const calendar = ical.createCalendar({
+		// Dynamic import ical-generator (v10+: default export is the factory function)
+		const { default: icalFactory } = await import('ical-generator');
+
+		const calendar = icalFactory({
 			name: `${trip.name} - VERYNICE.kz`,
 			description: `Trip to ${trip.destination}`
 		});

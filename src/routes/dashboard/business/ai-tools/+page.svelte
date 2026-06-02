@@ -21,7 +21,7 @@
 		'history', 'wellness', 'outdoor', 'romantic', 'budget-friendly', 'luxury'
 	];
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) {
 			goto('/get-started');
 			return;

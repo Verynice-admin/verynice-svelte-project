@@ -76,18 +76,22 @@ export async function POST({ request, cookies }: { request: Request; cookies: { 
   if (!auth.ok) return auth.response;
   if (!adminDB) return json({ success: false, error: 'Firebase Admin not initialized' }, { status: 500 });
 
-  let body: any;
+  let rawBody: unknown;
   try {
-    body = await request.json();
+    rawBody = await request.json();
   } catch {
     return json({ success: false, error: 'Invalid JSON body' }, { status: 400 });
   }
+  if (!rawBody || typeof rawBody !== 'object') {
+    return json({ success: false, error: 'Invalid JSON body' }, { status: 400 });
+  }
+  const body = rawBody as Record<string, unknown>;
 
   const resourceType = typeof body?.type === 'string' ? body.type.trim() : '';
   const resourceId = typeof body?.id === 'string' ? body.id.trim() : '';
   const subcollection = typeof body?.sub === 'string' ? body.sub.trim() : '';
   const docId = typeof body?.docId === 'string' ? body.docId.trim() : '';
-  const data = body?.data;
+  const data = body.data;
 
   const mapping = RESOURCE_MAP[resourceType];
   if (!mapping) return json({ success: false, error: 'Unknown resource type' }, { status: 400 });
@@ -139,18 +143,22 @@ async function updateDoc(
   if (!auth.ok) return auth.response;
   if (!adminDB) return json({ success: false, error: 'Firebase Admin not initialized' }, { status: 500 });
 
-  let body: any;
+  let rawBody: unknown;
   try {
-    body = await request.json();
+    rawBody = await request.json();
   } catch {
     return json({ success: false, error: 'Invalid JSON body' }, { status: 400 });
   }
+  if (!rawBody || typeof rawBody !== 'object') {
+    return json({ success: false, error: 'Invalid JSON body' }, { status: 400 });
+  }
+  const body = rawBody as Record<string, unknown>;
 
   const resourceType = typeof body?.type === 'string' ? body.type.trim() : '';
   const resourceId = typeof body?.id === 'string' ? body.id.trim() : '';
   const subcollection = typeof body?.sub === 'string' ? body.sub.trim() : '';
   const subId = typeof body?.subId === 'string' ? body.subId.trim() : '';
-  const data = body?.data;
+  const data = body.data;
 
   const mapping = RESOURCE_MAP[resourceType];
   if (!mapping) return json({ success: false, error: 'Unknown resource type' }, { status: 400 });
@@ -187,12 +195,16 @@ export async function DELETE({ request, cookies }: { request: Request; cookies: 
   if (!auth.ok) return auth.response;
   if (!adminDB) return json({ success: false, error: 'Firebase Admin not initialized' }, { status: 500 });
 
-  let body: any;
+  let rawBody: unknown;
   try {
-    body = await request.json();
+    rawBody = await request.json();
   } catch {
     return json({ success: false, error: 'Invalid JSON body' }, { status: 400 });
   }
+  if (!rawBody || typeof rawBody !== 'object') {
+    return json({ success: false, error: 'Invalid JSON body' }, { status: 400 });
+  }
+  const body = rawBody as Record<string, unknown>;
 
   const resourceType = typeof body?.type === 'string' ? body.type.trim() : '';
   const resourceId = typeof body?.id === 'string' ? body.id.trim() : '';

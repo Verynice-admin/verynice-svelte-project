@@ -1,7 +1,11 @@
 import * as Sentry from '@sentry/sveltekit';
 
+// DSN is read from the environment — never hardcode credentials in source.
+// PUBLIC_SENTRY_DSN is set in Vercel environment variables and is already used
+// by hooks.client.ts. process.env is available before the SvelteKit $env system
+// initialises, making it the correct accessor for instrumentation bootstrap code.
 Sentry.init({
-  dsn: 'https://2efd4fb0bd1a9cd434b5533c9ea68ae5@o4511434392993792.ingest.de.sentry.io/4511434683646032',
+  dsn: process.env.PUBLIC_SENTRY_DSN,
   tracesSampleRate: 0.1,
   environment: process.env.NODE_ENV ?? 'production',
 });

@@ -79,7 +79,7 @@
 	// Notifications
 	let notifications: any[] = [];
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) {
 			goto('/get-started');
 			return;

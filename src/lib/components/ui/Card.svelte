@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	export let glass = false;
 	export let padding = 'md';
 	export let hover = false;

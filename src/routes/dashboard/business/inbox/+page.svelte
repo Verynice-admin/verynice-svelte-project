@@ -11,7 +11,7 @@
 	let replyText = '';
 	let sending = false;
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) { goto('/get-started'); return; }
 
 		const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {

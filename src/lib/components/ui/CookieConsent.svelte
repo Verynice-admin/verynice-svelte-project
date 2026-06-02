@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
+	import { CONSENT_KEY, CONSENT_VERSION, hasConsent } from '$lib/utils/cookieConsent';
 
-	const CONSENT_KEY = 'vn_cookie_consent';
-	const CONSENT_VERSION = '2';
+	// Re-export so existing callers of the named export still work.
+	export { hasConsent };
 
 	// Non-essential localStorage keys cleared on decline
 	const NON_ESSENTIAL_KEYS = ['vn_lang', 'vn_translation_cache'];
@@ -15,11 +15,18 @@
 		if (!stored) {
 			setTimeout(() => { visible = true; }, 800);
 		}
+
+		// Allow the footer "Cookie Preferences" button to re-open this banner.
+		const handleOpen = () => { visible = true; };
+		window.addEventListener('openCookiePreferences', handleOpen);
+		return () => window.removeEventListener('openCookiePreferences', handleOpen);
 	});
 
 	function accept() {
 		localStorage.setItem(CONSENT_KEY, JSON.stringify({ v: CONSENT_VERSION, decision: 'accepted', ts: new Date().toISOString() }));
 		visible = false;
+		// Notify the layout so analytics can be injected without a page reload.
+		window.dispatchEvent(new CustomEvent('cookieConsentAccepted'));
 	}
 
 	function decline() {
@@ -28,19 +35,20 @@
 		// Clear any non-essential data already stored
 		NON_ESSENTIAL_KEYS.forEach(k => localStorage.removeItem(k));
 		visible = false;
+
+		// GDPR Article 7(3): stop analytics tracking immediately on withdrawal.
+		// Vercel Analytics respects window.va = 'disable' to suppress future events.
+		// A page reload ensures the script is not re-injected (hasConsent() returns false).
+		if (typeof window !== 'undefined') {
+			try { (window as unknown as Record<string, unknown>)['va'] = 'disable'; } catch { /* ignore */ }
+		}
+		// Reload so any already-injected analytics script is removed from the page.
+		window.location.reload();
 	}
 
-	export function hasConsent(): boolean {
-		if (!browser) return false;
-		const raw = localStorage.getItem(CONSENT_KEY);
-		if (!raw) return false;
-		try {
-			const parsed = JSON.parse(raw);
-			return parsed?.decision === 'accepted' && parsed?.v === CONSENT_VERSION;
-		} catch {
-			// legacy plain-string value from v1
-			return raw === '1';
-		}
+	/** Re-opens the consent banner (used by cookie preference link in footer). */
+	export function reopenBanner() {
+		visible = true;
 	}
 </script>
 

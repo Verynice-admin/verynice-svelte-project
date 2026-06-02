@@ -24,7 +24,7 @@
 	let emailNewReview = true;
 	let emailWeeklyDigest = false;
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) { goto('/get-started'); return; }
 
 		const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {

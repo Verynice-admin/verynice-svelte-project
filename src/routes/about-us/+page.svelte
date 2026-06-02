@@ -41,6 +41,7 @@
 	<title>About Us | VeryNice.kz — The Reverse Borat Story</title>
 	<meta name="description" content="Learn about VeryNice.kz — the ultimate guide for tourists who came to study Kazakhstan. Created by Azamat Baidildayev and daughter Aliya Askar with the help of AI." />
 	<link rel="canonical" href="https://verynice.kz/about-us" />
+	<meta property="og:url" content="https://verynice.kz/about-us" />
 </svelte:head>
 
 <div class="doc-page">

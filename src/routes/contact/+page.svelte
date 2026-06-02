@@ -21,6 +21,7 @@
 	<title>Contact Us | VeryNice.kz</title>
 	<meta name="description" content="Get in touch with the VeryNice.kz team — Kazakhstan travel guide." />
 	<link rel="canonical" href="https://verynice.kz/contact" />
+	<meta property="og:url" content="https://verynice.kz/contact" />
 </svelte:head>
 
 <main id="main-content" class="contact-page">

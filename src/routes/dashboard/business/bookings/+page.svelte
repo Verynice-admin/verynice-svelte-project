@@ -20,7 +20,7 @@
 	let error = '';
 	let filter: 'all' | 'pending' | 'confirmed' | 'cancelled' | 'completed' = 'all';
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) {
 			goto('/get-started');
 			return;

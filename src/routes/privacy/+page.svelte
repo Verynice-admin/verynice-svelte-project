@@ -49,6 +49,7 @@
 	<meta name="description" content="Privacy Policy for VeryNice.kz — how we collect, use, protect, and share personal data under Kazakhstan Law No. 94-V, GDPR, and UK GDPR." />
 	<meta name="robots" content="noindex, follow" />
 	<link rel="canonical" href="https://verynice.kz/privacy" />
+	<meta property="og:url" content="https://verynice.kz/privacy" />
 </svelte:head>
 
 <div class="doc-page">

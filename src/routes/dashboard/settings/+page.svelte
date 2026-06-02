@@ -30,7 +30,7 @@
 	let show2FASetup = false;
 	let verificationCode = '';
 	
-	onMount(async () => {
+	onMount(() => {
 		if (!browser || !auth) {
 			goto('/get-started');
 			return;

@@ -20,7 +20,7 @@
 	let error = '';
 	let deleting: string | null = null;
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) {
 			goto('/get-started');
 			return;

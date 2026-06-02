@@ -150,6 +150,12 @@
 					<span class="sep" aria-hidden="true">·</span>
 					<a href={link.url} class="bottom-link">{link.text}</a>
 				{/each}
+				<span class="sep" aria-hidden="true">·</span>
+				<button
+					type="button"
+					class="bottom-link cookie-pref-btn"
+					on:click={() => window.dispatchEvent(new CustomEvent('openCookiePreferences'))}
+				>Cookie Preferences</button>
 			</div>
 			<div class="copyright">
 				{cfg.copyrightTemplate.replace('{year}', new Date().getFullYear())}
@@ -429,6 +435,15 @@
 	.bottom-link:hover {
 		opacity: 0.75;
 		text-decoration: underline;
+	}
+
+	/* Cookie preferences button inherits bottom-link styles but resets button defaults */
+	.cookie-pref-btn {
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		font-family: inherit;
 	}
 
 	/* Mobile */

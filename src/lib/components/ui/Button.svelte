@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	/**
 	 * @typedef {'primary' | 'secondary' | 'ghost' | 'danger'} Variant
 	 * @typedef {'sm' | 'md' | 'lg'} Size

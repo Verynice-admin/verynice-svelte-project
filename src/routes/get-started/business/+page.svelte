@@ -21,7 +21,7 @@
 	let isSigningIn = false;
 	let error = '';
 
-	onMount(async () => {
+	onMount(() => {
 		// Check for ?mode=register query param
 		const urlParams = new URLSearchParams(window.location.search);
 		if (urlParams.get('mode') === 'register') {

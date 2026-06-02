@@ -140,7 +140,7 @@
 
 			log('[Step 1b] Firebase instances ready');
 			
-			if (!auth || !db) {
+			if (!auth || !db || !googleProvider) {
 				authError = 'Firebase not initialized. Check configuration.';
 				console.error('[Google SignIn] Firebase not initialized:', { auth, db });
 				return;

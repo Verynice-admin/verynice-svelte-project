@@ -15,7 +15,7 @@
 	let topListings: any[] = [];
 	let recentViews: any[] = [];
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) {
 			goto('/get-started');
 			return;

@@ -56,7 +56,12 @@ export async function enforceRateLimit(options: {
         const data = snap.data();
 
         if (!data || data.resetAt.toMillis() <= now) {
-          tx.set(docRef, { count: 1, resetAt: new Date(now + windowMs) });
+          const resetAt = new Date(now + windowMs);
+          // expireAt is used by a Firestore TTL policy to auto-delete stale buckets.
+          // To enable: Firebase console → Firestore → Indexes → TTL policy → collection
+          // "_ratelimit", field "expireAt". Documents are deleted within 72 h of expiry.
+          const expireAt = new Date(now + windowMs + 24 * 60 * 60 * 1000);
+          tx.set(docRef, { count: 1, resetAt, expireAt });
           return { allowed: true };
         }
 

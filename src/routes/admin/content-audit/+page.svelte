@@ -92,7 +92,7 @@
   }
 
   // ── Load from Firestore ────────────────────────────────────────────────────
-  onMount(async () => {
+  onMount(() => {
     if (!browser) return;
 
     const auth = getFirebaseAuth();

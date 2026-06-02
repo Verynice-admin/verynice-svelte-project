@@ -95,7 +95,12 @@ const config = {
         'base-uri': ["'self'"],
         'form-action': ["'self'"],
         'frame-ancestors': ["'none'"],
-        'upgrade-insecure-requests': true
+        'upgrade-insecure-requests': true,
+        // CSP violations are reported to our own endpoint which logs them via
+        // the structured logger. This covers both legacy report-uri clients and
+        // Reporting API v1 (report-to) clients.
+        'report-uri': ['/api/csp-report'],
+        'report-to': ['csp-endpoint']
       }
     },
 

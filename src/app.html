@@ -40,7 +40,7 @@
 	<meta property="og:description"
 		content="Discover Kazakhstan's best attractions, rich history, and vibrant culture." />
 	<!-- 1200×630 social share image (proper OG dimensions) -->
-	<meta property="og:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta property="og:image" content="https://verynice.kz/assets/images/steppe_bacground.avif" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 	<meta property="og:locale" content="en_US" />
@@ -50,7 +50,7 @@
 	<meta name="twitter:title" content="VeryNice — Kazakhstan Travel Guide" />
 	<meta name="twitter:description"
 		content="Discover Kazakhstan's best attractions, rich history, and vibrant culture." />
-	<meta name="twitter:image" content="https://verynice.kz/assets/og-cover.jpg" />
+	<meta name="twitter:image" content="https://verynice.kz/assets/images/steppe_bacground.avif" />
 	<meta name="twitter:creator" content="@verynicekz" />
 
 	<!-- PWA -->
@@ -71,16 +71,19 @@
 	<a href="#main-content" class="skip-to-content">Skip to main content</a>
 	<div style="display: contents">%sveltekit.body%</div>
 	<script nonce="%sveltekit.nonce%">
-		// Service Worker — register after page load (no arbitrary delay)
+		// Service Worker — register after page load.
+		// updateViaCache: 'none' tells the browser to bypass its HTTP cache when
+		// fetching the SW script itself, so a new build is always detected.
+		// The ?v= query string is removed — Date.now() was causing a fresh
+		// registration attempt (and extra network round-trip) on every page load.
 		if ('serviceWorker' in navigator) {
 			window.addEventListener('load', () => {
-				const swUrl = '/service-worker.js?v=' + Date.now();
-				navigator.serviceWorker.register(swUrl, {
+				navigator.serviceWorker.register('/service-worker.js', {
 					scope: '/',
 					updateViaCache: 'none',
 					type: 'module'
 				}).then(reg => {
-					// Check for updates every hour
+					// Hourly update check as a safety net for long-lived tabs.
 					setInterval(() => reg.update(), 3600000);
 				}).catch(() => {
 					// SW registration failure is non-critical

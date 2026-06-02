@@ -56,6 +56,7 @@
 	<meta name="description" content="Terms of Use for VeryNice.kz — rules governing use of the Kazakhstan travel guide platform, including user accounts, business listings, advertising, and personal data." />
 	<meta name="robots" content="noindex, follow" />
 	<link rel="canonical" href="https://verynice.kz/terms" />
+	<meta property="og:url" content="https://verynice.kz/terms" />
 </svelte:head>
 
 <div class="doc-page">

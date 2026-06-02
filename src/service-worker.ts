@@ -31,6 +31,16 @@ self.addEventListener('activate', (event) => {
 	event.waitUntil(deleteOldCaches());
 });
 
+// Routes that must NEVER be cached — they serve authenticated or session-specific content.
+// Caching these on a shared device would expose one user's data to the next.
+const NEVER_CACHE_PREFIXES = [
+	'/admin',
+	'/dashboard',
+	'/api/',
+	'/get-started',
+	'/demo',
+];
+
 self.addEventListener('fetch', (event) => {
 	// Ignore non-GET requests and non-http(s) requests (like chrome-extension://)
 	if (event.request.method !== 'GET') return;
@@ -40,6 +50,10 @@ self.addEventListener('fetch', (event) => {
 	// Never intercept cross-origin requests (Firebase, Cloudinary, Google APIs, etc.)
 	// cache.put() on cross-origin responses causes network errors in the browser
 	if (url.origin !== self.location.origin) return;
+
+	// Pass authenticated / session-specific routes straight to the network —
+	// never store their responses in the cache.
+	if (NEVER_CACHE_PREFIXES.some((prefix) => url.pathname.startsWith(prefix))) return;
 
 	async function respond() {
 		const cache = await caches.open(CACHE_NAME);

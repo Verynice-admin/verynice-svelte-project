@@ -5,7 +5,7 @@ vi.mock('$lib/server/rateLimit', () => ({
     enforceRateLimit: vi.fn().mockResolvedValue({ allowed: true })
 }));
 vi.mock('$lib/server/aiService', () => ({
-    translateSegments: vi.fn().mockResolvedValue([{ id: '1', text: 'Translated text' }])
+    translateSegments: vi.fn().mockResolvedValue([{ id: '1', translated: 'Translated text' }])
 }));
 
 import { POST } from '../../src/routes/api/translate/+server';
@@ -27,7 +27,7 @@ async function callPost(body: unknown): Promise<Response> {
 describe('POST /api/translate', () => {
     beforeEach(() => {
         vi.mocked(enforceRateLimit).mockResolvedValue({ allowed: true });
-        vi.mocked(translateSegments).mockResolvedValue([{ id: '1', text: 'Translated' }]);
+        vi.mocked(translateSegments).mockResolvedValue([{ id: '1', translated: 'Translated' }]);
     });
 
     it('returns 200 with translations for valid input', async () => {

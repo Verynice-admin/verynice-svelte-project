@@ -7,6 +7,7 @@
 	import TimeWeatherDock from '$components/features/widgets/TimeWeatherDock.svelte';
 	import SearchModal from '$components/features/search/SearchModal.svelte';
 	import CookieConsent from '$lib/components/ui/CookieConsent.svelte';
+	import { hasConsent } from '$lib/utils/cookieConsent';
 	// Lazy load non-critical components for better performance
 	import { onMount, onDestroy, tick } from 'svelte';
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
@@ -17,6 +18,7 @@
 	import { translatePageTo, translationStatus } from '$lib/services/aiTranslator';
 	import { getFirebaseAuth } from '$lib/firebase';
 	import { onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
+	import { page } from '$app/stores';
 	import type { LayoutData } from './$types';
 	export let data: LayoutData;
 	const headerConfig = data.headerConfig ?? {};
@@ -25,9 +27,12 @@
 	// Keep <html lang> in sync with the active language
 	$: if (browser) document.documentElement.lang = ($currentLanguage as string).toLowerCase();
 
-	// Lazy loaded components
-	let BackToTop: any;
-	let TranslationProgressBar: any;
+	// Lazy-loaded Svelte components. Typed loosely so svelte:component accepts them;
+	// each import resolves to a Svelte component constructor at runtime.
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	let BackToTop: any = undefined;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	let TranslationProgressBar: any = undefined;
 	let componentsLoaded = false;
 	
 	// Session timeout state
@@ -95,20 +100,32 @@
 		});
 	}
 
-	// Lazy load non-critical components after initial render
-	onMount(async () => {
-		// Vercel observability — client-only, no-ops outside Vercel deployments
+	/** Inject Vercel observability — only after the user has accepted cookies (GDPR). */
+	function injectObservability() {
 		injectAnalytics({ mode: 'auto' });
 		injectSpeedInsights();
+	}
+
+	// Lazy load non-critical components after initial render
+	onMount(() => {
+		// Vercel observability — only injected when consent has been granted.
+		// If the user already accepted on a previous visit, inject immediately.
+		// Otherwise, the 'cookieConsentAccepted' event from CookieConsent.svelte
+		// triggers injection the moment the user clicks Accept.
+		if (hasConsent()) {
+			injectObservability();
+		} else {
+			window.addEventListener('cookieConsentAccepted', injectObservability, { once: true });
+		}
 		// Register openSearch listener with cleanup
 		const handleOpenSearch = () => { isSearchOpen = true; };
 		window.addEventListener('openSearch', handleOpenSearch);
 
 		// Session timeout variables
-		let idleTimer: any = null;
-		let sessionTimer: any = null;
-		let countdownInterval: any = null;
-		let authUnsubscribe: any = null;
+		let idleTimer: ReturnType<typeof setTimeout> | undefined;
+		let sessionTimer: ReturnType<typeof setTimeout> | undefined;
+		let countdownInterval: ReturnType<typeof setInterval> | undefined;
+		let authUnsubscribe: (() => void) | undefined;
 		
 		// Session timeout constants (in milliseconds)
 		const WARNING_TIME = 5 * 60 * 1000; // 5 minutes
@@ -137,15 +154,18 @@
 				sessionTimer = setTimeout(async () => {
 					try {
 						const auth = getFirebaseAuth();
-						if (auth) {
-							await firebaseSignOut(auth);
-							console.log('[Session] Timed out, signed out');
-							goto('/');
-						}
-					} catch (e) {
-						console.error('[Session] Sign out failed:', e);
-						goto('/');
+						if (auth) await firebaseSignOut(auth);
+					} catch {
+						// Firebase client sign-out failure is non-fatal; proceed to server logout
 					}
+					try {
+						// Revoke the server-side __session cookie so the cookie cannot be
+						// replayed after the client-side timeout has fired.
+						await fetch('/api/auth/logout', { method: 'POST' });
+					} catch {
+						// Network failure during logout — still navigate away
+					}
+					goto('/');
 				}, MAX_SESSION_TIME);
 			}
 		}
@@ -218,6 +238,7 @@
 		// Cleanup function - returned at the END of onMount
 		return () => {
 			window.removeEventListener('openSearch', handleOpenSearch);
+			window.removeEventListener('cookieConsentAccepted', injectObservability);
 			if (authUnsubscribe) authUnsubscribe();
 			activityEvents.forEach(event => {
 				window.removeEventListener(event, handleUserActivity);
@@ -246,7 +267,7 @@
 			autocapitalize="off"
 			spellcheck="false"
 			placeholder="Ask I-Borat anything about Kazakhstan! Wawaweewa! 🤙"
-			aria-label="Search"
+			aria-label="Search Kazakhstan travel information"
 			bind:this={searchInput}
 			bind:value={searchQuery}
 			on:focus={() => isSearchOpen = true}
@@ -288,7 +309,11 @@
 				<button class="btn-primary" on:click={() => { showTimeoutWarning = false; }}>
 					Stay Logged In
 				</button>
-				<button class="btn-secondary" on:click={() => goto('/')}>
+				<button class="btn-secondary" on:click={async () => {
+					try { const auth = getFirebaseAuth(); if (auth) await firebaseSignOut(auth); } catch { /* non-fatal */ }
+					try { await fetch('/api/auth/logout', { method: 'POST' }); } catch { /* non-fatal */ }
+					goto('/');
+				}}>
 					Sign Out
 				</button>
 			</div>

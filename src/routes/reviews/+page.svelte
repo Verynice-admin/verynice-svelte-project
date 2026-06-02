@@ -275,6 +275,8 @@
 <svelte:head>
   <title>Reviews — VeryNice Kazakhstan</title>
   <meta name="description" content="Read and write reviews for destinations across Kazakhstan." />
+  <link rel="canonical" href="https://verynice.kz/reviews" />
+  <meta property="og:url" content="https://verynice.kz/reviews" />
 </svelte:head>
 
 <div class="reviews-page">
@@ -393,8 +395,8 @@
 
               <!-- Star Rating -->
               <div class="form-group">
-                <label class="form-label">Rating *</label>
-                <div class="star-input">
+                <p class="form-label" aria-hidden="true">Rating *</p>
+                <div class="star-input" role="group" aria-label="Star rating">
                   {#each [1, 2, 3, 4, 5] as star}
                     <button
                       type="button"

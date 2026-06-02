@@ -14,7 +14,7 @@
 	let businessVerified = false;
 	let notificationsCount = 0;
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) {
 			goto('/get-started');
 			return;

@@ -172,7 +172,7 @@ function splitSegmentsByTokenBudget(
     return chunks;
 }
 
-type RawTranslation = { id: unknown; translated: unknown };
+type RawTranslation = Record<string, unknown>;
 
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
 
@@ -334,7 +334,12 @@ async function callGroqTranslation(
         });
 
         if (response.status === 429 && retryCount < 2) {
-            const waitMs = 1000 * (retryCount + 1);
+            // Honour the Retry-After header if present; fall back to linear back-off.
+            const retryAfterHeader = response.headers.get('retry-after');
+            const retryAfterSec = retryAfterHeader ? parseFloat(retryAfterHeader) : NaN;
+            const waitMs = Number.isFinite(retryAfterSec) && retryAfterSec > 0
+                ? Math.min(retryAfterSec * 1000, 30_000)
+                : 1000 * (retryCount + 1);
             logger.warn('[ai] Groq rate limit hit, retrying', { attempt: retryCount + 1, waitMs });
             await new Promise(r => setTimeout(r, waitMs));
             return callGroqTranslation(targetLanguage, segments, retryCount + 1);
@@ -615,7 +620,7 @@ export async function getCoordinates(query: string): Promise<{ lat: number, lng:
     }
 }
 
-export async function processComment(rawText: string): Promise<{ correctedText: string, isOffensive: boolean } | null> {
+export async function processComment(rawText: string): Promise<{ correctedText: string | null, isOffensive: boolean } | null> {
     if (!GROQ_API_KEY) {
         logger.error('[ai] GROQ_API_KEY is missing');
         return null;

@@ -22,7 +22,7 @@
 		return () => document.body.classList.remove('premium-theme-page');
 	});
 
-	onMount(async () => {
+	onMount(() => {
 		if (browser) {
 			const { default: mermaid } = await import('mermaid');
 			mermaid.initialize({

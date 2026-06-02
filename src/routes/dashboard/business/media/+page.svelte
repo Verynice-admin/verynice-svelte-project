@@ -6,7 +6,7 @@
 
 	let loading = true;
 
-	onMount(async () => {
+	onMount(() => {
 		if (!auth) { goto('/get-started'); return; }
 		const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
 			if (!firebaseUser) { goto('/get-started'); return; }

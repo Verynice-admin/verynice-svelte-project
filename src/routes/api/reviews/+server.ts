@@ -19,7 +19,7 @@ function sanitize(input: string, maxLength: number): string {
   return input.replace(/[<>"'&]/g, '').trim().slice(0, maxLength);
 }
 
-function validateReviewPayload(body: any): {
+function validateReviewPayload(body: unknown): {
   title: string;
   body: string;
   rating: number;
@@ -27,12 +27,13 @@ function validateReviewPayload(body: any): {
   author: string;
 } | null {
   if (!body || typeof body !== 'object') return null;
+  const b = body as Record<string, unknown>;
 
-  const postId = typeof body.postId === 'string' ? body.postId.trim() : '';
-  const title = typeof body.title === 'string' ? body.title.trim() : '';
-  const reviewBody = typeof body.body === 'string' ? body.body.trim() : '';
-  const rating = typeof body.rating === 'number' ? body.rating : 0;
-  const author = typeof body.author === 'string' ? body.author.trim() : 'Anonymous';
+  const postId = typeof b.postId === 'string' ? b.postId.trim() : '';
+  const title = typeof b.title === 'string' ? b.title.trim() : '';
+  const reviewBody = typeof b.body === 'string' ? b.body.trim() : '';
+  const rating = typeof b.rating === 'number' ? b.rating : 0;
+  const author = typeof b.author === 'string' ? b.author.trim() : 'Anonymous';
 
   if (!postId || !POST_ID_PATTERN.test(postId)) return null;
   if (!title || title.length > MAX_TITLE_LENGTH) return null;
@@ -75,7 +76,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     return json({ error: 'Server configuration unavailable' }, { status: 503 });
   }
 
-  let parsed: any;
+  let parsed: unknown;
   try {
     parsed = await request.json();
   } catch {
@@ -232,12 +233,16 @@ export const PUT: RequestHandler = async ({ request, cookies }) => {
     return json({ error: 'Server configuration unavailable' }, { status: 503 });
   }
 
-  let parsed: any;
+  let rawPut: unknown;
   try {
-    parsed = await request.json();
+    rawPut = await request.json();
   } catch {
     return json({ error: 'Invalid request body' }, { status: 400 });
   }
+  if (!rawPut || typeof rawPut !== 'object') {
+    return json({ error: 'Invalid request body' }, { status: 400 });
+  }
+  const parsed = rawPut as Record<string, unknown>;
 
   const reviewId = typeof parsed.reviewId === 'string' ? parsed.reviewId.trim() : '';
   const postId = typeof parsed.postId === 'string' ? parsed.postId.trim() : '';
@@ -263,7 +268,7 @@ export const PUT: RequestHandler = async ({ request, cookies }) => {
   }
 
   // Build update object — only allow updating specific fields
-  const updates: Record<string, any> = {
+  const updates: Record<string, string | number | ReturnType<typeof Timestamp.now>> = {
     updatedAt: Timestamp.now()
   };
 
@@ -324,15 +329,19 @@ export const DELETE: RequestHandler = async ({ request, cookies }) => {
     return json({ error: 'Server configuration unavailable' }, { status: 503 });
   }
 
-  let parsed: any;
+  let rawDel: unknown;
   try {
-    parsed = await request.json();
+    rawDel = await request.json();
   } catch {
     return json({ error: 'Invalid request body' }, { status: 400 });
   }
+  if (!rawDel || typeof rawDel !== 'object') {
+    return json({ error: 'Invalid request body' }, { status: 400 });
+  }
+  const parsedDel = rawDel as Record<string, unknown>;
 
-  const reviewId = typeof parsed.reviewId === 'string' ? parsed.reviewId.trim() : '';
-  const postId = typeof parsed.postId === 'string' ? parsed.postId.trim() : '';
+  const reviewId = typeof parsedDel.reviewId === 'string' ? parsedDel.reviewId.trim() : '';
+  const postId = typeof parsedDel.postId === 'string' ? parsedDel.postId.trim() : '';
 
   if (!reviewId || !REVIEW_ID_PATTERN.test(reviewId)) {
     return json({ error: 'Valid reviewId is required' }, { status: 400 });
