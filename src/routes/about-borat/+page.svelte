@@ -813,34 +813,46 @@
 
 	/* RESPONSIVE */
 	@media (max-width: 900px) {
-		.timeline-spine {
-			left: 2rem;
+		/* Hide spine and nodes entirely on mobile */
+		.timeline-spine,
+		.timeline-node {
+			display: none;
 		}
 
-		.timeline-node {
-			left: 2rem;
+		.timeline {
+			padding: 2rem 0;
+			gap: 1.5rem;
 		}
 
 		.timeline-card-wrapper {
-			justify-content: flex-start;
-			padding-left: 4rem; /* Space for spine */
-			margin-bottom: 2rem;
+			justify-content: center;
+			padding-left: 0;
+			margin-bottom: 0;
 		}
 
+		/* Full-width clean cards — no left/right borders or transforms */
 		.timeline-card-wrapper.left .timeline-card-glass,
 		.timeline-card-wrapper.right .timeline-card-glass {
 			width: 100%;
 			margin: 0;
 			transform: none;
 			text-align: left;
-			border-left: 4px solid #374151;
-			border-right: 1px solid #e2e8f0;
+			border-left: none;
+			border-right: none;
+			border-top: 3px solid var(--vnk-accent-color, #FBBF24);
+			border-bottom: none;
+			border-radius: 16px;
+			padding: 1.75rem 1.25rem;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 		}
 
-		/* Remove hover transforms on mobile for simplicity */
 		.timeline-card-wrapper.left .timeline-card-glass:hover,
 		.timeline-card-wrapper.right .timeline-card-glass:hover {
 			transform: none;
+		}
+
+		.card-title {
+			font-size: 1.4rem;
 		}
 
 		.hero-text-box h1 {
