@@ -811,52 +811,5 @@
 		height: 100%;
 	}
 
-	/* RESPONSIVE */
-	@media (max-width: 900px) {
-		/* Hide spine and nodes entirely on mobile */
-		.timeline-spine,
-		.timeline-node {
-			display: none;
-		}
-
-		.timeline {
-			padding: 2rem 0;
-			gap: 1.5rem;
-		}
-
-		.timeline-card-wrapper {
-			justify-content: center;
-			padding-left: 0;
-			margin-bottom: 0;
-		}
-
-		/* Full-width clean cards — no left/right borders or transforms */
-		.timeline-card-wrapper.left .timeline-card-glass,
-		.timeline-card-wrapper.right .timeline-card-glass {
-			width: 100%;
-			margin: 0;
-			transform: none;
-			text-align: left;
-			border-left: none;
-			border-right: none;
-			border-top: 3px solid var(--vnk-accent-color, #FBBF24);
-			border-bottom: none;
-			border-radius: 16px;
-			padding: 1.75rem 1.25rem;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-		}
-
-		.timeline-card-wrapper.left .timeline-card-glass:hover,
-		.timeline-card-wrapper.right .timeline-card-glass:hover {
-			transform: none;
-		}
-
-		.card-title {
-			font-size: 1.4rem;
-		}
-
-		.hero-text-box h1 {
-			font-size: 3rem;
-		}
-	}
+	/* Mobile styles are handled globally in src/styles/responsive.css */
 </style>

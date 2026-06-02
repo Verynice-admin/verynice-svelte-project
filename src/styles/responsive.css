@@ -543,6 +543,47 @@ h3, .timeline-body :global(h3), .prose :global(h3) {
   button, a.button, .faq-btn {
     min-height: 48px;
   }
+
+  /* ── BORAT / PREMIUM TIMELINE — mobile clean cards ── */
+  .timeline-spine,
+  .timeline-node {
+    display: none !important;
+  }
+
+  .timeline-container-premium .timeline {
+    padding: 1.5rem 0 !important;
+    gap: 1.25rem !important;
+  }
+
+  .timeline-card-wrapper {
+    justify-content: center !important;
+    padding-left: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .timeline-card-wrapper.left .timeline-card-glass,
+  .timeline-card-wrapper.right .timeline-card-glass {
+    width: 100% !important;
+    margin: 0 !important;
+    transform: none !important;
+    text-align: left !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: 3px solid #FBBF24 !important;
+    border-bottom: none !important;
+    border-radius: 16px !important;
+    padding: 1.5rem 1rem !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07) !important;
+  }
+
+  .timeline-card-wrapper.left .timeline-card-glass:hover,
+  .timeline-card-wrapper.right .timeline-card-glass:hover {
+    transform: none !important;
+  }
+
+  .timeline-card-glass .card-title {
+    font-size: 1.3rem !important;
+  }
 }
 
 /* ========================================= */
