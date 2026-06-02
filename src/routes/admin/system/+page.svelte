@@ -20,8 +20,12 @@
   let feat = { ...data.features };
   let saving = false;
 
+  // Narrow to boolean-only keys so bind:checked receives boolean, not string | boolean.
+  // maintenanceMessage is a string field and is handled separately below.
+  type BooleanFeatureKey = 'commentsEnabled' | 'reviewsEnabled' | 'translationsEnabled' | 'aiChatEnabled' | 'likesEnabled' | 'maintenanceMode';
+
   const FLAGS: {
-    key: keyof typeof feat;
+    key: BooleanFeatureKey;
     label: string;
     what: string;
     scope: string;

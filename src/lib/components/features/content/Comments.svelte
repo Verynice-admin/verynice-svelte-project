@@ -188,7 +188,7 @@
 			console.error('Error submitting comment:', err);
 			submitMessage = 'error';
 			pendingComment = null;
-			alert('Failed to post comment: ' + (err.message || 'Unknown error'));
+			alert('Failed to post comment: ' + (err instanceof Error ? err.message : 'Unknown error'));
 		} finally {
 			isSubmitting = false;
 		}

@@ -53,7 +53,7 @@
 			return L;
 		} catch (err) {
 			console.error('[Map] Failed to load Leaflet:', err);
-			leafletError = err.message || 'Failed to load map library';
+			leafletError = err instanceof Error ? err.message : 'Failed to load map library';
 			mapState = 'error';
 			throw err;
 		}
@@ -70,7 +70,7 @@
 			await loadLeaflet();
 		} catch (err) {
 			console.error('[Map] Leaflet load failed:', err);
-			errorMessage = 'Failed to load map library: ' + (err.message || 'Unknown error');
+			errorMessage = 'Failed to load map library: ' + (err instanceof Error ? err.message : 'Unknown error');
 			mapState = 'error';
 			return;
 		}
@@ -182,7 +182,7 @@
 
   		} catch (error) {
   			console.error('[Map] Error initializing map:', error);
-  			errorMessage = `Map unavailable: ${error.message}`;
+  			errorMessage = `Map unavailable: ${error instanceof Error ? error.message : 'Unknown error'}`;
   			mapState = 'error';
   		}
   	}

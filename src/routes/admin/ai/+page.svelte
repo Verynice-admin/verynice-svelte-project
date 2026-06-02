@@ -56,8 +56,11 @@
     },
   ];
 
+  // Narrow to boolean-only keys so bind:checked receives boolean, not string | boolean.
+  type BooleanAiKey = 'commentModerationEnabled' | 'editorialRewriteEnabled' | 'translationEnabled' | 'aiChatEnabled';
+
   const toggles: {
-    key: keyof typeof cfg;
+    key: BooleanAiKey;
     label: string;
     what: string;
     impact: string;

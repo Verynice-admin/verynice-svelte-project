@@ -5,6 +5,13 @@
 	import { onAuthStateChanged } from 'firebase/auth';
 	import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 
+	interface Listing {
+		id: string;
+		title?: string;
+		views: number;
+		bookings: number;
+	}
+
 	let loading = true;
 	let stats = {
 		totalViews: 0,
@@ -12,8 +19,8 @@
 		avgRating: 0,
 		totalReviews: 0
 	};
-	let topListings: any[] = [];
-	let recentViews: any[] = [];
+	let topListings: Listing[] = [];
+	let recentViews: Listing[] = [];
 
 	onMount(() => {
 		if (!auth) {
@@ -42,11 +49,19 @@
 				where('businessId', '==', uid)
 			);
 			const listingsSnap = await getDocs(listingsQuery);
-			const listings = listingsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+			const listings: Listing[] = listingsSnap.docs.map(d => {
+				const data = d.data();
+				return {
+					id: d.id,
+					title: data.title as string | undefined,
+					views: (data.views as number) || 0,
+					bookings: (data.bookings as number) || 0,
+				};
+			});
 
-			// Calculate stats
-			stats.totalViews = listings.reduce((sum, l) => sum + (l.views || 0), 0);
-			stats.totalBookings = listings.reduce((sum, l) => sum + (l.bookings || 0), 0);
+			// Calculate stats — views/bookings already normalised to number in the map above
+			stats.totalViews = listings.reduce((sum, l) => sum + l.views, 0);
+			stats.totalBookings = listings.reduce((sum, l) => sum + l.bookings, 0);
 
 			// Get reviews for this business
 			const reviewsQuery = query(
@@ -61,8 +76,8 @@
 				stats.avgRating = sum / reviews.length;
 			}
 
-			// Top listings by views
-			topListings = listings.sort((a, b) => (b.views || 0) - (a.views || 0)).slice(0, 5);
+			// Top listings by views — views is typed as number so no || 0 guard needed
+			topListings = listings.sort((a, b) => b.views - a.views).slice(0, 5);
 
 		} catch (err) {
 			console.error('Error loading analytics:', err);

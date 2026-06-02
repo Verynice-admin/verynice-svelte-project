@@ -6,10 +6,12 @@
 	import VideoEmbed from '$components/features/content/VideoEmbed.svelte';
 	import SplashScreen from '$components/features/ui-elements/SplashScreen.svelte';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	export let data: import('./$types').PageData;
 	$: homepage = data?.homepage;
-	$: sliders = data?.sliders;
+
+	// SliderItems represents the shape returned by the homepage server load function.
+	type SliderItems = Record<string, Array<{ id: string; title: string; slug: string; [key: string]: unknown }>>;
+	$: sliders = data?.sliders as SliderItems | undefined;
 
 	let scrollY = 0;
 	let innerWidth = 0;
@@ -29,7 +31,7 @@
 		? getCloudinaryUrl(homepage.featuredDestination.imagePublicId, { width: 1200, crop: 'fill' })
 		: '';
 
-	function handleSearch(e) {
+	function handleSearch(e: SubmitEvent) {
 		const formData = new FormData(e.target);
 		const q = formData.get('q');
 		if (q) window.location.href = `/search?q=${encodeURIComponent(q.toString())}`;
