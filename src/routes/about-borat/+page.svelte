@@ -333,10 +333,19 @@
 							</div>
 						{/if}
 					</div>
-					<button class="hero-search-btn" on:click={openSearch}>
-						<span class="search-icon">🔍</span>
-						<span>Search or ask anything...</span>
-					</button>
+					<div class="hero-search-block">
+						<button class="hero-search-bar" on:click={openSearch} aria-label="Open search">
+							<svg class="hero-search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+							<span class="hero-search-placeholder">Jagshemash! Ask I-Borat anything about Kazakhstan! Wawaweewa! 🤙</span>
+							<span class="hero-search-cta">Search</span>
+						</button>
+						<div class="hero-search-chips">
+							<span class="chips-label">Popular:</span>
+							{#each ['Borat Film', 'Romania or Kazakhstan?', 'Famous Quotes', 'Real Kazakhstan', 'Sacha Baron Cohen'] as chip}
+								<button class="search-chip" on:click={openSearch}>{chip}</button>
+							{/each}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -486,32 +495,114 @@
 		margin: 0 auto;
 	}
 
-	/* Hero Search Button */
-	.hero-search-btn {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		background: rgba(255, 255, 255, 0.1);
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		border-radius: 50px;
-		padding: 0.875rem 1.5rem;
-		color: rgba(255, 255, 255, 0.7);
-		font-size: 1rem;
-		cursor: pointer;
-		transition: all 0.3s ease;
-		margin-top: 2rem;
-		max-width: 400px;
+	/* Hero Search Block */
+	.hero-search-block {
+		margin-top: 2.5rem;
+		width: 100%;
+		max-width: 680px;
 	}
 
-	.hero-search-btn:hover {
-		background: rgba(255, 255, 255, 0.15);
-		border-color: rgba(255, 255, 255, 0.3);
-		color: #fff;
+	.hero-search-bar {
+		display: flex;
+		align-items: center;
+		gap: 0;
+		width: 100%;
+		background: #fff;
+		border: none;
+		border-radius: 14px;
+		padding: 0;
+		cursor: pointer;
+		box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.2);
+		overflow: hidden;
+		transition: box-shadow 0.2s ease, transform 0.2s ease;
+	}
+
+	.hero-search-bar:hover {
+		box-shadow: 0 12px 50px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.25);
 		transform: translateY(-2px);
 	}
 
-	.hero-search-btn .search-icon {
-		font-size: 1.25rem;
+	.hero-search-icon {
+		flex-shrink: 0;
+		margin: 0 0.75rem 0 1.25rem;
+		color: #64748b;
+	}
+
+	.hero-search-placeholder {
+		flex: 1;
+		text-align: left;
+		padding: 1.1rem 0.5rem;
+		font-size: 1.05rem;
+		color: #94a3b8;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-family: inherit;
+	}
+
+	.hero-search-cta {
+		flex-shrink: 0;
+		background: #1e3a5f;
+		color: #fff;
+		font-size: 0.9rem;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+		padding: 1.1rem 1.6rem;
+		align-self: stretch;
+		display: flex;
+		align-items: center;
+		transition: background 0.2s ease;
+	}
+
+	.hero-search-bar:hover .hero-search-cta {
+		background: #14283f;
+	}
+
+	/* Quick-search chips */
+	.hero-search-chips {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 1rem;
+	}
+
+	.chips-label {
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.6);
+		font-weight: 500;
+		margin-right: 0.25rem;
+	}
+
+	.search-chip {
+		background: rgba(255, 255, 255, 0.12);
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		border-radius: 50px;
+		color: rgba(255, 255, 255, 0.9);
+		font-size: 0.78rem;
+		font-weight: 500;
+		padding: 0.3rem 0.85rem;
+		cursor: pointer;
+		transition: background 0.2s ease, border-color 0.2s ease;
+		font-family: inherit;
+	}
+
+	.search-chip:hover {
+		background: rgba(255, 255, 255, 0.22);
+		border-color: rgba(255, 255, 255, 0.45);
+	}
+
+	@media (max-width: 600px) {
+		.hero-search-block {
+			max-width: 100%;
+		}
+		.hero-search-placeholder {
+			font-size: 0.88rem;
+		}
+		.hero-search-cta {
+			padding: 1rem 1.1rem;
+			font-size: 0.82rem;
+		}
 	}
 
 	/* TIMELINE CONTAINER */

@@ -2,6 +2,7 @@ import { sequence } from '@sveltejs/kit/hooks';
 import type { Handle } from '@sveltejs/kit';
 import * as Sentry from '@sentry/sveltekit';
 import { verifyFirebaseSessionCookie } from '$lib/server/sessionAuth';
+import { enforceRateLimit } from '$lib/server/rateLimit';
 
 // Sentry.init() is called in src/instrumentation.server.ts (loaded first via experimental.instrumentation.server).
 // Do NOT call Sentry.init() here — a second init with undefined DSN re-registers the OTel TracerProvider and throws.
@@ -51,13 +52,20 @@ const securityHandle: Handle = async ({ event, resolve }) => {
 	// for prerendered pages — before this handle runs. Do not set it here.
 	response.headers.set('X-DNS-Prefetch-Control', 'on');
 
+	// Admin routes: tell crawlers to never index even if they bypass robots.txt
+	if (event.url.pathname.startsWith('/admin')) {
+		response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+	}
+
 	// Cache control
 	if (event.url.pathname.startsWith('/_app/') || event.url.pathname.startsWith('/vendor/')) {
 		response.headers.set('Cache-Control', 'public, max-age=31536000, immutable');
-	} else if (event.url.pathname.startsWith('/api/auth/')) {
-		// Auth endpoints must never be cached — they set/clear session cookies.
-		// no-store prevents every layer (browser, CDN, proxy) from retaining the response.
-		response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+	} else if (
+		event.url.pathname.startsWith('/api/auth/') ||
+		event.url.pathname.startsWith('/admin')
+	) {
+		// Auth endpoints and admin pages must never be cached by any layer.
+		response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
 		response.headers.set('Pragma', 'no-cache');
 	} else if (!event.url.pathname.startsWith('/api/')) {
 		response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=300, must-revalidate');
@@ -66,4 +74,26 @@ const securityHandle: Handle = async ({ event, resolve }) => {
 	return response;
 };
 
-export const handle = sequence(Sentry.sentryHandle(), authHandle, securityHandle);
+// Rate-limits brute-force scanning of /admin/* routes (30 req/min per IP).
+// Runs before the auth check so attackers can't probe route existence.
+const adminRateLimitHandle: Handle = async ({ event, resolve }) => {
+	if (!event.url.pathname.startsWith('/admin')) return resolve(event);
+
+	const rate = await enforceRateLimit({
+		request: event.request,
+		scope: 'admin-route',
+		maxRequests: 30,
+		windowMs: 60_000,
+	});
+
+	if (!rate.allowed) {
+		return new Response('Too many requests', {
+			status: 429,
+			headers: { 'Retry-After': String(rate.retryAfterSeconds) },
+		});
+	}
+
+	return resolve(event);
+};
+
+export const handle = sequence(Sentry.sentryHandle(), authHandle, adminRateLimitHandle, securityHandle);

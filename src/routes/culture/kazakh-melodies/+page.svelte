@@ -107,14 +107,6 @@
 		</section>
 
 		{#if sections && sections.length}
-			<nav class="category-nav" aria-label="Jump to section">
-				{#each sections as section (section.id)}
-					<a href="#{section.id}" class="category-nav-link" on:click={(e) => scrollToSection(e, section.id)}>
-						<span class="nav-icon">{sectionCodes[section.id] || 'Music'}</span>
-						<span class="nav-text">{section.title}</span>
-					</a>
-				{/each}
-			</nav>
 
 			{#each sections as section (section.id)}
 				<section class="category-section" id={section.id}>
@@ -177,8 +169,7 @@
 	.category-image-wrapper { margin: 2rem 0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); background: #f8f9fa; padding: 0.5rem; }
 	.category-image-wrapper img { width: 100%; height: auto; display: block; border-radius: 8px; }
 	.category-image-wrapper p { font-size: 1rem; font-weight: 600; margin: 0.75rem 0 0.25rem; text-align: center; color: #333; }
-	.category-image { width: 100%; height: auto; display: block; }
-	.category-content { text-align: left; max-width: 800px; margin: 0 auto; background-color: transparent; padding: 0; border-radius: 0; }
+	.category-image { width: 100%; height: auto; display: block; }	.category-content { text-align: left; max-width: 100%; margin: 0 auto; background-color: transparent; padding: 0; border-radius: 0; }
 	.category-content :global(h3) { color: #000000; font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; }
 	.category-content :global(p) { margin-bottom: 1rem; line-height: 1.8; color: #000000; background-color: transparent; padding: 0; border-radius: 0; display: block; max-width: 100%; }
 	.category-content :global(p:last-child) { margin-bottom: 0; }
@@ -191,4 +182,6 @@
 	.gallery-item img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; display: block; }
 	.gallery-item p { font-size: 0.9rem; font-weight: 600; margin: 0.75rem 0 0.25rem; text-align: center; color: #333; }
 	@media (max-width: 768px) { .category-nav { gap: 0.5rem; } .category-nav-link { padding: 0.5rem 0.75rem; font-size: 0.8rem; } .category-section { padding: 1.5rem; } .category-title { font-size: 1.5rem; } }
+
+	:global(.category-content.prose) { max-width: none !important; }
 </style>

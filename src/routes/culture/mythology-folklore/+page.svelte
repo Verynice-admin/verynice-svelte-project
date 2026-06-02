@@ -117,14 +117,6 @@
 		</section>
 
 		{#if sections && sections.length}
-			<nav class="category-nav" aria-label="Jump to section">
-				{#each tocGroups as group, i}
-					<a href="#{group.id}" class="category-nav-link" on:click={(e) => scrollToSection(e, group.children[0])}>
-						<span class="nav-icon">{String.fromCharCode(65 + i)}</span>
-						<span class="nav-text">{group.title}</span>
-					</a>
-				{/each}
-			</nav>
 
 				{#each tocGroups as group, groupIndex}
 				<div class="group-header" id={group.id}>
@@ -211,4 +203,7 @@
 	.category-content :global(ul li) { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; line-height: 1.7; color: #000000; background-color: transparent; padding: 0 0 0 1.5rem; border-radius: 0; }
 	.category-content :global(ul li::before) { content: ''; position: absolute; left: 0; top: 0.6rem; width: 8px; height: 8px; background: rgba(0, 0, 0, 0.6); border-radius: 50%; }
 	@media (max-width: 768px) { .category-nav { gap: 0.5rem; } .category-nav-link { padding: 0.5rem 0.75rem; font-size: 0.8rem; } .category-section { padding: 1.5rem; } .category-title { font-size: 1.5rem; } }
+	.category-content { max-width: 100%; }
+
+	:global(.category-content.prose) { max-width: none !important; }
 </style>

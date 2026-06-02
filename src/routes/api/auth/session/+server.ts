@@ -62,8 +62,10 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
     }
   }
 
-  // Set custom claim if role is valid and not already stamped on the token
-  if ((role === 'business' || role === 'traveller') && decoded.role !== role) {
+  // Stamp custom claim when Firestore role differs from what's in the token.
+  // Covers all valid roles so that admin claim propagates on next login.
+  const VALID_ROLES = new Set(['traveller', 'business', 'admin']);
+  if (role && VALID_ROLES.has(role) && decoded.role !== role) {
     try {
       await adminAuth.setCustomUserClaims(uid, { role });
     } catch (e) {

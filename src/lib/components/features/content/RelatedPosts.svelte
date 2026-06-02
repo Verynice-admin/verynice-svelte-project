@@ -459,13 +459,4 @@
 		font-size: 0.95rem;
 	}
 
-	@media (min-width: 768px) {
-		.related-posts-header h2 {
-			color: #000000 !important;
-		}
-
-		.related-posts-header h2 a {
-			color: #000000 !important;
-		}
-	}
 </style>

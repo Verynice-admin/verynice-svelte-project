@@ -88,15 +88,19 @@
 html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
+  height: 100%;
 }
 
 body {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
   display: block;
-  min-height: calc(100vh - 250px);
+  flex: 1 0 auto;
 }
 
 h1 {
@@ -809,8 +813,16 @@ html[lang="kk"] blockquote,
 html[lang="kk"] figcaption,
 html[lang="kk"] summary {
   font-family: 'Noto Sans', 'PT Sans', 'Arial Unicode MS', sans-serif !important;
-}/* Base styles for progress bar are in its component, 
+}/* Base styles for progress bar are in its component,
    but we can define variables here if needed */
 :root {
   --vnk-translation-progress-bg: var(--vnk-accent-color);
+}
+
+/* Food-drink pages: white background for category sections and headers */
+.dishes-list,
+.category-section,
+.category-header,
+.category-header-text {
+  background: #fff !important;
 }

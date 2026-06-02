@@ -142,18 +142,6 @@
 		</section>
 
 		{#if sections && sections.length}
-			<nav class="category-nav" aria-label="Jump to section">
-				{#each sections as section (section.id)}
-					<a
-						href="#{section.id}"
-						class="category-nav-link"
-						on:click={(e) => scrollToSection(e, section.id)}
-					>
-						<span class="nav-icon">{sectionCodes[section.id] || 'Yurt'}</span>
-						<span class="nav-text">{section.title}</span>
-					</a>
-				{/each}
-			</nav>
 
 			{#each sections as section (section.id)}
 				<section class="category-section" id={section.id}>
@@ -360,10 +348,9 @@
 		height: auto;
 		display: block;
 	}
-
-	.category-content {
+	.category-content {
 		text-align: left;
-		max-width: 800px;
+		max-width: 100%;
 		margin: 0 auto;
 		background-color: transparent;
 		padding: 0;
@@ -469,4 +456,6 @@
 			font-size: 1.5rem;
 		}
 	}
+
+	:global(.category-content.prose) { max-width: none !important; }
 </style>

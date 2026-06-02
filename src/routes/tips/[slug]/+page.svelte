@@ -63,128 +63,24 @@
 		{ id: 'events', label: 'Festivals' }
 	];
 
-	// Month temperature and travel quality data
-	const months = [
+	// Data driven from Firestore (tip.*) with hardcoded fallback
+	const months      = tip.months   || [
 		{ label: 'Jan', temp: -10, height: 16, quality: 2, color: '#B5D4F4', type: 'cold', desc: 'Cold, short days' },
-		{ label: 'Feb', temp: -8, height: 16, quality: 2, color: '#B5D4F4', type: 'cold', desc: 'Cold, skiing season' },
-		{ label: 'Mar', temp: 4, height: 28, quality: 4, color: '#C0DD97', type: 'transitional', desc: 'Nowruz, spring begins' },
-		{ label: 'Apr', temp: 14, height: 46, quality: 5, color: '#97C459', type: 'good', desc: 'Blooming, pleasant' },
-		{ label: 'May', temp: 22, height: 64, quality: 5, color: '#38BC7D', type: 'best', desc: 'Best - green valleys' },
-		{ label: 'Jun', temp: 29, height: 80, quality: 5, color: '#38BC7D', type: 'best', desc: 'Best - long days' },
-		{ label: 'Jul', temp: 33, height: 88, quality: 3, color: '#F0997B', type: 'hot', desc: 'Hot, peak season' },
-		{ label: 'Aug', temp: 31, height: 84, quality: 3, color: '#F0997B', type: 'hot', desc: 'Hot, summer vibes' },
-		{ label: 'Sep', temp: 21, height: 68, quality: 5, color: '#38BC7D', type: 'best', desc: 'Best - fall colors' },
-		{ label: 'Oct', temp: 10, height: 46, quality: 4, color: '#C0DD97', type: 'good', desc: 'Golden autumn' },
-		{ label: 'Nov', temp: -1, height: 26, quality: 2, color: '#85B7EB', type: 'transitional', desc: 'Getting cold' },
-		{ label: 'Dec', temp: -8, height: 16, quality: 2, color: '#B5D4F4', type: 'cold', desc: 'Winter, holidays' }
+		{ label: 'Feb', temp: -8,  height: 16, quality: 2, color: '#B5D4F4', type: 'cold', desc: 'Cold, skiing season' },
+		{ label: 'Mar', temp: 4,   height: 28, quality: 4, color: '#C0DD97', type: 'transitional', desc: 'Nowruz, spring begins' },
+		{ label: 'Apr', temp: 14,  height: 46, quality: 5, color: '#97C459', type: 'good', desc: 'Blooming, pleasant' },
+		{ label: 'May', temp: 22,  height: 64, quality: 5, color: '#38BC7D', type: 'best', desc: 'Best - green valleys' },
+		{ label: 'Jun', temp: 29,  height: 80, quality: 5, color: '#38BC7D', type: 'best', desc: 'Best - long days' },
+		{ label: 'Jul', temp: 33,  height: 88, quality: 3, color: '#F0997B', type: 'hot',  desc: 'Hot, peak season' },
+		{ label: 'Aug', temp: 31,  height: 84, quality: 3, color: '#F0997B', type: 'hot',  desc: 'Hot, summer vibes' },
+		{ label: 'Sep', temp: 21,  height: 68, quality: 5, color: '#38BC7D', type: 'best', desc: 'Best - fall colors' },
+		{ label: 'Oct', temp: 10,  height: 46, quality: 4, color: '#C0DD97', type: 'good', desc: 'Golden autumn' },
+		{ label: 'Nov', temp: -1,  height: 26, quality: 2, color: '#85B7EB', type: 'transitional', desc: 'Getting cold' },
+		{ label: 'Dec', temp: -8,  height: 16, quality: 2, color: '#B5D4F4', type: 'cold', desc: 'Winter, holidays' }
 	];
-
-	// Full season data with highlights
-	const seasons = [
-		{
-			id: 'spring',
-			name: 'Spring',
-			months: 'March — June',
-			range: '4°C → 29°C',
-			color: '#38BC7D',
-			icon: '🌸',
-			badge: 'Best Time to Visit',
-			best: true,
-			desc: 'Spring transforms Kazakhstan into a green paradise. Mountains awaken with wildflowers, valleys bloom, and the famous Almaty apple orchards come alive.',
-			pros: [
-				{ text: 'Mild, pleasant temperatures', type: 'good' },
-				{ text: 'Stunning wildflowers in Tian Shan', type: 'good' },
-				{ text: 'Fewer crowds than summer', type: 'good' },
-				{ text: 'Perfect for trekking', type: 'good' },
-				{ text: 'March can still be chilly', type: 'bad' }
-			],
-			highlights: ['Medeu skating rink', 'Tian Shan trekking', 'Green Bazaar', 'Nomad camps open']
-		},
-		{
-			id: 'summer',
-			name: 'Summer',
-			months: 'July — August',
-			range: '20°C → 40°C',
-			color: '#F0997B',
-			icon: '☀️',
-			badge: 'Peak Season',
-			best: false,
-			desc: 'Long summer days (up to 16 hours of sunlight) offer maximum exploration time. Lakes warm up for swimming and the country celebrates with festivals.',
-			pros: [
-				{ text: 'Long daylight hours', type: 'good' },
-				{ text: 'Best for swimming in lakes', type: 'good' },
-				{ text: 'Maximum yurt camp availability', type: 'good' },
-				{ text: 'Extreme heat in lowlands (40°C)', type: 'bad' },
-				{ text: 'Peak tourist crowds', type: 'bad' }
-			],
-			highlights: ['Kolsai Lakes swimming', 'Shymbulak summer', 'Harvest Festival', 'Street food festivals']
-		},
-		{
-			id: 'autumn',
-			name: 'Autumn',
-			months: 'September — November',
-			range: '-1°C → 22°C',
-			color: '#F59E0B',
-			icon: '🍂',
-			badge: 'Second Best Time',
-			best: true,
-			desc: 'Golden autumn paints Kazakhstan in stunning hues. The harvest season brings amazing food and the famous Golden Eagle Festival showcases Kazakh falconry.',
-			pros: [
-				{ text: 'Gorgeous fall colors', type: 'good' },
-				{ text: 'Harvest season - amazing food', type: 'good' },
-				{ text: 'Golden Eagle Festival', type: 'good' },
-				{ text: 'Fewer tourists than summer', type: 'good' },
-				{ text: 'November gets cold', type: 'bad' }
-			],
-			highlights: ['Golden Eagle Festival', 'Charyn Canyon golden hour', 'Altyn Emel', 'Fresh grapes & melons']
-		},
-		{
-			id: 'winter',
-			name: 'Winter',
-			months: 'December — February',
-			range: '-35°C → 5°C',
-			color: '#0EA5E9',
-			icon: '⛷️',
-			badge: 'Ski Season',
-			best: false,
-			desc: 'Winter transforms Kazakhstan into a snowy wonderland. World-class skiing at Shymbulak and ice festivals create unique experiences — but prepare for extreme cold.',
-			pros: [
-				{ text: 'World-class skiing at Shymbulak', type: 'good' },
-				{ text: 'Ice festivals', type: 'good' },
-				{ text: 'Magical winter landscapes', type: 'good' },
-				{ text: 'Fewer tourists', type: 'good' },
-				{ text: 'Extreme cold (-35°C possible)', type: 'bad' },
-				{ text: 'Short daylight hours', type: 'bad' }
-			],
-			highlights: ['Shymbulak Ski Resort', 'Ice Sculpture Festival', 'New Year celebrations', 'Frozen Kaindy Lake']
-		}
-	];
-
-	// Regions data
-	const regions = [
-		{ name: 'Almaty City', desc: 'Business & cultural hub', best: 'May-Jun, Sep', spring: 5, summer: 4, autumn: 5, winter: 2 },
-		{ name: 'Astana/Akmola', desc: 'Modern capital', best: 'May-Jun, Aug-Sep', spring: 4, summer: 4, autumn: 4, winter: 2 },
-		{ name: 'Almaty Region', desc: 'Mountains, lakes, trekking', best: 'Jun-Sep', spring: 5, summer: 5, autumn: 4, winter: 1 },
-		{ name: 'Turkestan', desc: 'Silk Road heritage', best: 'Apr-Jun, Sep-Oct', spring: 5, summer: 3, autumn: 5, winter: 2 },
-		{ name: 'Shymkent', desc: 'Southern gateway, bazaars', best: 'Mar-May, Oct-Nov', spring: 5, summer: 3, autumn: 5, winter: 2 },
-		{ name: 'East Kazakhstan', desc: 'Altai mountains', best: 'Jun-Sep', spring: 4, summer: 5, autumn: 4, winter: 1 }
-	];
-
-	// Festivals data
-	const festivals = [
-		{ month: 'March', name: 'Nowruz', desc: 'Persian New Year', location: 'Nationwide' },
-		{ month: 'April', name: 'Almaty Marathon', desc: 'City marathon', location: 'Almaty' },
-		{ month: 'May', name: 'Street Food Festival', desc: 'Culinary showcase', location: 'Almaty' },
-		{ month: 'June', name: 'National Day', desc: 'Independence celebrations', location: 'Astana' },
-		{ month: 'July', name: 'Shymbulak Summer', desc: 'Mountain festival', location: 'Almaty' },
-		{ month: 'August', name: 'Harvest Festival', desc: 'Agricultural celebrations', location: 'Nationwide' },
-		{ month: 'September', name: 'Altyn Emel', desc: 'Cultural festival', location: 'Almaty Region' },
-		{ month: 'October', name: 'Golden Eagle Festival', desc: 'Falconry competition', location: 'Almaty' },
-		{ month: 'November', name: 'City Day', desc: 'Almaty anniversary', location: 'Almaty' },
-		{ month: 'December', name: 'New Year', desc: 'Winter festivities', location: 'Nationwide' },
-		{ month: 'January', name: 'New Year Cup', desc: 'Winter sports', location: 'Almaty' },
-		{ month: 'February', name: 'Ice Festival', desc: 'Ice sculptures', location: 'Astana' }
-	];
+	const seasons     = tip.seasons  || [];
+	const regions     = tip.regions  || [];
+	const festivals   = tip.festivals || [];
 
 	// Tab state for Transport page
 	let transportTab = 'flying';
@@ -197,42 +93,37 @@
 		{ id: 'road', label: 'Road Trips' }
 	];
 
-	// Transport data
-	const airports = [
-		{ code: 'ALA', name: 'Almaty', city: 'Almaty', distance: '15 km', taxi: '~2,000 KZT', airlines: ['Air Astana', 'Turkish Airlines', 'Emirates', 'Lufthansa', 'flydubai', 'S7 Airlines'], highlight: 'Most connections' },
-		{ code: 'NQZ', name: 'Astana', city: 'Nursultan', distance: '17 km', taxi: '~2,500 KZT', airlines: ['Air Astana', 'Turkish Airlines', 'Air Arabia', 'FlyArystan', 'SCAT'], highlight: 'Modern terminal 2023' }
+	// Transport data — driven from Firestore (tip.*) with hardcoded fallback
+	const airports = tip.airports || [
+		{ code: 'ALA', name: 'Almaty', city: 'Almaty', distance: '15 km', taxi: '~2,500 KZT (~$5)', airlines: ['Air Astana', 'Turkish Airlines', 'Emirates', 'Lufthansa', 'flydubai', 'FlyArystan', 'Pegasus'], highlight: 'Most connections' },
+		{ code: 'NQZ', name: 'Astana', city: 'Astana', distance: '17 km', taxi: '~3,000 KZT (~$6)', airlines: ['Air Astana', 'Turkish Airlines', 'Air Arabia', 'FlyArystan', 'SCAT'], highlight: 'New Terminal 2 (2024)' }
 	];
-
-	const otherAirports = [
-		{ code: 'GUW', name: 'Atyrau', best: 'Oil hub, Moscow/Dubai' },
+	const otherAirports   = tip.otherAirports   || [
+		{ code: 'GUW', name: 'Atyrau',    best: 'Oil hub, Moscow/Dubai' },
 		{ code: 'CIT', name: 'Shymkent', best: 'Southern gateway' },
-		{ code: 'AKX', name: 'Aktobe', best: 'Western KZ, Russia' },
-		{ code: 'SCO', name: 'Aktau', best: 'Mangystau, Caspian' }
+		{ code: 'AKX', name: 'Aktobe',   best: 'Western KZ, Russia' },
+		{ code: 'SCO', name: 'Aktau',    best: 'Mangystau, Caspian' }
 	];
-
-	const trainRoutes = [
-		{ from: 'Almaty', to: 'Astana', duration: '12-20 hours', price: '8,000-15,000' },
-		{ from: 'Almaty', to: 'Shymkent', duration: '15-18 hours', price: '6,000-12,000' },
-		{ from: 'Astana', to: 'Shymkent', duration: '20-24 hours', price: '10,000-18,000' }
+	const trainRoutes     = tip.trainRoutes     || [
+		{ from: 'Almaty', to: 'Astana',   duration: '12-20 hours', price: '8,000–15,000 KZT (~$17–32)' },
+		{ from: 'Almaty', to: 'Shymkent', duration: '15-18 hours', price: '6,000–12,000 KZT (~$13–25)' },
+		{ from: 'Astana', to: 'Shymkent', duration: '20-24 hours', price: '10,000–18,000 KZT (~$21–38)' }
 	];
-
-	const domesticRoutes = [
-		{ from: 'Almaty', to: 'Astana', duration: '1.5 hours', price: '15,000-30,000' },
-		{ from: 'Almaty', to: 'Shymkent', duration: '1 hour', price: '12,000-25,000' },
-		{ from: 'Astana', to: 'Shymkent', duration: '1.5 hours', price: '15,000-28,000' }
+	const domesticRoutes  = tip.domesticRoutes  || [
+		{ from: 'Almaty', to: 'Astana',   duration: '1.5 hours', price: '15,000–30,000 KZT (~$32–63)' },
+		{ from: 'Almaty', to: 'Shymkent', duration: '1 hour',    price: '12,000–25,000 KZT (~$25–53)' },
+		{ from: 'Astana', to: 'Shymkent', duration: '1.5 hours', price: '15,000–28,000 KZT (~$32–59)' }
 	];
-
-	const cities = [
-		{ name: 'Almaty', features: ['Metro - 1 line', 'Buses/Trolleybuses', 'Yandex Go dominant', 'inDriver budget option'], icon: '🏙️' },
-		{ name: 'Astana', features: ['Extensive bus network', 'Yandex Go & inDriver', 'New city, wide sidewalks', 'Modern infrastructure'], icon: '🏗️' }
+	const cities          = tip.cities          || [
+		{ name: 'Almaty', features: ['Metro - 1 line', 'Buses/Trolleybuses', 'Yandex Go dominant', 'Bolt available in Almaty', 'inDrive budget option'], icon: '🏙️' },
+		{ name: 'Astana', features: ['LRT (newly launched) — city light rail', 'Extensive bus network', 'Yandex Go & inDrive', 'New city, wide sidewalks', 'Modern infrastructure'], icon: '🏗️' }
 	];
-
-	const tips = [
-		'Download Yandex Go before arrival',
-		'Get a local SIM - essential for apps',
-		'Book trains early - especially overnight',
-		'Consider FlyArystan for long distances',
-		'Keep cash for rural areas'
+	const tips            = tip.transportTips   || [
+		'Download Yandex Go and Yandex Maps before arrival — more accurate than Google in Kazakhstan',
+		'Get a local SIM (Kcell/Activ or Beeline) at the airport — essential for apps and navigation',
+		'Book trains at tickets.kz — English available, book early for overnight routes',
+		'Use FlyArystan for budget domestic flights — saves time over long train journeys',
+		'Keep cash (KZT) for rural areas, national parks, and minibuses'
 	];
 
 	const defaultPage = {
@@ -526,8 +417,8 @@
 					<div class="quick-facts">
 						<div class="fact-item"><strong>2</strong> int'l airports</div>
 						<div class="fact-item"><strong>16</strong> domestic airports</div>
-						<div class="fact-item"><strong>15,000 km</strong> rail</div>
-						<div class="fact-item"><strong>~$0.45/L</strong> petrol</div>
+						<div class="fact-item"><strong>15,000 km</strong> rail network</div>
+						<div class="fact-item"><strong>~$0.50/L</strong> petrol (~220 KZT)</div>
 					</div>
 
 					<!-- Transport Tab Navigation -->
@@ -637,10 +528,10 @@
 						<div class="tab-panel">
 							<h3>Road Trips</h3>
 							<div class="road-info">
-								<div class="road-item"><strong>IDP</strong> recommended</div>
+								<div class="road-item"><strong>IDP</strong> recommended alongside national licence</div>
 								<div class="road-item"><strong>Traffic</strong> Right-hand side</div>
-								<div class="road-item"><strong>Petrol</strong> ~$0.45/litre</div>
-								<div class="road-item"><strong>Roads</strong> Good in cities, variable outside</div>
+								<div class="road-item"><strong>Petrol</strong> ~$0.50/litre (~220 KZT)</div>
+								<div class="road-item"><strong>Roads</strong> Good in cities, variable outside; SUV recommended for mountains</div>
 							</div>
 							<div class="pro-tips">
 								<h4>Car Rental</h4>
@@ -684,7 +575,7 @@
 						<div class="tab-panel">
 							<h3>Exchange Rates</h3>
 							<p class="rate-note">Always check live rates — the tenge fluctuates. Use <strong>kurs.kz</strong>, Google, XE.com, or your bank app before you travel. Rates above are approximate.</p>
-							<table class="price-table"><thead><tr><th>Currency</th><th>Rate (approx)</th><th>Notes</th></tr></thead><tbody><tr><td>🇺🇸 USD → KZT</td><td>~500</td><td>1 USD ≈ 500 KZT</td></tr><tr><td>🇪🇺 EUR → KZT</td><td>~540</td><td>1 EUR ≈ 540 KZT</td></tr><tr><td>🇬🇧 GBP → KZT</td><td>~630</td><td>1 GBP ≈ 630 KZT</td></tr><tr><td>🇷🇺 RUB → KZT</td><td>~5.5</td><td>1 RUB ≈ 5.5 KZT</td></tr><tr><td>🇨🇳 CNY → KZT</td><td>~68</td><td>1 CNY ≈ 68 KZT</td></tr></tbody></table>
+							<table class="price-table"><thead><tr><th>Currency</th><th>Rate (approx)</th><th>Notes</th></tr></thead><tbody><tr><td>🇺🇸 USD → KZT</td><td>~470–490</td><td>1 USD ≈ 475 KZT (check live)</td></tr><tr><td>🇪🇺 EUR → KZT</td><td>~510–530</td><td>1 EUR ≈ 520 KZT (check live)</td></tr><tr><td>🇬🇧 GBP → KZT</td><td>~600–620</td><td>1 GBP ≈ 610 KZT (check live)</td></tr><tr><td>🇷🇺 RUB → KZT</td><td>~5–6</td><td>1 RUB ≈ 5.5 KZT (volatile)</td></tr><tr><td>🇨🇳 CNY → KZT</td><td>~65–70</td><td>1 CNY ≈ 67 KZT (check live)</td></tr></tbody></table>
 							<h3>Where to Exchange</h3>
 							<table class="price-table"><thead><tr><th>Method</th><th>Rate Quality</th><th>Notes</th></tr></thead><tbody><tr><td>Exchange booths (obmennik)</td><td>Best rates</td><td>Everywhere in cities — compare a few before exchanging</td></tr><tr><td>Bank branch exchange</td><td>Good rates</td><td>Reliable and official — slower but trustworthy</td></tr><tr><td>ATM withdrawal</td><td>Decent</td><td>Kaspi, Halyk, ForteBank ATMs. Check foreign card fees.</td></tr><tr><td>Airport exchange</td><td>Below average</td><td>Only change enough for taxi/SIM on arrival</td></tr><tr><td>Hotel desk</td><td>Poor rates</td><td>Last resort only</td></tr></tbody></table>
 							<div class="warning-box"><p><strong>Pro tip:</strong> USD and EUR are the most widely accepted foreign currencies at exchange booths. Bring crisp, undamaged bills — booths may refuse old, torn, or marked notes.</p></div>
@@ -711,12 +602,12 @@
 							<h3>How to Pay in Kazakhstan</h3>
 							<div class="payment-grid"><div class="payment-card"><h4>Cash (KZT)</h4><ul><li>Essential — always carry some</li><li>Works everywhere without exception</li><li>Markets, taxis, rural areas, small cafés</li><li>Small bills useful — 1,000 and 2,000 KZT notes</li><li>Keep 10,000–20,000 KZT cash reserve at all times</li></ul></div><div class="payment-card"><h4>Debit / Credit Cards</h4><ul><li>Widely accepted in cities</li><li>Visa and Mastercard work in hotels, malls, restaurants</li><li>Contactless payments increasingly common</li><li>Inform your bank before travelling</li><li>Foreign cards may not work at all ATMs — test early</li><li>Amex rarely accepted outside luxury hotels</li></ul></div><div class="payment-card"><h4>Kaspi Pay / QR Pay</h4><ul><li>Locals' favourite — useful for visitors too</li><li>Kaspi Bank app dominates local payments</li><li>QR codes at almost every shop and café</li><li>If staying long-term, open a Kaspi account</li><li>Requires a KZ phone number and passport</li></ul></div><div class="payment-card"><h4>ATMs</h4><ul><li>Best way to get KZT cash</li><li>Halyk Bank, Kaspi, ForteBank ATMs most reliable</li><li>Available in all cities and airports 24/7</li><li>Withdraw larger amounts — some charge per transaction</li><li>Rural and mountain areas: cash only, no ATMs</li></ul></div></div>
 							<h3>Tipping Culture</h3>
-							<table class="price-table"><thead><tr><th>Service</th><th>Expected?</th><th>Amount</th></tr></thead><tbody><tr><td>Restaurant (sit-down)</td><td>Appreciated</td><td>5–10% if service was good</td></tr><tr><td>Café / fast casual</td><td>Not expected</td><td>Round up if you like</td></tr><tr><td>App taxi (Yandex Go)</td><td>Optional</td><td>Round up or in-app tip</td></tr><tr><td>Tour guide / driver</td><td>Yes — standard</td><td>10–15% or 2,000–5,000 KZT/day</td></tr><tr><td>Hotel porter</td><td>Appreciated</td><td>200–500 KZT per bag</td></tr><tr><td>Spa / massage</td><td>Appreciated</td><td>10% is generous and welcome</td></tr></tbody></table>
+							<table class="price-table"><thead><tr><th>Service</th><th>Expected?</th><th>Amount</th></tr></thead><tbody><tr><td>Restaurant (sit-down)</td><td>Appreciated</td><td>5–10% if service was good</td></tr><tr><td>Café / fast casual</td><td>Not expected</td><td>Round up if you like</td></tr><tr><td>App taxi (Yandex Go)</td><td>Optional</td><td>Round up or in-app tip</td></tr><tr><td>Tour guide / driver</td><td>Yes — standard</td><td>10–15% or 2,000–5,000 KZT/day (~$4–10)</td></tr><tr><td>Hotel porter</td><td>Appreciated</td><td>200–500 KZT per bag (~$0.40–1)</td></tr><tr><td>Spa / massage</td><td>Appreciated</td><td>10% is generous and welcome</td></tr></tbody></table>
 						</div>
 					{:else if moneyTab === 'practical'}
 						<div class="tab-panel">
 							<h3>Essential Practicalities</h3>
-							<div class="practical-grid"><div class="practical-card"><h4>SIM Cards & Mobile Data</h4><p>Buy Beeline, Tele2, or Activ at the airport on arrival. A SIM with 10–20GB data costs 1,000–3,000 KZT. Coverage is excellent in cities; patchy in mountains and steppe. Roaming is expensive — get a local SIM.</p></div><div class="practical-card"><h4>Electricity & Plugs</h4><p>220V / 50Hz. Type C and F plugs (European round 2-pin). UK and US travellers need an adaptor. Power cuts are rare in cities but more common in rural guesthouses — bring a power bank.</p></div><div class="practical-card"><h4>Time Zones</h4><p>Kazakhstan spans 2 time zones: UTC+5 (Almaty, Shymkent, most of the country) and UTC+6 (Astana and east). No daylight saving. Plan calls and connections accordingly.</p></div><div class="practical-card"><h4>Health & Pharmacies</h4><p>Pharmacies (apteka) are everywhere and well-stocked. No mandatory vaccinations, but Hepatitis A and typhoid recommended. Tap water: safe to drink in Almaty and Astana, but most locals drink bottled. High altitude — acclimatise if trekking.</p></div><div class="practical-card"><h4>Internet & VPN</h4><p>Wi-Fi is fast and free in most hotels, cafés, and restaurants. Some foreign websites and apps may be slower or restricted. A VPN (installed before arrival) is useful and used widely by locals and expats alike.</p></div><div class="practical-card"><h4>Language</h4><p>Kazakh and Russian are official. Russian is widely spoken across all cities and generations. English is growing fast in Almaty and Astana, especially among younger people and hospitality staff. Learn a few Russian phrases — locals light up when you try.</p></div><div class="practical-card"><h4>Safety</h4><p>Kazakhstan is generally safe for travellers. Petty theft exists in crowded markets — use a money belt. Avoid informal taxis. Political demonstrations are rare but avoid large crowds if they occur. Night-time in city centres is safe; rural areas are hospitable and low-crime.</p></div><div class="practical-card"><h4>Travel Insurance</h4><p>Essential. Public hospitals are basic — private clinics in Almaty and Astana are modern and affordable. Mountain rescue and helicopter evacuation can be very expensive without cover. Ensure your policy covers adventure activities if trekking or skiing.</p></div></div>
+							<div class="practical-grid"><div class="practical-card"><h4>SIM Cards & Mobile Data</h4><p>Buy Kcell/Activ or Beeline at the airport on arrival — both have airport kiosks. A SIM with 10–20GB data costs 1,000–3,000 KZT (~$2–6). Coverage is excellent in cities; patchy in mountains and steppe. Roaming is expensive — always get a local SIM. Download apps and maps before heading into remote areas.</p></div><div class="practical-card"><h4>Electricity & Plugs</h4><p>220V / 50Hz. Type C and F plugs (European round 2-pin). UK and US travellers need an adaptor. Power cuts are rare in cities but more common in rural guesthouses — bring a power bank.</p></div><div class="practical-card"><h4>Time Zones</h4><p>Kazakhstan spans 2 time zones: UTC+5 (Almaty, Shymkent, most of the country) and UTC+6 (Astana and east). No daylight saving. Plan calls and connections accordingly.</p></div><div class="practical-card"><h4>Health & Pharmacies</h4><p>Pharmacies (apteka) are everywhere and well-stocked. No mandatory vaccinations, but Hepatitis A and typhoid recommended. Tap water: safe to drink in Almaty and Astana, but most locals drink bottled. High altitude — acclimatise if trekking.</p></div><div class="practical-card"><h4>Internet & VPN</h4><p>Wi-Fi is fast and free in most hotels, cafés, and restaurants. Some foreign websites and apps may be slower or restricted. A VPN (installed before arrival) is useful and used widely by locals and expats alike.</p></div><div class="practical-card"><h4>Language</h4><p>Kazakh and Russian are official. Russian is widely spoken across all cities and generations. English is growing fast in Almaty and Astana, especially among younger people and hospitality staff. Learn a few Russian phrases — locals light up when you try.</p></div><div class="practical-card"><h4>Safety</h4><p>Kazakhstan is generally safe for travellers. Petty theft exists in crowded markets — use a money belt. Avoid informal taxis. Political demonstrations are rare but avoid large crowds if they occur. Night-time in city centres is safe; rural areas are hospitable and low-crime.</p></div><div class="practical-card"><h4>Travel Insurance</h4><p>Essential. Public hospitals are basic — private clinics in Almaty and Astana are modern and affordable. Mountain rescue and helicopter evacuation can be very expensive without cover. Ensure your policy covers adventure activities if trekking or skiing.</p></div></div>
 							<h3>Emergency Numbers</h3>
 							<table class="price-table"><thead><tr><th>Service</th><th>Number</th><th>Notes</th></tr></thead><tbody><tr><td>Police</td><td>102</td><td>Politsiya</td></tr><tr><td>Ambulance</td><td>103</td><td>Skoraya pomoshch</td></tr><tr><td>Fire service</td><td>101</td><td>Pozharnaya sluzhba</td></tr><tr><td>Single emergency number</td><td>112</td><td>All services (like 911)</td></tr><tr><td>Mountain rescue (Almaty)</td><td>+7 727 279-88-02</td><td>KazSpas search & rescue</td></tr></tbody></table>
 							<div class="pro-tips"><h4>Pro Tips</h4><ol><li>Carry cash in KZT at all times — markets, national parks, village homestays, and minibuses are cash-only</li><li>USD / EUR as backup — hard currency exchange booths are everywhere. Crisp, clean bills are your best backup</li><li>Notify your bank before travelling — transactions from Kazakhstan can trigger fraud alerts</li><li>Haggle at bazaars — not at shops. Green Bazaar (Almaty) and Kok Bazaar (Shymkent) expect negotiation</li><li>Dress modestly at religious sites — mosques and mausoleums require covered shoulders and legs</li><li>Download Google Translate offline — Russian Cyrillic is everywhere, camera translation is a game-changer</li></ol></div>
@@ -793,39 +684,40 @@
 					<div class="quick-facts">
 						<div class="fact-item"><strong>3</strong>int'l airports</div>
 						<div class="fact-item"><strong>Yandex Go</strong>recommended app</div>
-						<div class="fact-item"><strong>~₸2,000–6,000</strong>city ride</div>
+						<div class="fact-item"><strong>₸2,000–8,000</strong>~$4–17 city ride</div>
 						<div class="fact-item"><strong>24/7</strong>taxi availability</div>
 					</div>
 
 					<h3>Almaty International Airport (ALA)</h3>
 					<p>Almaty's airport is 13 km northeast of the city centre. Journey time: 20–40 min depending on traffic.</p>
 					<table class="price-table">
-						<thead><tr><th>Option</th><th>Approx. Cost</th><th>Notes</th></tr></thead>
+						<thead><tr><th>Option</th><th>KZT</th><th>USD</th><th>Notes</th></tr></thead>
 						<tbody>
-							<tr><td>Yandex Go / inDrive</td><td>₸2,500–4,500</td><td>Best value, meter-based, no negotiation needed</td></tr>
-							<tr><td>Official airport taxi (yellow)</td><td>₸5,000–8,000</td><td>Fixed zone pricing, available at arrivals exit</td></tr>
-							<tr><td>Bolt</td><td>₸2,000–4,000</td><td>Available in Almaty, check app for availability</td></tr>
-							<tr><td>Bus 79 / 86</td><td>₸80–150</td><td>Slowest option, runs to city centre</td></tr>
+							<tr><td>Yandex Go / inDrive</td><td>₸2,500–4,500</td><td>~$5–9</td><td>Best value, meter-based, no negotiation needed</td></tr>
+							<tr><td>Official airport taxi (yellow)</td><td>₸5,000–8,000</td><td>~$10–17</td><td>Fixed zone pricing, available at arrivals exit</td></tr>
+							<tr><td>Bolt</td><td>₸2,000–4,000</td><td>~$4–8</td><td>Available in Almaty, check app for availability</td></tr>
+							<tr><td>Bus 79 / 86</td><td>₸150–200</td><td>~$0.30–0.40</td><td>Slowest option, runs to city centre</td></tr>
 						</tbody>
 					</table>
 
 					<h3>Astana International Airport (NQZ)</h3>
 					<p>Astana's airport is 17 km south of the city centre. Journey time: 20–35 min.</p>
 					<table class="price-table">
-						<thead><tr><th>Option</th><th>Approx. Cost</th><th>Notes</th></tr></thead>
+						<thead><tr><th>Option</th><th>KZT</th><th>USD</th><th>Notes</th></tr></thead>
 						<tbody>
-							<tr><td>Yandex Go</td><td>₸2,000–4,000</td><td>Most reliable, available immediately</td></tr>
-							<tr><td>Official airport taxi</td><td>₸5,000–7,000</td><td>Available at arrivals, negotiate upfront</td></tr>
-							<tr><td>City bus 10</td><td>₸80</td><td>Runs to city, slower but very cheap</td></tr>
+							<tr><td>Yandex Go</td><td>₸2,000–4,000</td><td>~$4–8</td><td>Most reliable, available immediately</td></tr>
+							<tr><td>Official airport taxi</td><td>₸5,000–7,000</td><td>~$10–15</td><td>Available at arrivals, negotiate upfront</td></tr>
+							<tr><td>LRT (light rail)</td><td>₸80–200</td><td>~$0.15–0.40</td><td>Newly launched — check current route coverage</td></tr>
+							<tr><td>City bus 10</td><td>₸80–150</td><td>~$0.15–0.30</td><td>Runs to city, slower but very cheap</td></tr>
 						</tbody>
 					</table>
 
 					<h3>Shymkent International Airport (CIT)</h3>
 					<table class="price-table">
-						<thead><tr><th>Option</th><th>Approx. Cost</th><th>Notes</th></tr></thead>
+						<thead><tr><th>Option</th><th>KZT</th><th>USD</th><th>Notes</th></tr></thead>
 						<tbody>
-							<tr><td>Yandex Go</td><td>₸1,500–3,000</td><td>Cheapest and fastest to book</td></tr>
-							<tr><td>Airport taxi booth</td><td>₸4,000–5,000</td><td>Fixed rates, reliable</td></tr>
+							<tr><td>Yandex Go</td><td>₸1,500–3,000</td><td>~$3–6</td><td>Cheapest and fastest to book</td></tr>
+							<tr><td>Airport taxi booth</td><td>₸4,000–5,000</td><td>~$8–10</td><td>Fixed rates, reliable</td></tr>
 						</tbody>
 					</table>
 
@@ -941,7 +833,7 @@
 							<div class="practical-grid"><div class="practical-card"><h4>Valid Passport</h4><p>Must be valid for at least 3 months beyond intended departure. Damaged passports may be rejected. Carry it on your person — not in checked luggage.</p></div><div class="practical-card"><h4>Visa / e-Visa</h4><p>Printed e-Visa PDF or consular visa stamp. Visa-free nationals don't need this. CIS nationals may use national ID cards.</p></div><div class="practical-card"><h4>Return / Onward Ticket</h4><p>Border officers may ask for proof you intend to leave. A printed or digital return flight/booking is sufficient.</p></div><div class="practical-card"><h4>Accommodation</h4><p>First night's hotel booking confirmation. Useful if questioned at the border.</p></div><div class="practical-card"><h4>Prescription Meds</h4><p>If carrying prescription medication, bring the original prescription. Controlled substances require advance permission from customs.</p></div><div class="practical-card"><h4>Travel Insurance</h4><p>Not mandatory but strongly recommended. Print or save your insurance certificate and emergency contact.</p></div></div>
 							<h3>Registration (Propiska) Requirement</h3>
 							<table class="price-table"><thead><tr><th>Stay Duration</th><th>Registration?</th><th>Who Does It?</th></tr></thead><tbody><tr><td>Under 30 days (visa-free)</td><td>Not required</td><td>Covered automatically</td></tr><tr><td>Hotel stay (any length)</td><td>Auto-registered</td><td>Hotel registers you on check-in</td></tr><tr><td>Airbnb / private home</td><td>Required within 3 days</td><td>Host files with migration</td></tr><tr><td>30+ days (any)</td><td>Mandatory within 3 days</td><td>Host or employer files</td></tr></tbody></table>
-							<div class="warning-box"><p><strong>Don't skip registration</strong> if staying 30+ days. Unregistered stays can result in fines (up to 50,000 KZT) and exit complications.</p></div>
+							<div class="warning-box"><p><strong>Don't skip registration</strong> if staying 30+ days. Unregistered stays can result in fines (up to 50,000 KZT / ~$105) and exit complications.</p></div>
 						</div>
 					{:else if visaTab === 'points'}
 						<div class="tab-panel">
@@ -954,7 +846,7 @@
 					{:else if visaTab === 'whatif'}
 						<div class="tab-panel">
 							<h3>Common Problem Situations</h3>
-							<div class="practical-grid"><div class="practical-card"><h4>Visa Expires While in Kazakhstan</h4><p>Go immediately to the nearest Migration Service Office (UMiR). You can apply for a short extension. Overstaying is fineable (50,000–200,000 KZT) and can result in an entry ban.</p></div><div class="practical-card"><h4>Denied Entry at Border</h4><p>Ask for the specific reason in writing. You have the right to contact your embassy. Common reasons: passport validity issues, previous overstay, missing documents. Do not argue aggressively.</p></div><div class="practical-card"><h4>Lost Passport Inside Kazakhstan</h4><p>1. File a police report (call 102). 2. Contact your embassy for Emergency Travel Document. 3. Notify Migration Service. Don't try to exit without documentation.</p></div><div class="practical-card"><h4>⏳ Want to Stay Longer Than 30 Days?</h4><p>Options: 1. Exit and re-enter — go to Kyrgyzstan or Uzbekistan for a day trip. 2. Apply for long-term visa via employer/educational institution.</p></div><div class="practical-card"><h4>e-Visa Rejected?</h4><p>Reapply fixing the reason (mismatched details, bad photo, inconsistent dates). You can also apply through a Kazakhstan consulate in person. Fees are non-refundable.</p></div><div class="practical-card"><h4>Stopped by Police?</h4><p>You must carry your passport (or certified copy) at all times. Show documents calmly. If you feel intimidated, ask for badge number and call 112.</p></div><div class="practical-card"><h4>Emergency Medical Care?</h4><p>Yes — emergency care cannot be refused. However, bills can be significant. Always have travel insurance covering emergency hospitalization and repatriation.</p></div><div class="practical-card"><h4>Want to Work in Kazakhstan?</h4><p>Tourist/visa-free entry does not permit work. Working without a permit is illegal and can result in deportation and entry ban. Employer must apply for work permit through Ministry of Labour.</p></div></div>
+							<div class="practical-grid"><div class="practical-card"><h4>Visa Expires While in Kazakhstan</h4><p>Go immediately to the nearest Migration Service Office (UMiR). You can apply for a short extension. Overstaying is fineable (50,000–200,000 KZT / ~$105–420) and can result in an entry ban.</p></div><div class="practical-card"><h4>Denied Entry at Border</h4><p>Ask for the specific reason in writing. You have the right to contact your embassy. Common reasons: passport validity issues, previous overstay, missing documents. Do not argue aggressively.</p></div><div class="practical-card"><h4>Lost Passport Inside Kazakhstan</h4><p>1. File a police report (call 102). 2. Contact your embassy for Emergency Travel Document. 3. Notify Migration Service. Don't try to exit without documentation.</p></div><div class="practical-card"><h4>⏳ Want to Stay Longer Than 30 Days?</h4><p>Options: 1. Exit and re-enter — go to Kyrgyzstan or Uzbekistan for a day trip. 2. Apply for long-term visa via employer/educational institution.</p></div><div class="practical-card"><h4>e-Visa Rejected?</h4><p>Reapply fixing the reason (mismatched details, bad photo, inconsistent dates). You can also apply through a Kazakhstan consulate in person. Fees are non-refundable.</p></div><div class="practical-card"><h4>Stopped by Police?</h4><p>You must carry your passport (or certified copy) at all times. Show documents calmly. If you feel intimidated, ask for badge number and call 112.</p></div><div class="practical-card"><h4>Emergency Medical Care?</h4><p>Yes — emergency care cannot be refused. However, bills can be significant. Always have travel insurance covering emergency hospitalization and repatriation.</p></div><div class="practical-card"><h4>Want to Work in Kazakhstan?</h4><p>Tourist/visa-free entry does not permit work. Working without a permit is illegal and can result in deportation and entry ban. Employer must apply for work permit through Ministry of Labour.</p></div></div>
 							<div class="warning-box"><p><strong>Migration Service Office (UMiR):</strong> mia.gov.kz · <strong>Tourist helpline:</strong> 1414 (English, 24/7)</p></div>
 						</div>
 					{:else if visaTab === 'embassies'}

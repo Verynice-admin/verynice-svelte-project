@@ -100,13 +100,6 @@
 		<section class="dishes-intro">
 			<p>Tea in Kazakhstan is a social ritual: small pours, frequent refills, dried fruits, sweets, and long conversation around the dastarkhan.</p>
 		</section>
-		<nav class="category-nav" aria-label="Jump to section">
-			{#each sections as section (section.id)}
-				<a href="#{section.id}" class="category-nav-link" on:click={(e) => scrollToSection(e, section.id)}>
-					<span class="nav-icon">{sectionIcons[section.id] || '🍵'}</span><span class="nav-text">{section.title}</span>
-				</a>
-			{/each}
-		</nav>
 		{#each sections as section (section.id)}
 			<section class="category-section" id={section.id}>
 				<div class="dishes-list">
@@ -139,22 +132,16 @@
 
 <style>
 	.hero-kicker { display:block; font-family:'Outfit',sans-serif; text-transform:uppercase; letter-spacing:.3em; color:var(--vnk-accent-color); font-weight:700; font-size:.9rem; margin-bottom:1.5rem; }
-	.dishes-intro { max-width:800px; margin:0 auto 2rem; text-align:center; }
-	.dishes-intro p { font-family:'Inter',sans-serif; font-size:1.15rem; line-height:1.8; color:rgba(255, 255, 255, 0.82); margin:0; }
-	.category-nav { display:flex; flex-wrap:wrap; justify-content:center; gap:.75rem; margin-bottom:3rem; padding:1.5rem; background:rgba(255,255,255,.05); border-radius:24px; }
-	.category-nav-link { display:flex; align-items:center; gap:.5rem; padding:.6rem 1.2rem; background:var(--vnk-text-secondary-color); border-radius:20px; text-decoration:none; color:#fff; font-family:'Inter',sans-serif; font-size:.85rem; font-weight:500; transition:all .2s ease; box-shadow:0 2px 6px rgba(0,0,0,.1); }
-	.category-nav-link:hover { background:var(--vnk-primary-color); transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,.15); }
-	.category-nav-link .nav-icon { font-size:1.4rem !important; width:52px !important; height:52px !important; min-width:52px !important; }
-	.category-nav-link .nav-text { display:flex !important; justify-content:center !important; align-items:center !important; color:#0f172a !important; font-size:0.875rem !important; }
-	.category-section { margin-bottom:2.25rem; scroll-margin-top:110px; }
+	.dishes-intro { max-width:800px; margin:0 auto 2rem; text-align:center; padding:1.5rem 2rem; background:#fff; border-radius:16px; }
+	.dishes-intro p { font-family:'Inter',sans-serif; font-size:1.15rem; line-height:1.8; color:#1a1a1a; margin:0; }
+	.category-section { margin-bottom:2.25rem; scroll-margin-top:110px; background:#fff !important; }
 	.dishes-list { display:flex; flex-direction:column; gap:1.5rem; }
 	.dish-article { display:grid; grid-template-columns:1.2fr .8fr; gap:0; background:var(--vnk-card-bg); border-radius:24px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.6); }
 	.dish-article:nth-child(even) .dish-article-image { order:2; }
 	.dish-article:nth-child(even) .dish-article-content { order:1; }
 	.dish-article-image { position:relative; min-height:360px; overflow:hidden; z-index:1; }
-	.dish-article-image::after { content:''; position:absolute; top:0; bottom:0; width:300px; background:var(--vnk-card-bg); z-index:10; pointer-events:none; }
-	.dish-article:nth-child(odd) .dish-article-image::after { right:-120px; transform:skewX(-20deg); }
-	.dish-article:nth-child(even) .dish-article-image::after { left:-120px; transform:skewX(20deg); }
+	.dish-article:nth-child(odd) .dish-article-image { clip-path:polygon(0 0, calc(100% - 80px) 0, 100% 100%, 0 100%); }
+	.dish-article:nth-child(even) .dish-article-image { clip-path:polygon(80px 0, 100% 0, 100% 100%, 0 100%); }
 	.dish-image { position:absolute; inset:0; background-size:cover; background-position:center; background-repeat:no-repeat; transition:transform .3s ease; }
 	.dish-article:hover .dish-image { transform:scale(1.05); }
 	.dish-article-content { padding:1.3rem 1.7rem; display:flex; flex-direction:column; gap:.6rem; justify-content:center; }
@@ -168,5 +155,5 @@
 	.ritual-prose :global(strong) { color:var(--vnk-text-secondary-color); font-weight:600; }
 	.ritual-prose :global(ul), .ritual-prose :global(ol), .ritual-prose :global(li) { list-style:none; margin:0; padding:0; }
 	@media (max-width: 900px) { .dish-article { grid-template-columns:1.15fr .85fr; } .dish-article-image { min-height:300px; } }
-	@media (max-width: 600px) { .dish-article, .dish-article:nth-child(even) { grid-template-columns:1fr; } .dish-article:nth-child(even) .dish-article-image, .dish-article:nth-child(even) .dish-article-content { order:unset; } .dish-article-image::after { display:none; } .dish-article-image { min-height:220px; } .dish-article-content { padding:1.25rem; } }
+	@media (max-width: 600px) { .dish-article, .dish-article:nth-child(even) { grid-template-columns:1fr; } .dish-article:nth-child(even) .dish-article-image, .dish-article:nth-child(even) .dish-article-content { order:unset; } .dish-article:nth-child(odd) .dish-article-image, .dish-article:nth-child(even) .dish-article-image { clip-path:none; } .dish-article-image { min-height:220px; } .dish-article-content { padding:1.25rem; } }
 </style>

@@ -164,16 +164,6 @@
 			</p>
 		</section>
 
-		<!-- Quick Navigation -->
-		<nav class="category-nav" aria-label="Jump to category">
-			{#each categories as cat (cat.id)}
-				<a href="#{cat.id}" class="category-nav-link">
-					<span class="nav-icon">{categoryIcons[cat.id] || '🍽️'}</span>
-					<span class="nav-text">{cat.title}</span>
-				</a>
-			{/each}
-		</nav>
-
 		<!-- Dishes by Category -->
 		{#each categories as category (category.id)}
 			{@const categoryDishes = dishesByCategory[category.id] || []}
@@ -282,19 +272,21 @@
 		max-width: 800px;
 		margin: 0 auto 2rem;
 		text-align: center;
-		padding: 0;
+		padding: 1.5rem 2rem;
+		background: #fff;
+		border-radius: 16px;
 	}
 
 	.dishes-intro p {
 		font-family: 'Inter', sans-serif;
 		font-size: 1.15rem;
 		line-height: 1.8;
-		color: rgba(255, 255, 255, 0.82);
+		color: #1a1a1a;
 		margin: 0;
 	}
 
 	.dishes-intro strong {
-		color: #fff;
+		color: #000;
 		font-weight: 600;
 	}
 
@@ -304,59 +296,11 @@
 	}
 
 	/* Category Navigation */
-	.category-nav {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.75rem;
-		margin-bottom: 3rem;
-		padding: 1.5rem;
-		background: rgba(255, 255, 255, 0.05);
-		border-radius: 24px;
-	}
-
-	.category-nav-link {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.6rem 1.2rem;
-		background: var(--vnk-text-secondary-color); /* Deep Blue */
-		border-radius: 20px;
-		text-decoration: none;
-		color: #ffffff; /* White text */
-		font-family: 'Inter', sans-serif;
-		font-size: 0.85rem;
-		font-weight: 500;
-		transition: all 0.2s ease;
-		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-	}
-
-	.category-nav-link:hover {
-		background: var(--vnk-primary-color); /* Brighter Blue on hover */
-		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-	}
-
-	.category-nav-link .nav-icon {
-		font-size: 1.5rem !important;
-		width: 52px !important;
-		height: 52px !important;
-		min-width: 52px !important;
-	}
-
-	.category-nav-link .nav-text {
-		white-space: nowrap;
-		color: #0f172a !important;
-		font-size: 0.875rem !important;
-		display: flex !important;
-		justify-content: center !important;
-		align-items: center !important;
-	}
-
 	/* Category Section */
 	.category-section {
 		margin-bottom: 4rem;
 		scroll-margin-top: 100px;
+		background: #fff !important;
 	}
 
 	.category-header {
@@ -365,7 +309,8 @@
 		gap: 1.25rem;
 		margin-bottom: 2rem;
 		padding-bottom: 1.5rem;
-		border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+		border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+		background: #fff !important;
 	}
 
 	.category-icon {
@@ -377,7 +322,7 @@
 		font-family: 'Outfit', sans-serif;
 		font-size: 1.8rem;
 		font-weight: 700;
-		color: #fff;
+		color: #000;
 		margin: 0 0 0.5rem;
 	}
 
@@ -430,28 +375,13 @@
 		z-index: 1;
 	}
 
-	/* The Angled Divider Overlay */
-	.dish-article-image::after {
-		content: '';
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		width: 300px;
-		background: var(--vnk-card-bg);
-		z-index: 10;
-		pointer-events: none;
+	/* Diagonal clip — odd: image left, slant on right; even: image right, slant on left */
+	.dish-article:nth-child(odd) .dish-article-image {
+		clip-path: polygon(0 0, calc(100% - 80px) 0, 100% 100%, 0 100%);
 	}
 
-	/* Odd Items (Image Left): Cut the right side with \ slant */
-	.dish-article:nth-child(odd) .dish-article-image::after {
-		right: -120px;
-		transform: skewX(-20deg);
-	}
-
-	/* Even Items (Image Right): Cut the left side with / slant (Zigzag effect) */
-	.dish-article:nth-child(even) .dish-article-image::after {
-		left: -120px;
-		transform: skewX(20deg);
+	.dish-article:nth-child(even) .dish-article-image {
+		clip-path: polygon(80px 0, 100% 0, 100% 100%, 0 100%);
 	}
 
 	.dish-image {
@@ -597,31 +527,6 @@
 
 	/* Responsive */
 	@media (max-width: 900px) {
-		.category-nav {
-			gap: 0.5rem;
-			padding: 1rem;
-		}
-
-		.category-nav-link {
-			padding: 0.5rem 1rem;
-			font-size: 0.8rem;
-		}
-
-		.category-nav-link .nav-text {
-			display: flex !important;
-			justify-content: center !important;
-			align-items: center !important;
-			color: #0f172a !important;
-			font-size: 0.8rem !important;
-		}
-
-		.category-nav-link .nav-icon {
-			font-size: 1.5rem !important;
-			width: 52px !important;
-			height: 52px !important;
-			min-width: 52px !important;
-		}
-
 		.category-header {
 			gap: 1rem;
 		}
@@ -683,8 +588,9 @@
 			min-height: 160px;
 		}
 
-		.dish-article-image::after {
-			display: none;
+		.dish-article:nth-child(odd) .dish-article-image,
+		.dish-article:nth-child(even) .dish-article-image {
+			clip-path: none;
 		}
 
 		.dish-article-content {
