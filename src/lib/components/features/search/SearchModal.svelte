@@ -34,7 +34,7 @@
 	let query = '';
 	let inputElement: HTMLInputElement;
 	let loading = false;
-	const placeholder = "Jagshemash! Ask I-Borat anything about Kazakhstan! Wawaweewa! 🤙";
+	const placeholder = "Ask I-Borat anything about Kazakhstan! Wawaweewa! 🤙";
 	let aiResponse: {
 		question: string;
 		answer: string;

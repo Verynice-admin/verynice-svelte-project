@@ -336,7 +336,7 @@
 					<div class="hero-search-block">
 						<button class="hero-search-bar" on:click={openSearch} aria-label="Open search">
 							<svg class="hero-search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-							<span class="hero-search-placeholder">Jagshemash! Ask I-Borat anything about Kazakhstan! Wawaweewa! 🤙</span>
+							<span class="hero-search-placeholder">Ask I-Borat anything about Kazakhstan! Wawaweewa! 🤙</span>
 							<span class="hero-search-cta">Search</span>
 						</button>
 						<div class="hero-search-chips">
