@@ -245,7 +245,7 @@
 			autocorrect="off"
 			autocapitalize="off"
 			spellcheck="false"
-			placeholder="Search..."
+			placeholder="Ask I-Borat anything about Kazakhstan! Wawaweewa! 🤙"
 			aria-label="Search"
 			bind:this={searchInput}
 			bind:value={searchQuery}
