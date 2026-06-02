@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { auth, db } from '$lib/firebase';
 	import { onAuthStateChanged } from 'firebase/auth';
-	import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+	import { doc, getDoc, setDoc, serverTimestamp, collection } from 'firebase/firestore';
 
 	let loading = true;
 	let saving = false;
