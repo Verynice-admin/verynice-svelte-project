@@ -21,7 +21,6 @@ try {
         { url: '/culture', text: 'Heritage' },
         { url: '/food-drink', text: 'Food & Drinks' },
         { url: '/travel-tips', text: 'Travel Tips' },
-        { url: '/get-started', text: 'Get Started' },
         { url: '/about-borat', text: 'Me Borat' }
       ]
     },
@@ -66,16 +65,27 @@ function useFirebaseOrFallback(firebaseValue: any, fallbackValue: any): any {
   return fallbackValue;
 }
 
+// Menu items hidden site-wide (routes not ready for public)
+const HIDDEN_MENU_URLS = new Set(['/get-started']);
+
+function filterMenu(menu: { url: string; text: string }[]) {
+  return menu.filter((item) => !HIDDEN_MENU_URLS.has(item.url));
+}
+
 export async function loadSiteConfig() {
   // Try to get Firebase config first
   const firebaseConfig = await fetchFirebaseConfig();
-  
+
   // Merge Firebase config with local fallback
   // Firebase takes priority ONLY if it has actual values, otherwise use local
+  const rawMenu =
+    useFirebaseOrFallback(firebaseConfig?.headerConfig?.menu, fallbackConfig?.headerConfig?.menu) ?? [];
+
   const mergedConfig = {
     headerConfig: {
       ...fallbackConfig?.headerConfig,
-      ...(firebaseConfig?.headerConfig || {})
+      ...(firebaseConfig?.headerConfig || {}),
+      menu: filterMenu(rawMenu),
     },
     footerConfig: {
       ...fallbackConfig?.footerConfig,

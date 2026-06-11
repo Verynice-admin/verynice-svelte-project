@@ -12,14 +12,51 @@ service cloud.firestore {
           && request.auth.token.email == 'contact.azamat@gmail.com';
     }
 
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isBusinessOwner() {
+      return isSignedIn()
+          && resource.data.businessId == request.auth.uid;
+    }
+
+    function isCreatingOwnBusinessResource() {
+      return isSignedIn()
+          && request.resource.data.businessId == request.auth.uid;
+    }
+
+    function keepsBusinessOwner() {
+      return request.resource.data.businessId == resource.data.businessId;
+    }
+
+    function isUserDocumentCreate(userId) {
+      return isSelf(userId)
+          && request.resource.data.uid == userId
+          && request.resource.data.role in ['traveller', 'business'];
+    }
+
+    function isUserDocumentUpdate(userId) {
+      let diff = request.resource.data.diff(resource.data);
+      return isSelf(userId)
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.role == resource.data.role
+          && !diff.changedKeys().hasAny(['email', 'createdAt'])
+          && !diff.addedKeys().hasAny(['admin', 'isAdmin', 'suspended']);
+    }
+
     // ========================================
     // 1. PAGES - Public read (for website content)
     // ========================================
     match /pages/{pageId} {
       allow read: if true;
 
-      // Counter updates for view/like counts
-      allow update: if isCounterOnlyUpdate();
+      // Counter updates for view/like counts - requires auth token to prevent REST API abuse
+      allow update: if isSignedIn() && isCounterOnlyUpdate();
 
       function isCounterOnlyUpdate() {
         let diff = request.resource.data.diff(resource.data);
@@ -80,19 +117,74 @@ service cloud.firestore {
     // 4. USERS - Authenticated users read/write own doc ONLY
     // ========================================
     match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-      allow create: if request.auth != null && request.auth.uid == userId;
+      allow read: if isSelf(userId) || isOwner();
+      allow create: if isUserDocumentCreate(userId) || isOwner();
+      allow update: if isUserDocumentUpdate(userId) || isOwner();
+      allow delete: if isSelf(userId) || isOwner();
     }
 
     // ========================================
-    // 5. USERS/PRIVATE - Sensitive PII subcollection
+    // 5. USER SUBCOLLECTIONS - Owner-only traveller/dashboard data
     // ========================================
-    match /users/{userId}/private/{docId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
+    match /users/{userId}/{collectionId}/{docId} {
+      allow read, write: if isSelf(userId) || isOwner();
     }
 
     // ========================================
-    // 6. DEFAULT - Deny everything else
+    // 6. BUSINESSES - Business profile belongs to the authenticated user
+    // ========================================
+    match /businesses/{businessId} {
+      allow read, write: if isSelf(businessId) || isOwner();
+    }
+
+    // ========================================
+    // 7. LISTINGS - Public can read published listings; businesses manage their own
+    // ========================================
+    match /listings/{listingId} {
+      allow read: if resource.data.status == 'published' || isBusinessOwner() || isOwner();
+      allow create: if isCreatingOwnBusinessResource() || isOwner();
+      allow update: if (isBusinessOwner() && keepsBusinessOwner()) || isOwner();
+      allow delete: if isBusinessOwner() || isOwner();
+    }
+
+    // ========================================
+    // 8. BOOKINGS, REVIEWS, MESSAGES - Business scoped dashboard records
+    // ========================================
+    match /bookings/{bookingId} {
+      allow read, update: if isBusinessOwner() || isOwner();
+      allow create: if isCreatingOwnBusinessResource() || isOwner();
+      allow delete: if isOwner();
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isCreatingOwnBusinessResource() || isOwner();
+      allow update: if (isBusinessOwner() && keepsBusinessOwner()) || isOwner();
+      allow delete: if isOwner();
+    }
+
+    match /messages/{messageId} {
+      allow read: if isBusinessOwner() || isOwner();
+      allow create: if isCreatingOwnBusinessResource() || isOwner();
+      allow update: if (isBusinessOwner() && keepsBusinessOwner()) || isOwner();
+      allow delete: if isOwner();
+    }
+
+    // ========================================
+    // 9. CLIENT CONFIG - Public read, server/admin writes only
+    // ========================================
+    match /settings/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /siteConfig/{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ========================================
+    // 10. DEFAULT - Deny everything else
     // ========================================
     match /{document=**} {
       allow read: if false;

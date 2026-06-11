@@ -73,7 +73,7 @@
 				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 				allowfullscreen
 				loading="lazy"
-				sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+				sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
 			></iframe>
 		</div>
 	{:else if url}
@@ -81,11 +81,8 @@
 			The provided video URL is not valid. Please use a YouTube or Vimeo URL.
 		</p>
 	{:else}
-		<div
-			style="background: #f0f0f0; padding: 2rem; text-align: center; border: 1px dashed #ccc; margin: 1rem 0;"
-		>
-			<p style="color: #666; font-weight: bold;">Video Section Placeholder</p>
-			<p style="color: #888;">No video source URL is currently configured for this destination.</p>
+		<div style="padding: 2rem; text-align: center; margin: 1rem 0;">
+			<p style="color: #999; font-style: italic;">Video coming soon</p>
 		</div>
 	{/if}
 </section>
