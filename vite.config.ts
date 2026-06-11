@@ -3,6 +3,9 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  css: {
+    transformer: 'postcss',
+  },
   plugins: [sentrySvelteKit({
     org: "verynice-kz",
     project: "javascript-sveltekit",
