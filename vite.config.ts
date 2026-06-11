@@ -41,7 +41,7 @@ export default defineConfig({
     },
     // Optimize CSS
     cssCodeSplit: true,
-    cssMinify: true,
+    cssMinify: 'esbuild',
     // Source maps for debugging but not in production
     sourcemap: false
   },
