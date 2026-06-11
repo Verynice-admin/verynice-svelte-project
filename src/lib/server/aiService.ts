@@ -1,4 +1,6 @@
-import { GROQ_API_KEY, GEMINI_API_KEY, OPENROUTER_API_KEY } from '$env/static/private';
+import { GROQ_API_KEY, GEMINI_API_KEY } from '$env/static/private';
+import { env as dynamicEnv } from '$env/dynamic/private';
+const OPENROUTER_API_KEY = dynamicEnv.OPENROUTER_API_KEY ?? '';
 import { dev } from '$app/environment';
 import { logger } from '$lib/server/logger';
 
