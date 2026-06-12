@@ -25,7 +25,7 @@
 			{ label: 'Food & Drinks', href: '/food-drink' },
 			{ label: 'Traditional Dastarkhan' }
 		],
-		headerBackgroundPublicId: 'content/pages/foodDrinks/traditionalDastarkhan/hero'
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02'
 	};
 
 	const sectionCodes = {

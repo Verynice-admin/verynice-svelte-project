@@ -52,7 +52,7 @@ const DEFAULT_PAGE = {
 		{ label: 'Home', href: '/' },
 		{ label: 'Travel Tips', href: '/tips' }
 	],
-	headerBackgroundPublicId: 'site/backgrounds/attractions-hero'
+	headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01'
 };
 
 export const load: PageServerLoad = async ({ params }) => {

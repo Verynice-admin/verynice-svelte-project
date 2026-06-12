@@ -36,7 +36,7 @@ const FALLBACK_PAGE = {
   articleLikes: 0,
   articleComments: 0,
   breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Food & Drinks' }],
-  headerBackgroundPublicId: 'content/pages/foodDrinks/main_dastarkhan',
+  headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
   introMarkdown:
     'Kazakh cuisine is built for the open steppe: **hearty, seasonal, and communal**. Meals are designed to be shared around the *dastarkhan* (the family table), balancing tradition with a fast-growing modern dining scene in Almaty, Astana, and Shymkent.'
 };
@@ -198,121 +198,76 @@ const FALLBACK_ARTICLES = [
 ];
 
 const LEGACY_GALLERY_MAP: Record<string, string> = {
-  'content/pages/food-drink/hero': 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes',
+  'content/pages/food-drink/hero': 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
   'content/pages/food-drink/beshbarmak':
-    'content/pages/foodDrinks/signatureDishes/main-meat-dishes/beshbarmak',
-  'content/pages/food-drink/tea': 'content/pages/foodDrinks/TeaHouseCourtyard/teaQuickGuide',
+    'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
+  'content/pages/food-drink/tea': 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03',
   'content/pages/food-drink/market':
-    'content/pages/foodDrinks/signatureDishes/soups-and-broths/sorpa'
+    'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04'
 };
 
 const FALLBACK_GALLERY = {
   title: 'A Taste of Kazakhstan',
   photos: [
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes',
+      publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
       alt: 'Kazakh table spread',
       caption: 'Traditional Dastarkhan — A generous spread of Kazakh delicacies showcasing hospitality and culinary heritage'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/beshbarmak',
-      alt: 'Beshbarmak',
-      caption: 'Beshbarmak — The national dish of Kazakhstan, featuring hand-cut noodles with tender lamb or horse meat'
+      publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
+      alt: 'Nomad village',
+      caption: 'Nomad Ethno Village — Experience authentic Kazakh nomadic culture and traditional cuisine'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/kuyrdak',
-      alt: 'Kuyrdak',
-      caption: 'Kuyrdak — Fried chunks of meat with onions, a hearty dish rooted in nomadic traditions'
+      publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03',
+      alt: 'Traditional setting',
+      caption: 'Traditional Setting — The cultural heart of Kazakh hospitality and food traditions'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/kazan-zhappa',
-      alt: 'Kazan zhappa',
-      caption: 'Kazan Zhaps — Meat and potatoes cooked in a cauldron over an open fire'
+      publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04',
+      alt: 'Cultural village',
+      caption: 'Cultural Village — Where Kazakh culinary heritage comes alive through food and ceremony'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/zhyzhmyzh',
-      alt: 'Zhyzhmyzh',
-      caption: 'Zhyzhmyzh — Spiced fried meat cubes, a popular dish for celebrations and gatherings'
+      publicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
+      alt: 'Charyn Canyon',
+      caption: 'Charyn Canyon — The dramatic landscape that has shaped Kazakh steppe culture and nomadic cuisine'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/karynburme',
-      alt: 'Karynburme',
-      caption: 'Karynburme — Layered pastry filled with spiced meat, a savory pastry beloved in Kazakhstan'
+      publicId: 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01',
+      alt: 'Kolsai Lakes',
+      caption: 'Kolsai Lakes — Alpine beauty that frames the mountain regions where Kazakh dairy traditions thrive'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/steamedmeat',
-      alt: 'Steamed meat',
-      caption: 'Steamed Meat — Tender meat cooked with aromatic spices in a traditional steaming method'
+      publicId: 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01',
+      alt: 'Silk Road heritage',
+      caption: 'Silk Road Heritage — The ancient trade routes that brought spices and flavors to Kazakh cuisine'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/main-meat-dishes/driedcuredmeat',
-      alt: 'Dried cured meat',
-      caption: 'Kazy — Premium dried horse meat, a delicacy sliced thin and served as an appetizer'
+      publicId: 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+      alt: 'Baiterek Tower',
+      caption: 'Modern Kazakhstan — Where international cuisines meet the vibrant contemporary dining scene'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/kazy',
-      alt: 'Kazy',
-      caption: 'Kazy — The most prized horse meat sausage, air-dried and sliced thin for special occasions'
+      publicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-01',
+      alt: 'Zenkov Cathedral',
+      caption: 'Almaty — Home to Kazakhstan\'s most diverse culinary scene and historic food culture'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/karta',
-      alt: 'Karta',
-      caption: 'Karta — Ground horse meat seasoned and formed into patties, grilled to perfection'
+      publicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-01',
+      alt: 'Panfilov Park',
+      caption: 'Almaty Dining — The city\'s parks and streets are lined with cafes, tea houses, and restaurants'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/shuzhuk',
-      alt: 'Shuzhuk',
-      caption: 'Shuzhuk — Spiced horse meat sausage, dried and smoked for intense flavor'
+      publicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01',
+      alt: 'Central State Museum',
+      caption: 'Cultural Heritage — Kazakh cuisine is deeply rooted in the nomadic history on display here'
     },
     {
-      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/zhaya',
-      alt: 'Zhaya',
-      caption: 'Zhaya — Finely minced horse meat mixed with fat and spices, a traditional delicacy'
-    },
-    {
-      publicId: 'content/pages/foodDrinks/signatureDishes/horse-meat-specialties/zhal',
-      alt: 'Zhal',
-      caption: 'Zhal — Horse meat preserve, a protein-rich traditional food for winter'
-    },
-    {
-      publicId: 'content/pages/foodDrinks/signatureDishes/soups-and-broths/sorpa',
-      alt: 'Sorpa',
-      caption: 'Sorpa — A rich broth made from lamb or horse meat, served with noodles or bread'
-    },
-    {
-      publicId: 'content/pages/foodDrinks/signatureDishes/soups-and-broths/kespe',
-      alt: 'Kespe',
-      caption: 'Kespe — Soup with handmade pasta squares, a comforting dish for cold Kazakh winters'
-    },
-    {
-      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/sheepheadritual',
-      alt: 'Sheep head ritual',
-      caption: 'Sheep Head — A ceremonial dish served to honored guests, representing respect and abundance'
-    },
-    {
-      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/tongue',
-      alt: 'Tongue',
-      caption: 'Tongue — Considered a delicacy, served boiled or sliced in salads'
-    },
-    {
-      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/liver',
-      alt: 'Liver',
-      caption: 'Liver — Served grilled or in pate, rich in iron and flavor'
-    },
-    {
-      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/heart',
-      alt: 'Heart',
-      caption: 'Heart — A lean and tender organ meat, often served grilled or in soups'
-    },
-    {
-      publicId: 'content/pages/foodDrinks/signatureDishes/offal-and-ritual-dishes/lungsandliver',
-      alt: 'Lungs and liver',
-      caption: 'Lungs and Liver — Traditional offal dishes prepared in various regional styles'
-    },
-    {
-      publicId: 'content/pages/foodDrinks/TeaHouseCourtyard/teaQuickGuide',
-      alt: 'Tea ritual',
-      caption: 'Tea Ceremony — The traditional Kazakh tea ritual, where green tea is poured and offered to guests'
+      publicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-01',
+      alt: 'Altyn Emel',
+      caption: 'Altyn Emel — The steppe landscapes that inspired the hearty, sustaining traditions of Kazakh food'
     }
   ]
 };
@@ -348,7 +303,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Signature Dishes',
     category: 'Food & Drinks',
     description: 'Beshbarmak, kazy, manty, lagman, and the street-time classic, samsa.',
-    imagePublicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes'
+    imagePublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01'
   },
   {
     id: 'traditional-dastarkhan',
@@ -356,7 +311,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Traditional Dastarkhan',
     category: 'Food & Drinks',
     description: 'A generous spread of Kazakh delicacies showcasing hospitality and culinary heritage.',
-    imagePublicId: 'content/pages/foodDrinks/traditionalDastarkhan/hero'
+    imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02'
   },
   {
     id: 'silk-road-noodles',
@@ -364,7 +319,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Silk Road Noodles',
     category: 'Food & Drinks',
     description: 'Hand-pulled lagman and bold southern spices from the Silk Road.',
-    imagePublicId: 'content/pages/foodDrinks/silkRoadNoodles/hero'
+    imagePublicId: 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01'
   },
   {
     id: 'tea-house-courtyard',
@@ -372,7 +327,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Tea House Courtyard',
     category: 'Food & Drinks',
     description: 'Slow tea rituals with dried fruits and sweets around the dastarkhan.',
-    imagePublicId: 'content/pages/foodDrinks/TeaHouseCourtyard/hero'
+    imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
   },
   {
     id: 'international-tastes',
@@ -380,7 +335,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'International Tastes',
     category: 'Food & Drinks',
     description: 'Global flavors from sushi and ramen to shawarma and pizza.',
-    imagePublicId: 'content/pages/foodDrinks/internationalTastes/tom_yam'
+    imagePublicId: 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01'
   }
 ];
 
@@ -430,17 +385,17 @@ const normalizeHighlightTitle = (value: any) =>
   normalizeTitle(value) === 'regional tastes' ? 'International Tastes' : value;
 
 const HIGHLIGHT_IMAGE_FALLBACKS: Record<string, string> = {
-  'signature dishes': 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes',
-  'international tastes': 'content/pages/foodDrinks/internationalTastes/tom_yam',
-  'regional tastes': 'content/pages/foodDrinks/internationalTastes/tom_yam',
-  'traditional dastarkhan': 'content/pages/foodDrinks/traditionalDastarkhan/hero',
-  'silk road noodles': 'content/pages/foodDrinks/silkRoadNoodles/hero',
-  'tea house courtyard': 'content/pages/foodDrinks/TeaHouseCourtyard/hero'
+  'signature dishes': 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
+  'international tastes': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+  'regional tastes': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+  'traditional dastarkhan': 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
+  'silk road noodles': 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01',
+  'tea house courtyard': 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
 };
 const RESTAURANT_IMAGE_FALLBACKS: Record<string, string> = {
-  'traditional dastarkhan': 'content/pages/foodDrinks/traditionalDastarkhan/hero',
-  'silk road noodles': 'content/pages/foodDrinks/silkRoadNoodles/hero',
-  'tea house courtyard': 'content/pages/foodDrinks/TeaHouseCourtyard/hero'
+  'traditional dastarkhan': 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
+  'silk road noodles': 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01',
+  'tea house courtyard': 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
 };
 
 const withHighlightImage = (item: any) => {

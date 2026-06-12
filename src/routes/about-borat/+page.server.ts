@@ -23,7 +23,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Traditional Dastarkhan',
     slug: 'traditional-dastarkhan',
     category: 'Food & Drinks',
-    headerBackgroundPublicId: 'content/pages/foodDrinks/traditionalDastarkhan/hero',
+    headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
     description: 'A generous spread of Kazakh delicacies showcasing hospitality.'
   },
   {

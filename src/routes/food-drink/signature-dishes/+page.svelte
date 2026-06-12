@@ -22,7 +22,7 @@
 			{ label: 'Food & Drinks', href: '/food-drink' },
 			{ label: 'Signature Dishes' }
 		],
-		headerBackgroundPublicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes'
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01'
 	};
 
 	let pageData = { ...defaultPage, ...(page ?? {}) };

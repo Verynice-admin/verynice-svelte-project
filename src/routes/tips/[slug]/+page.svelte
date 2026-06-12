@@ -142,7 +142,7 @@
 			{ label: 'Home', href: '/' },
 			{ label: 'Travel Tips', href: '/tips' }
 		],
-		headerBackgroundPublicId: 'site/backgrounds/attractions-hero'
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01'
 	};
 
 	let resolvedPage = { ...defaultPage, ...(pageData ?? {}) };
@@ -165,7 +165,7 @@
 			tip?.imagePublicId ||
 			tip?.publicId ||
 			resolvedPage?.headerBackgroundPublicId ||
-			'site/backgrounds/attractions-hero';
+			'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01';
 		return getCloudinaryUrl(publicId, {
 			width: 2200,
 			height: 1200,

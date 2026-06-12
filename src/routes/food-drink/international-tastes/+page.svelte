@@ -23,7 +23,7 @@
 			{ label: 'Food & Drinks', href: '/food-drink' },
 			{ label: 'International Tastes' }
 		],
-		headerBackgroundPublicId: 'content/pages/foodDrinks/internationalTastes/tom_yam'
+		headerBackgroundPublicId: 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01'
 	};
 
 	let pageData = { ...defaultPage, ...(page ?? {}) };

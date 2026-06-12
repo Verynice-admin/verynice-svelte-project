@@ -77,19 +77,19 @@ const FALLBACK_HIGHLIGHTS = [
 ];
 
 const HIGHLIGHT_IMAGE_FALLBACKS: Record<string, string> = {
-  'best time to visit': 'site/backgrounds/almaty-mountains',
-  'best time to visit kazakhstan': 'site/backgrounds/almaty-mountains',
-  'visa & entry': 'site/backgrounds/passport',
-  'visa and entry': 'site/backgrounds/passport',
-  'safety & precautions': 'site/backgrounds/safety',
-  'safety and precautions': 'site/backgrounds/safety',
-  'getting around': 'site/backgrounds/transport',
-  'getting there & around': 'site/backgrounds/transport',
-  'getting there and around': 'site/backgrounds/transport',
-  'airport taxis': 'site/backgrounds/taxi',
-  'airport taxi guide': 'site/backgrounds/taxi',
-  'money & costs': 'site/backgrounds/money',
-  'money and costs': 'site/backgrounds/money'
+  'best time to visit': 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01',
+  'best time to visit kazakhstan': 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01',
+  'visa & entry': 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
+  'visa and entry': 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
+  'safety & precautions': 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01',
+  'safety and precautions': 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01',
+  'getting around': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+  'getting there & around': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+  'getting there and around': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+  'airport taxis': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+  'airport taxi guide': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+  'money & costs': 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01',
+  'money and costs': 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01'
 };
 
 const withHighlightImage = (item: any) => {

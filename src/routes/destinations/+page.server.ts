@@ -63,7 +63,7 @@ export async function load() {
       title: 'Food & Drinks',
       category: 'Cuisine',
       shortDescription: 'Beshbarmak, kazy, tea rituals, and the modern dining scene across Kazakhstan.',
-      imagePublicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes'
+      imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
     },
     {
       id: 'culture',

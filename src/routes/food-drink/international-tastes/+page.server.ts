@@ -22,11 +22,11 @@ function serializeDates(obj: any): any {
 	return out;
 }
 
-const PUBLIC_ID_BASE = 'content/pages/foodDrinks/internationalTastes';
-const MAIN_HERO_PUBLIC_ID = `${PUBLIC_ID_BASE}/tom_yam`;
+const PUBLIC_ID_BASE = 'content/pages/destinations/Astana_Nearby/baiterek-tower';
+const MAIN_HERO_PUBLIC_ID = 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01';
 const LEGACY_HERO_PUBLIC_IDS = new Set([
-	`${PUBLIC_ID_BASE}/hero`,
-	'content/pages/foodDrinks/internationalTastes/hero'
+	'content/pages/destinations/Astana_Nearby/baiterek-tower/hero',
+	'content/pages/destinations/Astana_Nearby/baiterek-tower/internationalTastes/hero'
 ]);
 
 function resolveInternationalHeroPublicId(value: any): string {

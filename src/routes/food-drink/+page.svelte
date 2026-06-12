@@ -61,19 +61,19 @@
 		{
 			const title = normalizeKey(item?.title);
 			const byTitle = {
-				'signature dishes': 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes',
-				'international tastes': 'content/pages/foodDrinks/internationalTastes/tom_yam',
-				'regional tastes': 'content/pages/foodDrinks/internationalTastes/tom_yam',
-				'traditional dastarkhan': 'content/pages/foodDrinks/traditionalDastarkhan/hero',
-				'silk road noodles': 'content/pages/foodDrinks/silkRoadNoodles/hero',
-				'tea house courtyard': 'content/pages/foodDrinks/TeaHouseCourtyard/hero'
+				'signature dishes': 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
+				'international tastes': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+				'regional tastes': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+				'traditional dastarkhan': 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
+				'silk road noodles': 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01',
+				'tea house courtyard': 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
 			};
 			const publicId =
 				item?.image?.publicId ||
 				item?.imagePublicId ||
 				item?.publicId ||
 				byTitle[title] ||
-				'site/backgrounds/attractions-hero';
+				'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01';
 
 			return getCloudinaryUrl(publicId, {
 				width: 900,

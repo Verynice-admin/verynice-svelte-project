@@ -25,7 +25,7 @@
 		articleLikes: 0,
 		articleComments: 0,
 		breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Travel Tips' }],
-		headerBackgroundPublicId: 'site/backgrounds/attractions-hero',
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01',
 		introMarkdown: 'Welcome to Kazakhstan! Here are essential travel tips to help you plan your perfect trip.'
 	};
 
@@ -41,15 +41,15 @@
 
 	const cardImageUrl = (item: any) => {
 		const byTitle: Record<string, string> = {
-			'best time to visit': 'site/backgrounds/almaty-mountains',
-			'visa & entry': 'site/backgrounds/passport',
-			'safety & precautions': 'site/backgrounds/safety',
-			'getting around': 'site/backgrounds/transport',
-			'airport taxis': 'site/backgrounds/taxi',
-			'money & costs': 'site/backgrounds/money'
+			'best time to visit': 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01',
+			'visa & entry': 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
+			'safety & precautions': 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01',
+			'getting around': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+			'airport taxis': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+			'money & costs': 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01'
 		};
 		const titleKey = item?.title?.toLowerCase() || '';
-		const publicId = item?.image?.publicId || item?.imagePublicId || item?.publicId || byTitle[titleKey] || 'site/backgrounds/attractions-hero';
+		const publicId = item?.image?.publicId || item?.imagePublicId || item?.publicId || byTitle[titleKey] || 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01';
 
 		return getCloudinaryUrl(publicId, {
 			width: 900,

@@ -22,7 +22,7 @@ function serializeDates(obj: any): any {
 	return out;
 }
 
-const PUBLIC_ID_BASE = 'content/pages/foodDrinks/traditionalDastarkhan';
+const PUBLIC_ID_BASE = 'content/pages/destinations/Almaty_nearby/nomad-ethno-village';
 
 const FALLBACK_PAGE = {
 	seo: {
@@ -43,7 +43,7 @@ const FALLBACK_PAGE = {
 		{ label: 'Food & Drinks', href: '/food-drink' },
 		{ label: 'Traditional Dastarkhan' }
 	],
-	headerBackgroundPublicId: `${PUBLIC_ID_BASE}/hero`
+	headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02'
 };
 
 const FALLBACK_SECTIONS = [
@@ -52,7 +52,7 @@ const FALLBACK_SECTIONS = [
 		order: 1,
 		title: 'Ethos of Hosting',
 		description: 'In Kazakh culture, the table is a moral space before it is a menu.',
-		imagePublicId: `${PUBLIC_ID_BASE}/sections/ethos-of-hosting`,
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
 		contentMarkdown:
 			`The **dastarkhan** is not simply a spread of dishes. It is an ethical performance of care in which the host demonstrates attentiveness, memory, and restraint. A respected host notices who arrived first, who is older, who is visiting from afar, and who should be greeted through food rather than words.
 
@@ -65,7 +65,7 @@ Even iconic foods such as **beshbarmak**, **kazy**, or fresh **baursak** gain th
 		order: 2,
 		title: 'Seating Hierarchy and Social Geometry',
 		description: 'Placement around the dastarkhan communicates rank, respect, and relationship.',
-		imagePublicId: `${PUBLIC_ID_BASE}/sections/seating-hierarchy`,
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
 		contentMarkdown:
 			`Traditional seating is deliberate. The most honored position is not ornamental; it marks the person whose presence dignifies the gathering. Elders, spiritual authorities, or senior guests are placed where service reaches them first and where conversation naturally centers around them.
 
@@ -78,7 +78,7 @@ This spatial discipline allows the meal to unfold without friction. Service beco
 		order: 3,
 		title: 'Serving Order and Tabak Tartu',
 		description: 'The prestige of the dastarkhan is expressed through sequence, not speed.',
-		imagePublicId: `${PUBLIC_ID_BASE}/sections/serving-order`,
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03',
 		contentMarkdown:
 			`A classic dastarkhan does not present all dishes at once. It opens with stabilizing gestures, most often tea and light accompaniments, then moves toward its ceremonial center where meat and broth define the emotional peak of the meal.
 
@@ -91,7 +91,7 @@ What outsiders sometimes read as “just serving” is, in fact, a public gramma
 		order: 4,
 		title: 'Tea Ritual and Conversational Rhythm',
 		description: 'Tea is the tempo system of the table, regulating pace and emotional tone.',
-		imagePublicId: `${PUBLIC_ID_BASE}/sections/tea-ritual`,
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04',
 		contentMarkdown:
 			`Tea service in Kazakh hosting is an art of timing. Small pours are intentional: they invite continued attention, repeated contact, and a quieter cadence of care. Each refill is a social checkpoint where comfort is reassessed without interruption.
 
@@ -104,7 +104,7 @@ Fermented drinks such as **kymyz**, **shubat**, and **ayran** may appear accordi
 		order: 5,
 		title: 'Speech Etiquette, Bata, and Table Conduct',
 		description: 'Respect is performed through speech discipline as much as through eating.',
-		imagePublicId: `${PUBLIC_ID_BASE}/sections/speech-and-etiquette`,
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
 		contentMarkdown:
 			`A refined guest listens before speaking, accepts hospitality without theatrical refusal, and follows elder-first cues in both food and conversation. At a traditional table, manners are interpreted as character rather than style.
 
@@ -117,7 +117,7 @@ In this setting, rushing, interrupting service order, or treating the table as a
 		order: 6,
 		title: 'Ceremonial Contexts Across Life Events',
 		description: 'The dastarkhan adapts to weddings, births, memorials, and seasonal festivals.',
-		imagePublicId: `${PUBLIC_ID_BASE}/sections/ceremonial-contexts`,
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
 		contentMarkdown:
 			`The same etiquette architecture appears in different ceremonial moods. Wedding-related gatherings expand the meat program and lengthen the tea horizon to honor alliances between families. Birth celebrations emphasize continuity and blessing, often placing elder women at the center of ritual authority.
 
@@ -130,7 +130,7 @@ During **Nauryz**, symbolic foods such as **nauryz kozhe** reinforce renewal, bu
 		order: 7,
 		title: 'Modern Urban Dastarkhan and Cultural Revival',
 		description: 'Contemporary venues reinterpret tradition while preserving ceremonial logic.',
-		imagePublicId: `${PUBLIC_ID_BASE}/sections/modern-practice`,
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03',
 		contentMarkdown:
 			`In Almaty and Astana, contemporary restaurants are rebuilding dastarkhan culture through design, pacing, and narrative service. Plating may look modern, yet the underlying sequence often mirrors classical protocol: honor first, center service, then extended tea.
 
