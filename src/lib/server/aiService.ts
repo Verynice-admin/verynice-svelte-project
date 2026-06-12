@@ -176,7 +176,7 @@ function splitSegmentsByTokenBudget(
 
 type RawTranslation = Record<string, unknown>;
 
-const GROQ_MODEL = 'llama-3.3-70b-versatile';
+const GROQ_MODEL = 'llama-4-scout-17b-16e-instruct';
 
 // Hard cap on how long any single AI API call may block a serverless function.
 // Prevents slow-loris abuse where an attacker holds connections open to exhaust concurrency.
@@ -391,7 +391,7 @@ async function translateWithOpenRouter(
         'meta-llama/llama-4-maverick:free',
         'meta-llama/llama-3.3-70b-instruct:free',
         'mistralai/mistral-small-3.1-24b-instruct:free',
-        'deepseek/deepseek-chat-v3-0324:free',
+        'deepseek/deepseek-r1-0528:free',
         'openrouter/free'
     ];
 
