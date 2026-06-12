@@ -77,7 +77,7 @@ interface HistoryPage {
   author: HistoryAuthor;
 }
 
-const HERO_IMAGE_ID = 'content/pages/history/mainimage';
+const HERO_IMAGE_ID = 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01';
 
 const ARTICLE_SOURCE: Array<Omit<HistoryArticle, 'contentHTML'>> = [
   {

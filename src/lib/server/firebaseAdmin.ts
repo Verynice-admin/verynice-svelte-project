@@ -61,19 +61,27 @@ function loadServiceAccount(): ServiceAccount | null {
   }
   
   // Priority 3: Environment variable with JSON string
-  // Use FIREBASE_SERVICE_ACCOUNT (no VITE_ prefix) — VITE_ vars are bundled into
-  // the client by Vite and must never hold server secrets.
-  const jsonStr = env.FIREBASE_SERVICE_ACCOUNT;
-  if (jsonStr) {
+  // Check FIREBASE_SERVICE_ACCOUNT and FIREBASE_ADMIN_TOKEN (both may hold service account JSON)
+  for (const key of ['FIREBASE_SERVICE_ACCOUNT', 'FIREBASE_ADMIN_TOKEN']) {
+    const jsonStr = (env as Record<string, string | undefined>)[key];
+    if (!jsonStr) continue;
+    // Try direct JSON parse
     try {
       const sa: ServiceAccount = JSON.parse(jsonStr);
       if (typeof sa.private_key === 'string' && sa.private_key.includes('\\n')) {
         sa.private_key = sa.private_key.replace(/\\n/g, '\n');
       }
-      return sa;
-    } catch (error) {
-      // Continue
-    }
+      if (sa.project_id && sa.private_key && sa.client_email) return sa;
+    } catch { /* not valid JSON, try base64 */ }
+    // Try base64-encoded JSON
+    try {
+      const decoded = Buffer.from(jsonStr, 'base64').toString('utf8');
+      const sa: ServiceAccount = JSON.parse(decoded);
+      if (typeof sa.private_key === 'string' && sa.private_key.includes('\\n')) {
+        sa.private_key = sa.private_key.replace(/\\n/g, '\n');
+      }
+      if (sa.project_id && sa.private_key && sa.client_email) return sa;
+    } catch { /* not base64 JSON either */ }
   }
 
   // Priority 4: Try root directory (legacy support)
