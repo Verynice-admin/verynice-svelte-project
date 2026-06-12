@@ -193,17 +193,27 @@ const AI_FETCH_TIMEOUT_MS = 25_000;
 // Translation uses a shorter timeout to stay within Vercel Hobby's 10 s function limit.
 // Groq fallback chain: fast 8B model first, capable 70B second, legacy stable third.
 const AI_TRANSLATE_TIMEOUT_MS = 7_000;
+// Wall-clock budget shared by the entire provider fallback chain for one request.
+// Without it, sequential attempts (3 Groq + 4 Gemini + 5 OpenRouter × 7 s each)
+// outlive Vercel Hobby's 10 s limit and the function is killed mid-chain.
+const AI_TRANSLATE_TOTAL_BUDGET_MS = 9_000;
+// Don't start a new attempt with less time than this remaining.
+const AI_TRANSLATE_MIN_ATTEMPT_MS = 1_500;
+// maxTokens: per-model output cap. A ~3000-token English chunk can need well
+// over 4096 output tokens once translated to Cyrillic/CJK inside the JSON
+// wrapper (those scripts tokenize less efficiently), which truncates the JSON.
+// Groq rate limits are per model, so each entry is a separate RPM bucket.
 const GROQ_TRANSLATE_MODELS = [
-    'llama-3.1-8b-instant',       // fastest, high free-tier RPM
-    'llama-3.3-70b-versatile',    // capable fallback
-    'llama3-70b-8192',            // legacy stable
+    { id: 'llama-3.1-8b-instant', maxTokens: 8192 },     // fastest, high free-tier RPM
+    { id: 'llama-3.3-70b-versatile', maxTokens: 8192 },  // capable fallback
+    { id: 'openai/gpt-oss-20b', maxTokens: 8192 },       // separate rate-limit bucket
 ];
 // Gemini model names change between preview and stable; try each in order.
 const GEMINI_TRANSLATE_MODELS = [
     'gemini-2.5-flash-lite',
+    'gemini-2.5-flash',
     'gemini-2.0-flash-lite',
     'gemini-2.0-flash',
-    'gemini-1.5-flash',
 ];
 
 export async function generateAnswer(rawQuestion: string): Promise<{ correctedQuestion: string, answer: string, relatedLinks: { title: string, url: string }[] } | null> {
@@ -258,7 +268,8 @@ const OPENROUTER_TRANSLATE_ENDPOINT = 'https://openrouter.ai/api/v1/chat/complet
 
 async function callGeminiTranslation(
     targetLanguage: string,
-    segments: { id: string; text: string }[]
+    segments: { id: string; text: string }[],
+    deadline: number
 ) {
     if (!GEMINI_API_KEY) {
         logger.warn('[ai] GEMINI_API_KEY not set, skipping Gemini translation');
@@ -266,11 +277,16 @@ async function callGeminiTranslation(
     }
 
     for (const model of GEMINI_TRANSLATE_MODELS) {
+        const remainingMs = deadline - Date.now();
+        if (remainingMs < AI_TRANSLATE_MIN_ATTEMPT_MS) {
+            logger.warn('[ai] Translation time budget exhausted, skipping remaining Gemini models', { model });
+            break;
+        }
         const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
         try {
             const response = await fetch(`${endpoint}?key=${GEMINI_API_KEY}`, {
                 method: 'POST',
-                signal: AbortSignal.timeout(AI_TRANSLATE_TIMEOUT_MS),
+                signal: AbortSignal.timeout(Math.min(AI_TRANSLATE_TIMEOUT_MS, remainingMs)),
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     contents: [{
@@ -321,18 +337,24 @@ async function callGeminiTranslation(
 
 async function callGroqTranslation(
     targetLanguage: string,
-    segments: { id: string; text: string }[]
+    segments: { id: string; text: string }[],
+    deadline: number
 ): Promise<{ id: string, translated: string }[] | null> {
     if (!GROQ_API_KEY) {
         logger.warn('[ai] GROQ_API_KEY not set, skipping Groq translation');
         return null;
     }
 
-    for (const model of GROQ_TRANSLATE_MODELS) {
+    for (const { id: model, maxTokens } of GROQ_TRANSLATE_MODELS) {
+        const remainingMs = deadline - Date.now();
+        if (remainingMs < AI_TRANSLATE_MIN_ATTEMPT_MS) {
+            logger.warn('[ai] Translation time budget exhausted, skipping remaining Groq models', { model });
+            break;
+        }
         try {
             const response = await fetch(GROQ_TRANSLATE_ENDPOINT, {
                 method: 'POST',
-                signal: AbortSignal.timeout(AI_TRANSLATE_TIMEOUT_MS),
+                signal: AbortSignal.timeout(Math.min(AI_TRANSLATE_TIMEOUT_MS, remainingMs)),
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${GROQ_API_KEY}`
@@ -344,7 +366,7 @@ async function callGroqTranslation(
                         { role: 'user', content: JSON.stringify({ targetLanguage, segments }) }
                     ],
                     temperature: 0.1,
-                    max_tokens: 4096,
+                    max_tokens: maxTokens,
                     response_format: { type: 'json_object' }
                 })
             });
@@ -353,6 +375,10 @@ async function callGroqTranslation(
                 // Cap wait to 2 s — longer sleeps will exceed Vercel's function timeout.
                 const retryAfterSec = parseFloat(response.headers.get('retry-after') ?? '0');
                 const waitMs = retryAfterSec > 0 ? Math.min(retryAfterSec * 1000, 2_000) : 1_000;
+                if (Date.now() + waitMs > deadline - AI_TRANSLATE_MIN_ATTEMPT_MS) {
+                    logger.warn('[ai] Groq rate limit and budget exhausted, giving up', { model });
+                    break;
+                }
                 logger.warn('[ai] Groq rate limit, trying next model after brief wait', { model, waitMs });
                 await new Promise(r => setTimeout(r, waitMs));
                 continue;
@@ -391,7 +417,8 @@ async function callGroqTranslation(
 
 async function translateWithOpenRouter(
     targetLanguage: string,
-    segments: { id: string; text: string }[]
+    segments: { id: string; text: string }[],
+    deadline: number
 ): Promise<{ id: string, translated: string }[] | null> {
     if (!OPENROUTER_API_KEY) {
         logger.warn('[ai] OPENROUTER_API_KEY not set, skipping OpenRouter translation');
@@ -409,11 +436,16 @@ async function translateWithOpenRouter(
     ];
 
     for (const model of models) {
+        const remainingMs = deadline - Date.now();
+        if (remainingMs < AI_TRANSLATE_MIN_ATTEMPT_MS) {
+            logger.warn('[ai] Translation time budget exhausted, skipping remaining OpenRouter models', { model });
+            break;
+        }
         try {
             if (dev) logger.debug('[ai] Trying OpenRouter model', { model });
             const response = await fetch(OPENROUTER_TRANSLATE_ENDPOINT, {
                 method: 'POST',
-                signal: AbortSignal.timeout(AI_TRANSLATE_TIMEOUT_MS),
+                signal: AbortSignal.timeout(Math.min(AI_TRANSLATE_TIMEOUT_MS, remainingMs)),
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
@@ -447,12 +479,17 @@ async function translateWithOpenRouter(
                 if (errorText.includes('rate-limit') || errorText.includes('rate_limit')) {
                     for (let retryAttempt = 1; retryAttempt <= 2; retryAttempt++) {
                         const waitMs = 1000 * retryAttempt;
+                        const retryRemainingMs = deadline - Date.now() - waitMs;
+                        if (retryRemainingMs < AI_TRANSLATE_MIN_ATTEMPT_MS) {
+                            logger.warn('[ai] OpenRouter 429 and budget exhausted, giving up retries', { model });
+                            break;
+                        }
                         logger.warn('[ai] OpenRouter 429, retrying', { model, attempt: retryAttempt, waitMs });
                         await new Promise(r => setTimeout(r, waitMs));
 
                         const retryResponse = await fetch(OPENROUTER_TRANSLATE_ENDPOINT, {
                             method: 'POST',
-                            signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
+                            signal: AbortSignal.timeout(Math.min(AI_TRANSLATE_TIMEOUT_MS, retryRemainingMs)),
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
@@ -538,23 +575,27 @@ export async function translateSegments(
     const chunks = splitSegmentsByTokenBudget(segments, 3000);
     if (dev) logger.debug('[ai] Translation chunks', { segmentCount: segments.length, chunkCount: chunks.length });
 
+    // Shared wall-clock deadline for the whole fallback chain — chunks run in
+    // parallel, so they all race the same budget.
+    const deadline = Date.now() + AI_TRANSLATE_TOTAL_BUDGET_MS;
+
     // Process all sub-chunks in parallel (usually just 1 chunk with the 3000-token budget)
     const results = await Promise.all(chunks.map(async (chunk) => {
         // Primary: Groq
         if (GROQ_API_KEY) {
-            const t = await callGroqTranslation(targetLanguage, chunk);
+            const t = await callGroqTranslation(targetLanguage, chunk, deadline);
             if (t?.length) return t;
             logger.warn('[ai] Groq translation failed for chunk, attempting Gemini fallback');
         }
         // Fallback 1: Gemini
         if (GEMINI_API_KEY) {
-            const t = await callGeminiTranslation(targetLanguage, chunk);
+            const t = await callGeminiTranslation(targetLanguage, chunk, deadline);
             if (t?.length) return t;
             logger.warn('[ai] Gemini translation failed for chunk, attempting OpenRouter fallback');
         }
         // Fallback 2: OpenRouter
         if (OPENROUTER_API_KEY) {
-            const t = await translateWithOpenRouter(targetLanguage, chunk);
+            const t = await translateWithOpenRouter(targetLanguage, chunk, deadline);
             if (t?.length) return t;
             logger.error('[ai] All providers failed for chunk');
         }

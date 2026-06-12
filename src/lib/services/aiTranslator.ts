@@ -140,6 +140,22 @@ const simpleHash = (str: string): string => {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// Limit concurrent /api/translate requests. Firing every chunk at once exhausts
+// the free-tier rate limits of the server-side AI providers (Groq/Gemini), so
+// the whole page cascades into 429 → 503 instead of translating.
+const MAX_CONCURRENT_CHUNK_REQUESTS = 3;
+
+const runWithConcurrency = async (tasks: (() => Promise<void>)[], limit: number): Promise<void> => {
+	let index = 0;
+	const workers = Array.from({ length: Math.min(limit, tasks.length) }, async () => {
+		while (index < tasks.length) {
+			const task = tasks[index++];
+			await task();
+		}
+	});
+	await Promise.all(workers);
+};
+
 const getLanguageName = (code: string): string => LANGUAGE_LABELS[code] ?? code;
 
 const normalizeText = (text: string): string => text.replace(/\s+/g, ' ').trim();
@@ -606,20 +622,20 @@ const processMutationQueue = async () => {
 		return;
 	}
 
-	// Create chunks and translate in parallel
+	// Create chunks and translate with limited concurrency
 	const chunks = createChunks(segments);
 	const translatedNodeSets: Set<Node>[] = [];
 
-	// PHASE 1: Process chunks in parallel using Promise.all
-	await Promise.all(
-		chunks.map(async (chunk) => {
+	await runWithConcurrency(
+		chunks.map((chunk) => async () => {
 			const cache = await translateChunk(chunk, currentLang);
 			const translatedNodes = applyTranslationsToNodes(
 				nodes.filter(n => chunk.some(s => s.id === n.segmentId)),
 				cache
 			);
 			translatedNodeSets.push(translatedNodes);
-		})
+		}),
+		MAX_CONCURRENT_CHUNK_REQUESTS
 	);
 
 	// PHASE 2: Dispatch translationChunkDone event for Font Agent
@@ -869,12 +885,12 @@ export const translatePageTo = async (languageCode: string, showLoading = true):
 		// PHASE 1: Create chunks for batch processing
 		const chunks = createChunks(segments);
 
-		// PHASE 1: Process chunks in parallel; apply each to DOM as it resolves
-		// so users see progressive translation rather than waiting for all chunks.
+		// PHASE 1: Process chunks with limited concurrency; apply each to DOM as it
+		// resolves so users see progressive translation rather than waiting for all chunks.
 		const allTranslatedNodes = new Set<Node>();
 
-		await Promise.all(
-			chunks.map(async (chunk) => {
+		await runWithConcurrency(
+			chunks.map((chunk) => async () => {
 				const cache = await translateChunk(chunk, languageCode);
 				if (requestId !== requestCounter) return; // newer request supersedes this one
 				// Only touch nodes whose text belongs to this chunk
@@ -889,7 +905,8 @@ export const translatePageTo = async (languageCode: string, showLoading = true):
 					}));
 					checkAndDispatchFontEvent(translated);
 				}
-			})
+			}),
+			MAX_CONCURRENT_CHUNK_REQUESTS
 		);
 
 		// Verify this is still the active request

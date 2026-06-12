@@ -60,7 +60,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		const rate = await enforceRateLimit({
 			request,
 			scope: 'api-translate',
-			maxRequests: 30,
+			maxRequests: 120,
 			windowMs: 60_000
 		});
 		if (!rate.allowed) {
