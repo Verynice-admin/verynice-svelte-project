@@ -15,7 +15,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Kazakhstan History',
     url: '/history',
     category: 'Heritage',
-    headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
+    headerBackgroundPublicId: 'content/pages/heritage/yurtNomadiclife/yurt-nomadic-life-hero',
     description: 'From the Silk Road empires to the modern republic.'
   },
   {
@@ -23,7 +23,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Traditional Dastarkhan',
     slug: 'traditional-dastarkhan',
     category: 'Food & Drinks',
-    headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
+    headerBackgroundPublicId: 'content/pages/foodDrinks/traditionalDastarkhan/hero',
     description: 'A generous spread of Kazakh delicacies showcasing hospitality.'
   },
   {
@@ -47,7 +47,7 @@ const getBoratData = () => {
       mainTitle: 'Welcome to Verynice Land!',
       headerDescription:
         'Welcome to Verynice Land! The movie "Borat: Cultural Learnings of America for Make Benefit Glorious Nation of Kazakhstan" changed the world\'s view of us forever.',
-      headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
+      headerBackgroundPublicId: 'content/pages/aboutBorat/main_borat',
       location: 'Glod, Romania (Not Kazakhstan)',
       articleViews: 69420,
       articleComments: 128,
@@ -157,7 +157,7 @@ export async function load() {
 
     // Fallback image if missing from DB
     if (!page.headerBackgroundPublicId) {
-      page.headerBackgroundPublicId = 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01';
+      page.headerBackgroundPublicId = 'content/pages/aboutBorat/main_borat';
     }
 
     const articles = articlesSnap.docs

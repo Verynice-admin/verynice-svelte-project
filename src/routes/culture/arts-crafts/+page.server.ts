@@ -35,7 +35,7 @@ const FALLBACK_PAGE = {
 	articleLikes: 0,
 	articleComments: 0,
 	breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture', href: '/culture' }, { label: 'Arts & Crafts' }],
-	headerBackgroundPublicId: 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01'
+	headerBackgroundPublicId: 'content/pages/heritage/artAndCrafts/hero/main'
 };
 
 const FALLBACK_SECTIONS = [
@@ -44,7 +44,7 @@ const FALLBACK_SECTIONS = [
 		order: 1,
 		title: 'Felt-making (Syrmak)',
 		description: 'The foundation of Kazakh crafts, transforming sheep wool into dense, beautiful fabric.',
-		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
+		imagePublicId: 'content/pages/heritage/artAndCrafts/felt-making/syrmak',
 		contentMarkdown: `Felt-making is the foundation of Kazakh crafts, with techniques passed down through generations of women who transformed raw sheep wool into the functional and decorative materials that defined nomadic life.
 
 **The Process** — Creating felt involves several stages:
@@ -65,7 +65,7 @@ const FALLBACK_SECTIONS = [
 		order: 2,
 		title: 'Embroidery (Kezde)',
 		description: 'Intricate needlework adorning clothing, wall hangings, and accessories.',
-		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
+		imagePublicId: 'content/pages/heritage/artAndCrafts/keste/beldeshe',
 		contentMarkdown: `Kazakh embroidery (**Kezde**) transforms simple fabrics into works of art. Women adorned everything from wedding dresses to horse blankets with intricate needlework, each stitch carrying cultural meaning and protective symbolism.
 
 **Techniques** — Kazakh embroiderers mastered several methods:
@@ -95,7 +95,7 @@ const FALLBACK_SECTIONS = [
 		order: 3,
 		title: 'Leather and Woodwork',
 		description: 'Saddles, bridles, carved bowls, and the implements of nomadic life.',
-		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03',
+		imagePublicId: 'content/pages/heritage/artAndCrafts/crafts/besik',
 		contentMarkdown: `Leather and wood were essential materials for nomadic life, crafted into everything from horse equipment to household items. Kazakh artisans developed sophisticated techniques to create durable, beautiful objects that served both practical and status purposes.
 
 **Leatherworking** — The **Uykha** (leatherworker) was a respected specialist who created:
@@ -119,7 +119,7 @@ const FALLBACK_SECTIONS = [
 		order: 4,
 		title: 'Metalwork and Jewelry',
 		description: 'Silver craftsmanship creating tea sets, bridal jewelry, and protective amulets.',
-		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04',
+		imagePublicId: 'content/pages/heritage/artAndCrafts/jewelry/art',
 		contentMarkdown: `Kazakh metalworkers (**Kumisşi**) transformed silver, copper, and gold into objects of extraordinary beauty. Their creations ranged from everyday utensils to elaborate bridal jewelry, each piece reflecting the owner's status and carrying protective symbolism.
 
 **Silver Jewelry** — Kazakh silversmiths created an extensive repertoire:
@@ -149,7 +149,7 @@ const FALLBACK_SECTIONS = [
 		order: 5,
 		title: 'Eagle Hunting (Burkitshi)',
 		description: 'The ancient tradition of training golden eagles for cooperative hunting.',
-		imagePublicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01',
+		imagePublicId: 'content/pages/heritage/artAndCrafts/eagle-hunting/hunter',
 		contentMarkdown: `Eagle hunting (**Burkitshi**) represents one of humanity's most remarkable partnerships with wildlife. For centuries, Kazakh hunters in the Altai mountains have trained golden eagles to hunt foxes, hares, and even wolves, creating a bond that transcends species.
 
 **The Berkutchi** — The eagle hunter is a respected figure who dedicates years to mastering the craft. Training begins with selecting a young eagle (usually female, as they're larger and more aggressive) from the nest. The bird lives with the hunter's family, becoming a member of the household.

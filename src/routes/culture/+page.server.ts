@@ -35,7 +35,7 @@ const FALLBACK_PAGE = {
   articleLikes: 0,
   articleComments: 0,
   breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture' }],
-  headerBackgroundPublicId: 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01',
+  headerBackgroundPublicId: 'content/pages/heritage/mainHeritage',
   introMarkdown:
     'Kazakh culture is rooted in **centuries of nomadic tradition**, shaped by the vast steppes, harsh winters, and the deep connection between people, nature, and community. From the ornate **Saukele** headdresses to the warm embrace of **konakasy** (hospitality), every aspect tells a story of resilience, beauty, and unity.'
 };

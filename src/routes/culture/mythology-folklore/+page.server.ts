@@ -32,7 +32,7 @@ const FALLBACK_PAGE = {
 	articleLikes: 0,
 	articleComments: 0,
 	breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture', href: '/culture' }, { label: 'Mythology & Folklore' }],
-	headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01'
+	headerBackgroundPublicId: 'content/pages/heritage/mythologyFolklore/totemic-belief'
 };
 
 const FALLBACK_SECTIONS = [

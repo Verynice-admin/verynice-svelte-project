@@ -36,7 +36,7 @@ const FALLBACK_PAGE = {
   articleLikes: 0,
   articleComments: 0,
   breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Food & Drinks' }],
-  headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
+  headerBackgroundPublicId: 'content/pages/foodDrinks/main_dastarkhan',
   introMarkdown:
     'Kazakh cuisine is built for the open steppe: **hearty, seasonal, and communal**. Meals are designed to be shared around the *dastarkhan* (the family table), balancing tradition with a fast-growing modern dining scene in Almaty, Astana, and Shymkent.'
 };
@@ -303,7 +303,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Signature Dishes',
     category: 'Food & Drinks',
     description: 'Beshbarmak, kazy, manty, lagman, and the street-time classic, samsa.',
-    imagePublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01'
+    imagePublicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes'
   },
   {
     id: 'traditional-dastarkhan',
@@ -311,7 +311,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Traditional Dastarkhan',
     category: 'Food & Drinks',
     description: 'A generous spread of Kazakh delicacies showcasing hospitality and culinary heritage.',
-    imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02'
+    imagePublicId: 'content/pages/foodDrinks/traditionalDastarkhan/hero'
   },
   {
     id: 'silk-road-noodles',
@@ -319,7 +319,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Silk Road Noodles',
     category: 'Food & Drinks',
     description: 'Hand-pulled lagman and bold southern spices from the Silk Road.',
-    imagePublicId: 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01'
+    imagePublicId: 'content/pages/foodDrinks/silkRoadNoodles/hero'
   },
   {
     id: 'tea-house-courtyard',
@@ -327,7 +327,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Tea House Courtyard',
     category: 'Food & Drinks',
     description: 'Slow tea rituals with dried fruits and sweets around the dastarkhan.',
-    imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
+    imagePublicId: 'content/pages/foodDrinks/TeaHouseCourtyard/hero'
   },
   {
     id: 'international-tastes',
@@ -335,7 +335,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'International Tastes',
     category: 'Food & Drinks',
     description: 'Global flavors from sushi and ramen to shawarma and pizza.',
-    imagePublicId: 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01'
+    imagePublicId: 'content/pages/foodDrinks/internationalTastes/tom_yam'
   }
 ];
 

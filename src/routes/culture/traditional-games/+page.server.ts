@@ -41,23 +41,23 @@ const FALLBACK_PAGE = {
 		{ label: 'Heritage', href: '/culture' },
 		{ label: 'Traditional Games' }
 	],
-	headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-01'
+	headerBackgroundPublicId: 'content/pages/heritage/traditionalGames/baigeAlamanBaige'
 };
 
 const FALLBACK_SECTIONS = [
-	{ id: 'kokpar', order: 1, title: 'Kokpar', description: 'The most thrilling Kazakh sport.', imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01', contentMarkdown: 'Kokpar is the most thrilling Kazakh sport.' },
-	{ id: 'audaryspak', order: 2, title: 'Audaryspak', description: 'Wrestling on horseback.', imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02', contentMarkdown: 'Audaryspak combines wrestling and horsemanship.' },
-	{ id: 'kyzkuu', order: 3, title: 'Kyz Kuu', description: 'The romantic chase game.', imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03', contentMarkdown: 'Kyz Kuu is a beloved Kazakh traditional game.' },
-	{ id: 'kazakh-kures', order: 4, title: 'Kazakh Kures', description: 'Traditional wrestling.', imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04', contentMarkdown: 'Kures is one of the oldest sports in Central Asia.' },
-	{ id: 'togyzkumalak', order: 5, title: 'Togyzkumalak', description: 'The game of 41 stones.', imagePublicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01', contentMarkdown: 'Togyzkumalak is a traditional board game.' },
-	{ id: 'assyk-atu', order: 6, title: 'Ashyk Aty', description: 'Bone game of champions.', imagePublicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-02', contentMarkdown: 'Ashyk Aty is played with sheep ankle bones.' },
-	{ id: 'er-enish', order: 7, title: 'Er Enish', description: 'Fight for the sash.', imagePublicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-01', contentMarkdown: 'Er Enish is a test of strength.' },
-	{ id: 'altybakan', order: 8, title: 'Altybakan', description: 'The six-goal game.', imagePublicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-02', contentMarkdown: 'Altybakan is a traditional team sport.' },
-	{ id: 'bese-tas', order: 9, title: 'Bese Tas', description: 'Five stones game.', imagePublicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01', contentMarkdown: 'Bese Tas is a dexterity game.' },
-	{ id: 'buerkuet-salu', order: 10, title: 'Bürküt Salu', description: 'Eagle raising.', imagePublicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-02', contentMarkdown: 'Bürküt Salu is an ancient tradition.' },
-	{ id: 'arqan-tartys', order: 11, title: 'Arqan Tartys', description: 'Tug-of-war.', imagePublicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-01', contentMarkdown: 'Arqan Tartys is a test of team strength.' },
-	{ id: 'baige', order: 12, title: 'Baige', description: 'Traditional horse racing.', imagePublicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-02', contentMarkdown: 'Baige tests endurance across the steppe.' },
-	{ id: 'tenge-alu', order: 13, title: 'Tenge Alu', description: 'Picking up coins.', imagePublicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-01', contentMarkdown: 'Tenge Alu tests riding skills.' }
+	{ id: 'kokpar', order: 1, title: 'Kokpar', description: 'The most thrilling Kazakh sport.', imagePublicId: 'content/pages/heritage/traditionalGames/kokpar', contentMarkdown: 'Kokpar is the most thrilling Kazakh sport.' },
+	{ id: 'audaryspak', order: 2, title: 'Audaryspak', description: 'Wrestling on horseback.', imagePublicId: 'content/pages/heritage/traditionalGames/audaryspak', contentMarkdown: 'Audaryspak combines wrestling and horsemanship.' },
+	{ id: 'kyzkuu', order: 3, title: 'Kyz Kuu', description: 'The romantic chase game.', imagePublicId: 'content/pages/heritage/traditionalGames/kyzKuu', contentMarkdown: 'Kyz Kuu is a beloved Kazakh traditional game.' },
+	{ id: 'kazakh-kures', order: 4, title: 'Kazakh Kures', description: 'Traditional wrestling.', imagePublicId: 'content/pages/heritage/traditionalGames/kazakshaKures', contentMarkdown: 'Kures is one of the oldest sports in Central Asia.' },
+	{ id: 'togyzkumalak', order: 5, title: 'Togyzkumalak', description: 'The game of 41 stones.', imagePublicId: 'content/pages/heritage/traditionalGames/togyzkumalak', contentMarkdown: 'Togyzkumalak is a traditional board game.' },
+	{ id: 'assyk-atu', order: 6, title: 'Ashyk Aty', description: 'Bone game of champions.', imagePublicId: 'content/pages/heritage/traditionalGames/assykAtu', contentMarkdown: 'Ashyk Aty is played with sheep ankle bones.' },
+	{ id: 'er-enish', order: 7, title: 'Er Enish', description: 'Fight for the sash.', imagePublicId: 'content/pages/heritage/traditionalGames/erEnish', contentMarkdown: 'Er Enish is a test of strength.' },
+	{ id: 'altybakan', order: 8, title: 'Altybakan', description: 'The six-goal game.', imagePublicId: 'content/pages/heritage/traditionalGames/altybakan', contentMarkdown: 'Altybakan is a traditional team sport.' },
+	{ id: 'bese-tas', order: 9, title: 'Bese Tas', description: 'Five stones game.', imagePublicId: 'content/pages/heritage/traditionalGames/besTas', contentMarkdown: 'Bese Tas is a dexterity game.' },
+	{ id: 'buerkuet-salu', order: 10, title: 'Bürküt Salu', description: 'Eagle raising.', imagePublicId: 'content/pages/heritage/traditionalGames/bürkütSalu', contentMarkdown: 'Bürküt Salu is an ancient tradition.' },
+	{ id: 'arqan-tartys', order: 11, title: 'Arqan Tartys', description: 'Tug-of-war.', imagePublicId: 'content/pages/heritage/traditionalGames/arqanTartys', contentMarkdown: 'Arqan Tartys is a test of team strength.' },
+	{ id: 'baige', order: 12, title: 'Baige', description: 'Traditional horse racing.', imagePublicId: 'content/pages/heritage/traditionalGames/baigeAlamanBaige', contentMarkdown: 'Baige tests endurance across the steppe.' },
+	{ id: 'tenge-alu', order: 13, title: 'Tenge Alu', description: 'Picking up coins.', imagePublicId: 'content/pages/heritage/traditionalGames/teńgeIluKumealu', contentMarkdown: 'Tenge Alu tests riding skills.' }
 ];
 
 export const load: PageServerLoad = async () => {

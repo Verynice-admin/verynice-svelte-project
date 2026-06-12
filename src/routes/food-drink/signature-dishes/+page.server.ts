@@ -40,7 +40,7 @@ const FALLBACK_PAGE = {
 		{ label: 'Food & Drinks', href: '/food-drink' },
 		{ label: 'Signature Dishes' }
 	],
-	headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01'
+	headerBackgroundPublicId: 'content/pages/foodDrinks/signatureDishes/mainSignatureDishes'
 };
 
 const FALLBACK_CATEGORIES = [

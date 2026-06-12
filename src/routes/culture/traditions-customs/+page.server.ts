@@ -32,7 +32,7 @@ const FALLBACK_PAGE = {
 	articleLikes: 0,
 	articleComments: 0,
 	breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture', href: '/culture' }, { label: 'Traditions & Customs' }],
-	headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
+	headerBackgroundPublicId: 'home/content/pages/heritage/traditionsCustoms/mainTraditionsCustomsSocialLife'
 };
 
 const FALLBACK_SECTIONS = [
@@ -41,7 +41,7 @@ const FALLBACK_SECTIONS = [
 		order: 1,
 		title: 'Konakasy (Hospitality)',
 		description: 'The sacred tradition that makes guests messengers from God.',
-		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
+		imagePublicId: 'home/content/pages/heritage/traditionsCustoms/shashu',
 		contentMarkdown: `**Konakasy** — the Kazakh tradition of hospitality — is not merely good manners; it is a sacred obligation rooted in the practical realities and spiritual beliefs of nomadic life. The ancient saying *"The guest is a messenger from God"* reflects the deep reverence for anyone who crosses the threshold.
 
 **The Host's Duty** — A Kazakh host must provide:
@@ -65,7 +65,7 @@ const FALLBACK_SECTIONS = [
 		order: 2,
 		title: 'Besikke Salu — Welcoming Newborns',
 		description: 'The ceremony that celebrates new life and places the baby in the cradle for the first time.',
-		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03',
+		imagePublicId: 'home/content/pages/heritage/traditionsCustoms/BesikkeSalu',
 		contentMarkdown: `**Besikke Salu** is the joyous ceremony that welcomes a newborn into the family and community. This tradition celebrates the continuation of the family line and asks for blessings on the child's future.
 
 **The Besik (Cradle)** — The Kazakh cradle is a masterpiece of practical design. Its wooden frame rocks gently, while adjustable straps secure the baby safely. A hole in the bottom allows for easy cleaning, and the elevated design protects infants from drafts and animals. The cradle is often decorated with protective amulets and beautiful textiles.
@@ -151,7 +151,7 @@ const FALLBACK_SECTIONS = [
 		order: 5,
 		title: 'Respect for Elders (Aksakal)',
 		description: 'The foundation of Kazakh social order honoring age, wisdom, and experience.',
-		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04',
+		imagePublicId: 'home/content/pages/heritage/traditionsCustoms/RespectforElders',
 		contentMarkdown: `Respect for elders (**Aksakal** — literally "white-bearded") forms the foundation of Kazakh social order. This reverence for age and experience shaped everything from family dynamics to community governance.
 
 **The Aksakal Council** — In traditional communities, respected elders formed councils that:

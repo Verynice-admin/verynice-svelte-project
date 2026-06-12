@@ -34,7 +34,7 @@ const FALLBACK_PAGE = {
   articleLikes: 0,
   articleComments: 0,
   breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Travel Tips' }],
-  headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01',
+  headerBackgroundPublicId: 'content/pages/travelTips/mainTravelTips',
   introMarkdown: 'Welcome to Kazakhstan! Here are essential travel tips to help you plan your perfect trip.'
 };
 
@@ -77,19 +77,19 @@ const FALLBACK_HIGHLIGHTS = [
 ];
 
 const HIGHLIGHT_IMAGE_FALLBACKS: Record<string, string> = {
-  'best time to visit': 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01',
-  'best time to visit kazakhstan': 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01',
-  'visa & entry': 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
-  'visa and entry': 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
-  'safety & precautions': 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01',
-  'safety and precautions': 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01',
-  'getting around': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
-  'getting there & around': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
-  'getting there and around': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
-  'airport taxis': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
-  'airport taxi guide': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
-  'money & costs': 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01',
-  'money and costs': 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01'
+  'best time to visit': 'content/pages/travelTips/mainBestTimeToVisit',
+  'best time to visit kazakhstan': 'content/pages/travelTips/mainBestTimeToVisit',
+  'visa & entry': 'content/pages/travelTips/mainVisaEntry',
+  'visa and entry': 'content/pages/travelTips/mainVisaEntry',
+  'safety & precautions': 'content/pages/travelTips/mainTravelSafety',
+  'safety and precautions': 'content/pages/travelTips/mainTravelSafety',
+  'getting around': 'content/pages/travelTips/mainGettingThere',
+  'getting there & around': 'content/pages/travelTips/mainGettingThere',
+  'getting there and around': 'content/pages/travelTips/mainGettingThere',
+  'airport taxis': 'content/pages/travelTips/mainAirportTaxis',
+  'airport taxi guide': 'content/pages/travelTips/mainAirportTaxis',
+  'money & costs': 'content/pages/travelTips/mainMoneyCost',
+  'money and costs': 'content/pages/travelTips/mainMoneyCost'
 };
 
 const withHighlightImage = (item: any) => {
