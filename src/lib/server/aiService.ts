@@ -116,11 +116,19 @@ function cleanAndParseJSON(text: string | undefined | null) {
     try {
         return JSON.parse(cleaned);
     } catch (e) {
-        // Basic attempt to fix truncated JSON
+        // Attempt to fix truncated JSON by closing open structures
         try {
-            if (cleaned.startsWith('{') && !cleaned.endsWith('}')) {
-                return JSON.parse(cleaned + '}');
-            }
+            // Count unclosed brackets/braces and close them
+            let fixed = cleaned;
+            const opens = (fixed.match(/\[/g) || []).length - (fixed.match(/\]/g) || []).length;
+            const closes = (fixed.match(/\{/g) || []).length - (fixed.match(/\}/g) || []).length;
+            // Remove any dangling partial object at the end (last comma or partial key-value)
+            fixed = fixed.replace(/,\s*\{[^}]*$/, '');
+            for (let i = 0; i < opens; i++) fixed += ']';
+            for (let i = 0; i < closes; i++) fixed += '}';
+            const result = JSON.parse(fixed);
+            logger.warn('[ai] Recovered truncated JSON response');
+            return result;
         } catch (innerE) { }
         logger.error('[ai] Failed to parse JSON response', { err: String(e), preview: text.slice(0, 200) });
         return null;
@@ -176,11 +184,27 @@ function splitSegmentsByTokenBudget(
 
 type RawTranslation = Record<string, unknown>;
 
-const GROQ_MODEL = 'llama-4-scout-17b-16e-instruct';
+const GROQ_MODEL = 'llama-3.3-70b-versatile';
 
 // Hard cap on how long any single AI API call may block a serverless function.
 // Prevents slow-loris abuse where an attacker holds connections open to exhaust concurrency.
 const AI_FETCH_TIMEOUT_MS = 25_000;
+
+// Translation uses a shorter timeout to stay within Vercel Hobby's 10 s function limit.
+// Groq fallback chain: fast 8B model first, capable 70B second, legacy stable third.
+const AI_TRANSLATE_TIMEOUT_MS = 7_000;
+const GROQ_TRANSLATE_MODELS = [
+    'llama-3.1-8b-instant',       // fastest, high free-tier RPM
+    'llama-3.3-70b-versatile',    // capable fallback
+    'llama3-70b-8192',            // legacy stable
+];
+// Gemini model names change between preview and stable; try each in order.
+const GEMINI_TRANSLATE_MODELS = [
+    'gemini-2.5-flash-lite',
+    'gemini-2.0-flash-lite',
+    'gemini-2.0-flash',
+    'gemini-1.5-flash',
+];
 
 export async function generateAnswer(rawQuestion: string): Promise<{ correctedQuestion: string, answer: string, relatedLinks: { title: string, url: string }[] } | null> {
     if (dev) logger.debug('[ai] Generating answer', { question: rawQuestion });
@@ -228,9 +252,6 @@ export async function generateAnswer(rawQuestion: string): Promise<{ correctedQu
     }
 }
 
-const GEMINI_TRANSLATE_ENDPOINT =
-    'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent';
-
 const GROQ_TRANSLATE_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
 
 const OPENROUTER_TRANSLATE_ENDPOINT = 'https://openrouter.ai/api/v1/chat/completions';
@@ -244,136 +265,128 @@ async function callGeminiTranslation(
         return null;
     }
 
-    try {
-        const response = await fetch(`${GEMINI_TRANSLATE_ENDPOINT}?key=${GEMINI_API_KEY}`, {
-            method: 'POST',
-            signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                contents: [
-                    {
+    for (const model of GEMINI_TRANSLATE_MODELS) {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+        try {
+            const response = await fetch(`${endpoint}?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                signal: AbortSignal.timeout(AI_TRANSLATE_TIMEOUT_MS),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{
                         role: 'user',
-                        parts: [
-                            {
-                                text: `${SIMPLE_TRANSLATION_PROMPT(targetLanguage)}\n\nInput:\n${JSON.stringify({
-                                    targetLanguage,
-                                    segments
-                                })}`
-                            }
-                        ]
-                    }
-                ],
-                generationConfig: {
-                    temperature: 0.2
-                }
-            })
-        });
+                        parts: [{
+                            text: `${SIMPLE_TRANSLATION_PROMPT(targetLanguage)}\n\nInput:\n${JSON.stringify({ targetLanguage, segments })}`
+                        }]
+                    }],
+                    generationConfig: { temperature: 0.2 }
+                })
+            });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            logger.error('[ai] Gemini translation error', { status: response.status, body: errorText.slice(0, 500) });
-            return null;
+            if (response.status === 400 || response.status === 404) {
+                logger.warn('[ai] Gemini model unavailable, trying next', { model, status: response.status });
+                continue;
+            }
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                logger.error('[ai] Gemini translation error', { model, status: response.status, body: errorText.slice(0, 300) });
+                continue;
+            }
+
+            const data = await response.json();
+            const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+            if (!content) {
+                logger.error('[ai] Gemini translation returned empty content', { model });
+                continue;
+            }
+
+            const parsed = cleanAndParseJSON(content);
+            if (parsed && Array.isArray(parsed.translations)) {
+                return parsed.translations.map((t: RawTranslation) => ({
+                    id: String(t.id),
+                    translated: decodeUnicodeEscapes(String(t.translated ?? ''))
+                }));
+            }
+            logger.error('[ai] Gemini translation payload missing translations', { model });
+        } catch (error) {
+            logger.error('[ai] Error translating with Gemini model', { model, err: String(error) });
         }
-
-        const data = await response.json();
-        const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-        if (!content) {
-            logger.error('[ai] Gemini translation returned empty content');
-            return null;
-        }
-
-        const parsed = cleanAndParseJSON(content);
-        if (parsed && Array.isArray(parsed.translations)) {
-            return parsed.translations.map((t: RawTranslation) => ({
-                id: String(t.id),
-                translated: decodeUnicodeEscapes(String(t.translated ?? ''))
-            }));
-        }
-        logger.error('[ai] Gemini translation payload missing translations');
-        return null;
-    } catch (error) {
-        logger.error('[ai] Error translating content with Gemini', { err: String(error) });
-        return null;
     }
+
+    logger.error('[ai] All Gemini models failed for translation');
+    return null;
 }
 
 async function callGroqTranslation(
     targetLanguage: string,
-    segments: { id: string; text: string }[],
-    retryCount = 0
+    segments: { id: string; text: string }[]
 ): Promise<{ id: string, translated: string }[] | null> {
     if (!GROQ_API_KEY) {
         logger.warn('[ai] GROQ_API_KEY not set, skipping Groq translation');
         return null;
     }
 
-    try {
-        const response = await fetch(GROQ_TRANSLATE_ENDPOINT, {
-            method: 'POST',
-            signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${GROQ_API_KEY}`
-            },
-            body: JSON.stringify({
-                model: GROQ_MODEL,
-                messages: [
-                    { role: 'system', content: SIMPLE_TRANSLATION_PROMPT(targetLanguage) },
-                    {
-                        role: 'user',
-                        content: JSON.stringify({
-                            targetLanguage,
-                            segments
-                        })
-                    }
-                ],
-                temperature: 0.1,
-                response_format: { type: 'json_object' }
-            })
-        });
+    for (const model of GROQ_TRANSLATE_MODELS) {
+        try {
+            const response = await fetch(GROQ_TRANSLATE_ENDPOINT, {
+                method: 'POST',
+                signal: AbortSignal.timeout(AI_TRANSLATE_TIMEOUT_MS),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${GROQ_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model,
+                    messages: [
+                        { role: 'system', content: SIMPLE_TRANSLATION_PROMPT(targetLanguage) },
+                        { role: 'user', content: JSON.stringify({ targetLanguage, segments }) }
+                    ],
+                    temperature: 0.1,
+                    max_tokens: 4096,
+                    response_format: { type: 'json_object' }
+                })
+            });
 
-        if (response.status === 429 && retryCount < 2) {
-            // Honour the Retry-After header if present; fall back to linear back-off.
-            const retryAfterHeader = response.headers.get('retry-after');
-            const retryAfterSec = retryAfterHeader ? parseFloat(retryAfterHeader) : NaN;
-            const waitMs = Number.isFinite(retryAfterSec) && retryAfterSec > 0
-                ? Math.min(retryAfterSec * 1000, 30_000)
-                : 1000 * (retryCount + 1);
-            logger.warn('[ai] Groq rate limit hit, retrying', { attempt: retryCount + 1, waitMs });
-            await new Promise(r => setTimeout(r, waitMs));
-            return callGroqTranslation(targetLanguage, segments, retryCount + 1);
+            if (response.status === 429) {
+                // Cap wait to 2 s — longer sleeps will exceed Vercel's function timeout.
+                const retryAfterSec = parseFloat(response.headers.get('retry-after') ?? '0');
+                const waitMs = retryAfterSec > 0 ? Math.min(retryAfterSec * 1000, 2_000) : 1_000;
+                logger.warn('[ai] Groq rate limit, trying next model after brief wait', { model, waitMs });
+                await new Promise(r => setTimeout(r, waitMs));
+                continue;
+            }
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                logger.error('[ai] Groq translation error', { model, status: response.status, body: errorText.slice(0, 300) });
+                continue;
+            }
+
+            const data = await response.json();
+            const content = data.choices[0]?.message?.content;
+
+            if (!content) {
+                logger.error('[ai] Groq translation returned empty content', { model });
+                continue;
+            }
+
+            const parsed = cleanAndParseJSON(content);
+            if (parsed && Array.isArray(parsed.translations)) {
+                return parsed.translations.map((t: RawTranslation) => ({
+                    id: String(t.id),
+                    translated: decodeUnicodeEscapes(String(t.translated ?? ''))
+                }));
+            }
+            logger.error('[ai] Groq translation parsing failed', { model, preview: content.substring(0, 200) });
+        } catch (error) {
+            logger.error('[ai] Error translating with Groq model', { model, err: String(error) });
         }
-
-        if (!response.ok) {
-            const errorText = await response.text();
-            logger.error('[ai] Groq translation error', { status: response.status, body: errorText.slice(0, 500) });
-            return null;
-        }
-
-        const data = await response.json();
-        const content = data.choices[0]?.message?.content;
-
-        if (!content) {
-            logger.error('[ai] Groq translation returned empty content');
-            return null;
-        }
-
-        const parsed = cleanAndParseJSON(content);
-        if (parsed && Array.isArray(parsed.translations)) {
-            return parsed.translations.map((t: RawTranslation) => ({
-                id: String(t.id),
-                translated: decodeUnicodeEscapes(String(t.translated ?? ''))
-            }));
-        }
-        logger.error('[ai] Groq translation parsing failed', { preview: content.substring(0, 200) });
-        return null;
-    } catch (error) {
-        logger.error('[ai] Error translating content with Groq', { err: String(error) });
-        return null;
     }
+
+    logger.error('[ai] All Groq models failed for translation');
+    return null;
 }
 
 async function translateWithOpenRouter(
@@ -400,7 +413,7 @@ async function translateWithOpenRouter(
             if (dev) logger.debug('[ai] Trying OpenRouter model', { model });
             const response = await fetch(OPENROUTER_TRANSLATE_ENDPOINT, {
                 method: 'POST',
-                signal: AbortSignal.timeout(AI_FETCH_TIMEOUT_MS),
+                signal: AbortSignal.timeout(AI_TRANSLATE_TIMEOUT_MS),
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${OPENROUTER_API_KEY}`,

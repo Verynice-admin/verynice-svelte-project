@@ -52,8 +52,8 @@ const LANGUAGE_LABELS: Record<string, string> = {
 };
 
 // PHASE 1: Chunking parameters
-const MIN_SEGMENTS_PER_CHUNK = 40;
-const MAX_SEGMENTS_PER_CHUNK = 80;
+const MIN_SEGMENTS_PER_CHUNK = 20;
+const MAX_SEGMENTS_PER_CHUNK = 50;
 const MAX_TOKENS_PER_CHUNK = 3000;
 
 // PHASE 2: Dynamic content parameters
@@ -82,6 +82,8 @@ let observer: MutationObserver | null = null;
 let mutationQueue: Set<Node | Element> = new Set();
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 let fontAgentReady = true;
+// When the server returns 429, block all translation attempts until this timestamp.
+let rateLimitedUntil = 0;
 
 // ============================================================================
 // LOCAL STORAGE CACHE (PHASE 4)
@@ -359,6 +361,12 @@ const translateChunk = async (
 	retryCount = 0
 ): Promise<Map<string, string>> => {
 	const languageCache = ensureLanguageCache(languageCode);
+
+	// If the server rate-limited us, skip until the window resets.
+	if (Date.now() < rateLimitedUntil) {
+		return languageCache;
+	}
+
 	const missing = chunk.filter((segment) => !languageCache.has(segment.text));
 
 	if (!missing.length) {
@@ -378,6 +386,22 @@ const translateChunk = async (
 				segments: missing.map(s => ({ id: s.id, text: s.text }))
 			} as TranslateRequest)
 		});
+
+		if (response.status === 429) {
+			// Honour the Retry-After header; default to 60 s back-off.
+			const retryAfterSec = parseInt(response.headers.get('Retry-After') ?? '60', 10);
+			rateLimitedUntil = Date.now() + retryAfterSec * 1000;
+			console.warn(`[Translation] Rate limited – pausing requests for ${retryAfterSec}s`);
+			return languageCache; // don't retry, just skip this chunk
+		}
+
+		if (response.status === 502 || response.status === 503 || response.status === 504) {
+			// All AI providers failed on the server, or server timed out.
+			// Back off 30 s before any further attempts to avoid a cascade.
+			rateLimitedUntil = Date.now() + 30_000;
+			console.warn(`[Translation] Service unavailable (${response.status}) – pausing requests for 30 s`);
+			return languageCache;
+		}
 
 		if (!response.ok) {
 			throw new Error(`Translation API error: ${response.status} ${response.statusText}`);
@@ -810,13 +834,15 @@ export const translatePageTo = async (languageCode: string, showLoading = true):
 			root.dataset.translationState = 'loading';
 		}
 
-		// If page is already translated to a different non-EN language, restore English
-		// first so collectAllTextNodes() can see the original text (translated nodes are
-		// skipped by the data-translated guard, causing zero segments to be found).
+		// Cross-language switch (e.g. RU → ES): restore English immediately so the user
+		// sees visual feedback (page changes = "something is happening"), then progressive
+		// ES translations appear as each chunk resolves.
 		const prevLang = root.dataset.translationLanguage;
 		if (prevLang && prevLang !== 'EN' && prevLang !== languageCode) {
 			stopTranslationObserver();
 			restoreOriginalText();
+			// Flush pending microtasks so Svelte can settle the DOM before collection.
+			await Promise.resolve();
 		}
 
 		root.dataset.translationLanguage = languageCode;
