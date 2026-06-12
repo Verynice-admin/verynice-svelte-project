@@ -6,7 +6,7 @@ import { logger } from '$lib/server/logger';
 
 type SegmentPayload = { id: string; text: string };
 
-const MAX_SEGMENTS = 125;
+const MAX_SEGMENTS = 250;
 
 // Closed allowlist of supported display-language names.
 // Prevents prompt injection via targetLanguage string concatenation into the LLM system prompt.

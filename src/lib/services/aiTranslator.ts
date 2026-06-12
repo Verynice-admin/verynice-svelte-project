@@ -52,9 +52,9 @@ const LANGUAGE_LABELS: Record<string, string> = {
 };
 
 // PHASE 1: Chunking parameters
-const MIN_SEGMENTS_PER_CHUNK = 25;
-const MAX_SEGMENTS_PER_CHUNK = 40;
-const MAX_TOKENS_PER_CHUNK = 1500;
+const MIN_SEGMENTS_PER_CHUNK = 40;
+const MAX_SEGMENTS_PER_CHUNK = 80;
+const MAX_TOKENS_PER_CHUNK = 3000;
 
 // PHASE 2: Dynamic content parameters
 const DYNAMIC_CONTENT_DEBOUNCE_MS = 600;
@@ -809,6 +809,16 @@ export const translatePageTo = async (languageCode: string, showLoading = true):
 			translationStatus.set('loading');
 			root.dataset.translationState = 'loading';
 		}
+
+		// If page is already translated to a different non-EN language, restore English
+		// first so collectAllTextNodes() can see the original text (translated nodes are
+		// skipped by the data-translated guard, causing zero segments to be found).
+		const prevLang = root.dataset.translationLanguage;
+		if (prevLang && prevLang !== 'EN' && prevLang !== languageCode) {
+			stopTranslationObserver();
+			restoreOriginalText();
+		}
+
 		root.dataset.translationLanguage = languageCode;
 		currentLanguage = languageCode;
 
@@ -833,10 +843,26 @@ export const translatePageTo = async (languageCode: string, showLoading = true):
 		// PHASE 1: Create chunks for batch processing
 		const chunks = createChunks(segments);
 
-		// PHASE 1: Process chunks in parallel
+		// PHASE 1: Process chunks in parallel; apply each to DOM as it resolves
+		// so users see progressive translation rather than waiting for all chunks.
+		const allTranslatedNodes = new Set<Node>();
+
 		await Promise.all(
 			chunks.map(async (chunk) => {
-				await translateChunk(chunk, languageCode);
+				const cache = await translateChunk(chunk, languageCode);
+				if (requestId !== requestCounter) return; // newer request supersedes this one
+				// Only touch nodes whose text belongs to this chunk
+				const chunkTextSet = new Set(chunk.map((s) => s.text));
+				const chunkNodes = nodes.filter((n) => chunkTextSet.has(n.normalized));
+				const translated = applyTranslationsToNodes(chunkNodes, cache);
+				translated.forEach((n) => allTranslatedNodes.add(n));
+				if (translated.size > 0) {
+					document.body.dispatchEvent(new CustomEvent('translationChunkDone', {
+						bubbles: true,
+						detail: { nodes: Array.from(translated) }
+					}));
+					checkAndDispatchFontEvent(translated);
+				}
 			})
 		);
 
@@ -845,22 +871,11 @@ export const translatePageTo = async (languageCode: string, showLoading = true):
 			return true;
 		}
 
-		// Apply all translations
+		// Apply any remaining attribute/title translations missed by per-chunk pass
 		const cache = ensureLanguageCache(languageCode);
-		const translatedNodes = applyTranslationsToNodes(nodes, cache);
+		applyTranslationsToNodes([], cache); // nodes=[] triggers only attribute+title logic
 
-		console.log(`[Translation] Applied ${translatedNodes.size} translations to DOM`);
-
-		// PHASE 2: Dispatch event for Font Agent
-		if (translatedNodes.size > 0) {
-			document.body.dispatchEvent(new CustomEvent('translationChunkDone', {
-				bubbles: true,
-				detail: { nodes: Array.from(translatedNodes) }
-			}));
-			
-			// PHASE 3: Check font coverage
-			checkAndDispatchFontEvent(translatedNodes);
-		}
+		console.log(`[Translation] Applied ${allTranslatedNodes.size} translations to DOM`);
 
 		if (showLoading) {
 			translationStatus.set('translated');

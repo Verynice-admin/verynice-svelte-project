@@ -520,56 +520,35 @@ export async function translateSegments(
 ): Promise<{ id: string; translated: string }[] | null> {
     if (!segments.length) return [];
 
-    // Split segments by token budget to prevent oversized requests
-    const chunks = splitSegmentsByTokenBudget(segments, 800);
+    // Split segments by token budget. Matches the client MAX_TOKENS_PER_CHUNK (3000)
+    // so each client request maps to exactly one AI call with no re-splitting.
+    const chunks = splitSegmentsByTokenBudget(segments, 3000);
     if (dev) logger.debug('[ai] Translation chunks', { segmentCount: segments.length, chunkCount: chunks.length });
 
-    let allTranslations: { id: string; translated: string }[] = [];
-
-    // Process each chunk sequentially and merge results
-    for (const chunk of chunks) {
-        let translations: { id: string; translated: string }[] | null = null;
-
-        // Primary: Groq (llama-3.3-70b-versatile)
+    // Process all sub-chunks in parallel (usually just 1 chunk with the 3000-token budget)
+    const results = await Promise.all(chunks.map(async (chunk) => {
+        // Primary: Groq
         if (GROQ_API_KEY) {
-            translations = await callGroqTranslation(targetLanguage, chunk);
-            if (translations?.length) {
-                allTranslations = allTranslations.concat(translations);
-                continue;
-            }
+            const t = await callGroqTranslation(targetLanguage, chunk);
+            if (t?.length) return t;
             logger.warn('[ai] Groq translation failed for chunk, attempting Gemini fallback');
         }
-
-        // Fallback 1: Gemini (gemini-2.5-flash-lite)
+        // Fallback 1: Gemini
         if (GEMINI_API_KEY) {
-            translations = await callGeminiTranslation(targetLanguage, chunk);
-            if (translations?.length) {
-                allTranslations = allTranslations.concat(translations);
-                continue;
-            }
+            const t = await callGeminiTranslation(targetLanguage, chunk);
+            if (t?.length) return t;
             logger.warn('[ai] Gemini translation failed for chunk, attempting OpenRouter fallback');
         }
-
         // Fallback 2: OpenRouter
         if (OPENROUTER_API_KEY) {
-            translations = await translateWithOpenRouter(targetLanguage, chunk);
-            if (translations?.length) {
-                allTranslations = allTranslations.concat(translations);
-                continue;
-            }
-            logger.error('[ai] OpenRouter translation failed for chunk');
+            const t = await translateWithOpenRouter(targetLanguage, chunk);
+            if (t?.length) return t;
+            logger.error('[ai] All providers failed for chunk');
         }
+        return [] as { id: string; translated: string }[];
+    }));
 
-        // If all providers failed for this chunk, try without token budgeting as last resort
-        logger.warn('[ai] All providers failed for chunk, retrying without token budget');
-        if (GROQ_API_KEY) {
-            translations = await callGroqTranslation(targetLanguage, chunk);
-            if (translations?.length) {
-                allTranslations = allTranslations.concat(translations);
-                continue;
-            }
-        }
-    }
+    const allTranslations = results.flat();
 
     if (allTranslations.length === 0) {
         if (!GROQ_API_KEY && !GEMINI_API_KEY && !OPENROUTER_API_KEY) {
