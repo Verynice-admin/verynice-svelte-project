@@ -25,7 +25,7 @@
 			{ label: 'Culture', href: '/culture' },
 			{ label: 'Yurt & Nomadic Life' }
 		],
-		headerBackgroundPublicId: 'content/site/backgrounds/attractions-hero'
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
 	};
 
 	const sectionCodes = {

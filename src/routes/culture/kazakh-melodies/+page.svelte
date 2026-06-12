@@ -19,7 +19,7 @@
 		heroKicker: 'Sounds of the Steppe',
 		location: 'Kazakhstan',
 		breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture', href: '/culture' }, { label: 'Kazakh Melodies' }],
-		headerBackgroundPublicId: 'content/site/backgrounds/attractions-hero'
+		headerBackgroundPublicId: 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01'
 	};
 
 	const sectionCodes = { 'the-dombra': 'Dombra', 'traditional-instruments': 'Instruments', 'traditional-dances': 'Dances', 'epic-poetry': 'Epic', 'modern-music': 'Modern', 'orchestras-ensembles': 'Orchestra', 'kazakh-aitys': 'Aitys' };

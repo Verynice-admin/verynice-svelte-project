@@ -16,7 +16,7 @@
 		heroKicker: 'Ancient Tales',
 		location: 'Kazakhstan',
 		breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture', href: '/culture' }, { label: 'Mythology & Folklore' }],
-		headerBackgroundPublicId: 'content/site/backgrounds/attractions-hero'
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01'
 	};
 
 	const sectionCodes = { tengri: 'Sky', 'epic-heroes': 'Heroes', tulpar: 'Horse', 'spirits-nature': 'Spirits', 'folk-medicine': 'Healing' };

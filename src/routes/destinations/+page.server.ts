@@ -71,7 +71,7 @@ export async function load() {
       title: 'Heritage & Culture',
       category: 'Culture',
       shortDescription: 'Nomadic traditions, yurt life, Kazakh melodies, and living customs.',
-      imagePublicId: 'content/pages/heritage/mainHeritage'
+      imagePublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01'
     },
     {
       id: 'history',
@@ -79,7 +79,7 @@ export async function load() {
       title: 'History of Kazakhstan',
       category: 'History',
       shortDescription: 'From the ancient Silk Road to Soviet legacy and modern independence.',
-      imagePublicId: 'content/pages/heritage/yurtNomadiclife/yurt-nomadic-life-hero'
+      imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
     },
     {
       id: 'tips',
@@ -87,7 +87,7 @@ export async function load() {
       title: 'Travel Tips',
       category: 'Tips',
       shortDescription: 'Visas, currency, transport, and practical advice for visiting Kazakhstan.',
-      imagePublicId: 'content/pages/heritage/artAndCrafts/eagle-hunting/hunter'
+      imagePublicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-01'
     }
   ];
 

@@ -41,7 +41,7 @@ const FALLBACK_PAGE = {
 		{ label: 'Culture', href: '/culture' },
 		{ label: 'Yurt & Nomadic Life' }
 	],
-	headerBackgroundPublicId: 'content/pages/heritage/yurtNomadiclife/yurt-nomadic-life-hero'
+	headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
 };
 
 const FALLBACK_SECTIONS = [
@@ -50,7 +50,7 @@ const FALLBACK_SECTIONS = [
 		order: 1,
 		title: 'The Pure Life of the Steppe',
 		description: 'How nomadic existence preserved the pristine purity that settled civilizations had long forgotten.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/pure',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
 		contentMarkdown: `Imagine a world where the air you breathe carries no taint of coal smoke, where the water you drink sparkles with mountain purity, where the earth beneath your feet remains unsullied by the accumulated filth of generations. This was the world of the Kazakh nomad — **a life of pristine cleanliness** that stood in glorious contrast to the squalor of settled cities.
 
 While ancient civilizations built their stone monuments and cramped quarters, they also created something else: **disease-ridden streets flowing with refuse**, air thick with the smoke of countless hearth fires, water sources fouled by proximity to waste. The great cities of old — magnificent in their architecture — were death traps of pollution and plague.
@@ -64,7 +64,7 @@ But out on the endless steppe, the Kazakh people lived differently. **They were 
 		order: 2,
 		title: 'Wanderers Through Paradise',
 		description: 'Following the eternal rhythm of seasons across landscapes of breathtaking beauty.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/free',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
 		contentMarkdown: `To be a Kazakh nomad was to be **a citizen of paradise** — to wake each morning not to the view of cramped walls and narrow streets, but to the sight of wildflowers dancing in the breeze, of eagles soaring against azure skies, of mountains wearing crowns of eternal snow.
 
 The seasonal migrations were not grueling marches but **sacred journeys through ever-changing beauty**. In spring, they followed the greening grass to alpine meadows carpeted with tulips and poppies. Summer found them in high pastures where the grass grew lush and tall, where their horses grew fat and strong.
@@ -78,7 +78,7 @@ Every move was a discovery, every new campsite a revelation. **They never knew t
 		order: 3,
 		title: 'The Soul Forged in Freedom',
 		description: 'How the boundless steppe shaped a people of song, joy, and indomitable spirit.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/soul',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03',
 		contentMarkdown: `The landscape we inhabit shapes the landscape within. **The Kazakh people, born of boundless horizons and open skies, developed souls as expansive as the steppe itself** — hearts that knew no walls, spirits that could not be contained.
 
 Where the settled peoples of crowded cities learned caution and secrecy, the Kazakhs learned **openness, generosity, and spontaneous joy**. Their hearts were as visible as the endless sky, their emotions as natural and flowing as the rivers they followed.
@@ -94,7 +94,7 @@ And when the time came to fight? **Then the steppe produced warriors of legend.*
 		order: 4,
 		title: 'The Shanyrak — Crown of the Cosmos',
 		description: 'The sacred circular opening that connects earth to sky.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/shanyrak',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04',
 		contentMarkdown: `At the very top of the yurt sits its most sacred element — **the Shanyrak**, a circular wooden wheel with crossed bars radiating from the center like rays of the sun. This is not merely a chimney or skylight; it is the spiritual heart of the nomadic home.
 
 The Shanyrak's pattern represents the cosmos itself — the sun, the stars, and the eternal cycle of life. It serves as a spiritual connection to Tengri, the sky god, and a pathway for prayers to ascend to the heavens. The smoke from the central hearth rises through this opening, carrying the family's blessings upward.
@@ -106,7 +106,7 @@ A family's Shanyrak was often passed down through generations as a cherished hei
 		order: 5,
 		title: 'The Kerege — Living Lattice Walls',
 		description: 'The expandable wooden framework that breathes with the wind.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/kerege',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01',
 		contentMarkdown: `The **Kerege** forms the circular walls of the yurt — an ingenious system of expanding lattice sections crafted from flexible willow or birch. These sections can be compressed like an accordion for transport, then expanded to create living spaces of various sizes.
 
 Each Kerege section consists of thin wooden slats joined by leather thongs at their crossing points, creating a diamond pattern that is both strong and flexible. A skilled family could adjust the size of their yurt based on the season — larger for summer gatherings, smaller for winter warmth.
@@ -120,7 +120,7 @@ The number of Kerege sections determined the size of the yurt — from a modest 
 		order: 6,
 		title: 'The Uyk — Rays of the Sun',
 		description: 'Slender roof poles that create the yurt\'s distinctive dome.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/uyk',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-02',
 		contentMarkdown: `The **Uyk** are the roof poles that radiate from the Shanyrak like sun rays, connecting the cosmic center to the earthly perimeter. These slender beams of willow or birch — numbering from 60 to 150 depending on the yurt's size — create the distinctive dome shape that is both beautiful and functional.
 
 Each Uyk pole slots into the Shanyrak at one end and rests against the Kerege lattice at the other, locked in place by tension and gravity. Their arrangement creates a self-supporting structure of remarkable strength, capable of withstanding the fierce steppe winds that would tear apart conventional buildings.
@@ -134,7 +134,7 @@ The craftsmanship of the Uyk is deceptively complex — each pole must be straig
 		order: 7,
 		title: 'Jabu Kiiz — The Art of Felt',
 		description: 'Thick felt carpets that transform structure into sanctuary.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/jabu-kiiz',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-01',
 		contentMarkdown: `The **Jabu Kiiz** are the thick felt carpets that cover the floor and walls of the yurt, transforming the wooden framework into a warm, inviting home. Made from sheep's wool that has been beaten, rolled, and pressed until it becomes a durable, insulating fabric, these carpets are masterpieces of functional art.
 
 Creating Jabu Kiiz is a labor-intensive process that begins with shearing sheep in spring. The wool is washed, carded, and arranged in layers, then sprayed with water and rolled tightly. Women would walk on these rolls for hours, pressing the fibers together until they bonded into a thick, durable felt.
@@ -148,7 +148,7 @@ New Jabu Kiiz were often part of a bride's dowry, representing her skill and the
 		order: 8,
 		title: 'Baskur and Baqanaq — Woven Bands of Beauty',
 		description: 'Decorative and structural elements that encircle the yurt.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/baskur',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-02',
 		contentMarkdown: `Encircling the yurt are the **Baskur** and **Baqanaq** — woven bands that serve both structural and decorative purposes. These intricate textiles, created by skilled craftswomen using techniques passed down through generations, add strength to the structure while creating visual harmony.
 
 The **Baskur** runs along the top of the Kerege walls, helping to secure the Uyk poles and distribute their weight evenly. It features bold geometric patterns in red, black, and white — colors that hold deep symbolic meaning in Kazakh culture. Red represents life and vitality, black symbolizes the earth and protection, and white signifies purity and the sky.
@@ -162,7 +162,7 @@ The weaving of these bands required both technical skill and artistic vision. Ea
 		order: 9,
 		title: 'Esik and Tundik — The Sacred Doorway',
 		description: 'Thresholds and curtains that welcome guests and protect the home.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/esik',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01',
 		contentMarkdown: `The entrance to a Kazakh yurt is more than a simple door — it is a **sacred threshold** that separates the harsh outer world from the protected sanctuary within. The **Esik** (door frame) and **Tundik** (door curtain) embody the nomadic values of hospitality and protection.
 
 The **Esik** is framed by wooden thresholds that create a formal boundary between outside and inside. Traditional yurt doors face south, away from the prevailing winds, and are often decorated with intricate carvings, bright colors, and protective symbols. Stepping across the Esik, guests enter a space where they are considered sacred and protected by the ancient laws of hospitality.
@@ -176,7 +176,7 @@ The saying **"Konak kudaý dyny"** — "The guest is the envoy of God" — guide
 		order: 10,
 		title: 'Tuirlyq and Uzyk — The Bonds That Hold',
 		description: 'Woven bands and leather straps that give the yurt its strength.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/tuirlyq',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-02',
 		contentMarkdown: `The yurt's strength lies not just in its wooden frame, but in the **web of connections** that bind it together. The **Tuirlyq** (woven tension bands) and **Uzyk** (leather straps) are essential elements that transform individual components into a unified, resilient structure.
 
 The **Tuirlyq** encircles the yurt horizontally, holding the Kerege walls firmly in place and providing the tension that keeps the structure rigid. Made from horsehair or woven wool, these bands must be incredibly strong yet flexible enough to accommodate the yurt's natural movement in the wind. The Tuirlyq represents the strength of family bonds — flexible yet unbreakable, holding everything together through storms and sunshine alike.
@@ -190,7 +190,7 @@ In the assembled yurt, the Uzyk become part of the decorative elements — their
 		order: 11,
 		title: 'The Eternal Legacy',
 		description: 'Why the nomadic spirit remains the beating heart of Kazakh identity.',
-		imagePublicId: 'content/pages/heritage/yurtNomadiclife/etern',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-01',
 		contentMarkdown: `The world has changed. The industrial revolution came, and with it the comforts and compromises of modern life. Most Kazakhs now live in cities and towns, in apartments with running water and central heating. The yurts that once dotted the steppe are fewer now, clustered at summer pastures or set up for celebrations.
 
 **But the soul remembers.**

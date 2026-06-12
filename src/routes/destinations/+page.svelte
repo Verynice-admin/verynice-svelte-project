@@ -779,8 +779,8 @@
 													attraction.heroImage ||
 													attraction.heroImagePublicId ||
 													attraction.headerBackgroundPublicId ||
-													(attraction.image?.alt ? `content/site/backgrounds/attractions-hero` : null) ||
-													'site/backgrounds/attractions-hero',
+													(attraction.image?.alt ? `content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01` : null) ||
+													'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
 												{
 													width: 600,
 													crop: 'fill'

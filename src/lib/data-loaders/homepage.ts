@@ -27,7 +27,7 @@ export async function loadHomePage(): Promise<HomePageData> {
       metaDescription: 'Discover Kazakhstan',
       heroTitle: 'Discover Kazakhstan',
       heroSubtitle: 'Guides, attractions, food and culture',
-      heroImagePublicId: 'content/site/backgrounds/attractions-hero',
+      heroImagePublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
       featuredVideoUrl: ''
     },
     sliders: {

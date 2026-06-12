@@ -10,7 +10,7 @@
 
 	// Get Cloudinary URLs for the images
 	const lightning1Url = browser 
-		? getCloudinaryUrl('content/pages/aboutBorat/lightning', { width: 400, height: 100, crop: 'fit', quality: 'auto', fetch_format: 'auto' })
+		? getCloudinaryUrl('content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01', { width: 400, height: 100, crop: 'fit', quality: 'auto', fetch_format: 'auto' })
 		: '';
 
 	onMount(() => {

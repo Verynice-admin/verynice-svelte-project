@@ -21,13 +21,13 @@
   const cardImageUrl = (item) => {
     const title = normalizeKey(item?.title);
     const byTitle = {
-      'traditional clothing': 'content/pages/heritage/traditionalClothing/traditional-clothing-hero',
-      'yurt & nomadic life': 'content/pages/heritage/yurtNomadiclife/yurt-nomadic-life-hero',
-      'kazakh melodies': 'content/pages/heritage/kazakhMelodies/mainKazakhMelodies',
-      'arts & crafts': 'content/pages/heritage/artAndCrafts/hero/main',
-      'traditions & customs': 'home/content/pages/heritage/traditionsCustoms/shashu',
-      'mythology & folklore': 'content/pages/heritage/mythologyFolklore/totemic-belief',
-      'traditional games': 'content/pages/heritage/traditionalGames/baigeAlamanBaige'
+      'traditional clothing': 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01',
+      'yurt & nomadic life': 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
+      'kazakh melodies': 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01',
+      'arts & crafts': 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01',
+      'traditions & customs': 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
+      'mythology & folklore': 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
+      'traditional games': 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-01'
     };
     // First check if title has a mapping to the sub-page hero image
     const mappedImage = byTitle[title];
@@ -35,7 +35,7 @@
       item?.image?.publicId ||
       item?.imagePublicId ||
       item?.publicId ||
-      'content/site/backgrounds/attractions-hero';
+      'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01';
 
     return getCloudinaryUrl(publicId, {
       width: 900,
@@ -76,7 +76,7 @@
 		articleLikes: 0,
 		articleComments: 0,
 		breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture' }],
-		headerBackgroundPublicId: 'content/pages/heritage/mainHeritage',
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
 		introMarkdown:
 			'Kazakh culture is rooted in **centuries of nomadic tradition**, shaped by the vast steppes, harsh winters, and the deep connection between people, nature, and community.'
 	};

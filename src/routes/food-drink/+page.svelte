@@ -99,7 +99,7 @@
 		articleLikes: 0,
 		articleComments: 0,
 		breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Food & Drinks' }],
-		headerBackgroundPublicId: 'content/site/backgrounds/attractions-hero',
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
 		introMarkdown:
 			'Kazakh cuisine is built for the open steppe: **hearty, seasonal, and communal**. Meals are designed to be shared around the *dastarkhan* (the family table), balancing tradition with a fast-growing modern dining scene in Almaty, Astana, and Shymkent.'
 	};

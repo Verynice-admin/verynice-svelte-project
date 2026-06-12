@@ -35,7 +35,7 @@ const FALLBACK_PAGE = {
   articleLikes: 0,
   articleComments: 0,
   breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture' }],
-  headerBackgroundPublicId: 'content/pages/heritage/mainHeritage',
+  headerBackgroundPublicId: 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01',
   introMarkdown:
     'Kazakh culture is rooted in **centuries of nomadic tradition**, shaped by the vast steppes, harsh winters, and the deep connection between people, nature, and community. From the ornate **Saukele** headdresses to the warm embrace of **konakasy** (hospitality), every aspect tells a story of resilience, beauty, and unity.'
 };
@@ -44,37 +44,37 @@ const FALLBACK_HIGHLIGHTS = [
   {
     title: 'Traditional Clothing',
     description: 'The Saukele, Shapan, and Chapan — symbols of status, beauty, and cultural identity.',
-    imagePublicId: 'content/site/backgrounds/attractions-hero'
+    imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
   },
   {
     title: 'Yurt & Nomadic Life',
     description: 'The portable home that embodies Kazakh mobility, family values, and connection to nature.',
-    imagePublicId: 'content/site/backgrounds/attractions-hero'
+    imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02'
   },
   {
     title: 'Kazakh Melodies',
     description: 'Dombra melodies, throat singing, and the lively Kara Zhorga that unite generations.',
-    imagePublicId: 'content/site/backgrounds/attractions-hero'
+    imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03'
   },
   {
     title: 'Arts & Crafts',
     description: 'Intricate embroidery, felt-making, jewelry, and the ancient art of eagle hunting.',
-    imagePublicId: 'content/site/backgrounds/attractions-hero'
+    imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04'
   },
   {
     title: 'Traditions & Customs',
     description: 'Konakasy hospitality, Besikke Salu ceremonies, and the sacred Tüsau Keser.',
-    imagePublicId: 'content/site/backgrounds/attractions-hero'
+    imagePublicId: 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01'
   },
   {
     title: 'Mythology & Folklore',
     description: 'Epic tales of heroes, spirits of the steppe, and the legendary Tulpar horses.',
-    imagePublicId: 'content/site/backgrounds/attractions-hero'
+    imagePublicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01'
   },
   {
     title: 'Traditional Games',
     description: 'Kokpar, Audaryspak, Kyz Kuu — ancient sports that test strength, skill, and courage.',
-    imagePublicId: 'content/site/backgrounds/attractions-hero'
+    imagePublicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-01'
   }
 ];
 
@@ -84,42 +84,42 @@ const FALLBACK_GALLERY = {
   title: 'Kazakh Culture Gallery',
   photos: [
     // Traditional Clothing (5)
-    { publicId: 'content/pages/heritage/traditionalClothing/shapan', alt: 'Shapan - Traditional robe', caption: 'Shapan — A richly embroidered robe worn by Kazakh men, symbolizing dignity and status' },
-    { publicId: 'content/pages/heritage/traditionalClothing/saukele', alt: 'Saukele - Bridal headdress', caption: 'Saukele — An ornate bridal headdress adorned with gold, pearls, and feathers, worn by brides' },
-    { publicId: 'content/pages/heritage/traditionalClothing/kalpak', alt: 'Kalpak - White felt hat', caption: 'Kalpak — A distinctive white felt hat, a symbol of Kazakh identity and craftsmanship' },
-    { publicId: 'content/pages/heritage/traditionalClothing/kamzol', alt: 'Kamzol - Embroidered vest', caption: 'Kamzol — An embroidered vest showcasing intricate patterns passed through generations' },
-    { publicId: 'content/pages/heritage/traditionalClothing/beldemshe', alt: 'Beldemshe - Embroidered apron', caption: 'Beldemshe — A beautifully embroidered apron worn by married women as a sign of skill' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01', alt: 'Shapan - Traditional robe', caption: 'Shapan — A richly embroidered robe worn by Kazakh men, symbolizing dignity and status' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-02', alt: 'Saukele - Bridal headdress', caption: 'Saukele — An ornate bridal headdress adorned with gold, pearls, and feathers, worn by brides' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01', alt: 'Kalpak - White felt hat', caption: 'Kalpak — A distinctive white felt hat, a symbol of Kazakh identity and craftsmanship' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02', alt: 'Kamzol - Embroidered vest', caption: 'Kamzol — An embroidered vest showcasing intricate patterns passed through generations' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03', alt: 'Beldemshe - Embroidered apron', caption: 'Beldemshe — A beautifully embroidered apron worn by married women as a sign of skill' },
     // Yurt & Nomadic Life (5)
-    { publicId: 'content/pages/heritage/yurtNomadiclife/shanyrak', alt: 'Shanyrak - Yurt roof crown', caption: 'Shanyrak — The crown of the yurt, symbolizing the connection between earth and sky' },
-    { publicId: 'content/pages/heritage/yurtNomadiclife/kerege', alt: 'Kerege - Lattice walls', caption: 'Kerege — The intricate lattice walls that make the yurt portable and resilient' },
-    { publicId: 'content/pages/heritage/yurtNomadiclife/uyk', alt: 'Uyk - Roof poles', caption: 'Uyk — The wooden poles that support the yurt, arranged to face the door' },
-    { publicId: 'content/pages/heritage/yurtNomadiclife/jabu-kiiz', alt: 'Jabu Kiiz - Felt carpets', caption: 'Jabu Kiiz — Colorful felt carpets and wall decorations that insulate and beautify the yurt' },
-    { publicId: 'content/pages/heritage/yurtNomadiclife/esik', alt: 'Esik - Yurt entrance', caption: 'Esik — The wooden door of the yurt, often carved with protective symbols' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04', alt: 'Shanyrak - Yurt roof crown', caption: 'Shanyrak — The crown of the yurt, symbolizing the connection between earth and sky' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01', alt: 'Kerege - Lattice walls', caption: 'Kerege — The intricate lattice walls that make the yurt portable and resilient' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-02', alt: 'Uyk - Roof poles', caption: 'Uyk — The wooden poles that support the yurt, arranged to face the door' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-01', alt: 'Jabu Kiiz - Felt carpets', caption: 'Jabu Kiiz — Colorful felt carpets and wall decorations that insulate and beautify the yurt' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-02', alt: 'Esik - Yurt entrance', caption: 'Esik — The wooden door of the yurt, often carved with protective symbols' },
     // Kazakh Melodies (5)
-    { publicId: 'content/pages/heritage/kazakhMelodies/dombra', alt: 'Dombra - Two-stringed lute', caption: 'Dombra — The soulful two-stringed lute that has accompanied Kazakh storytellers for centuries' },
-    { publicId: 'content/pages/heritage/kazakhMelodies/Kobyz', alt: 'Kobyz - Bowed instrument', caption: 'Kobyz — An ancient bowed instrument whose haunting sounds connect listeners to the ancestors' },
-    { publicId: 'content/pages/heritage/kazakhMelodies/KaraZhorga', alt: 'Kara Zhorga - Traditional dance', caption: 'Kara Zhorga — An energetic circle dance that celebrates community and joy' },
-    { publicId: 'content/pages/heritage/kazakhMelodies/Alpamys', alt: 'Alpamys - Epic hero', caption: 'Alpamys — A legendary hero from Kazakh epic poetry, embodying strength and honor' },
-    { publicId: 'content/pages/heritage/kazakhMelodies/aitys', alt: 'Aitys - Poetic competition', caption: 'Aitys — A traditional poetic improvisation contest where singers compete with wit and verse' },
+    { publicId: 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01', alt: 'Dombra - Two-stringed lute', caption: 'Dombra — The soulful two-stringed lute that has accompanied Kazakh storytellers for centuries' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-01', alt: 'Kobyz - Bowed instrument', caption: 'Kobyz — An ancient bowed instrument whose haunting sounds connect listeners to the ancestors' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-02', alt: 'Kara Zhorga - Traditional dance', caption: 'Kara Zhorga — An energetic circle dance that celebrates community and joy' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-01', alt: 'Alpamys - Epic hero', caption: 'Alpamys — A legendary hero from Kazakh epic poetry, embodying strength and honor' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-02', alt: 'Aitys - Poetic competition', caption: 'Aitys — A traditional poetic improvisation contest where singers compete with wit and verse' },
     // Arts & Crafts (5)
-    { publicId: 'content/pages/heritage/artAndCrafts/felt-making/syrmak', alt: 'Syrmak - Felt carpet', caption: 'Syrmak — A traditional felt carpet with bold geometric patterns, essential to nomadic life' },
-    { publicId: 'content/pages/heritage/artAndCrafts/keste/beldeshe', alt: 'Kezde - Embroidery', caption: 'Kezde — Delicate embroidery featuring symbolic patterns of protection and prosperity' },
-    { publicId: 'content/pages/heritage/artAndCrafts/crafts/besik', alt: 'Besik - Cradle', caption: 'Besik — A beautifully decorated cradle for infants, passed down through generations' },
-    { publicId: 'content/pages/heritage/artAndCrafts/jewelry/art', alt: 'Silver - Jewelry', caption: 'Traditional Kazakh silver jewelry — Handcrafted pieces featuring tribal symbols and semi-precious stones' },
-    { publicId: 'content/pages/heritage/artAndCrafts/eagle-hunting/hunter', alt: 'Berkutchi - Eagle hunting', caption: 'Berkutchi — The ancient tradition of hunting with golden eagles on the vast steppes' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01', alt: 'Syrmak - Felt carpet', caption: 'Syrmak — A traditional felt carpet with bold geometric patterns, essential to nomadic life' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01', alt: 'Kezde - Embroidery', caption: 'Kezde — Delicate embroidery featuring symbolic patterns of protection and prosperity' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01', alt: 'Besik - Cradle', caption: 'Besik — A beautifully decorated cradle for infants, passed down through generations' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02', alt: 'Silver - Jewelry', caption: 'Traditional Kazakh silver jewelry — Handcrafted pieces featuring tribal symbols and semi-precious stones' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01', alt: 'Berkutchi - Eagle hunting', caption: 'Berkutchi — The ancient tradition of hunting with golden eagles on the vast steppes' },
     // Traditions & Customs (5)
-    { publicId: 'home/content/pages/heritage/traditionsCustoms/shashu', alt: 'Konakasy - Hospitality', caption: 'Konakasy — The sacred tradition of Kazakh hospitality where guests are treated as messengers of God' },
-    { publicId: 'home/content/pages/heritage/traditionsCustoms/BesikkeSalu', alt: 'Besikke - Cradle ceremony', caption: 'Besikke Salu — A ceremony celebrating a baby\'s first placement in the cradle' },
-    { publicId: 'home/content/pages/heritage/traditionsCustoms/RespectforElders', alt: 'Aksakal - Elders respect', caption: 'Aksakal — The deep respect for elders, the keepers of wisdom and tradition' },
-    { publicId: 'content/pages/heritage/traditionalClothing/saukele', alt: 'Wedding - Traditional ceremony', caption: 'Traditional Kazakh wedding — Rich in symbolism, color, and centuries-old customs' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02', alt: 'Konakasy - Hospitality', caption: 'Konakasy — The sacred tradition of Kazakh hospitality where guests are treated as messengers of God' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03', alt: 'Besikke - Cradle ceremony', caption: 'Besikke Salu — A ceremony celebrating a baby\'s first placement in the cradle' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04', alt: 'Aksakal - Elders respect', caption: 'Aksakal — The deep respect for elders, the keepers of wisdom and tradition' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-01', alt: 'Wedding - Traditional ceremony', caption: 'Traditional Kazakh wedding — Rich in symbolism, color, and centuries-old customs' },
     // Mythology & Folklore (remaining)
-    { publicId: 'content/pages/heritage/mythologyFolklore/totemic-belief', alt: 'Tengri - Sky god', caption: 'Tengri — The supreme sky god in ancient Turkic belief, source of all life and cosmic order' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01', alt: 'Tengri - Sky god', caption: 'Tengri — The supreme sky god in ancient Turkic belief, source of all life and cosmic order' },
     // Traditional Games (5)
-    { publicId: 'content/pages/heritage/traditionalGames/kokpar', alt: 'Kokpar - Buzkashi sport', caption: 'Kokpar — The ancient sport of horsemen competing for a goat carcass on the open steppe' },
-    { publicId: 'content/pages/heritage/traditionalGames/audaryspak', alt: 'Audaryspak - Horse wrestling', caption: 'Audaryspak — A traditional horse wrestling competition testing strength and riding skills' },
-    { publicId: 'content/pages/heritage/traditionalGames/kyzKuu', alt: 'Kyz Kuu - Chase game', caption: 'Kyz Kuu — The thrilling chase game where horsemen pursue young women riders' },
-    { publicId: 'content/pages/heritage/traditionalGames/kazakshaKures', alt: 'Kures - Wrestling', caption: 'Kures — Traditional wrestling where strength, technique, and honor determine the victor' },
-    { publicId: 'content/pages/heritage/traditionalGames/altybakan', alt: 'Altybakan - Swinging game', caption: 'Altybakan — The ancient swinging game that brings courage and joy to participants' }
+    { publicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-01', alt: 'Kokpar - Buzkashi sport', caption: 'Kokpar — The ancient sport of horsemen competing for a goat carcass on the open steppe' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-02', alt: 'Audaryspak - Horse wrestling', caption: 'Audaryspak — A traditional horse wrestling competition testing strength and riding skills' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-01', alt: 'Kyz Kuu - Chase game', caption: 'Kyz Kuu — The thrilling chase game where horsemen pursue young women riders' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-02', alt: 'Kures - Wrestling', caption: 'Kures — Traditional wrestling where strength, technique, and honor determine the victor' },
+    { publicId: 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01', alt: 'Altybakan - Swinging game', caption: 'Altybakan — The ancient swinging game that brings courage and joy to participants' }
   ]
 };
 

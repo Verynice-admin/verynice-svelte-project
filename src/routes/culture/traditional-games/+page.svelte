@@ -25,7 +25,7 @@
 			{ label: 'Heritage', href: '/culture' },
 			{ label: 'Traditional Games' }
 		],
-		headerBackgroundPublicId: 'content/pages/heritage/traditionalGames/baigeAlamanBaige'
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-01'
 	};
 
 	const sectionCodes = {

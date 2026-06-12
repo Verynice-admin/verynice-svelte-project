@@ -24,7 +24,7 @@
 			{ label: 'Culture', href: '/culture' },
 			{ label: 'Traditional Clothing' }
 		],
-		headerBackgroundPublicId: 'content/pages/heritage/traditionalClothing/traditional-clothing-hero'
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01'
 	};
 
 	let pageData = { ...defaultPage, ...(page ?? {}) };

@@ -41,7 +41,7 @@ const FALLBACK_PAGE = {
 		{ label: 'Culture', href: '/culture' },
 		{ label: 'Kazakh Melodies' }
 	],
-	headerBackgroundPublicId: 'content/pages/heritage/kazakhMelodies/mainKazakhMelodies'
+	headerBackgroundPublicId: 'content/pages/destinations/Astana_Nearby/baiterek-tower/baiterek-tower-01'
 };
 
 const FALLBACK_SECTIONS = [
@@ -50,9 +50,9 @@ const FALLBACK_SECTIONS = [
 		order: 1,
 		title: 'The Dombra — Soul of Kazakh Music',
 		description: 'The two-stringed lute that has accompanied nomads for centuries.',
-		imagePublicId: 'content/pages/heritage/kazakhMelodies/dombra',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
 		galleryImages: [
-			{ publicId: 'content/pages/heritage/kazakhMelodies/dombra', caption: 'The Dombra' }
+			{ publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01', caption: 'The Dombra' }
 		],
 		contentMarkdown: `The **dombra** is not merely an instrument — it is the soul of Kazakh music, the companion of poets, and the voice of the steppe. This two-stringed lute has accompanied nomads for centuries, filling yurts with melodies that speak of love, heroism, and the eternal connection to land and sky.
 
@@ -72,13 +72,13 @@ const FALLBACK_SECTIONS = [
 		order: 2,
 		title: 'Traditional Instruments',
 		description: 'The diverse soundscape of Kazakh musical culture.',
-		imagePublicId: 'content/pages/heritage/kazakhMelodies/Kobyz',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
 		galleryImages: [
-			{ publicId: 'content/pages/heritage/kazakhMelodies/Kobyz', caption: 'The Kobyz' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/Syrnay', caption: 'The Syrnay' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/Dauylpaz', caption: 'The Dauylpaz' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/Shankobyz', caption: 'The Shankobyz' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/Zhetigen', caption: 'The Zhetigen' }
+			{ publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02', caption: 'The Kobyz' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03', caption: 'The Syrnay' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04', caption: 'The Dauylpaz' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01', caption: 'The Shankobyz' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-02', caption: 'The Zhetigen' }
 		],
 		contentMarkdown: `Beyond the dombra, Kazakh musical culture encompasses a diverse array of instruments, each with unique sounds, histories, and ceremonial roles.
 
@@ -97,11 +97,11 @@ const FALLBACK_SECTIONS = [
 		order: 3,
 		title: 'Traditional Dances',
 		description: 'Movement traditions that unite communities and celebrate life.',
-		imagePublicId: 'content/pages/heritage/kazakhMelodies/KaraZhorga',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-01',
 		galleryImages: [
-			{ publicId: 'content/pages/heritage/kazakhMelodies/KaraZhorga', caption: 'Kara Zhorga Dance' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/qamazhai', caption: 'Kamazhai Dance' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/KyzKuu', caption: 'Kyz Kuu' }
+			{ publicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-01', caption: 'Kara Zhorga Dance' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-02', caption: 'Kamazhai Dance' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-01', caption: 'Kyz Kuu' }
 		],
 		contentMarkdown: `Kazakh dance traditions range from communal circle dances to competitive sporting displays, each expressing different aspects of nomadic life, relationships, and community bonds.
 
@@ -116,9 +116,9 @@ const FALLBACK_SECTIONS = [
 		order: 4,
 		title: 'Epic Poetry (Zhyr)',
 		description: 'The oral tradition that preserves history through performance.',
-		imagePublicId: 'content/pages/heritage/kazakhMelodies/Alpamys',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-02',
 		galleryImages: [
-			{ publicId: 'content/pages/heritage/kazakhMelodies/Alpamys', caption: 'Alpamys Epic' }
+			{ publicId: 'content/pages/destinations/Almaty_nearby/central-state-museum/central-state-museum-02', caption: 'Alpamys Epic' }
 		],
 		contentMarkdown: `Kazakh epic poetry (**Zhyr**) represents one of the world's great oral traditions. Bards called **Zhyraus** memorize thousands of lines of verse, recounting the deeds of heroes, the wisdom of ancestors, and the history of the Kazakh people.
 
@@ -138,14 +138,14 @@ const FALLBACK_SECTIONS = [
 		order: 5,
 		title: 'Modern Kazakh Music',
 		description: 'Contemporary artists taking Kazakh music to the world stage.',
-		imagePublicId: 'content/pages/heritage/kazakhMelodies/DimashKudaibergen',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-01',
 		galleryImages: [
-			{ publicId: 'content/pages/heritage/kazakhMelodies/DimashKudaibergen', caption: 'Dimash Kudaibergen' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/Imanbek', caption: 'Imanbek' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/Enlik', caption: 'Enlik' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/DosMukasan', caption: 'Dos Mukasan' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/BatyrkhanShukenov', caption: 'Batyrkhan Shukenov' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/RozaRymbayeva', caption: 'Roza Rymbayeva' }
+			{ publicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-01', caption: 'Dimash Kudaibergen' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/panfilov-park/panfilov-park-02', caption: 'Imanbek' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-01', caption: 'Enlik' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/altyn-emel-national-park/altyn-emel-national-park-02', caption: 'Dos Mukasan' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01', caption: 'Batyrkhan Shukenov' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01', caption: 'Roza Rymbayeva' }
 		],
 		contentMarkdown: `While rooted in ancient traditions, Kazakh music continues to evolve and captivate global audiences. Today's artists blend traditional sounds with contemporary styles, creating a unique musical identity that resonates worldwide.
 
@@ -168,13 +168,13 @@ const FALLBACK_SECTIONS = [
 		order: 6,
 		title: 'Orchestras & Ensembles',
 		description: 'World-class orchestras preserving and performing Kazakh musical heritage.',
-		imagePublicId: 'content/pages/heritage/kazakhMelodies/KurmangazyKazakhStateOrchestra',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03',
 		galleryImages: [
-			{ publicId: 'content/pages/heritage/kazakhMelodies/KurmangazyKazakhStateOrchestra', caption: 'Kurmangazy Orchestra' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/KazakhStateSymphonyOrchestra', caption: 'Kazakh State Symphony' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/OtyrarSazy', caption: 'Otyrar Sazy' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/ShabytNationalEnsemble', caption: 'Shabyt Ensemble' },
-			{ publicId: 'content/pages/heritage/kazakhMelodies/AstanaOperaOrchestra', caption: 'Astana Opera Orchestra' }
+			{ publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03', caption: 'Kurmangazy Orchestra' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04', caption: 'Kazakh State Symphony' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01', caption: 'Otyrar Sazy' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-02', caption: 'Shabyt Ensemble' },
+			{ publicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-01', caption: 'Astana Opera Orchestra' }
 		],
 		contentMarkdown: `Kazakhstan's orchestras and ensembles represent the pinnacle of musical excellence, blending traditional folk instruments with classical training to create unique soundscapes that captivate audiences worldwide.
 
@@ -193,7 +193,7 @@ const FALLBACK_SECTIONS = [
 		order: 7,
 		title: 'Kazakh Aitys — The Art of Improvisation',
 		description: 'The ancient tradition of competitive singing and poetic duels.',
-		imagePublicId: 'content/pages/heritage/kazakhMelodies/aitys',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-02',
 		galleryImages: [],
 		contentMarkdown: `**Aitys** is one of Kazakhstan's most vibrant and entertaining musical traditions — a competitive art form where two performers, known as **aityskers**, engage in a spontaneous battle of wits, poetry, and song. Part debate, part concert, part comedy show, Aitys represents the pinnacle of Kazakh oral improvisation.
 

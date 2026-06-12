@@ -15,7 +15,7 @@ const FALLBACK_RELATED_POSTS = [
     title: 'Kazakhstan History',
     url: '/history',
     category: 'Heritage',
-    headerBackgroundPublicId: 'content/pages/heritage/yurtNomadiclife/yurt-nomadic-life-hero',
+    headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01',
     description: 'From the Silk Road empires to the modern republic.'
   },
   {
@@ -47,7 +47,7 @@ const getBoratData = () => {
       mainTitle: 'Welcome to Verynice Land!',
       headerDescription:
         'Welcome to Verynice Land! The movie "Borat: Cultural Learnings of America for Make Benefit Glorious Nation of Kazakhstan" changed the world\'s view of us forever.',
-      headerBackgroundPublicId: 'content/pages/aboutBorat/main_borat',
+      headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
       location: 'Glod, Romania (Not Kazakhstan)',
       articleViews: 69420,
       articleComments: 128,
@@ -70,7 +70,7 @@ const getBoratData = () => {
       name: 'Borat Sagdiyev',
       title: 'Lead Country promoter',
       bio: 'Providing accurate facts about our glorious nation.',
-      profilePicturePublicId: 'content/pages/aboutBorat/borat_author'
+      profilePicturePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
     },
     qualityReport: { qualityScore: 100 }
   };
@@ -157,7 +157,7 @@ export async function load() {
 
     // Fallback image if missing from DB
     if (!page.headerBackgroundPublicId) {
-      page.headerBackgroundPublicId = 'content/pages/aboutBorat/main_borat';
+      page.headerBackgroundPublicId = 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01';
     }
 
     const articles = articlesSnap.docs

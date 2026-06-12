@@ -16,7 +16,7 @@
 		heroKicker: 'Living Traditions',
 		location: 'Kazakhstan',
 		breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture', href: '/culture' }, { label: 'Traditions & Customs' }],
-		headerBackgroundPublicId: 'content/site/backgrounds/attractions-hero'
+		headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02'
 	};
 
 	const sectionCodes = { konakasy: 'Konak', 'besikke-salu': 'Besik', 'tusau-keser': 'Tusau', betashar: 'Betashar', 'respect-elders': 'Elders' };

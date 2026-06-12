@@ -32,7 +32,7 @@ const FALLBACK_PAGE = {
 	articleLikes: 0,
 	articleComments: 0,
 	breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture', href: '/culture' }, { label: 'Traditions & Customs' }],
-	headerBackgroundPublicId: 'home/content/pages/heritage/traditionsCustoms/mainTraditionsCustomsSocialLife'
+	headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-01'
 };
 
 const FALLBACK_SECTIONS = [
@@ -41,7 +41,7 @@ const FALLBACK_SECTIONS = [
 		order: 1,
 		title: 'Konakasy (Hospitality)',
 		description: 'The sacred tradition that makes guests messengers from God.',
-		imagePublicId: 'home/content/pages/heritage/traditionsCustoms/shashu',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-02',
 		contentMarkdown: `**Konakasy** — the Kazakh tradition of hospitality — is not merely good manners; it is a sacred obligation rooted in the practical realities and spiritual beliefs of nomadic life. The ancient saying *"The guest is a messenger from God"* reflects the deep reverence for anyone who crosses the threshold.
 
 **The Host's Duty** — A Kazakh host must provide:
@@ -65,7 +65,7 @@ const FALLBACK_SECTIONS = [
 		order: 2,
 		title: 'Besikke Salu — Welcoming Newborns',
 		description: 'The ceremony that celebrates new life and places the baby in the cradle for the first time.',
-		imagePublicId: 'home/content/pages/heritage/traditionsCustoms/BesikkeSalu',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-03',
 		contentMarkdown: `**Besikke Salu** is the joyous ceremony that welcomes a newborn into the family and community. This tradition celebrates the continuation of the family line and asks for blessings on the child's future.
 
 **The Besik (Cradle)** — The Kazakh cradle is a masterpiece of practical design. Its wooden frame rocks gently, while adjustable straps secure the baby safely. A hole in the bottom allows for easy cleaning, and the elevated design protects infants from drafts and animals. The cradle is often decorated with protective amulets and beautiful textiles.
@@ -90,7 +90,7 @@ const FALLBACK_SECTIONS = [
 		order: 3,
 		title: 'Tüsau Keser — First Steps Ceremony',
 		description: 'Celebrating a child\'s first steps by cutting the symbolic ties that bind their legs.',
-		imagePublicId: 'content/site/backgrounds/attractions-hero',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/besshatyr-scythian-mounds/besshatyr-scythian-mounds-01',
 		contentMarkdown: `**Tüsau Keser** marks one of childhood's most important milestones — the first steps toward independence. This ceremony cuts the symbolic ties (black and white threads wrapped around the child's legs) that represent the bond between infant and mother, allowing the child to walk freely into their future.
 
 **The Symbolic Ties** — Before the ceremony, black and white threads are loosely wrapped around the child's ankles. These represent:
@@ -120,7 +120,7 @@ const FALLBACK_SECTIONS = [
 		order: 4,
 		title: 'Betashar — Unveiling the Bride',
 		description: 'The wedding tradition of lifting the bride\'s veil and welcoming her to her new family.',
-		imagePublicId: 'content/site/backgrounds/attractions-hero',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/zenkov-cathedral/zenkov-cathedral-01',
 		contentMarkdown: `**Betashar** is the dramatic wedding ceremony where the bride's face covering is lifted for the first time in her new home, marking her official transition from daughter to wife and welcoming her into her husband's family.
 
 **The Veil** — The bride wears a beautiful veil (**Jelek**) throughout the wedding festivities. This covering:
@@ -151,7 +151,7 @@ const FALLBACK_SECTIONS = [
 		order: 5,
 		title: 'Respect for Elders (Aksakal)',
 		description: 'The foundation of Kazakh social order honoring age, wisdom, and experience.',
-		imagePublicId: 'home/content/pages/heritage/traditionsCustoms/RespectforElders',
+		imagePublicId: 'content/pages/destinations/Almaty_nearby/nomad-ethno-village/nomad-ethno-village-04',
 		contentMarkdown: `Respect for elders (**Aksakal** — literally "white-bearded") forms the foundation of Kazakh social order. This reverence for age and experience shaped everything from family dynamics to community governance.
 
 **The Aksakal Council** — In traditional communities, respected elders formed councils that:

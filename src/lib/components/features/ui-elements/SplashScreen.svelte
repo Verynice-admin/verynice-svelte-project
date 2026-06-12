@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getCloudinaryUrl } from '$lib/utils/cloudinary';
-
 	const STORAGE_KEY = 'vnk_splash_shown';
 
 	let show = false;
@@ -10,11 +8,7 @@
 	let labelVisible = false;
 	let isGo = false;
 
-	const logoUrl = getCloudinaryUrl('content/pages/aboutBorat/Borat_logo_image', {
-		width: 640,
-		quality: 'auto:best',
-		fetch_format: 'auto'
-	});
+	const logoUrl = '/Borat_logo_image.png';
 
 	function tick(ms: number) {
 		return new Promise<void>((r) => setTimeout(r, ms));

@@ -6,7 +6,7 @@ const FALLBACK_HOMEPAGE = {
   metaDescription: 'Explore the beautiful cities, attractions, and culture of Kazakhstan',
   heroTitle: 'Discover Kazakhstan',
   heroSubtitle: 'Explore amazing places, rich history, and vibrant culture',
-  heroImagePublicId: 'home/content/pages/homepage/Kazakhstan-bckgrnd',
+  heroImagePublicId: 'content/pages/destinations/Almaty_nearby/charyn-canyon/charyn-canyon-01',
   featuredVideoUrl: 'https://youtu.be/pssnBA7-f98?si=OBk1YVHKTHoDXOUd',
 };
 

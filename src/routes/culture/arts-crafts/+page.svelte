@@ -16,7 +16,7 @@
 		heroKicker: 'Crafted Heritage',
 		location: 'Kazakhstan',
 		breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Culture', href: '/culture' }, { label: 'Arts & Crafts' }],
-		headerBackgroundPublicId: 'content/site/backgrounds/attractions-hero'
+		headerBackgroundPublicId: 'content/pages/destinations/Turkistan_Shymkent/khoja-ahmed-yasawi-mausoleum/khoja-ahmed-yasawi-mausoleum-01'
 	};
 
 	const sectionCodes = { 'felt-making': 'Felt', 'embroidery': 'Embroid', 'leather-woodwork': 'Leather', 'metalwork-jewelry': 'Silver', 'eagle-hunting': 'Eagle' };
