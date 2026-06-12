@@ -40,7 +40,11 @@ const securityHandle: Handle = async ({ event, resolve }) => {
 	response.headers.set('X-Content-Type-Options', 'nosniff');
 	response.headers.set('X-Frame-Options', 'DENY');
 	response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-	response.headers.set('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+	// Sign-in pages use Firebase signInWithPopup which requires the popup to call
+	// window.close() back to the opener. 'same-origin-allow-popups' blocks this when
+	// the Firebase auth handler (firebaseapp.com) has its own COOP set to same-origin.
+	const isSignInPage = event.url.pathname.startsWith('/get-started');
+	response.headers.set('Cross-Origin-Opener-Policy', isSignInPage ? 'unsafe-none' : 'same-origin-allow-popups');
 	response.headers.set('Cross-Origin-Resource-Policy', 'same-site');
 	response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
 	if (event.url.protocol === 'https:') {
