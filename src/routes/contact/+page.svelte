@@ -12,7 +12,7 @@
 		// Build mailto link as a fallback (no server-side email handler yet)
 		const body = encodeURIComponent(`Name: ${name}\n\nMessage:\n${message}`);
 		const sub = encodeURIComponent(subject || 'VeryNice.kz contact form');
-		window.location.href = `mailto:contact.azamat@gmail.com?subject=${sub}&body=${body}`;
+		window.location.href = `mailto:headquarters.mailbox@gmail.com?subject=${sub}&body=${body}`;
 		status = 'sent';
 	}
 </script>
@@ -85,9 +85,9 @@
 					</button>
 
 					{#if status === 'sent'}
-						<p class="status-msg success">Your email client should have opened. If not, email us directly at <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.</p>
+						<p class="status-msg success">Your email client should have opened. If not, email us directly at <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.</p>
 					{:else if status === 'error'}
-						<p class="status-msg error">Something went wrong. Please email us directly at <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.</p>
+						<p class="status-msg error">Something went wrong. Please email us directly at <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.</p>
 					{/if}
 				</form>
 			</section>
@@ -97,7 +97,7 @@
 					<h2>Get in touch</h2>
 					<dl>
 						<dt>Email</dt>
-						<dd><a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a></dd>
+						<dd><a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a></dd>
 
 						<dt>Response time</dt>
 						<dd>Usually within 1–3 business days</dd>

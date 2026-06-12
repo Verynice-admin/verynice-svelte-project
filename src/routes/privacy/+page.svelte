@@ -182,7 +182,7 @@
 				<p>
 					The data controller for personal data processed through VeryNice.kz is the individual
 					operator of the Site, reachable at
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</p>
 				<div class="callout callout-neutral">
 					<strong>Operator identity and registration status.</strong> The Site is currently operated
@@ -192,7 +192,7 @@
 					(оператор дербес деректер базасының иесі). Upon completion of IE registration, this
 					Policy will be updated with the full registered entity name and BIN/IIN. Full legal
 					identity details are available on written request to
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</div>
 				<div class="callout callout-info">
 					<strong>EU/EEA — Article 27 GDPR Representative.</strong> We have not yet appointed a
@@ -209,7 +209,7 @@
 					with the <strong>Committee for Information Security of the Ministry of Digital
 					Development, Innovations and Aerospace Industry (MDDIA)</strong> prior to commencing
 					processing. The operator is actively completing this registration as a matter of priority. Processing personal data of Kazakhstan citizens without completing Article 19 registration constitutes a violation of Law No. 94-V. The operator will update this Policy immediately upon receiving the registration reference number from MDDIA. Users in Kazakhstan may verify registration status by contacting
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</div>
 			</section>
 
@@ -305,7 +305,7 @@
 						from users of VeryNice.kz. If you believe you have inadvertently submitted restricted
 						personal data through the Site (for example, through a comment or review), please
 						contact us immediately at
-						<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a> so that we
+						<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a> so that we
 						can arrange its secure and verified deletion in accordance with Article 21 of
 						Law No. 94-V.
 					</dd>
@@ -381,7 +381,7 @@
 					Where processing is based on consent, you may withdraw that consent at any time without
 					affecting the lawfulness of processing carried out before withdrawal. To withdraw: use
 					the cookie preference centre, or email
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</p>
 			</section>
 
@@ -534,7 +534,7 @@
 					<strong>DPF</strong> = EU-US Data Privacy Framework.
 					<strong>DPA</strong> = Data Processing Agreement.
 					Copies of applicable transfer safeguards are available on request at
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</p>
 			</section>
 
@@ -656,7 +656,7 @@
 				</div>
 				<p>
 					Users in Kazakhstan with specific concerns about the localisation of their personal data
-					may contact us at <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					may contact us at <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</p>
 			</section>
 
@@ -746,7 +746,7 @@
 				<p>
 					<strong>Public content.</strong> Comments and reviews you post on the Site are visible to
 					all visitors and should be treated as public. If you wish to have a public comment removed,
-					contact <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					contact <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</p>
 			</section>
 
@@ -783,7 +783,7 @@
 				</dl>
 				<p>
 					You may request a copy of the relevant transfer safeguards by emailing
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</p>
 			</section>
 
@@ -810,7 +810,7 @@
 					the deletion within 30 days and confirm by email.</dd>
 				</dl>
 				<p>
-					To exercise any right: email <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+					To exercise any right: email <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 					with your name, account email, and a description of your request. We will respond within
 					<strong>30 calendar days</strong> (GDPR) or within <strong>10 working days</strong>
 					for access requests under Kazakhstan Law No. 94-V.
@@ -882,7 +882,7 @@
 						Innovations and Aerospace Industry of the Republic of Kazakhstan (MDDIA)</strong>.
 						The Committee for Information Security of MDDIA is reachable via the official portal at
 						<a href="https://www.gov.kz/memleket/entities/mdi" target="_blank" rel="noopener noreferrer">gov.kz/memleket/entities/mdi</a>
-						or at <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a> for assistance locating the correct submission procedure.
+						or at <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a> for assistance locating the correct submission procedure.
 					</dd>
 				</dl>
 			</section>
@@ -911,7 +911,7 @@
 					<dd>
 						If you are a parent or guardian and believe your child under the applicable consent age
 						has used the Site without your knowledge, please contact us immediately at
-						<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a> so that we can
+						<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a> so that we can
 						take appropriate action, including account deletion and data erasure.
 					</dd>
 				</dl>
@@ -960,7 +960,7 @@
 				</p>
 				<p>
 					To stop using the Site and request account deletion, contact
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</p>
 			</section>
 
@@ -976,7 +976,7 @@
 								<rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
 								<path d="M1 5l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 							</svg>
-							<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+							<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 						</p>
 						<p class="contact-detail">
 							<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -1010,7 +1010,7 @@
 					A full Kazakh translation follows below.
 				</p>
 				<ul class="kz-list" lang="kk">
-					<li><strong>Деректер бақылаушысы:</strong> VeryNice.kz жеке операторы. Байланыс: <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>. Оператор ЖК ретінде тіркелу үстінде.</li>
+					<li><strong>Деректер бақылаушысы:</strong> VeryNice.kz жеке операторы. Байланыс: <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>. Оператор ЖК ретінде тіркелу үстінде.</li>
 					<li><strong>Жинайтын деректер:</strong> Тіркелгі деректері (Google OAuth), пікірлер мен пайдаланушы мазмұны, бизнес тіркелгі деректері, аналитика (келісіммен), жарнама деректері (келісіммен), сервер журналдары.</li>
 					<li><strong>Cookie файлдары:</strong> Маңызды (Firebase сессиясы), аналитикалық (Google Analytics 4 — келісім талап етіледі), жарнамалық (келісім талап етіледі). Cookie параметрлер орталығы арқылы басқаруға болады.</li>
 					<li><strong>Деректерді өңдеудің заңды негіздері (ЖТҚР):</strong> Шарт (тіркелгі), заңды мүдде (қауіпсіздік, модерация), келісім (аналитика, жарнама).</li>
@@ -1019,7 +1019,7 @@
 					<li><strong>Сақтау мерзімі:</strong> Тіркелгі деректері — жойғаннан кейін 3 жыл. Сервер журналдары — шамамен 30 күн (Vercel саясаты бойынша).</li>
 					<li><strong>Деректерді бермейміз:</strong> Жеке деректерді сатпаймыз. Маркетинг мақсатында үшінші тараптармен бөліспейміз.</li>
 					<li><strong>Халықаралық берулер:</strong> № 94-V Заңының 18-бабы бойынша ЦДИҒМ-ге хабарланады.</li>
-					<li><strong>Құқықтарыңыз (ҚР № 94-V):</strong> Қол жеткізу (10 жұмыс күні), түзету, жою, шектеу, маркетингке қарсылық білдіру. <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a></li>
+					<li><strong>Құқықтарыңыз (ҚР № 94-V):</strong> Қол жеткізу (10 жұмыс күні), түзету, жою, шектеу, маркетингке қарсылық білдіру. <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a></li>
 					<li><strong>Балалар:</strong> 13 жасқа толмаған балалардан деректер жинамаймыз. ЕЭА пайдаланушылары үшін — 16 жас (немесе ұлттық заңнамада белгіленген төменгі жас).</li>
 					<li><strong>Бұзылу туралы хабарлама:</strong> ЦДИҒМ-ге — 2024 жылдың 1 шілдесінен бастап қолданылатын мерзімде; ЖТҚР 34-бабы бойынша зардап шеккен тұлғаларға.</li>
 					<li><strong>Шағымдар:</strong> ЦДИҒМ Ақпараттық қауіпсіздік комитетіне шағым жасауға болады.</li>
@@ -1112,7 +1112,7 @@
 				<section id="kz-s2" class="kz-section-item">
 					<h3>2. Деректер бақылаушысы</h3>
 					<p>VeryNice.kz арқылы өңделетін жеке деректердің бақылаушысы — Сайттың жеке операторы.
-					Байланыс: <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a></p>
+					Байланыс: <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a></p>
 					<div class="callout callout-neutral">
 						<strong>Оператордың жеке басы және тіркелу мәртебесі.</strong>
 						Сайт қазіргі уақытта жеке тұлғамен басқарылады. Оператор ҚР заңнамасы бойынша
@@ -1359,7 +1359,7 @@
 					</dl>
 					<p><strong>Жариялық мазмұн.</strong> Сайтта жариялаған пікірлер барлық
 					келушілерге қолжетімді. Жою сұрауы үшін:
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a></p>
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a></p>
 				</section>
 
 				<!-- §13 KZ -->
@@ -1400,7 +1400,7 @@
 						<dt>Тіркелгіні жою</dt>
 						<dd>Тіркелгіні және барлық байланысты жеке деректерді жоюды сұрауға болады. 30 күн ішінде өңделеді.</dd>
 					</dl>
-					<p>Жүгіну: <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a><br>
+					<p>Жүгіну: <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a><br>
 					Жауап беру мерзімі: ЖТҚР бойынша <strong>30 күнтізбелік күн</strong> /
 					ҚР № 94-V Заңы бойынша <strong>10 жұмыс күні</strong>.</p>
 				</section>
@@ -1450,7 +1450,7 @@
 						<dt>17.1 Жалпы ең төменгі жас</dt>
 						<dd>13 жасқа толмаған балалардан біле тұрып жеке деректер жинамаймыз.
 						Мұндай жағдай орын алды деп санасаңыз, дереу
-						<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+						<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 						мекенжайына хабарласыңыз.</dd>
 						<dt>17.2 ЕЭА және Ұлыбритания пайдаланушылары</dt>
 						<dd>ЖТҚР 8-бабы бойынша дербес деректерді өңдеуге өздігінен келісім беру
@@ -1497,7 +1497,7 @@
 									<rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
 									<path d="M1 5l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 								</svg>
-								<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+								<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 							</p>
 							<p class="contact-detail">
 								<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">

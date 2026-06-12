@@ -153,7 +153,7 @@
 				<p>
 					These Terms form a legally binding agreement between you and the individual operator of
 					VeryNice.kz ("we", "us", or "our"), reachable at
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</p>
 				<div class="callout callout-neutral">
 					<strong>Operator identity and commercial status.</strong> The Site is currently operated
@@ -163,7 +163,7 @@
 					equivalent legal entity under the Law of the Republic of Kazakhstan. These Terms will be
 					updated with full registered entity details upon completion of that registration. Full
 					legal identity details are available on written request to
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.
 				</div>
 				<div class="callout callout-info">
 					<strong>Electronic contract — Law No. 370-II (ҚР Электрондық сауда туралы Заңы).</strong>
@@ -304,7 +304,7 @@
 					<dd>When you authenticate via a Third-Party Provider, that provider shares certain profile information (typically your name and email address) with us. Your use of those providers is governed by their own terms and privacy policies, which you remain solely responsible for.</dd>
 
 					<dt>5.3 Account security</dt>
-					<dd>You are responsible for maintaining the confidentiality of your credentials and for all activity under your account. Notify us immediately at <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a> if you suspect unauthorised use.</dd>
+					<dd>You are responsible for maintaining the confidentiality of your credentials and for all activity under your account. Notify us immediately at <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a> if you suspect unauthorised use.</dd>
 
 					<dt>5.4 Accurate information</dt>
 					<dd>You agree to provide accurate, current, and complete information at registration and to keep your profile up to date.</dd>
@@ -393,9 +393,9 @@
 					act expeditiously to remove or disable access to the reported content.
 				</div>
 				<div class="callout callout-info">
-					<strong>Reporting.</strong> If you believe User Content violates these Terms or applicable law, report it to <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>. We will provide a reasoned response within <strong>20 calendar days</strong> of receipt, in accordance with Article 9 of Kazakhstan Law No. 18-VIII.
+					<strong>Reporting.</strong> If you believe User Content violates these Terms or applicable law, report it to <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>. We will provide a reasoned response within <strong>20 calendar days</strong> of receipt, in accordance with Article 9 of Kazakhstan Law No. 18-VIII.
 				</div>
-				<p><strong>Appeals.</strong> If your content is removed, you may submit an appeal to <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>. We will review appeals on a reasonable-efforts basis.</p>
+				<p><strong>Appeals.</strong> If your content is removed, you may submit an appeal to <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>. We will review appeals on a reasonable-efforts basis.</p>
 			</section>
 
 			<!-- ── 9 ─────────────────────────────────────────────────────── -->
@@ -430,7 +430,7 @@
 				<div class="callout callout-neutral">
 					<strong>Important.</strong> Such references are for entertainment and engagement only. They do not represent the editorial position of VeryNice.kz. The Site's core mission is to showcase the authentic history, culture, people, cuisine, and natural beauty of Kazakhstan accurately and respectfully. We acknowledge and respect the sensitivities of Kazakhstani citizens regarding certain international media portrayals of their country.
 				</div>
-				<p>If you believe any content is disrespectful or offensive, please contact <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.</p>
+				<p>If you believe any content is disrespectful or offensive, please contact <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.</p>
 			</section>
 
 			<!-- ── 11 ─────────────────────────────────────────────────────── -->
@@ -438,7 +438,7 @@
 				<h2>11. Intellectual Property</h2>
 				<p>All editorial content, design elements, logos, trademarks, and source code on the Site are owned by VeryNice.kz or its licensors, protected under the Law of the Republic of Kazakhstan No. 6-II "On Copyright and Related Rights" (as amended, together with any successor legislation currently in force) and applicable international copyright treaties.</p>
 				<p>You may not reproduce, distribute, publicly display, or create derivative works from Site content without prior written permission, except as expressly permitted by law. Photographs served via Cloudinary or other third-party providers may carry separate licensing restrictions.</p>
-				<p><strong>Copyright / takedown requests.</strong> Send a notice to <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a> identifying the infringing material, your contact information, and a statement of your rights.</p>
+				<p><strong>Copyright / takedown requests.</strong> Send a notice to <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a> identifying the infringing material, your contact information, and a statement of your rights.</p>
 				<p><strong>Feedback.</strong> Any ideas or suggestions you provide may be used by us freely and without compensation.</p>
 			</section>
 
@@ -498,19 +498,19 @@
 					<dd>The operator is evaluating and implementing data localisation compliance for "restricted personal data" under Law No. 94-V, Article 17. Our current primary infrastructure providers (Google Firebase, Vercel) operate data centres globally, including outside the Republic of Kazakhstan. Until data routing to Kazakhstan-located servers is confirmed for all restricted personal data categories, such data transfers are subject to the cross-border transfer notification procedure under Article 18 of Law No. 94-V. Current compliance status is set out in full in our <a href="/privacy#s10">Privacy Policy §10</a>.</dd>
 
 					<dt>14.4 Right to withdraw consent</dt>
-					<dd>Where processing is based on consent, you may withdraw that consent at any time without affecting the lawfulness of processing carried out before withdrawal. To withdraw: (a) use the cookie preference centre on the Site; or (b) email <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a> specifying the consent you are withdrawing.</dd>
+					<dd>Where processing is based on consent, you may withdraw that consent at any time without affecting the lawfulness of processing carried out before withdrawal. To withdraw: (a) use the cookie preference centre on the Site; or (b) email <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a> specifying the consent you are withdrawing.</dd>
 
 					<dt>14.5 Data retention</dt>
 					<dd>Personal data is retained for as long as your account remains active, and for a maximum of <strong>3 years</strong> after account deletion or your last interaction with the Site, unless a longer period is required by applicable law (e.g., accounting records under Kazakhstan tax law may require retention for up to 5 years). Specific retention periods per data category are set out in our Privacy Policy.</dd>
 
 					<dt>14.6 Your rights</dt>
-					<dd>Under applicable law you may have the right to: access your personal data; rectify inaccurate data; request erasure ("right to be forgotten"); restrict processing; data portability; and object to processing. To exercise any right, contact <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>. We will respond within 30 days (GDPR) or within the timeframe required by applicable KZ law.</dd>
+					<dd>Under applicable law you may have the right to: access your personal data; rectify inaccurate data; request erasure ("right to be forgotten"); restrict processing; data portability; and object to processing. To exercise any right, contact <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>. We will respond within 30 days (GDPR) or within the timeframe required by applicable KZ law.</dd>
 
 					<dt>14.7 Breach notification</dt>
 					<dd>In the event of a personal data security breach, we will notify the Committee for Information Security of the Ministry of Digital Development, Innovations and Aerospace Industry of the Republic of Kazakhstan within <strong>72 hours</strong> of becoming aware of the breach, in accordance with the amended Law No. 94-V (amendments effective 1 July 2024), and will notify affected data subjects where required</dd>
 
 					<dt>14.8 Children</dt>
-					<dd>We do not knowingly collect personal data from children under 13. Contact <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a> immediately if you believe a child under 13 has provided personal data through the Site.</dd>
+					<dd>We do not knowingly collect personal data from children under 13. Contact <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a> immediately if you believe a child under 13 has provided personal data through the Site.</dd>
 				</dl>
 				<p>Full details of data collection, purposes, and your rights are in our <a href="/privacy">Privacy Policy</a>.</p>
 			</section>
@@ -520,7 +520,7 @@
 				<h2>15. Complaints and Dispute Resolution</h2>
 				<dl class="term-list">
 					<dt>15.1 Informal resolution</dt>
-					<dd>We encourage you to contact us first at <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>. We will provide a substantive response within <strong>20 calendar days</strong> in accordance with Article 9 of Law No. 18-VIII.</dd>
+					<dd>We encourage you to contact us first at <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>. We will provide a substantive response within <strong>20 calendar days</strong> in accordance with Article 9 of Law No. 18-VIII.</dd>
 
 					<dt>15.2 Governing law and authoritative language in proceedings</dt>
 					<dd>These Terms are governed by the laws of the Republic of Kazakhstan. In accordance
@@ -733,7 +733,7 @@
 			<!-- ── 22 ─────────────────────────────────────────────────────── -->
 			<section id="s22">
 				<h2>22. Changes to These Terms</h2>
-				<p>We may update these Terms at any time. We will provide at least <strong>30 days' notice</strong> of material changes via a prominent notice on the Site and/or by email to registered users. Continued use after the effective date constitutes acceptance of the revised Terms. To stop using the Site and request account deletion, contact <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>.</p>
+				<p>We may update these Terms at any time. We will provide at least <strong>30 days' notice</strong> of material changes via a prominent notice on the Site and/or by email to registered users. Continued use after the effective date constitutes acceptance of the revised Terms. To stop using the Site and request account deletion, contact <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>.</p>
 			</section>
 
 			<!-- ── 23 ─────────────────────────────────────────────────────── -->
@@ -765,7 +765,7 @@
 								<rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
 								<path d="M1 5l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 							</svg>
-							<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+							<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 						</p>
 						<p class="contact-detail">
 							<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -801,11 +801,11 @@
 					<li><strong>Жарнама:</strong> Барлық жарнамалық және демеушілік мазмұн тиісті белгімен белгіленеді (№ 508-II және № 18-VIII Заңдарға сәйкес). Сайт серіктестік сілтемелерін пайдаланады.</li>
 					<li><strong>Жеке деректер:</strong> Деректер ҚР «Дербес деректер және оларды қорғау туралы» Заңына (№ 94-V, 2024 жылғы өзгерістермен) сәйкес өңделеді. Қазақстандық пайдаланушылардың деректері аумақ ішінде сақталады. Келісімді кез келген уақытта кері қайтарып алуға болады.</li>
 					<li><strong>Деректерді сақтау мерзімі:</strong> Жеке деректер тіркелгі жойылғаннан кейін ең көбі 3 жыл сақталады.</li>
-					<li><strong>Шағымдар:</strong> Шағымдарға 20 күнтізбелік күн ішінде жауап беріледі (№ 18-VIII Заңның 9-бабы). Байланыс: <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a></li>
+					<li><strong>Шағымдар:</strong> Шағымдарға 20 күнтізбелік күн ішінде жауап беріледі (№ 18-VIII Заңның 9-бабы). Байланыс: <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a></li>
 					<li><strong>Балама дауларды шешу:</strong> ЕО/ЕЭА пайдаланушылары ODR платформасына жүгіне алады: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer">ec.europa.eu/consumers/odr</a></li>
 					<li><strong>Жауапкершілік:</strong> Сайт мазмұны «бар күйінде» ұсынылады. Жанама шығындар үшін жауапкершілік заңда рұқсат етілген шегінде шектеледі. ҚР «Тұтынушылардың құқықтарын қорғау туралы» Заңы (№ 274-IV) бойынша тұтынушылардың заңды құқықтары сақталады.</li>
 					<li><strong>Дауларды шешу:</strong> Қазақстан Республикасының заңнамасы қолданылады; Алматы соттары юрисдикция органы болып табылады. ЕО/ЕЭА тұтынушылары өз еліндегі сотқа жүгіне алады.</li>
-					<li><strong>Толық нұсқасы:</strong> Осы Шарттардың толық қазақша нұсқасы сұрау бойынша <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a> мекенжайы арқылы қолжетімді.</li>
+					<li><strong>Толық нұсқасы:</strong> Осы Шарттардың толық қазақша нұсқасы сұрау бойынша <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a> мекенжайы арқылы қолжетімді.</li>
 				</ul>
 			</section>
 
@@ -880,7 +880,7 @@
 					Сайтты пайдаланбауыңыз тиіс.</p>
 					<p>Осы Шарттар сіз бен VeryNice.kz жеке операторы (бұдан әрі — «біз», «бізді» немесе
 					«біздің») арасындағы заңды күші бар міндетті келісімді қалыптастырады.
-					Байланыс: <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a></p>
+					Байланыс: <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a></p>
 					<div class="callout callout-neutral">
 						<strong>Оператордың жеке басы және коммерциялық мәртебесі.</strong>
 						Сайт қазіргі уақытта жеке тұлғамен басқарылады. Сайт жарнама және серіктестік
@@ -888,7 +888,7 @@
 						коммерциялық қызмет болып табылуы мүмкін. Оператор жеке кәсіпкер (ЖК) немесе
 						баламалы заңды тұлға ретінде тіркелу үдерісінде; тіркеу аяқталғаннан кейін осы
 						Шарттар жаңартылады. Заңды жеке басты анықтайтын толық деректер жазбаша сұрау
-						бойынша <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+						бойынша <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 						мекенжайы арқылы ұсынылады.
 					</div>
 				</section>
@@ -1017,7 +1017,7 @@
 						<dd>Тіркелгі деректерінің құпиялылығын және тіркелгіде жүргізілетін барлық
 						іс-әрекеттің жауапкершілігін сіз өзіңіз көтересіз. Рұқсатсыз кіру
 						күдікті болса, дереу
-						<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+						<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 						мекенжайына хабарлаңыз.</dd>
 
 						<dt>5.4 Дәл ақпарат</dt>
@@ -1150,13 +1150,13 @@
 					<div class="callout callout-info">
 						<strong>Хабарлау.</strong> Пайдаланушы мазмұны осы Шарттарды немесе
 						қолданылатын заңнаманы бұзады деп санасаңыз,
-						<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+						<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 						мекенжайына хабарлаңыз. ҚР № 18-VIII Заңының 9-бабына сәйкес алынған
 						күннен бастап <strong>20 күнтізбелік күн</strong> ішінде дәлелді жауап
 						береміз.
 					</div>
 					<p><strong>Шағым жасау.</strong> Мазмұныңыз жойылса,
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 					мекенжайы арқылы шағым жасай аласыз. Шағымдарды мүмкіндік шегінде
 					қарастырамыз.</p>
 				</section>
@@ -1200,7 +1200,7 @@
 						сезімталдығын мойындаймыз және құрметтейміз.
 					</div>
 					<p>Кез келген мазмұнды дөрекі немесе қорлаушы деп санасаңыз,
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 					мекенжайына хабарлаңыз.</p>
 				</section>
 
@@ -1218,7 +1218,7 @@
 					мақсатында әділ пайдалану) қоспағанда.</p>
 					<p><strong>Авторлық құқықты бұзу туралы хабарлаулар.</strong>
 					Зияткерлік меншік құқықтарыңыздың бұзылды деп санасаңыз,
-					<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+					<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 					мекенжайына бұзушылық материалды, байланыс деректерін және
 					құқықтарыңыздың мәлімдемесін қамтитын хабарлама жіберіңіз.</p>
 				</section>
@@ -1310,7 +1310,7 @@
 						жүзеге асырылған өңдеудің заңдылығына нұқсан келтірместен, кез
 						келген уақытта келісімнен бас тартуға болады. Бас тарту тәсілі:
 						(а) Сайттағы cookie параметрлер орталығын пайдалану; немесе
-						(б) <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+						(б) <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 						мекенжайына бас тартылатын келісімді нақтылай отырып хат жіберу.</dd>
 
 						<dt>14.5 Деректерді сақтау мерзімі</dt>
@@ -1326,7 +1326,7 @@
 						жеке деректерге қол жеткізу; дәлсіз деректерді түзету; деректерді
 						жою («ұмытылу құқығы»); өңдеуді шектеу; деректерді тасымалдау;
 						өңдеуге қарсы болу. Осы құқықтарды жүзеге асыру үшін
-						<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+						<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 						мекенжайына хабарласыңыз. ЖТҚР бойынша 30 күн ішінде, ҚР
 						заңнамасы бойынша белгіленген мерзімде жауап береміз.</dd>
 
@@ -1340,7 +1340,7 @@
 						<dt>14.8 Балалар</dt>
 						<dd>13 жасқа толмаған балалардан біле тұрып жеке деректер
 						жинамаймыз. Бұған қайшы жағдай орын алды деп санасаңыз, дереу
-						<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+						<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 						мекенжайына хабарласыңыз.</dd>
 					</dl>
 					<p>Деректер жинау, мақсаттар және құқықтарыңыз туралы толық ақпарат —
@@ -1353,7 +1353,7 @@
 					<dl class="term-list">
 						<dt>15.1 Алдымен бейресми шешу</dt>
 						<dd>Алдымен
-						<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+						<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 						мекенжайы арқылы бізбен байланысуды ұсынамыз. № 18-VIII Заңының
 						9-бабына сәйкес <strong>20 күнтізбелік күн</strong> ішінде мазмұнды
 						жауап береміз.</dd>
@@ -1631,7 +1631,7 @@
 					кемінде <strong>30 күн</strong> бұрын ескертеміз. Күшіне ену
 					күнінен кейін Сайтты пайдалануды жалғастыру — өзгертілген Шарттарды
 					қабылдауды білдіреді. Сайтты пайдалануды тоқтату және тіркелгіні
-					жою үшін <a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+					жою үшін <a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 					мекенжайына хабарласыңыз.</p>
 				</section>
 
@@ -1680,7 +1680,7 @@
 									<rect x="1" y="3" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
 									<path d="M1 5l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 								</svg>
-								<a href="mailto:contact.azamat@gmail.com">contact.azamat@gmail.com</a>
+								<a href="mailto:headquarters.mailbox@gmail.com">headquarters.mailbox@gmail.com</a>
 							</p>
 							<p class="contact-detail">
 								<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
