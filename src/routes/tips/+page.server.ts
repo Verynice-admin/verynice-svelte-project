@@ -34,7 +34,7 @@ const FALLBACK_PAGE = {
   articleLikes: 0,
   articleComments: 0,
   breadcrumbs: [{ label: 'Home', href: '/' }, { label: 'Travel Tips' }],
-  headerBackgroundPublicId: 'site/backgrounds/attractions-hero',
+  headerBackgroundPublicId: 'content/pages/destinations/Almaty_nearby/kolsai-lakes/kolsai-lakes-01',
   introMarkdown: 'Welcome to Kazakhstan! Here are essential travel tips to help you plan your perfect trip.'
 };
 

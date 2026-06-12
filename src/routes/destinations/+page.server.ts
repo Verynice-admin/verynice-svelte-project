@@ -169,11 +169,15 @@ export async function load() {
             alt: normalizedTitle
           }];
         } else if (data.headerBackgroundPublicId) {
-          // Add headerBackgroundPublicId as fallback
           images = [{
             publicId: data.headerBackgroundPublicId,
             alt: normalizedTitle
           }];
+        }
+        // Final fallback: data.image may be {alt: '...'} with no publicId, blocking
+        // the headerBackgroundPublicId branch above. Recover it here.
+        if (images.length === 0 && data.headerBackgroundPublicId) {
+          images = [{ publicId: data.headerBackgroundPublicId, alt: normalizedTitle }];
         }
 
         // Validate images
