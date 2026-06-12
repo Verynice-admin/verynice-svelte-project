@@ -147,6 +147,8 @@
 			}
 
 			// Step 1 — Google Sign In
+			// Force account picker so the correct account can be chosen
+			googleProvider.setCustomParameters({ prompt: 'select_account' });
 			const result = await signInWithPopup(auth, googleProvider);
 			const firebaseUser = result.user;
 			log('[Step 2] Auth success:', firebaseUser.email);
